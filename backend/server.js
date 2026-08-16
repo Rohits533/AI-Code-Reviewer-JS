@@ -1,20 +1,19 @@
 const express = require('express');
-const cors = require('cors');
+const cors = require('cors');  // <-- This line must be present
 const axios = require('axios');
 
 const app = express();
-const PORT = 5002;
+const PORT = 5002; // Use 5002 or 5000
 
-app.use(cors());
+// ---> THIS IS THE FIX <---
+app.use(cors()); // This enables CORS for all requests
 app.use(express.json());
 
 app.post('/analyze', async (req, res) => {
     const { code } = req.body;
-
     if (!code) {
         return res.status(400).json({ error: 'No code provided' });
     }
-
     try {
         const response = await axios.post('http://localhost:5001/analyze', { code });
         res.json(response.data);
