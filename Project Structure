@@ -1,0 +1,11 @@
+AI-Code-Reviewer-JS/
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+├── backend/
+│   ├── server.js
+│   └── package.json
+└── python-service/
+    ├── app.py
+    └── requirements.txt
