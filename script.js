@@ -11,7 +11,7 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
 
     try {
         // ---> THIS IS THE FIX <---
-        const response = await fetch('https://ai-code-reviewer-backend.onrender.com/analyze', {
+        const response = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
