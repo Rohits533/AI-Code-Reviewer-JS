@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Code Reviewer</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 AI Code Reviewer</h1>
+        <p>Paste your Python code below and get a professional review.</p>
+
+        <textarea id="codeInput" rows="12" placeholder="Paste your Python code here...">
+def add(a, b):
+    return a + b
+
+x = 10  # unused
+        </textarea>
+
+        <button id="analyzeBtn">🔍 Analyze Code</button>
+
+        <div id="results">
+            <h3>Results</h3>
+            <div id="output"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
