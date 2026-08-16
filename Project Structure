@@ -1,11 +1,10 @@
 AI-Code-Reviewer-JS/
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
+├── index.html          ✅ already there
+├── style.css           ✅ already there
+├── script.js           ✅ already there
+├── app.py              ← MOVE this to root
+├── requirements.txt    ← MOVE this to root
 ├── backend/
-│   ├── server.js
-│   └── package.json
-└── python-service/
-    ├── app.py
-    └── requirements.txt
+│   ├── server.js       ✅ already there
+│   └── package.json    ✅ already there
+└── README.md
