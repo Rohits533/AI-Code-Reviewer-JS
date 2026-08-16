@@ -10,7 +10,8 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
     output.textContent = '⏳ Analyzing code...';
 
     try {
-        const response = await fetch('http://localhost:5002/analyze', {
+        // ---> THIS IS THE FIX <---
+        const response = await fetch('https://ai-code-reviewer-backend.onrender.com/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
