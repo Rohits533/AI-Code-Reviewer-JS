@@ -25,7 +25,8 @@ def get_gemini_review(code: str):
         return "AI review not available (GOOGLE_API_KEY missing)"
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        # Using gemini-2.5-flash or gemini-2.0-flash as a current standard model
+        model = genai.GenerativeModel("gemini-2.5-flash")
         
         prompt = f"""You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements.
 Be concise and specific.
