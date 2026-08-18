@@ -1,10 +1,10 @@
+import os
+import ast
 from fastapi import FastAPI
 from pydantic import BaseModel
-import ast
 import uvicorn
-import os
-import requests
 from fastapi.middleware.cors import CORSMiddleware
+import google.generativeai as genai
 
 app = FastAPI()
 
@@ -18,24 +18,45 @@ app.add_middleware(
 class CodeRequest(BaseModel):
     code: str
 
+def get_gemini_review(code: str):
+    """Calls Gemini API for AI code review."""
+    api_key = os.environ.get("GOOGLE_API_KEY")
+    if not api_key:
+        return "AI review not available (GOOGLE_API_KEY missing)"
+    try:
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        
+        prompt = f"""You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements.
+Be concise and specific.
+Analyze this Python code:
+```python
+{code}
+```"""
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        return f"Gemini API error: {str(e)}"
+
 @app.post("/analyze")
 async def analyze_code(request: CodeRequest):
     code = request.code
-
+    
     # --- AST Analysis ---
     try:
         tree = ast.parse(code)
     except SyntaxError as e:
         return {"error": f"Syntax Error: {e}"}
-
+        
     report = {
         "unused_variables": [],
         "unused_imports": [],
         "issues_count": 0,
     }
-
+    
     assigned = set()
     used = set()
+    
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign):
             for target in node.targets:
@@ -44,11 +65,13 @@ async def analyze_code(request: CodeRequest):
         elif isinstance(node, ast.Name):
             if isinstance(node.ctx, ast.Load):
                 used.add(node.id)
+                
     unused_vars = assigned - used
     report["unused_variables"] = list(unused_vars)
-
+    
     imported = set()
     used_names = set()
+    
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
@@ -59,45 +82,14 @@ async def analyze_code(request: CodeRequest):
         elif isinstance(node, ast.Name):
             if isinstance(node.ctx, ast.Load):
                 used_names.add(node.id)
+                
     unused_imports = imported - used_names
     report["unused_imports"] = list(unused_imports)
-
     report["issues_count"] = len(report["unused_variables"]) + len(report["unused_imports"])
-
-    # --- Groq AI Review ---
-    ai_review = "AI review not available (API key missing)"
-    groq_api_key = os.environ.get("GROQ_API_KEY")
-
-    if groq_api_key:
-        try:
-            groq_response = requests.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {groq_api_key}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": "mixtral-8x7b-32768",  # ✅ WORKING FREE MODEL
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": "You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements. Be concise and specific."
-                        },
-                        {
-                            "role": "user",
-                            "content": f"Analyze this Python code:\n\n{code}"
-                        }
-                    ],
-                    "temperature": 0.2
-                }
-            )
-            if groq_response.status_code == 200:
-                ai_review = groq_response.json()["choices"][0]["message"]["content"]
-            else:
-                ai_review = f"Groq API error: {groq_response.status_code} - {groq_response.text}"
-        except Exception as e:
-            ai_review = f"Groq API error: {str(e)}"
-
+    
+    # --- AI Review (Gemini) ---
+    ai_review = get_gemini_review(code)
+    
     # --- Combined Response ---
     return {
         "ast_report": report,
