@@ -1,7 +1,10 @@
-from fastapi import FastAPI, HTTPException
+
+from fastapi import FastAPI
 from pydantic import BaseModel
 import ast
 import uvicorn
+import os
+import requests
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -19,6 +22,8 @@ class CodeRequest(BaseModel):
 @app.post("/analyze")
 async def analyze_code(request: CodeRequest):
     code = request.code
+
+    # --- AST Analysis ---
     try:
         tree = ast.parse(code)
     except SyntaxError as e:
@@ -30,7 +35,6 @@ async def analyze_code(request: CodeRequest):
         "issues_count": 0,
     }
 
-    # --- Unused Variables ---
     assigned = set()
     used = set()
     for node in ast.walk(tree):
@@ -44,7 +48,6 @@ async def analyze_code(request: CodeRequest):
     unused_vars = assigned - used
     report["unused_variables"] = list(unused_vars)
 
-    # --- Unused Imports ---
     imported = set()
     used_names = set()
     for node in ast.walk(tree):
@@ -61,7 +64,50 @@ async def analyze_code(request: CodeRequest):
     report["unused_imports"] = list(unused_imports)
 
     report["issues_count"] = len(report["unused_variables"]) + len(report["unused_imports"])
-    return report
+
+    # --- Groq AI Review ---
+    ai_review = "AI review not available (API key missing)"
+    groq_api_key = os.environ.get("GROQ_API_KEY")
+
+    if groq_api_key:
+        try:
+            groq_response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {groq_api_key}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "llama3-8b-8192",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": "You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements. Be concise and specific."
+                        },
+                        {
+                            "role": "user",
+                            "content": f"Analyze this Python code:\n\n{code}"
+                        }
+                    ],
+                    "temperature": 0.2
+                }
+            )
+            if groq_response.status_code == 200:
+                ai_review = groq_response.json()["choices"][0]["message"]["content"]
+            else:
+                ai_review = f"Groq API error: {groq_response.status_code} - {groq_response.text}"
+        except Exception as e:
+            ai_review = f"Groq API error: {str(e)}"
+
+    # --- Combined Response ---
+    return {
+        "ast_report": report,
+        "ai_review": ai_review
+    }
+
+@app.get("/")
+async def root():
+    return {"message": "AI Code Reviewer API is running. Use POST /analyze to review code."}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=5001)
