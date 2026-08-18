@@ -77,7 +77,7 @@ async def analyze_code(request: CodeRequest):
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "llama-3.3-70b-versatile",  # ✅ WORKING MODEL
+                    "model": "mixtral-8x7b-32768",  # ✅ WORKING FREE MODEL
                     "messages": [
                         {
                             "role": "system",
