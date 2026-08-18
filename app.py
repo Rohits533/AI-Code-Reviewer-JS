@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 import ast
@@ -78,7 +77,7 @@ async def analyze_code(request: CodeRequest):
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "llama3-8b-8192",
+                    "model": "llama-3.1-8b-instant",  # ✅ CORRECT MODEL
                     "messages": [
                         {
                             "role": "system",
