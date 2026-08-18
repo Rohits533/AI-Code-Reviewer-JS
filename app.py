@@ -77,7 +77,7 @@ async def analyze_code(request: CodeRequest):
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "llama-3.1-8b-instant",  # ✅ CORRECT MODEL
+                    "model": "llama-3.3-70b-versatile",  # ✅ WORKING MODEL
                     "messages": [
                         {
                             "role": "system",
