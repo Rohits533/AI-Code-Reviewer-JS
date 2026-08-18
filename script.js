@@ -10,8 +10,7 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
     output.textContent = '⏳ Analyzing code...';
 
     try {
-        // ---> THIS IS THE FIX <---
-        const response = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
+        const response = await fetch('https://your-backend.onrender.com/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,7 +21,18 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
         const data = await response.json();
 
         if (response.ok) {
-            output.textContent = JSON.stringify(data, null, 2);
+            // Format results nicely
+            let resultText = '📊 STATIC ANALYSIS (AST)\n';
+            resultText += '------------------------\n';
+            resultText += `Unused Variables: ${data.ast_report.unused_variables.join(', ') || 'None'}\n`;
+            resultText += `Unused Imports: ${data.ast_report.unused_imports.join(', ') || 'None'}\n`;
+            resultText += `Total Issues: ${data.ast_report.issues_count}\n\n`;
+
+            resultText += '🤖 AI REVIEW (Groq)\n';
+            resultText += '------------------------\n';
+            resultText += data.ai_review;
+
+            output.textContent = resultText;
         } else {
             output.textContent = `❌ Error: ${data.error || 'Something went wrong'}`;
         }
