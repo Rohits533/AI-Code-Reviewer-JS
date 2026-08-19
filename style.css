@@ -3,31 +3,30 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-  background: #0a0a0f;
+  background: #1c1c1e;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
   color: #ffffff;
-  /* Animated background */
-  background: radial-gradient(circle at 20% 20%, #1a1a2e, #0a0a0f);
+  background: radial-gradient(circle at 30% 10%, #2c2c30, #0f0f11);
 }
 
-/* ===== GLASS CARD ===== */
+/* ===== APPLE GLASS CARD ===== */
 .app-card {
   max-width: 1300px;
   width: 100%;
-  background: rgba(20, 20, 35, 0.4);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-radius: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   padding: 2.5rem;
   transition: all 0.3s ease;
 }
@@ -57,7 +56,7 @@ body {
 
 .logo .sub {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.5);
   display: block;
   font-weight: 400;
 }
@@ -70,7 +69,7 @@ body {
 }
 
 .nav-links a {
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -99,10 +98,10 @@ body {
 }
 
 .nav-links .btn-outline {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 0.4rem 1.2rem;
   border-radius: 40px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.06);
   color: #ffffff;
   font-weight: 600;
   font-size: 0.8rem;
@@ -110,9 +109,8 @@ body {
 }
 
 .nav-links .btn-outline:hover {
-  background: #ffffff;
-  color: #0a0a0f;
-  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .nav-links .btn-outline::after {
@@ -139,7 +137,7 @@ body {
 
 .hero-left p {
   font-size: 1.1rem;
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.6);
   margin: 1.2rem 0 2rem;
   line-height: 1.7;
 }
@@ -169,19 +167,20 @@ body {
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 1.5rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   text-align: center;
   transition: 0.25s;
-  backdrop-filter: blur(8px);
 }
 
 .stat-card:hover {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .stat-card h3 {
@@ -194,7 +193,7 @@ body {
 
 .stat-card p {
   font-size: 0.7rem;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -203,10 +202,11 @@ body {
 .code-area textarea {
   width: 100%;
   padding: 1.2rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: #e5e7eb;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;
@@ -223,8 +223,9 @@ body {
 }
 
 #output {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 1.2rem;
   border-radius: 16px;
   min-height: 120px;
@@ -238,8 +239,8 @@ body {
 }
 
 #output .placeholder {
-  color: #4b5563;
-  font-family: 'Inter', sans-serif;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   text-align: center;
   padding: 2rem 0;
 }
@@ -271,7 +272,7 @@ body {
 }
 
 .contact-links a {
-  color: #9ca3af;
+  color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
   font-size: 1rem;
   transition: 0.2s;
@@ -293,11 +294,11 @@ body {
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  color: #4b5563;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .footer a {
-  color: #4b5563;
+  color: rgba(255, 255, 255, 0.3);
   text-decoration: none;
   margin-left: 1.5rem;
   transition: 0.2s;
