@@ -6,7 +6,6 @@
   <title>AI Debug · Spotify</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* ===== RESET & BASE ===== */
     * {
       margin: 0;
       padding: 0;
@@ -28,7 +27,7 @@
     @keyframes fadeSlideUp {
       0% {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(50px);
       }
       100% {
         opacity: 1;
@@ -342,7 +341,7 @@
 
   <div class="app-card">
 
-    <!-- ===== HEADER ===== -->
+    <!-- HEADER -->
     <header class="header">
       <div class="logo">
         <h1>✦ ai debug</h1>
@@ -355,7 +354,7 @@
       </nav>
     </header>
 
-    <!-- ===== HOME ===== -->
+    <!-- HOME -->
     <section id="home">
       <div class="hero">
         <div class="hero-left">
@@ -372,7 +371,7 @@
       </div>
     </section>
 
-    <!-- ===== DOCS (CODE ANALYZER) ===== -->
+    <!-- DOCS (ANALYZER) -->
     <section id="docs">
       <h2 class="section-title">Docs · Analyzer</h2>
       <div class="code-area">
@@ -390,7 +389,7 @@ x = 10  # unused</textarea>
       </div>
     </section>
 
-    <!-- ===== CONTACT ===== -->
+    <!-- CONTACT -->
     <section id="contact">
       <h2 class="section-title">Contact</h2>
       <div class="contact-links">
@@ -399,7 +398,7 @@ x = 10  # unused</textarea>
       </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer class="footer">
       <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
       <div>
@@ -412,7 +411,7 @@ x = 10  # unused</textarea>
   </div>
 
   <script>
-    // ===== SMOOTH SCROLL =====
+    // Smooth scroll
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
@@ -424,12 +423,12 @@ x = 10  # unused</textarea>
       });
     });
 
-    // ===== TRY IT NOW =====
+    // Try it now → scroll to Docs
     document.getElementById('tryItBtn').addEventListener('click', () => {
       document.getElementById('docs').scrollIntoView({ behavior: 'smooth' });
     });
 
-    // ===== ANALYZE =====
+    // Analyze code
     document.getElementById('analyzeBtn').addEventListener('click', async () => {
       const code = document.getElementById('codeInput').value;
       const output = document.getElementById('output');
