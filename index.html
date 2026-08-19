@@ -6,6 +6,7 @@
   <title>AI Debug · Spotify</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    /* ===== RESET ===== */
     * {
       margin: 0;
       padding: 0;
@@ -23,18 +24,61 @@
       align-items: center;
     }
 
-    /* ===== ENTRY ANIMATION ===== */
-    @keyframes fadeSlideUp {
-      0% {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* ===== ENTRY ANIMATION (Logo Reveal) ===== */
+    .entry-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #121212;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: fadeOut 1.2s ease 1.5s forwards;
     }
 
+    .entry-overlay .logo-icon {
+      font-size: 5rem;
+      color: #1DB954;
+      animation: logoPulse 1.4s ease forwards;
+    }
+
+    .entry-overlay h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #1DB954;
+      margin-top: 0.5rem;
+      letter-spacing: 2px;
+      animation: slideUp 1.2s ease forwards;
+    }
+
+    .entry-overlay p {
+      color: #b3b3b3;
+      font-size: 1rem;
+      margin-top: 0.3rem;
+      animation: slideUp 1.4s ease forwards;
+    }
+
+    @keyframes logoPulse {
+      0% { transform: scale(0.6); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; visibility: visible; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* ===== MAIN APP CARD ===== */
     .app-card {
       max-width: 1300px;
       width: 100%;
@@ -43,7 +87,13 @@
       border: 1px solid #282828;
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9);
       padding: 2.5rem;
-      animation: fadeSlideUp 0.8s ease-out forwards;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s ease 1.8s forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     /* ===== HEADER ===== */
@@ -302,46 +352,32 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 992px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .hero-right {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .hero { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-right { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 600px) {
-      .app-card {
-        padding: 1.5rem;
-      }
-      .header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .nav-links {
-        gap: 1rem;
-      }
-      .hero-left h2 {
-        font-size: 2rem;
-      }
-      .footer {
-        flex-direction: column;
-        gap: 0.8rem;
-        text-align: center;
-      }
-      .contact-links {
-        flex-direction: column;
-        gap: 1rem;
-      }
+      .app-card { padding: 1.5rem; }
+      .header { flex-direction: column; align-items: stretch; }
+      .nav-links { gap: 1rem; }
+      .hero-left h2 { font-size: 2rem; }
+      .footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+      .contact-links { flex-direction: column; gap: 1rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ===== ENTRY OVERLAY (Logo Animation) ===== -->
+  <div class="entry-overlay" id="entryOverlay">
+    <div class="logo-icon"><i class="fas fa-code"></i></div>
+    <h1>✦ ai debug</h1>
+    <p>ast + gemini · spotify</p>
+  </div>
+
+  <!-- ===== MAIN APP ===== -->
   <div class="app-card">
 
-    <!-- HEADER -->
     <header class="header">
       <div class="logo">
         <h1>✦ ai debug</h1>
@@ -354,7 +390,6 @@
       </nav>
     </header>
 
-    <!-- HOME -->
     <section id="home">
       <div class="hero">
         <div class="hero-left">
@@ -371,7 +406,6 @@
       </div>
     </section>
 
-    <!-- DOCS (ANALYZER) -->
     <section id="docs">
       <h2 class="section-title">Docs · Analyzer</h2>
       <div class="code-area">
@@ -389,7 +423,6 @@ x = 10  # unused</textarea>
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact">
       <h2 class="section-title">Contact</h2>
       <div class="contact-links">
@@ -398,7 +431,6 @@ x = 10  # unused</textarea>
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="footer">
       <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
       <div>
@@ -411,7 +443,7 @@ x = 10  # unused</textarea>
   </div>
 
   <script>
-    // Smooth scroll
+    // Nav smooth scroll
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
@@ -428,7 +460,7 @@ x = 10  # unused</textarea>
       document.getElementById('docs').scrollIntoView({ behavior: 'smooth' });
     });
 
-    // Analyze code
+    // Analyze
     document.getElementById('analyzeBtn').addEventListener('click', async () => {
       const code = document.getElementById('codeInput').value;
       const output = document.getElementById('output');
