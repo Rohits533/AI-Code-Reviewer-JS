@@ -1,408 +1,525 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Debug · Spotify</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        /* ===== RESET ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Debug · Spotify</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-        body {
-            background: #000000;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
+    body {
+      background: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        /* ===== MAIN CARD ===== */
-        .app-card {
-            max-width: 1300px;
-            width: 100%;
-            background: #121212;
-            border-radius: 40px;
-            border: 1px solid #282828;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9);
-            padding: 2.5rem;
-        }
+    /* ===== ENTRY ANIMATION ===== */
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        /* ===== HEADER ===== */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-        }
+    .app-card {
+      max-width: 1300px;
+      width: 100%;
+      background: #121212;
+      border-radius: 40px;
+      border: 1px solid #282828;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9);
+      padding: 2.5rem;
+      animation: fadeSlideUp 0.8s ease-out forwards;
+    }
 
-        .logo h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1DB954;
-            letter-spacing: -0.5px;
-        }
+    /* ===== HEADER ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
 
-        .logo span {
-            font-size: 0.8rem;
-            color: #b3b3b3;
-            display: block;
-        }
+    .logo h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1DB954;
+      letter-spacing: -0.5px;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
+    .logo span {
+      font-size: 0.8rem;
+      color: #b3b3b3;
+      display: block;
+    }
 
-        .nav-links a {
-            color: #b3b3b3;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: 0.2s;
-        }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-        .nav-links a:hover {
-            color: #ffffff;
-        }
+    .nav-links a {
+      color: #b3b3b3;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.2s;
+      cursor: pointer;
+    }
 
-        .nav-links .btn-outline {
-            border: 1px solid #1DB954;
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            background: transparent;
-            color: #1DB954;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: 0.25s;
-        }
+    .nav-links a:hover {
+      color: #ffffff;
+    }
 
-        .nav-links .btn-outline:hover {
-            background: #1DB954;
-            color: #000000;
-        }
+    .nav-links .btn-outline {
+      border: 1px solid #1DB954;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      background: transparent;
+      color: #1DB954;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: 0.25s;
+    }
 
-        /* ===== HERO ===== */
-        .hero {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
+    .nav-links .btn-outline:hover {
+      background: #1DB954;
+      color: #000000;
+    }
 
-        .hero-left h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            line-height: 1.1;
-            color: #ffffff;
-        }
+    /* ===== SECTIONS ===== */
+    section {
+      scroll-margin-top: 80px;
+      margin-bottom: 3rem;
+    }
 
-        .hero-left p {
-            font-size: 1.1rem;
-            color: #b3b3b3;
-            margin: 1.2rem 0 2rem;
-            line-height: 1.6;
-        }
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.2rem;
+      border-left: 4px solid #1DB954;
+      padding-left: 1rem;
+    }
 
-        .hero-left .btn-primary {
-            background: #1DB954;
-            border: none;
-            padding: 0.8rem 2.4rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #000000;
-            cursor: pointer;
-            box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
-            transition: 0.2s;
-        }
+    /* ===== HERO ===== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
 
-        .hero-left .btn-primary:hover {
-            transform: scale(1.03);
-            box-shadow: 0 12px 32px rgba(29, 185, 84, 0.5);
-        }
+    .hero-left h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #ffffff;
+    }
 
-        .hero-right {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-        }
+    .hero-left p {
+      font-size: 1.1rem;
+      color: #b3b3b3;
+      margin: 1.2rem 0 2rem;
+      line-height: 1.6;
+    }
 
-        .stat-card {
-            background: #1f1f1f;
-            border-radius: 20px;
-            padding: 1.5rem 1.2rem;
-            border: 1px solid #2a2a2a;
-            text-align: center;
-            transition: 0.25s;
-        }
+    .hero-left .btn-primary {
+      background: #1DB954;
+      border: none;
+      padding: 0.8rem 2.4rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #000000;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
+      transition: 0.2s;
+    }
 
-        .stat-card:hover {
-            background: #2a2a2a;
-            transform: translateY(-4px);
-        }
+    .hero-left .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 32px rgba(29, 185, 84, 0.5);
+    }
 
-        .stat-card h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #1DB954;
-        }
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
 
-        .stat-card p {
-            font-size: 0.8rem;
-            color: #b3b3b3;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    .stat-card {
+      background: #1f1f1f;
+      border-radius: 20px;
+      padding: 1.5rem 1.2rem;
+      border: 1px solid #2a2a2a;
+      text-align: center;
+      transition: 0.25s;
+    }
 
-        /* ===== CODE AREA ===== */
-        .code-area {
-            margin: 2rem 0;
-            scroll-margin-top: 80px;
-        }
+    .stat-card:hover {
+      background: #2a2a2a;
+      transform: translateY(-4px);
+    }
 
-        .code-area textarea {
-            width: 100%;
-            padding: 1.2rem;
-            background: #1f1f1f;
-            color: #ffffff;
-            border: 1px solid #2a2a2a;
-            border-radius: 16px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            resize: vertical;
-            min-height: 160px;
-            transition: border-color 0.2s;
-        }
+    .stat-card h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1DB954;
+    }
 
-        .code-area textarea:focus {
-            outline: none;
-            border-color: #1DB954;
-            box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.15);
-        }
+    .stat-card p {
+      font-size: 0.8rem;
+      color: #b3b3b3;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        #output {
-            background: #1f1f1f;
-            padding: 1.2rem;
-            border-radius: 16px;
-            min-height: 120px;
-            color: #ffffff;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            line-height: 1.7;
-            white-space: pre-wrap;
-            border: 1px solid #2a2a2a;
-            margin-top: 1.2rem;
-        }
+    /* ===== PROJECTS ===== */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
 
-        #output .placeholder {
-            color: #b3b3b3;
-            font-family: 'Inter', sans-serif;
-            text-align: center;
-            padding: 2rem 0;
-        }
+    .project-card {
+      background: #1f1f1f;
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: 1px solid #282828;
+      transition: 0.25s;
+    }
 
-        /* ===== BUTTONS ===== */
-        .analyze-btn {
-            margin-top: 1rem;
-            background: #1DB954;
-            border: none;
-            padding: 0.7rem 2rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #000000;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 16px rgba(29, 185, 84, 0.2);
-        }
+    .project-card:hover {
+      background: #2a2a2a;
+      transform: translateY(-4px);
+      border-color: #1DB954;
+    }
 
-        .analyze-btn:hover {
-            background: #1ed760;
-            transform: scale(1.02);
-            box-shadow: 0 8px 24px rgba(29, 185, 84, 0.4);
-        }
+    .project-card i {
+      font-size: 2rem;
+      color: #1DB954;
+      margin-bottom: 0.8rem;
+    }
 
-        /* ===== FOOTER ===== */
-        .footer {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #282828;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: #b3b3b3;
-        }
+    .project-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
 
-        .footer a {
-            color: #b3b3b3;
-            text-decoration: none;
-            margin-left: 1.5rem;
-            transition: 0.2s;
-        }
+    .project-card p {
+      font-size: 0.85rem;
+      color: #b3b3b3;
+      margin-top: 0.4rem;
+    }
 
-        .footer a:hover {
-            color: #1DB954;
-        }
+    /* ===== CODE AREA ===== */
+    .code-area textarea {
+      width: 100%;
+      padding: 1.2rem;
+      background: #1f1f1f;
+      color: #ffffff;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 160px;
+      transition: border-color 0.2s;
+    }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .hero {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .hero-right {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+    .code-area textarea:focus {
+      outline: none;
+      border-color: #1DB954;
+      box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.15);
+    }
 
-        @media (max-width: 600px) {
-            .app-card {
-                padding: 1.5rem;
-            }
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-            .hero-left h2 {
-                font-size: 2rem;
-            }
-            .footer {
-                flex-direction: column;
-                gap: 0.8rem;
-                text-align: center;
-            }
-        }
-    </style>
+    #output {
+      background: #1f1f1f;
+      padding: 1.2rem;
+      border-radius: 16px;
+      min-height: 120px;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      border: 1px solid #2a2a2a;
+      margin-top: 1.2rem;
+    }
+
+    #output .placeholder {
+      color: #b3b3b3;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .analyze-btn {
+      margin-top: 1rem;
+      background: #1DB954;
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #000000;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 16px rgba(29, 185, 84, 0.2);
+    }
+
+    .analyze-btn:hover {
+      background: #1ed760;
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(29, 185, 84, 0.4);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: #b3b3b3;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    .contact-links a:hover {
+      color: #1DB954;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #282828;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #b3b3b3;
+    }
+
+    .footer a {
+      color: #b3b3b3;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      transition: 0.2s;
+    }
+
+    .footer a:hover {
+      color: #1DB954;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .hero-right {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .app-card {
+        padding: 1.5rem;
+      }
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links {
+        gap: 1rem;
+      }
+      .hero-left h2 {
+        font-size: 2rem;
+      }
+      .footer {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="app-card">
+  <div class="app-card">
 
-        <!-- HEADER -->
-        <header class="header">
-            <div class="logo">
-                <h1>✦ ai debug</h1>
-                <span>ast + gemini · spotify edition</span>
-            </div>
-            <nav class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Projects</a>
-                <a href="#">Docs</a>
-                <a href="#" class="btn-outline">Contact</a>
-            </nav>
-        </header>
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="logo">
+        <h1>✦ ai debug</h1>
+        <span>ast + gemini · spotify</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#docs">Docs</a>
+        <a href="#contact" class="btn-outline">Contact</a>
+      </nav>
+    </header>
 
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-left">
-                <h2>Code that thinks.</h2>
-                <p>Paste your Python code — get AST analysis + Gemini AI review instantly. Built for clarity, speed, and depth.</p>
-                <button class="btn-primary" id="tryItBtn"><i class="fas fa-play" style="margin-right:8px;"></i> Try it now</button>
-            </div>
-            <div class="hero-right">
-                <div class="stat-card"><h3>18</h3><p>projects shipped</p></div>
-                <div class="stat-card"><h3>4</h3><p>languages</p></div>
-                <div class="stat-card"><h3>100%</h3><p>self-taught</p></div>
-                <div class="stat-card"><h3>⚡</h3><p>ast + gemini</p></div>
-            </div>
-        </section>
+    <!-- ===== HOME ===== -->
+    <section id="home">
+      <div class="hero">
+        <div class="hero-left">
+          <h2>Code that thinks.</h2>
+          <p>Paste your Python code — get AST analysis + Gemini AI review instantly. Built for clarity, speed, and depth.</p>
+          <button class="btn-primary" id="tryItBtn"><i class="fas fa-play" style="margin-right:8px;"></i> Try it now</button>
+        </div>
+        <div class="hero-right">
+          <div class="stat-card"><h3>18</h3><p>projects shipped</p></div>
+          <div class="stat-card"><h3>4</h3><p>languages</p></div>
+          <div class="stat-card"><h3>100%</h3><p>self-taught</p></div>
+          <div class="stat-card"><h3>⚡</h3><p>ast + gemini</p></div>
+        </div>
+      </div>
+    </section>
 
-        <!-- CODE INPUT + OUTPUT -->
-        <section class="code-area" id="codeSection">
-            <textarea id="codeInput" rows="6" placeholder="Paste your Python code here...">def add(a, b):
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
+      <div class="project-grid">
+        <div class="project-card"><i class="fas fa-robot"></i><h4>AI Code Reviewer</h4><p>AST + Gemini debugger</p></div>
+        <div class="project-card"><i class="fas fa-code-branch"></i><h4>Code Migrator</h4><p>AST-based refactoring</p></div>
+        <div class="project-card"><i class="fas fa-brain"></i><h4>RAG Pipeline</h4><p>LangChain + Groq</p></div>
+        <div class="project-card"><i class="fas fa-bolt"></i><h4>Blinkit Clone</h4><p>UI template</p></div>
+      </div>
+    </section>
+
+    <!-- ===== DOCS (CODE ANALYZER) ===== -->
+    <section id="docs">
+      <h2 class="section-title">Docs · Analyzer</h2>
+      <div class="code-area">
+        <textarea id="codeInput" rows="6" placeholder="Paste your Python code here...">def add(a, b):
     return a + b
 
 x = 10  # unused</textarea>
-            <button class="analyze-btn" id="analyzeBtn">🔍 Analyze</button>
-            <div id="output">
-                <div class="placeholder">
-                    <i class="fas fa-code" style="display:block; font-size:2rem; margin-bottom:0.5rem; color:#333;"></i>
-                    Results will appear here
-                </div>
-            </div>
-        </section>
+        <button class="analyze-btn" id="analyzeBtn">🔍 Analyze</button>
+        <div id="output">
+          <div class="placeholder">
+            <i class="fas fa-code" style="display:block; font-size:2rem; margin-bottom:0.5rem; color:#333;"></i>
+            Results will appear here
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- FOOTER -->
-        <footer class="footer">
-            <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
-            <div>
-                <a href="#">GitHub</a>
-                <a href="#">Vercel</a>
-                <a href="#">Render</a>
-            </div>
-        </footer>
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-links">
+        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="#"><i class="fas fa-envelope"></i> Email</a>
+        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+      </div>
+    </section>
 
-    </div>
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
+      <div>
+        <a href="#">GitHub</a>
+        <a href="#">Vercel</a>
+        <a href="#">Render</a>
+      </div>
+    </footer>
 
-    <script>
-        // Scroll to code section
-        document.getElementById('tryItBtn').addEventListener('click', () => {
-            document.getElementById('codeSection').scrollIntoView({ behavior: 'smooth' });
+  </div>
+
+  <script>
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ===== TRY IT NOW =====
+    document.getElementById('tryItBtn').addEventListener('click', () => {
+      document.getElementById('docs').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // ===== ANALYZE =====
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+      const code = document.getElementById('codeInput').value;
+      const output = document.getElementById('output');
+
+      if (!code.trim()) {
+        output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`;
+        return;
+      }
+
+      output.innerHTML = `<div class="placeholder">⏳ Analyzing...</div>`;
+
+      try {
+        const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
         });
 
-        // Analyze code
-        document.getElementById('analyzeBtn').addEventListener('click', async () => {
-            const code = document.getElementById('codeInput').value;
-            const output = document.getElementById('output');
+        const data = await res.json();
 
-            if (!code.trim()) {
-                output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`;
-                return;
-            }
+        if (!res.ok) {
+          output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`;
+          return;
+        }
 
-            output.innerHTML = `<div class="placeholder">⏳ Analyzing...</div>`;
+        const ast = data.ast_report || data;
+        let text = '📊 STATIC ANALYSIS (AST)\n';
+        text += '----------------------------\n';
+        text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
+        text += `Unused Imports: ${(ast.unused_imports || []).join(', ') || 'None'}\n`;
+        text += `Total Issues: ${ast.issues_count || 0}\n\n`;
 
-            try {
-                const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code })
-                });
+        if (data.ai_review) {
+          text += '🧠 AI REVIEW (Gemini)\n';
+          text += '----------------------------\n';
+          text += data.ai_review;
+        }
 
-                const data = await res.json();
+        output.textContent = text;
 
-                if (!res.ok) {
-                    output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`;
-                    return;
-                }
-
-                const ast = data.ast_report || data;
-                let text = '📊 STATIC ANALYSIS (AST)\n';
-                text += '----------------------------\n';
-                text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
-                text += `Unused Imports: ${(ast.unused_imports || []).join(', ') || 'None'}\n`;
-                text += `Total Issues: ${ast.issues_count || 0}\n\n`;
-
-                if (data.ai_review) {
-                    text += '🧠 AI REVIEW (Gemini)\n';
-                    text += '----------------------------\n';
-                    text += data.ai_review;
-                }
-
-                output.textContent = text;
-
-            } catch (err) {
-                output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`;
-            }
-        });
-    </script>
+      } catch (err) {
+        output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`;
+      }
+    });
+  </script>
 
 </body>
 </html>
