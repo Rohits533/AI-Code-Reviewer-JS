@@ -3,64 +3,357 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Code Debugger</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Font for clean icons -->
+    <title>AI Code Debugger · Spotify Theme</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ----- RESET ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 20%, #1a0b2e, #0a0a12, #05050a);
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* ----- MAIN CARD (frosted glass) ----- */
+        .app-card {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(20, 20, 35, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+            padding: 2.5rem;
+            transition: 0.3s ease;
+        }
+
+        /* ----- HEADER ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c084fc, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            font-size: 0.8rem;
+            color: #8888aa;
+            display: block;
+            font-weight: 400;
+            -webkit-text-fill-color: #8888aa;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #b0b0cc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-links .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            background: transparent;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: 0.25s;
+        }
+
+        .nav-links .btn-outline:hover {
+            background: #ffffff;
+            color: #0a0a12;
+            border-color: #fff;
+        }
+
+        /* ----- HERO SECTION ----- */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-left h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff, #c8c8e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-left p {
+            font-size: 1.1rem;
+            color: #a0a0c0;
+            margin: 1.2rem 0 2rem;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        .hero-left .btn-primary {
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            border: none;
+            padding: 0.8rem 2.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(129, 140, 248, 0.3);
+            transition: 0.2s;
+        }
+
+        .hero-left .btn-primary:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 32px rgba(129, 140, 248, 0.5);
+        }
+
+        .hero-right {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 1.5rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            text-align: center;
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-4px);
+        }
+
+        .stat-card h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #c084fc;
+        }
+
+        .stat-card p {
+            font-size: 0.8rem;
+            color: #8888aa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ----- FEATURES GRID ----- */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            padding: 1.8rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: 0.25s;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-4px);
+        }
+
+        .feature-item i {
+            font-size: 2rem;
+            color: #818cf8;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            color: #8888aa;
+            line-height: 1.5;
+            margin-top: 0.4rem;
+        }
+
+        /* ----- FOOTER ----- */
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #555577;
+        }
+
+        .footer a {
+            color: #777799;
+            text-decoration: none;
+            margin-left: 1.5rem;
+        }
+
+        .footer a:hover {
+            color: #c084fc;
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 992px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hero-right {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .features {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .app-card {
+                padding: 1.5rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .hero-left h2 {
+                font-size: 2rem;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 0.8rem;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="app-header">
+
+    <div class="app-card">
+
+        <!-- HEADER -->
+        <header class="header">
             <div class="logo">
-                <i class="fas fa-code"></i>
-                <span>AI Code Debugger</span>
+                <h1>✦ ai debug</h1>
+                <span>core maker · ast + gemini</span>
             </div>
-            <div class="header-status">
-                <span class="status-dot"></span>
-                <span>System Ready</span>
-            </div>
+            <nav class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Projects</a>
+                <a href="#">Docs</a>
+                <a href="#" class="btn-outline">Contact</a>
+            </nav>
         </header>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Left Panel: Input -->
-            <section class="input-panel">
-                <div class="panel-header">
-                    <h2><i class="fas fa-terminal"></i> Code Input</h2>
-                    <span class="badge">Python</span>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-left">
+                <h2>Code that thinks.</h2>
+                <p>Paste your Python code — get AST analysis + Gemini AI review instantly. Built for clarity, speed, and depth.</p>
+                <button class="btn-primary"><i class="fas fa-play" style="margin-right:8px;"></i> Try it now</button>
+            </div>
+            <div class="hero-right">
+                <div class="stat-card">
+                    <h3>18</h3>
+                    <p>projects shipped</p>
                 </div>
-                <textarea id="codeInput" rows="14" placeholder="Paste your Python code here...">def add(a, b):
-    return a + b
-
-x = 10  # unused</textarea>
-                <button id="analyzeBtn">
-                    <i class="fas fa-play"></i> Analyze Code
-                </button>
-            </section>
-
-            <!-- Right Panel: Results -->
-            <section class="results-panel">
-                <div class="panel-header">
-                    <h2><i class="fas fa-chart-bar"></i> Analysis Results</h2>
-                    <span class="badge" id="issueCount">0 issues</span>
+                <div class="stat-card">
+                    <h3>4</h3>
+                    <p>languages</p>
                 </div>
-                <div id="output">
-                    <div class="placeholder">
-                        <i class="fas fa-robot"></i>
-                        <p>Paste your code and click "Analyze"</p>
-                        <span>AST analysis + AI review will appear here</span>
-                    </div>
+                <div class="stat-card">
+                    <h3>100%</h3>
+                    <p>self-taught</p>
                 </div>
-            </section>
-        </main>
+                <div class="stat-card">
+                    <h3>⚡</h3>
+                    <p>ast + gemini</p>
+                </div>
+            </div>
+        </section>
 
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p>Built with ❤️ using Python, AST, and Gemini AI</p>
+        <!-- FEATURES -->
+        <section class="features">
+            <div class="feature-item">
+                <i class="fas fa-code"></i>
+                <h4>AST Analysis</h4>
+                <p>Detects unused variables, imports, and code smells — instantly.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-brain"></i>
+                <h4>Gemini AI Review</h4>
+                <p>Get a senior-level review of your code with actionable feedback.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-rocket"></i>
+                <h4>Deploy in 1 click</h4>
+                <p>Built on Vercel + Render — your app is live, always.</p>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <span>© 2026 · built with <span style="color:#818cf8;">✦</span> by rohit</span>
+            <div>
+                <a href="#">GitHub</a>
+                <a href="#">Vercel</a>
+                <a href="#">Render</a>
+            </div>
         </footer>
+
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
