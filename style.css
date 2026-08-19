@@ -7,28 +7,41 @@
 }
 
 body {
-  background: #1c1c1e;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
   color: #ffffff;
-  background: radial-gradient(circle at 30% 10%, #2c2c30, #0f0f11);
+  background: #1c1c1e;
+  /* Animated gradient background */
+  background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+  background-size: 400% 400%;
+  animation: gradientMove 18s ease-in-out infinite;
+  overflow: hidden;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ===== APPLE GLASS CARD ===== */
 .app-card {
   max-width: 1300px;
   width: 100%;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(40px) saturate(180%);
   -webkit-backdrop-filter: blur(40px) saturate(180%);
   border-radius: 56px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
   padding: 2.5rem;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== HEADER ===== */
@@ -56,7 +69,7 @@ body {
 
 .logo .sub {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
   display: block;
   font-weight: 400;
 }
@@ -69,7 +82,7 @@ body {
 }
 
 .nav-links a {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
@@ -98,10 +111,10 @@ body {
 }
 
 .nav-links .btn-outline {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 0.4rem 1.2rem;
   border-radius: 40px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   color: #ffffff;
   font-weight: 600;
   font-size: 0.8rem;
@@ -109,8 +122,8 @@ body {
 }
 
 .nav-links .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .nav-links .btn-outline::after {
@@ -137,7 +150,7 @@ body {
 
 .hero-left p {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
   margin: 1.2rem 0 2rem;
   line-height: 1.7;
 }
@@ -167,20 +180,20 @@ body {
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 1.5rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   text-align: center;
   transition: 0.25s;
 }
 
 .stat-card:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .stat-card h3 {
@@ -193,7 +206,7 @@ body {
 
 .stat-card p {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -202,11 +215,11 @@ body {
 .code-area textarea {
   width: 100%;
   padding: 1.2rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: #e5e7eb;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;
@@ -223,7 +236,7 @@ body {
 }
 
 #output {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 1.2rem;
@@ -239,7 +252,7 @@ body {
 }
 
 #output .placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.25);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   text-align: center;
   padding: 2rem 0;
@@ -272,7 +285,7 @@ body {
 }
 
 .contact-links a {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
   font-size: 1rem;
   transition: 0.2s;
@@ -289,16 +302,16 @@ body {
 .footer {
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .footer a {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.25);
   text-decoration: none;
   margin-left: 1.5rem;
   transition: 0.2s;
