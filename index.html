@@ -3,27 +3,62 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Code Reviewer</title>
+    <title>AI Code Debugger</title>
     <link rel="stylesheet" href="style.css" />
+    <!-- Font for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>🧠 AI Code Reviewer</h1>
-        <p>Paste your Python code below and get a professional review.</p>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>AI Code Debugger</span>
+            </div>
+            <div class="header-status">
+                <span class="status-dot"></span>
+                <span>System Ready</span>
+            </div>
+        </header>
 
-        <textarea id="codeInput" rows="12" placeholder="Paste your Python code here...">
-def add(a, b):
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel: Input -->
+            <section class="input-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-terminal"></i> Code Input</h2>
+                    <span class="badge">Python</span>
+                </div>
+                <textarea id="codeInput" rows="14" placeholder="Paste your Python code here...">def add(a, b):
     return a + b
 
-x = 10  # unused
-        </textarea>
+x = 10  # unused</textarea>
+                <button id="analyzeBtn">
+                    <i class="fas fa-play"></i> Analyze Code
+                </button>
+            </section>
 
-        <button id="analyzeBtn">🔍 Analyze Code</button>
+            <!-- Right Panel: Results -->
+            <section class="results-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-chart-bar"></i> Analysis Results</h2>
+                    <span class="badge" id="issueCount">0 issues</span>
+                </div>
+                <div id="output">
+                    <div class="placeholder">
+                        <i class="fas fa-robot"></i>
+                        <p>Paste your code and click "Analyze"</p>
+                        <span>AST analysis + AI review will appear here</span>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-        <div id="results">
-            <h3>Results</h3>
-            <div id="output"></div>
-        </div>
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Built with ❤️ using Python, AST, and Gemini AI</p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
