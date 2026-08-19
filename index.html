@@ -1,359 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Code Debugger · Spotify Theme</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        /* ----- RESET ----- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Debug · Spotify Dark</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ---------- RESET ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-        body {
-            min-height: 100vh;
-            background: radial-gradient(circle at 20% 20%, #1a0b2e, #0a0a12, #05050a);
-            color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
+    body {
+      min-height: 100vh;
+      background: #121212;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
 
-        /* ----- MAIN CARD (frosted glass) ----- */
-        .app-card {
-            max-width: 1300px;
-            width: 100%;
-            background: rgba(20, 20, 35, 0.5);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
-            padding: 2.5rem;
-            transition: 0.3s ease;
-        }
+    /* ---------- MAIN CARD ---------- */
+    .app-card {
+      max-width: 1300px;
+      width: 100%;
+      background: #181818;
+      border-radius: 40px;
+      border: 1px solid #282828;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+      padding: 2.5rem;
+      transition: 0.3s ease;
+    }
 
-        /* ----- HEADER ----- */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-        }
+    /* ---------- HEADER ---------- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
 
-        .logo h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #c084fc, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
+    .logo h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1DB954;
+      letter-spacing: -0.5px;
+    }
 
-        .logo span {
-            font-size: 0.8rem;
-            color: #8888aa;
-            display: block;
-            font-weight: 400;
-            -webkit-text-fill-color: #8888aa;
-        }
+    .logo span {
+      font-size: 0.8rem;
+      color: #888;
+      display: block;
+      font-weight: 400;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
 
-        .nav-links a {
-            color: #b0b0cc;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: 0.2s;
-            letter-spacing: 0.3px;
-        }
+    .nav-links a {
+      color: #b0b0b0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: 0.2s;
+    }
 
-        .nav-links a:hover {
-            color: #ffffff;
-        }
+    .nav-links a:hover {
+      color: #ffffff;
+    }
 
-        .nav-links .btn-outline {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            background: transparent;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: 0.25s;
-        }
+    .nav-links .btn-outline {
+      border: 1px solid #1DB954;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      background: transparent;
+      color: #1DB954;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: 0.25s;
+    }
 
-        .nav-links .btn-outline:hover {
-            background: #ffffff;
-            color: #0a0a12;
-            border-color: #fff;
-        }
+    .nav-links .btn-outline:hover {
+      background: #1DB954;
+      color: #121212;
+    }
 
-        /* ----- HERO SECTION ----- */
-        .hero {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
+    /* ---------- HERO ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
 
-        .hero-left h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #ffffff, #c8c8e8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .hero-left h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #ffffff;
+    }
 
-        .hero-left p {
-            font-size: 1.1rem;
-            color: #a0a0c0;
-            margin: 1.2rem 0 2rem;
-            line-height: 1.6;
-            max-width: 90%;
-        }
+    .hero-left p {
+      font-size: 1.1rem;
+      color: #b0b0b0;
+      margin: 1.2rem 0 2rem;
+      line-height: 1.6;
+    }
 
-        .hero-left .btn-primary {
-            background: linear-gradient(135deg, #818cf8, #c084fc);
-            border: none;
-            padding: 0.8rem 2.4rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #fff;
-            cursor: pointer;
-            box-shadow: 0 8px 24px rgba(129, 140, 248, 0.3);
-            transition: 0.2s;
-        }
+    .hero-left .btn-primary {
+      background: #1DB954;
+      border: none;
+      padding: 0.8rem 2.4rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #121212;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
+      transition: 0.2s;
+    }
 
-        .hero-left .btn-primary:hover {
-            transform: scale(1.03);
-            box-shadow: 0 12px 32px rgba(129, 140, 248, 0.5);
-        }
+    .hero-left .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 32px rgba(29, 185, 84, 0.5);
+    }
 
-        .hero-right {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-        }
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            padding: 1.5rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            text-align: center;
-            transition: 0.25s;
-        }
+    .stat-card {
+      background: #232323;
+      border-radius: 20px;
+      padding: 1.5rem 1.2rem;
+      border: 1px solid #2a2a2a;
+      text-align: center;
+      transition: 0.25s;
+    }
 
-        .stat-card:hover {
-            background: rgba(255, 255, 255, 0.07);
-            transform: translateY(-4px);
-        }
+    .stat-card:hover {
+      background: #2a2a2a;
+      transform: translateY(-4px);
+    }
 
-        .stat-card h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #c084fc;
-        }
+    .stat-card h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1DB954;
+    }
 
-        .stat-card p {
-            font-size: 0.8rem;
-            color: #8888aa;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    .stat-card p {
+      font-size: 0.8rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        /* ----- FEATURES GRID ----- */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
+    /* ---------- CODE INPUT AREA ---------- */
+    .code-area {
+      margin: 2rem 0;
+    }
 
-        .feature-item {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 24px;
-            padding: 1.8rem 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: 0.25s;
-        }
+    .code-area textarea {
+      width: 100%;
+      padding: 1.2rem;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 160px;
+      transition: border-color 0.2s;
+    }
 
-        .feature-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            transform: translateY(-4px);
-        }
+    .code-area textarea:focus {
+      outline: none;
+      border-color: #1DB954;
+      box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.15);
+    }
 
-        .feature-item i {
-            font-size: 2rem;
-            color: #818cf8;
-            margin-bottom: 0.8rem;
-        }
+    /* ---------- OUTPUT ---------- */
+    #output {
+      background: #0f0f0f;
+      padding: 1.2rem;
+      border-radius: 16px;
+      min-height: 120px;
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      border: 1px solid #2a2a2a;
+      margin-top: 1.2rem;
+    }
 
-        .feature-item h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-        }
+    #output .placeholder {
+      color: #555;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      padding: 2rem 0;
+    }
 
-        .feature-item p {
-            font-size: 0.9rem;
-            color: #8888aa;
-            line-height: 1.5;
-            margin-top: 0.4rem;
-        }
+    /* ---------- FOOTER ---------- */
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #2a2a2a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #555;
+    }
 
-        /* ----- FOOTER ----- */
-        .footer {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: #555577;
-        }
+    .footer a {
+      color: #777;
+      text-decoration: none;
+      margin-left: 1.5rem;
+    }
 
-        .footer a {
-            color: #777799;
-            text-decoration: none;
-            margin-left: 1.5rem;
-        }
+    .footer a:hover {
+      color: #1DB954;
+    }
 
-        .footer a:hover {
-            color: #c084fc;
-        }
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 992px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .hero-right {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-        /* ----- RESPONSIVE ----- */
-        @media (max-width: 992px) {
-            .hero {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .hero-right {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .features {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .app-card {
-                padding: 1.5rem;
-            }
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-            .hero-left h2 {
-                font-size: 2rem;
-            }
-            .features {
-                grid-template-columns: 1fr;
-            }
-            .footer {
-                flex-direction: column;
-                gap: 0.8rem;
-                text-align: center;
-            }
-        }
-    </style>
+    @media (max-width: 600px) {
+      .app-card {
+        padding: 1.5rem;
+      }
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .hero-left h2 {
+        font-size: 2rem;
+      }
+      .footer {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="app-card">
+  <div class="app-card">
 
-        <!-- HEADER -->
-        <header class="header">
-            <div class="logo">
-                <h1>✦ ai debug</h1>
-                <span>core maker · ast + gemini</span>
-            </div>
-            <nav class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Projects</a>
-                <a href="#">Docs</a>
-                <a href="#" class="btn-outline">Contact</a>
-            </nav>
-        </header>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <h1>✦ ai debug</h1>
+        <span>ast + gemini · spotify dark</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Projects</a>
+        <a href="#">Docs</a>
+        <a href="#" class="btn-outline">Contact</a>
+      </nav>
+    </header>
 
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-left">
-                <h2>Code that thinks.</h2>
-                <p>Paste your Python code — get AST analysis + Gemini AI review instantly. Built for clarity, speed, and depth.</p>
-                <button class="btn-primary"><i class="fas fa-play" style="margin-right:8px;"></i> Try it now</button>
-            </div>
-            <div class="hero-right">
-                <div class="stat-card">
-                    <h3>18</h3>
-                    <p>projects shipped</p>
-                </div>
-                <div class="stat-card">
-                    <h3>4</h3>
-                    <p>languages</p>
-                </div>
-                <div class="stat-card">
-                    <h3>100%</h3>
-                    <p>self-taught</p>
-                </div>
-                <div class="stat-card">
-                    <h3>⚡</h3>
-                    <p>ast + gemini</p>
-                </div>
-            </div>
-        </section>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <h2>Code that thinks.</h2>
+        <p>Paste your Python code — get AST analysis + Gemini AI review instantly. Built for clarity, speed, and depth.</p>
+        <button class="btn-primary" id="analyzeBtn"><i class="fas fa-play" style="margin-right:8px;"></i> Analyze</button>
+      </div>
+      <div class="hero-right">
+        <div class="stat-card"><h3>18</h3><p>projects shipped</p></div>
+        <div class="stat-card"><h3>4</h3><p>languages</p></div>
+        <div class="stat-card"><h3>100%</h3><p>self-taught</p></div>
+        <div class="stat-card"><h3>⚡</h3><p>ast + gemini</p></div>
+      </div>
+    </section>
 
-        <!-- FEATURES -->
-        <section class="features">
-            <div class="feature-item">
-                <i class="fas fa-code"></i>
-                <h4>AST Analysis</h4>
-                <p>Detects unused variables, imports, and code smells — instantly.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-brain"></i>
-                <h4>Gemini AI Review</h4>
-                <p>Get a senior-level review of your code with actionable feedback.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-rocket"></i>
-                <h4>Deploy in 1 click</h4>
-                <p>Built on Vercel + Render — your app is live, always.</p>
-            </div>
-        </section>
+    <!-- CODE INPUT + OUTPUT -->
+    <section class="code-area">
+      <textarea id="codeInput" rows="6" placeholder="Paste your Python code here...">def add(a, b):
+    return a + b
 
-        <!-- FOOTER -->
-        <footer class="footer">
-            <span>© 2026 · built with <span style="color:#818cf8;">✦</span> by rohit</span>
-            <div>
-                <a href="#">GitHub</a>
-                <a href="#">Vercel</a>
-                <a href="#">Render</a>
-            </div>
-        </footer>
+x = 10  # unused</textarea>
+      <div id="output">
+        <div class="placeholder">
+          <i class="fas fa-code" style="display:block; font-size:2rem; margin-bottom:0.5rem; color:#333;"></i>
+          Results will appear here
+        </div>
+      </div>
+    </section>
 
-    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
+      <div>
+        <a href="#">GitHub</a>
+        <a href="#">Vercel</a>
+        <a href="#">Render</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+      const code = document.getElementById('codeInput').value;
+      const output = document.getElementById('output');
+
+      if (!code.trim()) {
+        output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`;
+        return;
+      }
+
+      output.innerHTML = `<div class="placeholder">⏳ Analyzing...</div>`;
+
+      try {
+        const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`;
+          return;
+        }
+
+        const ast = data.ast_report || data;
+        let text = '📊 STATIC ANALYSIS (AST)\n';
+        text += '----------------------------\n';
+        text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
+        text += `Unused Imports: ${(ast.unused_imports || []).join(', ') || 'None'}\n`;
+        text += `Total Issues: ${ast.issues_count || 0}\n\n`;
+
+        if (data.ai_review) {
+          text += '🧠 AI REVIEW (Gemini)\n';
+          text += '----------------------------\n';
+          text += data.ai_review;
+        }
+
+        output.textContent = text;
+
+      } catch (err) {
+        output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`;
+      }
+    });
+  </script>
 
 </body>
 </html>
