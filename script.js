@@ -1,13 +1,26 @@
 document.getElementById('analyzeBtn').addEventListener('click', async () => {
     const code = document.getElementById('codeInput').value;
     const output = document.getElementById('output');
+    const issueCount = document.getElementById('issueCount');
 
     if (!code.trim()) {
-        output.textContent = '⚠️ Please paste some code to analyze.';
+        output.innerHTML = `
+            <div class="placeholder">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Please paste some code to analyze.</p>
+            </div>
+        `;
         return;
     }
 
-    output.textContent = '⏳ Analyzing code...';
+    // Show loading state
+    output.innerHTML = `
+        <div class="placeholder">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Analyzing code...</p>
+        </div>
+    `;
+    issueCount.textContent = '...';
 
     try {
         const response = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
@@ -20,30 +33,46 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
 
         const data = await response.json();
 
-        // Log the response to see what we're getting
-        console.log('Backend response:', data);
-
         if (response.ok) {
+            // Update issue count
+            const ast = data.ast_report || data;
+            const totalIssues = ast.issues_count || 0;
+            issueCount.textContent = `${totalIssues} issues`;
+
+            // Format AST results
             let resultText = '📊 STATIC ANALYSIS (AST)\n';
             resultText += '------------------------\n';
-            
-            // Handle both possible response structures
-            const ast = data.ast_report || data;
             resultText += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
             resultText += `Unused Imports: ${(ast.unused_imports || []).join(', ') || 'None'}\n`;
-            resultText += `Total Issues: ${ast.issues_count || 0}\n\n`;
+            resultText += `Total Issues: ${totalIssues}\n\n`;
 
+            // Format AI review
             if (data.ai_review) {
-                resultText += '🤖 AI REVIEW (Groq)\n';
+                resultText += '🧠 AI REVIEW (Gemini)\n';
                 resultText += '------------------------\n';
                 resultText += data.ai_review;
+            } else {
+                resultText += '🧠 AI REVIEW (Gemini)\n';
+                resultText += '------------------------\n';
+                resultText += 'No AI review available.';
             }
 
             output.textContent = resultText;
+
         } else {
-            output.textContent = `❌ Error: ${data.error || JSON.stringify(data)}`;
+            output.innerHTML = `
+                <div class="placeholder" style="color: #f87171;">
+                    <i class="fas fa-circle-exclamation"></i>
+                    <p>Error: ${data.error || 'Something went wrong'}</p>
+                </div>
+            `;
         }
     } catch (error) {
-        output.textContent = `❌ Network error: ${error.message}`;
+        output.innerHTML = `
+            <div class="placeholder" style="color: #f87171;">
+                <i class="fas fa-wifi"></i>
+                <p>Network error: ${error.message}</p>
+            </div>
+        `;
     }
 });
