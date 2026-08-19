@@ -13,31 +13,63 @@ body {
   align-items: center;
   padding: 1.5rem;
   color: #ffffff;
-  background: #1c1c1e;
-  /* Animated gradient background */
-  background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
-  background-size: 400% 400%;
-  animation: gradientMove 18s ease-in-out infinite;
+  background: #0a0a0f;
   overflow: hidden;
+  position: relative;
 }
 
-/* ===== ANIMATION ===== */
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* ===== ANIMATED GREEN GRID BACKGROUND ===== */
+.grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: 
+    linear-gradient(rgba(0, 255, 100, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 100, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(60px, 60px);
+  }
+}
+
+/* Glowing dot at grid intersections */
+.grid-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 100, 0.15) 0%, transparent 60%);
+  animation: pulseGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
 }
 
 /* ===== APPLE GLASS CARD ===== */
 .app-card {
   max-width: 1300px;
   width: 100%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(40px) saturate(180%);
   -webkit-backdrop-filter: blur(40px) saturate(180%);
   border-radius: 56px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
   padding: 2.5rem;
   transition: all 0.3s ease;
   position: relative;
@@ -275,6 +307,21 @@ body {
 .analyze-btn:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+}
+
+/* ===== AUDIO ===== */
+.audio-wrapper {
+  display: flex;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.audio-wrapper iframe {
+  width: 100%;
+  height: 120px;
+  border: 0;
 }
 
 /* ===== CONTACT ===== */
