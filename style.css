@@ -6,16 +6,18 @@
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
-  color: #ffffff;
   background: #0a0a0f;
-  overflow: hidden;
+  color: #ffffff;
+  padding: 1.5rem;
   position: relative;
+  overflow-y: auto; /* ✅ Enables scrolling */
+  overflow-x: hidden;
 }
 
 /* ===== ANIMATED GREEN GRID BACKGROUND ===== */
@@ -26,24 +28,19 @@ body {
   width: 100%;
   height: 100%;
   z-index: 0;
-  background: 
-    linear-gradient(rgba(0, 255, 100, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 100, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gridMove 20s linear infinite;
   pointer-events: none;
+  background: 
+    linear-gradient(rgba(0, 255, 100, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 100, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 25s linear infinite;
 }
 
 @keyframes gridMove {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(60px, 60px);
-  }
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
 }
 
-/* Glowing dot at grid intersections */
 .grid-bg::after {
   content: '';
   position: absolute;
@@ -51,19 +48,75 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 100, 0.15) 0%, transparent 60%);
+  background: radial-gradient(circle at 50% 50%, rgba(0, 255, 100, 0.12) 0%, transparent 60%);
   animation: pulseGlow 4s ease-in-out infinite alternate;
 }
 
 @keyframes pulseGlow {
-  0% { opacity: 0.4; }
+  0% { opacity: 0.3; }
   100% { opacity: 1; }
+}
+
+/* ===== ENTRY OVERLAY (Logo Reveal) ===== */
+.entry-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a0a0f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: none;
+  animation: fadeOut 1.2s ease 1.6s forwards;
+}
+
+.entry-overlay .logo-icon {
+  font-size: 5rem;
+  color: #1DB954;
+  animation: logoPulse 1.4s ease forwards;
+}
+
+.entry-overlay h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #1DB954;
+  margin-top: 0.5rem;
+  letter-spacing: 2px;
+  animation: slideUp 1.2s ease forwards;
+}
+
+.entry-overlay p {
+  color: #b3b3b3;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+  animation: slideUp 1.4s ease forwards;
+}
+
+@keyframes logoPulse {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
 }
 
 /* ===== APPLE GLASS CARD ===== */
 .app-card {
   max-width: 1300px;
   width: 100%;
+  margin: 0 auto;
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(40px) saturate(180%);
   -webkit-backdrop-filter: blur(40px) saturate(180%);
@@ -71,9 +124,15 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
   padding: 2.5rem;
-  transition: all 0.3s ease;
   position: relative;
   z-index: 1;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s ease 1.8s forwards;
+}
+
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== HEADER ===== */
@@ -162,13 +221,27 @@ body {
   display: none;
 }
 
+/* ===== SECTIONS ===== */
+section {
+  scroll-margin-top: 80px;
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.2rem;
+  border-left: 4px solid #1DB954;
+  padding-left: 1rem;
+}
+
 /* ===== HERO ===== */
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: center;
-  margin-bottom: 3rem;
 }
 
 .hero-left h2 {
