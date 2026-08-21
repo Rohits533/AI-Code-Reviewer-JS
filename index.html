@@ -15,39 +15,129 @@
     }
 
     body {
-      background: #000000;
+      background: #0a0a0f;
       color: #ffffff;
       min-height: 100vh;
       padding: 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at 20% 20%, #1a0b2e, #0a0a12, #05050a);
+      overflow: hidden;
+      position: relative;
     }
 
-    /* ===== ENTRY ANIMATION ===== */
-    @keyframes fadeSlideUp {
-      0% {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* ===== ANIMATED GREEN GRID BACKGROUND ===== */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: 
+        linear-gradient(rgba(0, 255, 100, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 100, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 25s linear infinite;
+      pointer-events: none;
     }
 
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(60px, 60px); }
+    }
+
+    .grid-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 255, 100, 0.12) 0%, transparent 60%);
+      animation: pulseGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    /* ===== ENTRY ANIMATION (Logo Reveal) ===== */
+    .entry-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: fadeOut 1.2s ease 1.6s forwards;
+    }
+
+    .entry-overlay .logo-icon {
+      font-size: 5rem;
+      color: #1DB954;
+      animation: logoPulse 1.4s ease forwards;
+    }
+
+    .entry-overlay h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #1DB954;
+      margin-top: 0.5rem;
+      letter-spacing: 2px;
+      animation: slideUp 1.2s ease forwards;
+    }
+
+    .entry-overlay p {
+      color: #b3b3b3;
+      font-size: 1rem;
+      margin-top: 0.3rem;
+      animation: slideUp 1.4s ease forwards;
+    }
+
+    @keyframes logoPulse {
+      0% { transform: scale(0.6); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; visibility: visible; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* ===== APPLE GLASS CARD ===== */
     .app-card {
       max-width: 1300px;
       width: 100%;
-      background: rgba(20, 20, 35, 0.5);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border-radius: 56px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
       padding: 2.5rem;
-      animation: fadeSlideUp 0.8s ease-out forwards;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s ease 1.8s forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     /* ===== HEADER ===== */
@@ -61,16 +151,23 @@
     }
 
     .logo h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      color: #1DB954;
+      color: #ffffff;
       letter-spacing: -0.5px;
     }
 
-    .logo span {
-      font-size: 0.8rem;
-      color: #b3b3b3;
+    .logo h1 span {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo .sub {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
       display: block;
+      font-weight: 400;
     }
 
     .nav-links {
@@ -81,32 +178,52 @@
     }
 
     .nav-links a {
-      color: #b3b3b3;
+      color: rgba(255, 255, 255, 0.5);
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
       transition: 0.2s;
       cursor: pointer;
+      position: relative;
     }
 
     .nav-links a:hover {
       color: #ffffff;
     }
 
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
     .nav-links .btn-outline {
-      border: 1px solid #1DB954;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       padding: 0.4rem 1.2rem;
       border-radius: 40px;
-      background: transparent;
-      color: #1DB954;
+      background: rgba(255, 255, 255, 0.04);
+      color: #ffffff;
       font-weight: 600;
       font-size: 0.8rem;
       transition: 0.25s;
     }
 
     .nav-links .btn-outline:hover {
-      background: #1DB954;
-      color: #000000;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-links .btn-outline::after {
+      display: none;
     }
 
     /* ===== SECTIONS ===== */
@@ -133,21 +250,23 @@
     }
 
     .hero-left h2 {
-      font-size: 3rem;
+      font-size: 3.2rem;
       font-weight: 700;
       line-height: 1.1;
-      color: #ffffff;
+      background: linear-gradient(to right, #ffffff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero-left p {
       font-size: 1.1rem;
-      color: #b3b3b3;
+      color: rgba(255, 255, 255, 0.55);
       margin: 1.2rem 0 2rem;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .hero-left .btn-primary {
-      background: #1DB954;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
       border: none;
       padding: 0.8rem 2.4rem;
       border-radius: 60px;
@@ -155,44 +274,49 @@
       font-size: 1rem;
       color: #000000;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
-      transition: 0.2s;
+      box-shadow: 0 8px 24px rgba(96, 165, 250, 0.25);
+      transition: 0.25s;
     }
 
     .hero-left .btn-primary:hover {
       transform: scale(1.03);
-      box-shadow: 0 12px 32px rgba(29, 185, 84, 0.5);
+      box-shadow: 0 12px 32px rgba(96, 165, 250, 0.45);
     }
 
     .hero-right {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
+      gap: 1rem;
     }
 
     .stat-card {
-      background: #1f1f1f;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius: 20px;
-      padding: 1.5rem 1.2rem;
-      border: 1px solid #2a2a2a;
+      padding: 1.5rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       text-align: center;
       transition: 0.25s;
     }
 
     .stat-card:hover {
-      background: #2a2a2a;
+      background: rgba(255, 255, 255, 0.08);
       transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.12);
     }
 
     .stat-card h3 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: #1DB954;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .stat-card p {
-      font-size: 0.8rem;
-      color: #b3b3b3;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.35);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -201,9 +325,11 @@
     .code-area textarea {
       width: 100%;
       padding: 1.2rem;
-      background: #1f1f1f;
-      color: #ffffff;
-      border: 1px solid #2a2a2a;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #e5e7eb;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 16px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.9rem;
@@ -215,34 +341,36 @@
 
     .code-area textarea:focus {
       outline: none;
-      border-color: #1DB954;
-      box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.15);
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
     }
 
     #output {
-      background: #1f1f1f;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 1.2rem;
       border-radius: 16px;
       min-height: 120px;
-      color: #ffffff;
+      color: #e5e7eb;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
       line-height: 1.7;
       white-space: pre-wrap;
-      border: 1px solid #2a2a2a;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       margin-top: 1.2rem;
     }
 
     #output .placeholder {
-      color: #b3b3b3;
-      font-family: 'Inter', sans-serif;
+      color: rgba(255, 255, 255, 0.25);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
       text-align: center;
       padding: 2rem 0;
     }
 
     .analyze-btn {
       margin-top: 1rem;
-      background: #1DB954;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
       border: none;
       padding: 0.7rem 2rem;
       border-radius: 60px;
@@ -251,34 +379,12 @@
       color: #000000;
       cursor: pointer;
       transition: 0.2s;
-      box-shadow: 0 4px 16px rgba(29, 185, 84, 0.2);
+      box-shadow: 0 4px 16px rgba(96, 165, 250, 0.2);
     }
 
     .analyze-btn:hover {
-      background: #1ed760;
       transform: scale(1.02);
-      box-shadow: 0 8px 24px rgba(29, 185, 84, 0.4);
-    }
-
-    /* ===== CONTACT ===== */
-    .contact-links {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .contact-links a {
-      color: #b3b3b3;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .contact-links a:hover {
-      color: #1DB954;
+      box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
     }
 
     /* ===== AUDIO ===== */
@@ -296,27 +402,48 @@
       border: 0;
     }
 
+    /* ===== CONTACT ===== */
+    .contact-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-links a:hover {
+      color: #ffffff;
+    }
+
     /* ===== FOOTER ===== */
     .footer {
       margin-top: 3rem;
       padding-top: 1.5rem;
-      border-top: 1px solid #282828;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.8rem;
-      color: #b3b3b3;
+      color: rgba(255, 255, 255, 0.25);
     }
 
     .footer a {
-      color: #b3b3b3;
+      color: rgba(255, 255, 255, 0.25);
       text-decoration: none;
       margin-left: 1.5rem;
       transition: 0.2s;
     }
 
     .footer a:hover {
-      color: #1DB954;
+      color: #60a5fa;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -342,7 +469,7 @@
         gap: 1rem;
       }
       .hero-left h2 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
       .footer {
         flex-direction: column;
@@ -358,9 +485,20 @@
 </head>
 <body>
 
+  <!-- ===== ANIMATED GREEN GRID ===== -->
+  <div class="grid-bg"></div>
+
+  <!-- ===== ENTRY OVERLAY (Logo Animation) ===== -->
+  <div class="entry-overlay" id="entryOverlay">
+    <div class="logo-icon"><i class="fas fa-code"></i></div>
+    <h1>✦ ai debug</h1>
+    <p>ast + gemini · spotify</p>
+  </div>
+
+  <!-- ===== MAIN APP ===== -->
   <div class="app-card">
 
-    <!-- ===== HEADER ===== -->
+    <!-- HEADER -->
     <header class="header">
       <div class="logo">
         <h1>✦ ai debug</h1>
@@ -374,7 +512,7 @@
       </nav>
     </header>
 
-    <!-- ===== HOME ===== -->
+    <!-- HOME -->
     <section id="home">
       <div class="hero">
         <div class="hero-left">
@@ -391,7 +529,7 @@
       </div>
     </section>
 
-    <!-- ===== DOCS (ANALYZER) ===== -->
+    <!-- DOCS (ANALYZER) -->
     <section id="docs">
       <h2 class="section-title">Docs · Analyzer</h2>
       <div class="code-area">
@@ -409,7 +547,7 @@ x = 10  # unused</textarea>
       </div>
     </section>
 
-    <!-- ===== AUDIO (SOUNDCLOUD) ===== -->
+    <!-- AUDIO (SOUNDCLOUD) -->
     <section id="audio">
       <h2 class="section-title">🎧 Radio · Fears to Fathom</h2>
       <div class="audio-wrapper">
@@ -420,12 +558,11 @@ x = 10  # unused</textarea>
           frameborder="no"
           allow="autoplay"
           src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%231DB954&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
-        >
-        </iframe>
+        ></iframe>
       </div>
     </section>
 
-    <!-- ===== CONTACT ===== -->
+    <!-- CONTACT -->
     <section id="contact">
       <h2 class="section-title">Contact</h2>
       <div class="contact-links">
@@ -434,7 +571,7 @@ x = 10  # unused</textarea>
       </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer class="footer">
       <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
       <div>
