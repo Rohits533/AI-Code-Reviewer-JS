@@ -11,19 +11,21 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
+      min-height: 100vh;
       background: #0a0a0f;
       color: #ffffff;
-      min-height: 100vh;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-y: auto;  /* ✅ SCROLL ENABLED */
+      padding: 1.5rem;
       position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
     /* ===== ANIMATED GREEN GRID ===== */
@@ -34,12 +36,12 @@
       width: 100%;
       height: 100%;
       z-index: 0;
+      pointer-events: none;
       background: 
         linear-gradient(rgba(0, 255, 100, 0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 100, 0.04) 1px, transparent 1px);
       background-size: 60px 60px;
       animation: gridMove 25s linear infinite;
-      pointer-events: none;
     }
 
     @keyframes gridMove {
@@ -63,7 +65,7 @@
       100% { opacity: 1; }
     }
 
-    /* ===== ENTRY ANIMATION ===== */
+    /* ===== ENTRY OVERLAY ===== */
     .entry-overlay {
       position: fixed;
       top: 0;
@@ -76,6 +78,7 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
+      pointer-events: none;
       animation: fadeOut 1.2s ease 1.6s forwards;
     }
 
@@ -121,6 +124,7 @@
     .app-card {
       max-width: 1300px;
       width: 100%;
+      margin: 0 auto;
       background: rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(40px) saturate(180%);
       -webkit-backdrop-filter: blur(40px) saturate(180%);
@@ -128,7 +132,6 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
       padding: 2.5rem;
-      transition: all 0.3s ease;
       position: relative;
       z-index: 1;
       opacity: 0;
@@ -557,4 +560,96 @@ x = 10  # unused</textarea>
           scrolling="no"
           frameborder="no"
           allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%231DB954&auto_play=false&hide_related=false&show_comments=true
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%231DB954&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-links">
+        <a href="https://github.com/Rohits533" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+        <a href="mailto:rohitsavan360@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
+      <div>
+        <a href="https://github.com/Rohits533" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">Vercel</a>
+        <a href="https://render.com" target="_blank" rel="noopener noreferrer">Render</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ===== TRY IT NOW =====
+    document.getElementById('tryItBtn').addEventListener('click', () => {
+      document.getElementById('docs').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // ===== ANALYZE =====
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+      const code = document.getElementById('codeInput').value;
+      const output = document.getElementById('output');
+
+      if (!code.trim()) {
+        output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`;
+        return;
+      }
+
+      output.innerHTML = `<div class="placeholder">⏳ Analyzing...</div>`;
+
+      try {
+        const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`;
+          return;
+        }
+
+        const ast = data.ast_report || data;
+        let text = '📊 STATIC ANALYSIS (AST)\n';
+        text += '----------------------------\n';
+        text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
+        text += `Unused Imports: ${(ast.unused_imports || []).join(', ') || 'None'}\n`;
+        text += `Total Issues: ${ast.issues_count || 0}\n\n`;
+
+        if (data.ai_review) {
+          text += '🧠 AI REVIEW (Gemini)\n';
+          text += '----------------------------\n';
+          text += data.ai_review;
+        }
+
+        output.textContent = text;
+
+      } catch (err) {
+        output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`;
+      }
+    });
+  </script>
+
+</body>
+</html>
