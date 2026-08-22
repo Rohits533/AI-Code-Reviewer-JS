@@ -391,6 +391,10 @@
     }
 
     /* ===== HISTORY SECTION ===== */
+    #historySection {
+      margin-top: 1.5rem;
+    }
+
     .history-toggle-btn {
       background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -630,7 +634,7 @@ x = 10  # unused</textarea>
         </div>
 
         <!-- ===== HISTORY SECTION ===== -->
-        <div id="historySection" style="margin-top: 1.5rem;">
+        <div id="historySection">
           <button id="toggleHistoryBtn" class="history-toggle-btn">
             📜 View Analysis History (<span id="historyCount">0</span>)
           </button>
@@ -725,6 +729,8 @@ x = 10  # unused</textarea>
       const list = document.getElementById('historyList');
       const count = document.getElementById('historyCount');
       const clearBtn = document.getElementById('clearHistoryBtn');
+
+      if (!list || !count || !clearBtn) return;
 
       count.textContent = history.length;
 
