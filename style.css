@@ -16,11 +16,11 @@ body {
   color: #ffffff;
   padding: 1.5rem;
   position: relative;
-  overflow-y: auto; /* ✅ Enables scrolling */
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* ===== ANIMATED GREEN GRID BACKGROUND ===== */
+/* ===== ANIMATED GREEN GRID ===== */
 .grid-bg {
   position: fixed;
   top: 0;
@@ -57,7 +57,7 @@ body {
   100% { opacity: 1; }
 }
 
-/* ===== ENTRY OVERLAY (Logo Reveal) ===== */
+/* ===== ENTRY OVERLAY ===== */
 .entry-overlay {
   position: fixed;
   top: 0;
@@ -112,7 +112,7 @@ body {
   100% { opacity: 0; visibility: hidden; }
 }
 
-/* ===== APPLE GLASS CARD ===== */
+/* ===== GLASS CARD ===== */
 .app-card {
   max-width: 1300px;
   width: 100%;
@@ -380,6 +380,87 @@ section {
 .analyze-btn:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+}
+
+/* ===== HISTORY SECTION ===== */
+.history-toggle-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.5rem 1.2rem;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: inherit;
+}
+
+.history-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.clear-history-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 50, 50, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0.3rem 1rem;
+  border-radius: 40px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+
+.clear-history-btn:hover {
+  background: rgba(255, 50, 50, 0.1);
+  color: #ff6b6b;
+  border-color: rgba(255, 50, 50, 0.4);
+}
+
+.history-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: 0.2s;
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.history-item .timestamp {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.7rem;
+  float: right;
+}
+
+.history-item .code-snippet {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.history-item .issues-badge {
+  display: inline-block;
+  background: #1DB954;
+  color: #000000;
+  font-weight: 600;
+  font-size: 0.65rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 20px;
+  margin-top: 0.2rem;
 }
 
 /* ===== AUDIO ===== */
