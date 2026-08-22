@@ -210,6 +210,39 @@
       position: relative;
     }
     #output .placeholder { color: rgba(255,255,255,0.25); font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif; text-align: center; padding: 2rem 0; }
+
+    /* ===== LOADING SPINNER ===== */
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 0;
+      gap: 1rem;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top: 3px solid #60a5fa;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .spinner-text {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      animation: pulse-text 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-text {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
     .analyze-btn {
       margin-top: 1rem;
       background: linear-gradient(135deg, #60a5fa, #a78bfa);
@@ -332,14 +365,12 @@
 
 x = 10  # unused</textarea>
 
-        <!-- Code Stats -->
         <div class="code-stats">
           <span id="lineCount">📄 Lines: 0</span>
           <span id="charCount">📝 Characters: 0</span>
           <span id="langDetect">🔤 Language: <span class="lang-badge" id="langBadge">Python</span></span>
         </div>
 
-        <!-- Toolbar -->
         <div class="toolbar">
           <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
           <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> Download .txt</button>
@@ -414,6 +445,7 @@ x = 10  # unused</textarea>
     // ===== TRY IT NOW =====
     document.getElementById('tryItBtn').addEventListener('click', () => {
       document.getElementById('docs').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('codeInput').focus();
     });
 
     // ===== KEYBOARD SHORTCUTS =====
@@ -435,7 +467,6 @@ x = 10  # unused</textarea>
       const chars = code.length;
       document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
       document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
-      // Auto-detect language
       const langBadge = document.getElementById('langBadge');
       if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
         langBadge.textContent = 'Python';
@@ -569,7 +600,13 @@ x = 10  # unused</textarea>
         return;
       }
 
-      output.innerHTML = `<div class="placeholder">⏳ Analyzing...</div>`;
+      // --- SHOW LOADING SPINNER ---
+      output.innerHTML = `
+        <div class="spinner-container">
+          <div class="spinner"></div>
+          <div class="spinner-text">Analyzing your code...</div>
+        </div>
+      `;
 
       try {
         const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
