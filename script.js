@@ -267,3 +267,26 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
 
 // ===== INITIALIZE HISTORY ON LOAD =====
 renderHistory();
+
+// ===== CURSOR GLOW =====
+const glow = document.getElementById('cursorGlow');
+
+document.addEventListener('mousemove', (e) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  glow.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+  glow.classList.remove('hidden');
+});
+
+document.addEventListener('mouseleave', () => {
+  glow.classList.add('hidden');
+});
+
+document.addEventListener('mouseenter', () => {
+  glow.classList.remove('hidden');
+});
+
+// Hide on touch devices (mobile)
+if ('ontouchstart' in window) {
+  glow.style.display = 'none';
+}
