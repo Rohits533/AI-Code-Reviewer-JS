@@ -576,6 +576,27 @@ section {
   margin-top: 0.2rem;
 }
 
+/* ===== CURSOR GLOW ===== */
+#cursorGlow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 255, 100, 0.25) 0%, rgba(0, 255, 100, 0.05) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transition: opacity 0.3s ease;
+  filter: blur(8px);
+  mix-blend-mode: screen;
+}
+
+#cursorGlow.hidden {
+  opacity: 0;
+}
+
 /* ===== AUDIO ===== */
 .audio-wrapper {
   display: flex;
