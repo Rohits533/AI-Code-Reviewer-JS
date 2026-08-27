@@ -59,13 +59,13 @@
     }
     .star {
       position: absolute;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       animation: twinkle var(--duration) ease-in-out infinite alternate;
     }
     @keyframes twinkle {
       0% { opacity: 0.1; }
-      100% { opacity: 0.4; }
+      100% { opacity: 0.3; }
     }
 
     /* ============================================================
@@ -88,7 +88,8 @@
     }
     .entry-overlay .icon {
       font-size: 3.5rem;
-      color: #60a5fa;
+      color: #ffffff;
+      opacity: 0.8;
       animation: pulseIn 0.8s ease forwards;
     }
     .entry-overlay h1 {
@@ -161,7 +162,8 @@
       letter-spacing: -0.3px;
     }
     .logo span {
-      color: #60a5fa;
+      color: #ffffff;
+      opacity: 0.4;
     }
     .nav {
       display: flex;
@@ -170,7 +172,7 @@
       flex-wrap: wrap;
     }
     .nav a {
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.2);
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 400;
@@ -181,7 +183,7 @@
       color: #ffffff;
     }
     .nav .btn {
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
@@ -191,8 +193,8 @@
       transition: 0.3s;
     }
     .nav .btn:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     /* ============================================================
@@ -210,18 +212,19 @@
       color: #ffffff;
     }
     .hero h1 .highlight {
-      color: #60a5fa;
+      color: #ffffff;
+      opacity: 0.6;
     }
     .hero p {
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.25);
       max-width: 520px;
       margin: 0.8rem auto 2rem;
       line-height: 1.7;
     }
     .hero .btn-primary {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 0.6rem 2rem;
       border-radius: 60px;
       font-weight: 500;
@@ -231,8 +234,8 @@
       transition: 0.3s;
     }
     .hero .btn-primary:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.12);
     }
 
     .scroll-indicator {
@@ -244,7 +247,7 @@
       flex-direction: column;
       align-items: center;
       gap: 0.3rem;
-      color: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.04);
       font-size: 0.55rem;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -273,20 +276,21 @@
       color: #ffffff;
     }
     .analyzer-title span {
-      color: #60a5fa;
+      color: #ffffff;
+      opacity: 0.4;
     }
     .analyzer-sub {
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.2);
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 2rem;
     }
 
     .code-area {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.015);
       border-radius: 16px;
       padding: 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.03);
     }
 
     .file-upload-area {
@@ -297,9 +301,9 @@
       flex-wrap: wrap;
     }
     .file-upload-label {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px dashed rgba(255, 255, 255, 0.06);
-      color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.2);
       padding: 0.3rem 1rem;
       border-radius: 40px;
       font-size: 0.75rem;
@@ -311,12 +315,12 @@
       gap: 0.4rem;
     }
     .file-upload-label:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.06);
       color: #ffffff;
     }
     .file-name {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.1);
       font-size: 0.7rem;
     }
 
@@ -324,8 +328,8 @@
       width: 100%;
       padding: 1rem;
       background: rgba(0, 0, 0, 0.3);
-      color: #e5e7eb;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.03);
       border-radius: 12px;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
       font-size: 0.85rem;
@@ -336,8 +340,7 @@
     }
     .code-area textarea:focus {
       outline: none;
-      border-color: #60a5fa;
-      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.05);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .code-stats {
@@ -345,7 +348,7 @@
       gap: 1.2rem;
       margin-top: 0.6rem;
       font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.08);
       flex-wrap: wrap;
     }
     .code-stats span {
@@ -362,8 +365,8 @@
     }
     .toolbar button {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      color: rgba(255, 255, 255, 0.15);
       padding: 0.2rem 0.7rem;
       border-radius: 40px;
       font-size: 0.65rem;
@@ -372,31 +375,31 @@
       font-family: inherit;
     }
     .toolbar button:hover {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
       color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.06);
     }
     .toolbar button.copy-btn:hover {
-      border-color: #60a5fa;
-      color: #60a5fa;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
     .toolbar button.download-btn:hover {
-      border-color: #1DB954;
-      color: #1DB954;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
     .toolbar button.clear-btn:hover {
-      border-color: #ff6b6b;
+      border-color: rgba(255, 255, 255, 0.1);
       color: #ff6b6b;
     }
     .toolbar button.pdf-btn:hover {
-      border-color: #f472b6;
-      color: #f472b6;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
 
     .lang-badge {
       display: inline-block;
-      background: rgba(96, 165, 250, 0.06);
-      color: #60a5fa;
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.4);
       padding: 0.05rem 0.5rem;
       border-radius: 20px;
       font-size: 0.55rem;
@@ -407,7 +410,7 @@
     .analyze-btn {
       margin-top: 0.8rem;
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       padding: 0.6rem 2rem;
       border-radius: 60px;
       font-weight: 500;
@@ -418,25 +421,25 @@
       width: 100%;
     }
     .analyze-btn:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     #output {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.15);
       padding: 1rem;
       border-radius: 12px;
       min-height: 90px;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.5);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.6;
       white-space: pre-wrap;
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.02);
       margin-top: 1rem;
     }
     #output .placeholder {
-      color: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.05);
       font-family: 'Inter', sans-serif;
       text-align: center;
       padding: 1.2rem 0;
@@ -453,8 +456,8 @@
     .spinner {
       width: 28px;
       height: 28px;
-      border: 2px solid rgba(255, 255, 255, 0.04);
-      border-top: 2px solid #60a5fa;
+      border: 2px solid rgba(255, 255, 255, 0.03);
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -463,7 +466,7 @@
       100% { transform: rotate(360deg); }
     }
     .spinner-text {
-      color: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.08);
       font-size: 0.75rem;
     }
 
@@ -482,44 +485,45 @@
       color: #ffffff;
     }
     .history-title span {
-      color: #60a5fa;
+      color: #ffffff;
+      opacity: 0.4;
     }
     .history-sub {
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.2);
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 2rem;
     }
 
     .history-card {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.015);
       border-radius: 16px;
       padding: 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.03);
     }
 
     .history-item {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.02);
       border-radius: 8px;
       padding: 0.5rem 0.8rem;
       margin-bottom: 0.4rem;
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.25);
       transition: 0.2s;
     }
     .history-item:hover {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.03);
     }
     .history-item .timestamp {
-      color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.06);
       font-size: 0.6rem;
       float: right;
     }
     .history-item .code-snippet {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.1);
       margin-top: 0.1rem;
       white-space: nowrap;
       overflow: hidden;
@@ -536,15 +540,15 @@
       margin-top: 0.1rem;
     }
     .history-empty {
-      color: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.05);
       text-align: center;
       padding: 1.2rem 0;
     }
 
     .clear-history-btn {
       background: transparent;
-      border: 1px solid rgba(255, 50, 50, 0.04);
-      color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      color: rgba(255, 255, 255, 0.06);
       padding: 0.2rem 0.8rem;
       border-radius: 40px;
       font-size: 0.65rem;
@@ -554,9 +558,9 @@
       margin-top: 0.6rem;
     }
     .clear-history-btn:hover {
-      background: rgba(255, 50, 50, 0.03);
+      background: rgba(255, 255, 255, 0.02);
       color: #ff6b6b;
-      border-color: rgba(255, 50, 50, 0.06);
+      border-color: rgba(255, 255, 255, 0.04);
     }
 
     /* ============================================================
@@ -564,25 +568,25 @@
        ============================================================ */
     .footer {
       padding: 1.2rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.015);
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.04);
       flex-wrap: wrap;
       gap: 1rem;
       max-width: 780px;
       width: 100%;
     }
     .footer a {
-      color: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.04);
       text-decoration: none;
       margin-left: 1.2rem;
       transition: 0.3s;
     }
     .footer a:hover {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.1);
     }
 
     /* ============================================================
@@ -717,7 +721,7 @@ x = 10  # unused</textarea>
         <!-- Output -->
         <div id="output">
           <div class="placeholder">
-            <i class="fas fa-code" style="display: block; font-size: 1.2rem; margin-bottom: 0.2rem; color: rgba(255,255,255,0.04);"></i>
+            <i class="fas fa-code" style="display: block; font-size: 1.2rem; margin-bottom: 0.2rem; color: rgba(255,255,255,0.03);"></i>
             Results will appear here
           </div>
         </div>
@@ -743,7 +747,7 @@ x = 10  # unused</textarea>
 
     <!-- Footer -->
     <footer class="footer" style="margin-top: 2rem;">
-      <span>© 2026 · built with <span style="color: #60a5fa;">✦</span> by rohit</span>
+      <span>© 2026 · built with <span style="color: rgba(255,255,255,0.3);">✦</span> by rohit</span>
       <div>
         <a href="https://github.com/Rohits533" target="_blank">GitHub</a>
         <a href="https://vercel.com" target="_blank">Vercel</a>
@@ -761,7 +765,7 @@ x = 10  # unused</textarea>
     scrolling="no"
     frameborder="no"
     allow="autoplay"
-    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%2360a5fa&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=ffffff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
     style="position: fixed; bottom: 16px; right: 16px; z-index: 999; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); width: 0; height: 0;"
   ></iframe>
 
@@ -770,7 +774,7 @@ x = 10  # unused</textarea>
     // STARS
     // ============================================================
     const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 100; i++) {
       const star = document.createElement('div');
       star.className = 'star';
       const size = Math.random() * 1.5 + 0.5;
@@ -873,7 +877,7 @@ x = 10  # unused</textarea>
       document.getElementById('fileInput').value = '';
       updateStats();
       document.getElementById('output').innerHTML = `<div class="placeholder">
-        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.04);"></i>
+        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.03);"></i>
         Results will appear here
       </div>`;
     });
@@ -1045,12 +1049,12 @@ x = 10  # unused</textarea>
 
         output.innerHTML = `
           <div style="margin-bottom:0.6rem;">
-            <strong style="color:rgba(255,255,255,0.2);font-size:0.7rem;">📄 Code</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.5;background:rgba(0,0,0,0.15);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.02);margin-top:0.2rem;white-space:pre-wrap;color:rgba(255,255,255,0.7);">${code}</pre>
+            <strong style="color:rgba(255,255,255,0.15);font-size:0.7rem;">📄 Code</strong>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.5;background:rgba(0,0,0,0.1);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.015);margin-top:0.2rem;white-space:pre-wrap;color:rgba(255,255,255,0.5);">${code}</pre>
           </div>
           <div>
-            <strong style="color:rgba(255,255,255,0.2);font-size:0.7rem;">📊 Analysis</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.1);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.02);margin-top:0.2rem;color:rgba(255,255,255,0.7);">${text}</pre>
+            <strong style="color:rgba(255,255,255,0.15);font-size:0.7rem;">📊 Analysis</strong>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.08);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.015);margin-top:0.2rem;color:rgba(255,255,255,0.5);">${text}</pre>
           </div>
         `;
 
