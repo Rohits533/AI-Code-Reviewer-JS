@@ -20,8 +20,8 @@
     }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a12;
-      color: #ffffff;
+      background: #f5f0ff;
+      color: #1a1a2e;
       min-height: 100vh;
       overflow-x: hidden;
       padding: 0;
@@ -29,7 +29,7 @@
     }
 
     /* ============================================================
-       BACKGROUND — AERO STYLE
+       ANIMATED BACKGROUND — LIGHT PURPLE
        ============================================================ */
     #bg {
       position: fixed;
@@ -38,7 +38,7 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      background: #0a0a12;
+      background: #f5f0ff;
       pointer-events: none;
     }
     #bg::before {
@@ -49,8 +49,9 @@
       width: 100%;
       height: 100%;
       background:
-        radial-gradient(ellipse at 70% 20%, rgba(0, 200, 150, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 80%, rgba(0, 200, 150, 0.03) 0%, transparent 40%);
+        radial-gradient(ellipse at 70% 20%, rgba(180, 130, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, rgba(130, 100, 255, 0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(200, 180, 255, 0.04) 0%, transparent 60%);
       animation: bgPulse 14s ease-in-out infinite alternate;
     }
     @keyframes bgPulse {
@@ -59,7 +60,7 @@
     }
 
     /* ============================================================
-       VISIBLE ROTATING LOGO
+       ROTATING LOGO — LIGHT PURPLE
        ============================================================ */
     #rotating-logo {
       position: fixed;
@@ -67,15 +68,13 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 0;
-      opacity: 0.06;
+      opacity: 0.04;
       pointer-events: none;
       font-size: 30rem;
       font-weight: 900;
-      color: #00c896;
+      color: #8b5cf6;
       animation: rotateLogo 30s linear infinite;
-      letter-spacing: 10px;
       user-select: none;
-      font-family: 'Inter', sans-serif;
     }
     @keyframes rotateLogo {
       0% { transform: translate(-50%, -50%) rotate(0deg); }
@@ -83,7 +82,7 @@
     }
 
     /* ============================================================
-       PARTICLES
+       FLOATING PARTICLES — LIGHT PURPLE
        ============================================================ */
     #particles {
       position: fixed;
@@ -97,7 +96,7 @@
     .particle {
       position: absolute;
       border-radius: 50%;
-      background: rgba(0, 200, 150, 0.06);
+      background: rgba(139, 92, 246, 0.08);
       animation: floatParticle var(--d) ease-in-out infinite alternate;
     }
     @keyframes floatParticle {
@@ -114,7 +113,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #0a0a12;
+      background: #f5f0ff;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -125,21 +124,21 @@
     }
     .entry-overlay .icon {
       font-size: 3.5rem;
-      color: #00c896;
+      color: #8b5cf6;
       animation: iconIn 0.8s ease forwards;
     }
     .entry-overlay h1 {
       font-size: 2.5rem;
       font-weight: 600;
-      color: #ffffff;
+      color: #1a1a2e;
       margin-top: 0.8rem;
       animation: textIn 0.8s ease forwards;
     }
     .entry-overlay h1 span {
-      color: #00c896;
+      color: #8b5cf6;
     }
     .entry-overlay p {
-      color: rgba(255, 255, 255, 0.12);
+      color: rgba(26, 26, 46, 0.3);
       font-size: 0.9rem;
       margin-top: 0.3rem;
       animation: textIn 1s ease forwards;
@@ -181,7 +180,7 @@
     }
 
     /* ============================================================
-       HEADER — AERO
+       HEADER — LIGHT PURPLE
        ============================================================ */
     .header {
       position: fixed;
@@ -193,21 +192,21 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: rgba(10, 10, 18, 0.6);
+      background: rgba(245, 240, 255, 0.7);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0, 200, 150, 0.04);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.06);
       flex-wrap: wrap;
       gap: 1rem;
     }
     .logo {
       font-size: 1.2rem;
       font-weight: 500;
-      color: #ffffff;
+      color: #1a1a2e;
       letter-spacing: 0.5px;
     }
     .logo span {
-      color: #00c896;
+      color: #8b5cf6;
     }
     .nav {
       display: flex;
@@ -216,7 +215,7 @@
       flex-wrap: wrap;
     }
     .nav a {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(26, 26, 46, 0.3);
       text-decoration: none;
       font-size: 0.85rem;
       transition: 0.3s;
@@ -224,25 +223,25 @@
       letter-spacing: 0.3px;
     }
     .nav a:hover {
-      color: #ffffff;
+      color: #1a1a2e;
     }
     .nav .btn {
-      border: 1px solid rgba(0, 200, 150, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.15);
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
-      color: #ffffff;
+      color: #1a1a2e;
       font-weight: 500;
       font-size: 0.8rem;
       transition: 0.3s;
     }
     .nav .btn:hover {
-      background: rgba(0, 200, 150, 0.04);
-      border-color: rgba(0, 200, 150, 0.12);
+      background: rgba(139, 92, 246, 0.06);
+      border-color: rgba(139, 92, 246, 0.25);
     }
 
     /* ============================================================
-       HERO — AERO
+       HERO — LIGHT PURPLE AERO
        ============================================================ */
     .hero {
       text-align: center;
@@ -250,11 +249,11 @@
     }
     .hero .badge {
       display: inline-block;
-      background: rgba(0, 200, 150, 0.06);
-      border: 1px solid rgba(0, 200, 150, 0.08);
-      color: #00c896;
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.12);
+      color: #8b5cf6;
       font-size: 0.7rem;
-      font-weight: 500;
+      font-weight: 600;
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       letter-spacing: 1px;
@@ -265,15 +264,15 @@
       font-size: 4.2rem;
       font-weight: 700;
       line-height: 1.05;
-      color: #ffffff;
+      color: #1a1a2e;
       letter-spacing: -0.5px;
     }
     .hero h1 .highlight {
-      color: #00c896;
+      color: #8b5cf6;
     }
     .hero p {
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(26, 26, 46, 0.4);
       max-width: 520px;
       margin: 0.8rem auto 2rem;
       line-height: 1.7;
@@ -285,8 +284,8 @@
       flex-wrap: wrap;
     }
     .hero .btn-primary {
-      background: transparent;
-      border: 1px solid rgba(0, 200, 150, 0.08);
+      background: #8b5cf6;
+      border: none;
       padding: 0.6rem 2rem;
       border-radius: 60px;
       font-weight: 500;
@@ -296,17 +295,17 @@
       transition: 0.3s;
     }
     .hero .btn-primary:hover {
-      background: rgba(0, 200, 150, 0.03);
-      border-color: rgba(0, 200, 150, 0.15);
+      background: #7c3aed;
+      transform: scale(1.02);
     }
     .hero .btn-secondary {
       background: transparent;
-      border: none;
+      border: 1px solid rgba(139, 92, 246, 0.15);
       padding: 0.6rem 2rem;
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.2);
+      color: #1a1a2e;
       cursor: pointer;
       transition: 0.3s;
       display: inline-flex;
@@ -314,10 +313,11 @@
       gap: 0.5rem;
     }
     .hero .btn-secondary:hover {
-      color: #ffffff;
+      background: rgba(139, 92, 246, 0.04);
+      border-color: rgba(139, 92, 246, 0.25);
     }
     .hero .btn-secondary i {
-      color: #00c896;
+      color: #8b5cf6;
     }
 
     .scroll-indicator {
@@ -329,7 +329,7 @@
       flex-direction: column;
       align-items: center;
       gap: 0.3rem;
-      color: rgba(255, 255, 255, 0.02);
+      color: rgba(26, 26, 46, 0.08);
       font-size: 0.5rem;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -339,12 +339,17 @@
       font-size: 0.8rem;
     }
     @keyframes bounceDown {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(6px);
+      }
     }
 
     /* ============================================================
-       ANALYZER
+       ANALYZER — LIGHT PURPLE
        ============================================================ */
     .analyzer-container {
       max-width: 780px;
@@ -355,23 +360,25 @@
       font-weight: 600;
       margin-bottom: 0.3rem;
       text-align: center;
-      color: #ffffff;
+      color: #1a1a2e;
     }
     .analyzer-title span {
-      color: #00c896;
+      color: #8b5cf6;
     }
     .analyzer-sub {
-      color: rgba(255, 255, 255, 0.12);
+      color: rgba(26, 26, 46, 0.3);
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 2rem;
     }
 
     .code-area {
-      background: rgba(255, 255, 255, 0.015);
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(8px);
       border-radius: 16px;
       padding: 1.8rem;
-      border: 1px solid rgba(0, 200, 150, 0.03);
+      border: 1px solid rgba(139, 92, 246, 0.06);
+      box-shadow: 0 4px 24px rgba(139, 92, 246, 0.04);
     }
 
     .file-upload-area {
@@ -382,9 +389,9 @@
       flex-wrap: wrap;
     }
     .file-upload-label {
-      background: rgba(255, 255, 255, 0.01);
-      border: 1px dashed rgba(0, 200, 150, 0.04);
-      color: rgba(255, 255, 255, 0.12);
+      background: rgba(139, 92, 246, 0.04);
+      border: 1px dashed rgba(139, 92, 246, 0.12);
+      color: rgba(26, 26, 46, 0.4);
       padding: 0.3rem 1rem;
       border-radius: 40px;
       font-size: 0.75rem;
@@ -396,21 +403,21 @@
       gap: 0.4rem;
     }
     .file-upload-label:hover {
-      background: rgba(0, 200, 150, 0.03);
-      border-color: rgba(0, 200, 150, 0.06);
-      color: #ffffff;
+      background: rgba(139, 92, 246, 0.06);
+      border-color: rgba(139, 92, 246, 0.2);
+      color: #1a1a2e;
     }
     .file-name {
-      color: rgba(255, 255, 255, 0.05);
+      color: rgba(26, 26, 46, 0.2);
       font-size: 0.7rem;
     }
 
     .code-area textarea {
       width: 100%;
       padding: 1rem;
-      background: rgba(0, 0, 0, 0.3);
-      color: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(0, 200, 150, 0.03);
+      background: rgba(255, 255, 255, 0.6);
+      color: #1a1a2e;
+      border: 1px solid rgba(139, 92, 246, 0.06);
       border-radius: 12px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
@@ -421,7 +428,8 @@
     }
     .code-area textarea:focus {
       outline: none;
-      border-color: rgba(0, 200, 150, 0.06);
+      border-color: rgba(139, 92, 246, 0.2);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.04);
     }
 
     .code-stats {
@@ -429,7 +437,7 @@
       gap: 1.2rem;
       margin-top: 0.6rem;
       font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.04);
+      color: rgba(26, 26, 46, 0.2);
       flex-wrap: wrap;
     }
 
@@ -441,8 +449,8 @@
     }
     .toolbar button {
       background: transparent;
-      border: 1px solid rgba(0, 200, 150, 0.03);
-      color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.06);
+      color: rgba(26, 26, 46, 0.3);
       padding: 0.2rem 0.7rem;
       border-radius: 40px;
       font-size: 0.65rem;
@@ -451,15 +459,15 @@
       font-family: inherit;
     }
     .toolbar button:hover {
-      background: rgba(0, 200, 150, 0.02);
-      color: #ffffff;
-      border-color: rgba(0, 200, 150, 0.06);
+      background: rgba(139, 92, 246, 0.04);
+      color: #1a1a2e;
+      border-color: rgba(139, 92, 246, 0.12);
     }
 
     .lang-badge {
       display: inline-block;
-      background: rgba(0, 200, 150, 0.06);
-      color: #00c896;
+      background: rgba(139, 92, 246, 0.08);
+      color: #8b5cf6;
       padding: 0.05rem 0.5rem;
       border-radius: 20px;
       font-size: 0.55rem;
@@ -469,8 +477,8 @@
 
     .analyze-btn {
       margin-top: 0.8rem;
-      background: transparent;
-      border: 1px solid rgba(0, 200, 150, 0.04);
+      background: #8b5cf6;
+      border: none;
       padding: 0.6rem 2rem;
       border-radius: 60px;
       font-weight: 500;
@@ -481,25 +489,26 @@
       width: 100%;
     }
     .analyze-btn:hover {
-      background: rgba(0, 200, 150, 0.02);
-      border-color: rgba(0, 200, 150, 0.06);
+      background: #7c3aed;
+      transform: scale(1.01);
     }
 
     #output {
-      background: rgba(0, 0, 0, 0.15);
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(4px);
       padding: 1rem;
       border-radius: 12px;
       min-height: 90px;
-      color: rgba(255, 255, 255, 0.4);
+      color: #1a1a2e;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.6;
       white-space: pre-wrap;
-      border: 1px solid rgba(0, 200, 150, 0.02);
+      border: 1px solid rgba(139, 92, 246, 0.04);
       margin-top: 1rem;
     }
     #output .placeholder {
-      color: rgba(255, 255, 255, 0.02);
+      color: rgba(26, 26, 46, 0.1);
       font-family: 'Inter', sans-serif;
       text-align: center;
       padding: 1.2rem 0;
@@ -516,22 +525,26 @@
     .spinner {
       width: 28px;
       height: 28px;
-      border: 2px solid rgba(0, 200, 150, 0.03);
-      border-top: 2px solid #00c896;
+      border: 2px solid rgba(139, 92, 246, 0.1);
+      border-top: 2px solid #8b5cf6;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
     .spinner-text {
-      color: rgba(255, 255, 255, 0.04);
+      color: rgba(26, 26, 46, 0.2);
       font-size: 0.75rem;
     }
 
     /* ============================================================
-       HISTORY
+       HISTORY — LIGHT PURPLE
        ============================================================ */
     .history-container {
       max-width: 780px;
@@ -542,48 +555,49 @@
       font-weight: 600;
       text-align: center;
       margin-bottom: 0.3rem;
-      color: #ffffff;
+      color: #1a1a2e;
     }
     .history-title span {
-      color: #00c896;
+      color: #8b5cf6;
     }
     .history-sub {
-      color: rgba(255, 255, 255, 0.12);
+      color: rgba(26, 26, 46, 0.3);
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 2rem;
     }
 
     .history-card {
-      background: rgba(255, 255, 255, 0.01);
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(8px);
       border-radius: 16px;
       padding: 1.8rem;
-      border: 1px solid rgba(0, 200, 150, 0.03);
+      border: 1px solid rgba(139, 92, 246, 0.04);
+      box-shadow: 0 4px 24px rgba(139, 92, 246, 0.04);
     }
 
     .history-item {
-      background: rgba(255, 255, 255, 0.01);
-      border: 1px solid rgba(0, 200, 150, 0.02);
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(139, 92, 246, 0.04);
       border-radius: 8px;
       padding: 0.5rem 0.8rem;
       margin-bottom: 0.4rem;
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.12);
+      color: rgba(26, 26, 46, 0.5);
       transition: 0.2s;
     }
     .history-item:hover {
-      background: rgba(0, 200, 150, 0.02);
-      border-color: rgba(0, 200, 150, 0.04);
+      background: rgba(255, 255, 255, 0.5);
     }
     .history-item .timestamp {
-      color: rgba(255, 255, 255, 0.04);
+      color: rgba(26, 26, 46, 0.2);
       font-size: 0.6rem;
       float: right;
     }
     .history-item .code-snippet {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.05);
+      color: rgba(26, 26, 46, 0.2);
       margin-top: 0.1rem;
       white-space: nowrap;
       overflow: hidden;
@@ -591,8 +605,8 @@
     }
     .history-item .issues-badge {
       display: inline-block;
-      background: #00c896;
-      color: #000;
+      background: #8b5cf6;
+      color: #ffffff;
       font-weight: 600;
       font-size: 0.5rem;
       padding: 0.05rem 0.4rem;
@@ -600,15 +614,15 @@
       margin-top: 0.1rem;
     }
     .history-empty {
-      color: rgba(255, 255, 255, 0.03);
+      color: rgba(26, 26, 46, 0.1);
       text-align: center;
       padding: 1.2rem 0;
     }
 
     .clear-history-btn {
       background: transparent;
-      border: 1px solid rgba(255, 50, 50, 0.03);
-      color: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(220, 38, 38, 0.1);
+      color: rgba(26, 26, 46, 0.2);
       padding: 0.2rem 0.8rem;
       border-radius: 40px;
       font-size: 0.65rem;
@@ -618,61 +632,88 @@
       margin-top: 0.6rem;
     }
     .clear-history-btn:hover {
-      background: rgba(255, 50, 50, 0.02);
-      color: #ff6b6b;
-      border-color: rgba(255, 50, 50, 0.04);
+      background: rgba(220, 38, 38, 0.04);
+      color: #dc2626;
+      border-color: rgba(220, 38, 38, 0.15);
     }
 
     /* ============================================================
-       FOOTER
+       FOOTER — LIGHT PURPLE
        ============================================================ */
     .footer {
       padding: 1.2rem 0;
-      border-top: 1px solid rgba(0, 200, 150, 0.02);
+      border-top: 1px solid rgba(139, 92, 246, 0.04);
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.02);
+      color: rgba(26, 26, 46, 0.15);
       flex-wrap: wrap;
       gap: 1rem;
       max-width: 780px;
       width: 100%;
     }
     .footer a {
-      color: rgba(255, 255, 255, 0.02);
+      color: rgba(26, 26, 46, 0.15);
       text-decoration: none;
       margin-left: 1.2rem;
       transition: 0.3s;
     }
     .footer a:hover {
-      color: rgba(255, 255, 255, 0.06);
+      color: rgba(26, 26, 46, 0.3);
     }
 
     /* ============================================================
        RESPONSIVE
        ============================================================ */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2.8rem; }
-      .header { padding: 1rem 1.5rem; }
-      .nav { gap: 1rem; }
-      .code-area, .history-card { padding: 1.2rem; }
-      .analyzer-title, .history-title { font-size: 1.6rem; }
-      #rotating-logo { font-size: 12rem; }
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      .header {
+        padding: 1rem 1.5rem;
+      }
+      .nav {
+        gap: 1rem;
+      }
+      .code-area,
+      .history-card {
+        padding: 1.2rem;
+      }
+      .analyzer-title,
+      .history-title {
+        font-size: 1.6rem;
+      }
+      #rotating-logo {
+        font-size: 12rem;
+      }
     }
     @media (max-width: 480px) {
-      .hero h1 { font-size: 2.2rem; }
-      .hero p { font-size: 0.85rem; }
-      .header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-      .hero .btn-group { flex-direction: column; align-items: center; }
-      #rotating-logo { font-size: 8rem; }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 0.85rem;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      .hero .btn-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      #rotating-logo {
+        font-size: 8rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <!-- ============================================================
-       VISIBLE ROTATING BACKGROUND LOGO
+       ROTATING LOGO
        ============================================================ -->
   <div id="rotating-logo">✦</div>
 
@@ -764,7 +805,7 @@ x = 10  # unused</textarea>
 
         <div id="output">
           <div class="placeholder">
-            <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.02);"></i>
+            <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(26,26,46,0.06);"></i>
             Results will appear here
           </div>
         </div>
@@ -789,7 +830,7 @@ x = 10  # unused</textarea>
     </div>
 
     <footer class="footer" style="margin-top:2rem;">
-      <span>© 2026 · built with <span style="color:#00c896;">✦</span> by rohit</span>
+      <span>© 2026 · built with <span style="color:#8b5cf6;">✦</span> by rohit</span>
       <div>
         <a href="https://github.com/Rohits533" target="_blank">GitHub</a>
         <a href="https://vercel.com" target="_blank">Vercel</a>
@@ -807,8 +848,8 @@ x = 10  # unused</textarea>
     scrolling="no"
     frameborder="no"
     allow="autoplay"
-    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%2300c896&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
-    style="position:fixed;bottom:16px;right:16px;z-index:999;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.4);width:0;height:0;"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%238b5cf6&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+    style="position:fixed;bottom:16px;right:16px;z-index:999;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.05);width:0;height:0;"
   ></iframe>
 
   <script>
@@ -905,215 +946,4 @@ x = 10  # unused</textarea>
     // FILE UPLOAD
     // ============================================================
     document.getElementById('fileInput').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      document.getElementById('fileName').textContent = file.name;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        document.getElementById('codeInput').value = event.target.result;
-        updateStats();
-      };
-      reader.readAsText(file);
-    });
-
-    // ============================================================
-    // CLEAR
-    // ============================================================
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      document.getElementById('codeInput').value = '';
-      document.getElementById('fileName').textContent = 'No file selected';
-      document.getElementById('fileInput').value = '';
-      updateStats();
-      document.getElementById('output').innerHTML = `<div class="placeholder">
-        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.02);"></i>
-        Results will appear here
-      </div>`;
-    });
-
-    // ============================================================
-    // COPY
-    // ============================================================
-    document.getElementById('copyBtn').addEventListener('click', async () => {
-      const output = document.getElementById('output').textContent;
-      if (output && !output.includes('Results will appear here')) {
-        try {
-          await navigator.clipboard.writeText(output);
-          const btn = document.getElementById('copyBtn');
-          btn.innerHTML = '✅ Copied!';
-          setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i> Copy', 2000);
-        } catch {
-          alert('Failed to copy.');
-        }
-      } else {
-        alert('No results to copy.');
-      }
-    });
-
-    // ============================================================
-    // DOWNLOAD .TXT
-    // ============================================================
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-      const output = document.getElementById('output').textContent;
-      if (output && !output.includes('Results will appear here')) {
-        const blob = new Blob([output], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `analysis-${Date.now()}.txt`;
-        a.click();
-        URL.revokeObjectURL(url);
-      } else {
-        alert('No results to download.');
-      }
-    });
-
-    // ============================================================
-    // PDF
-    // ============================================================
-    document.getElementById('pdfBtn').addEventListener('click', () => {
-      const output = document.getElementById('output');
-      const content = output.textContent;
-      if (!content || content.includes('Results will appear here') || content.includes('Analyzing your code')) {
-        alert('No results to export. Please analyze some code first.');
-        return;
-      }
-      const tempDiv = document.createElement('div');
-      tempDiv.style.padding = '30px';
-      tempDiv.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      tempDiv.style.maxWidth = '800px';
-      tempDiv.style.margin = '0 auto';
-      tempDiv.style.background = '#ffffff';
-      tempDiv.style.color = '#1a1a1a';
-      tempDiv.style.borderRadius = '8px';
-      tempDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-      tempDiv.innerHTML = `
-        <h1 style="font-size:24px;font-weight:700;margin-bottom:4px;color:#1a1a1a;">🧠 AI Debug Report</h1>
-        <p style="color:#666;font-size:14px;margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:12px;">Generated on ${new Date().toLocaleString()}</p>
-        <pre style="font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;background:#f5f5f5;padding:16px;border-radius:6px;border:1px solid #e0e0e0;color:#1a1a1a;">${content}</pre>
-        <p style="color:#999;font-size:11px;margin-top:20px;border-top:1px solid #eee;padding-top:12px;text-align:center;">Built with ✦ ai debug · ast + gemini</p>
-      `;
-      document.body.appendChild(tempDiv);
-      html2pdf().set({
-        margin: [0.5, 0.5, 0.5, 0.5],
-        filename: `ai-debug-report-${Date.now()}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, letterRendering: true, useCORS: true },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      }).from(tempDiv).save().then(() => {
-        document.body.removeChild(tempDiv);
-      });
-    });
-
-    // ============================================================
-    // HISTORY
-    // ============================================================
-    function getHistory() {
-      try {
-        return JSON.parse(localStorage.getItem('analysisHistory')) || [];
-      } catch {
-        return [];
-      }
-    }
-
-    function saveToHistory(code, result) {
-      const history = getHistory();
-      const entry = {
-        id: Date.now(),
-        timestamp: new Date().toLocaleString(),
-        code: code.slice(0, 200) + (code.length > 200 ? '...' : ''),
-        fullCode: code,
-        result: result,
-        issues: result.ast_report?.issues_count ?? result.issues_count ?? 0
-      };
-      history.unshift(entry);
-      if (history.length > 50) history.pop();
-      localStorage.setItem('analysisHistory', JSON.stringify(history));
-      renderHistory();
-    }
-
-    function renderHistory() {
-      const list = document.getElementById('historyList');
-      const history = getHistory();
-      if (!list) return;
-      if (history.length === 0) {
-        list.innerHTML = `<div class="history-empty">No past analyses yet.</div>`;
-        return;
-      }
-      list.innerHTML = history.map(item => `
-        <div class="history-item">
-          <span class="timestamp">${item.timestamp}</span>
-          <div><strong>${item.issues} issue${item.issues !== 1 ? 's' : ''} found</strong></div>
-          <div class="code-snippet">${item.code}</div>
-          <span class="issues-badge">${item.issues} issues</span>
-        </div>
-      `).join('');
-    }
-
-    function clearHistory() {
-      if (confirm('Clear all saved analyses?')) {
-        localStorage.removeItem('analysisHistory');
-        renderHistory();
-      }
-    }
-
-    document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
-
-    // ============================================================
-    // ANALYZE
-    // ============================================================
-    document.getElementById('analyzeBtn').addEventListener('click', async () => {
-      const code = document.getElementById('codeInput').value;
-      const output = document.getElementById('output');
-
-      if (!code.trim()) {
-        output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`;
-        return;
-      }
-
-      output.innerHTML = `<div class="spinner-container"><div class="spinner"></div><div class="spinner-text">Analyzing...</div></div>`;
-
-      try {
-        const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code })
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`;
-          return;
-        }
-
-        const ast = data.ast_report || data;
-        let text = '📊 STATIC ANALYSIS (AST)\n----------------------------\n';
-        text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
-        text += `Unused Imports: ${(ast.unused_imports || []).join(', ') || 'None'}\n`;
-        text += `Total Issues: ${ast.issues_count || 0}\n\n`;
-        if (data.ai_review) {
-          text += '🧠 AI REVIEW (Gemini)\n----------------------------\n' + data.ai_review;
-        }
-
-        output.innerHTML = `
-          <div style="margin-bottom:0.6rem;">
-            <strong style="color:rgba(255,255,255,0.08);font-size:0.65rem;">📄 Code</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;line-height:1.5;background:rgba(0,0,0,0.08);padding:0.6rem;border-radius:8px;border:1px solid rgba(0,200,150,0.02);margin-top:0.2rem;white-space:pre-wrap;color:rgba(255,255,255,0.3);">${code}</pre>
-          </div>
-          <div>
-            <strong style="color:rgba(255,255,255,0.08);font-size:0.65rem;">📊 Analysis</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.05);padding:0.6rem;border-radius:8px;border:1px solid rgba(0,200,150,0.02);margin-top:0.2rem;color:rgba(255,255,255,0.3);">${text}</pre>
-          </div>
-        `;
-
-        saveToHistory(code, data);
-
-      } catch (err) {
-        output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`;
-      }
-    });
-
-    renderHistory();
-  </script>
-</body>
-</html>
+      const file = e.target.files
