@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Code Reviewer</title>
+  <title>AI Code Reviewer · CyberCore</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
-       RESET & BASE
+       RESET & BASE — CYBERPUNK
        ============================================================ */
     * {
       margin: 0;
@@ -23,8 +23,8 @@
     }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0f;
-      color: #ffffff;
+      background: #050508;
+      color: #e0e0e0;
       min-height: 100vh;
       overflow-x: hidden;
       padding: 0;
@@ -32,19 +32,28 @@
     }
 
     /* ============================================================
-       ANIMATED NEBULA BACKGROUND
+       ANIMATED CYBER GRID BACKGROUND
        ============================================================ */
-    #nebula-bg {
+    #cyber-grid {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
-      background: radial-gradient(ellipse at 20% 50%, #0a0a0f 0%, #0a0a0f 70%);
       pointer-events: none;
+      background:
+        linear-gradient(rgba(0, 255, 100, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 100, 0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: gridPulse 10s linear infinite;
     }
-    #nebula-bg::before {
+    @keyframes gridPulse {
+      0% { transform: translate(0, 0); opacity: 0.4; }
+      50% { transform: translate(40px, 40px); opacity: 1; }
+      100% { transform: translate(0, 0); opacity: 0.4; }
+    }
+    #cyber-grid::after {
       content: '';
       position: absolute;
       top: 0;
@@ -52,21 +61,21 @@
       width: 100%;
       height: 100%;
       background:
-        radial-gradient(ellipse at 70% 20%, rgba(29, 185, 84, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 40%),
-        radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
-      animation: nebulaPulse 12s ease-in-out infinite alternate;
+        radial-gradient(ellipse at 20% 50%, rgba(0, 255, 100, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(251, 191, 36, 0.03) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 80%, rgba(0, 150, 255, 0.02) 0%, transparent 30%);
+      animation: auraShift 15s ease-in-out infinite alternate;
     }
-    @keyframes nebulaPulse {
-      0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
-      50% { transform: scale(1.05) rotate(1deg); opacity: 1; }
-      100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+    @keyframes auraShift {
+      0% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.5; transform: scale(1); }
     }
 
     /* ============================================================
-       FLOATING PARTICLES
+       FLOATING HOLOGRAPHIC PARTICLES
        ============================================================ */
-    #particles {
+    #hologram-particles {
       position: fixed;
       top: 0;
       left: 0;
@@ -75,19 +84,41 @@
       z-index: 0;
       pointer-events: none;
     }
-    .particle {
+    .h-particle {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      animation: float var(--duration) ease-in-out infinite alternate;
+      background: rgba(0, 255, 100, 0.15);
+      box-shadow: 0 0 20px rgba(0, 255, 100, 0.05);
+      animation: floatParticle var(--duration) ease-in-out infinite alternate;
     }
-    @keyframes float {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-      100% { transform: translate(var(--tx), var(--ty)) scale(1.2); opacity: 0.6; }
+    @keyframes floatParticle {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(1.5); opacity: 0.5; }
     }
 
     /* ============================================================
-       ENTRY ANIMATION — ATTENTION SEEKING
+       SCANNING LINE
+       ============================================================ */
+    #scan-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(0, 255, 100, 0.2), transparent);
+      z-index: 1;
+      animation: scanDown 6s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes scanDown {
+      0% { top: 0; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* ============================================================
+       ENTRY ANIMATION — NEON PULSE
        ============================================================ */
     .entry-overlay {
       position: fixed;
@@ -95,83 +126,103 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #0a0a0f;
+      background: #050508;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 99999;
       pointer-events: none;
-      animation: entryFadeOut 1.2s ease 2.0s forwards;
+      animation: entryFade 1.5s ease 2.2s forwards;
     }
-    .entry-overlay .icon-wrapper {
+    .entry-overlay .neon-ring {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 255, 100, 0.15);
+      position: relative;
+      animation: neonPulse 2s ease forwards;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(29, 185, 84, 0.06);
-      border: 1px solid rgba(29, 185, 84, 0.15);
-      animation: iconPulse 1.6s ease forwards;
-      box-shadow: 0 0 60px rgba(29, 185, 84, 0.05), inset 0 0 60px rgba(29, 185, 84, 0.02);
     }
-    .entry-overlay .icon-wrapper i {
-      font-size: 4rem;
+    .entry-overlay .neon-ring::before {
+      content: '';
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 255, 100, 0.05);
+      animation: ringExpand 2s ease forwards;
+    }
+    .entry-overlay .neon-ring i {
+      font-size: 4.5rem;
       color: #1DB954;
-      animation: iconIn 1.2s ease forwards;
+      animation: iconSpin 2s ease forwards;
     }
     .entry-overlay h1 {
-      font-size: 2.8rem;
-      font-weight: 700;
+      font-size: 3.2rem;
+      font-weight: 800;
       color: #ffffff;
-      margin-top: 1.2rem;
-      letter-spacing: 2px;
-      animation: textIn 1.2s ease forwards;
+      margin-top: 1.5rem;
+      letter-spacing: 4px;
+      animation: textReveal 1.4s ease forwards;
     }
     .entry-overlay h1 span {
       color: #1DB954;
+      text-shadow: 0 0 30px rgba(29, 185, 84, 0.2);
     }
     .entry-overlay p {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.15);
       font-size: 1rem;
-      margin-top: 0.3rem;
-      letter-spacing: 4px;
+      margin-top: 0.5rem;
+      letter-spacing: 6px;
       text-transform: uppercase;
-      animation: textIn 1.4s ease forwards;
+      animation: textReveal 1.6s ease forwards;
     }
-    .entry-overlay .glow-ring {
+    .entry-overlay .glow-lines {
       position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      border: 1px solid rgba(29, 185, 84, 0.04);
-      animation: ringExpand 2s ease forwards;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
     }
-    @keyframes iconPulse {
-      0% { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0px rgba(29, 185, 84, 0); }
+    .entry-overlay .glow-lines span {
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(0, 255, 100, 0.03), transparent);
+      animation: lineGlow 3s ease-in-out infinite;
+    }
+    @keyframes lineGlow {
+      0%, 100% { opacity: 0; transform: scaleY(0.5); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+    @keyframes neonPulse {
+      0% { transform: scale(0.4); opacity: 0; box-shadow: 0 0 0px rgba(29, 185, 84, 0); }
       60% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 80px rgba(29, 185, 84, 0.08); }
       100% { transform: scale(1); opacity: 1; box-shadow: 0 0 40px rgba(29, 185, 84, 0.04); }
     }
-    @keyframes iconIn {
-      0% { transform: scale(0.3) rotate(-30deg); opacity: 0; }
+    @keyframes iconSpin {
+      0% { transform: scale(0) rotate(-60deg); opacity: 0; }
       100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
-    @keyframes textIn {
-      0% { transform: translateY(40px); opacity: 0; }
+    @keyframes textReveal {
+      0% { transform: translateY(50px); opacity: 0; }
       100% { transform: translateY(0); opacity: 1; }
     }
     @keyframes ringExpand {
       0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1.8); opacity: 0; }
+      100% { transform: scale(1.5); opacity: 0; }
     }
-    @keyframes entryFadeOut {
+    @keyframes entryFade {
       0% { opacity: 1; visibility: visible; }
       100% { opacity: 0; visibility: hidden; }
     }
 
     /* ============================================================
-       FULL PAGE SPLIT SECTIONS
+       SECTIONS — CYBERPUNK
        ============================================================ */
     .section {
       min-height: 100vh;
@@ -184,16 +235,30 @@
       position: relative;
       z-index: 1;
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(50px);
+      transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .section.visible {
       opacity: 1;
       transform: translateY(0);
     }
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0, 255, 100, 0.01) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .section.visible::before {
+      opacity: 1;
+    }
 
     /* ============================================================
-       HEADER
+       HEADER — CYBER
        ============================================================ */
     .header {
       position: fixed;
@@ -205,18 +270,25 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: rgba(10, 10, 15, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      background: rgba(5, 5, 8, 0.7);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(0, 255, 100, 0.04);
       flex-wrap: wrap;
       gap: 1rem;
     }
     .logo {
-      font-size: 1.2rem;
-      font-weight: 500;
+      font-size: 1.3rem;
+      font-weight: 700;
       color: #ffffff;
       letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo i {
+      color: #1DB954;
+      font-size: 1.2rem;
     }
     .logo span {
       color: #1DB954;
@@ -228,69 +300,105 @@
       flex-wrap: wrap;
     }
     .nav a {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.15);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 400;
       transition: 0.3s;
       cursor: pointer;
+      letter-spacing: 1px;
+      position: relative;
+    }
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background: #1DB954;
+      transition: width 0.3s ease;
     }
     .nav a:hover {
       color: #ffffff;
     }
+    .nav a:hover::after {
+      width: 100%;
+    }
     .nav .btn {
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(0, 255, 100, 0.08);
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
       color: #ffffff;
       font-weight: 500;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       transition: 0.3s;
+      letter-spacing: 1px;
     }
     .nav .btn:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 255, 100, 0.04);
+      border-color: rgba(0, 255, 100, 0.15);
+      color: #1DB954;
     }
 
     /* ============================================================
-       HERO
+       HERO — CYBERPUNK
        ============================================================ */
     .hero {
       text-align: center;
       padding: 4rem 1.5rem;
     }
-    .hero h1 {
-      font-size: 4rem;
-      font-weight: 700;
+    .hero .glitch-text {
+      font-size: 4.5rem;
+      font-weight: 800;
       line-height: 1.05;
       letter-spacing: -1px;
       color: #ffffff;
+      position: relative;
     }
-    .hero h1 .highlight {
+    .hero .glitch-text .highlight {
       color: #1DB954;
+      text-shadow: 0 0 40px rgba(29, 185, 84, 0.15);
     }
-    .hero p {
+    .hero .sub-glitch {
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.15);
       max-width: 520px;
       margin: 0.8rem auto 2rem;
       line-height: 1.7;
+      letter-spacing: 0.5px;
     }
     .hero .btn-primary {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 0.6rem 2rem;
+      border: 1px solid rgba(0, 255, 100, 0.1);
+      padding: 0.7rem 2.2rem;
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.9rem;
       color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(0, 255, 100, 0.04), transparent);
+      transition: left 0.6s ease;
+    }
+    .hero .btn-primary:hover::before {
+      left: 100%;
     }
     .hero .btn-primary:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.12);
+      border-color: rgba(0, 255, 100, 0.2);
+      background: rgba(0, 255, 100, 0.02);
     }
 
     .scroll-indicator {
@@ -302,49 +410,52 @@
       flex-direction: column;
       align-items: center;
       gap: 0.3rem;
-      color: rgba(255, 255, 255, 0.04);
-      font-size: 0.55rem;
-      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.02);
+      font-size: 0.5rem;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      animation: bounceDown 2s ease-in-out infinite;
+      animation: cyberBounce 2s ease-in-out infinite;
     }
     .scroll-indicator i {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
-    @keyframes bounceDown {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
+    @keyframes cyberBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.3; }
+      50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
     }
 
     /* ============================================================
-       ANALYZER
+       ANALYZER — CYBER
        ============================================================ */
     .analyzer-container {
       max-width: 780px;
       width: 100%;
     }
     .analyzer-title {
-      font-size: 2rem;
-      font-weight: 600;
+      font-size: 2.2rem;
+      font-weight: 700;
       margin-bottom: 0.3rem;
       text-align: center;
       color: #ffffff;
+      letter-spacing: -0.5px;
     }
     .analyzer-title span {
       color: #1DB954;
     }
     .analyzer-sub {
-      color: rgba(255, 255, 255, 0.2);
-      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.1);
+      font-size: 0.85rem;
       text-align: center;
       margin-bottom: 2rem;
+      letter-spacing: 1px;
     }
 
     .code-area {
-      background: rgba(255, 255, 255, 0.015);
-      border-radius: 16px;
-      padding: 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(0, 255, 100, 0.04);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(0, 255, 100, 0.02);
     }
 
     .file-upload-area {
@@ -355,55 +466,58 @@
       flex-wrap: wrap;
     }
     .file-upload-label {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px dashed rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px dashed rgba(0, 255, 100, 0.04);
+      color: rgba(255, 255, 255, 0.15);
       padding: 0.3rem 1rem;
       border-radius: 40px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       cursor: pointer;
       transition: 0.3s;
       font-family: inherit;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
+      letter-spacing: 0.5px;
     }
     .file-upload-label:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.06);
+      background: rgba(0, 255, 100, 0.02);
+      border-color: rgba(0, 255, 100, 0.06);
       color: #ffffff;
     }
     .file-name {
-      color: rgba(255, 255, 255, 0.1);
-      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.05);
+      font-size: 0.65rem;
     }
 
     .code-area textarea {
       width: 100%;
-      padding: 1rem;
+      padding: 1.2rem;
       background: rgba(0, 0, 0, 0.3);
-      color: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 255, 100, 0.03);
+      border-radius: 14px;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
       font-size: 0.85rem;
-      line-height: 1.6;
+      line-height: 1.7;
       resize: vertical;
-      min-height: 150px;
+      min-height: 160px;
       transition: border-color 0.3s;
     }
     .code-area textarea:focus {
       outline: none;
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(0, 255, 100, 0.08);
+      box-shadow: 0 0 0 3px rgba(0, 255, 100, 0.02);
     }
 
     .code-stats {
       display: flex;
       gap: 1.2rem;
-      margin-top: 0.6rem;
-      font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.08);
+      margin-top: 0.8rem;
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.04);
       flex-wrap: wrap;
+      letter-spacing: 0.5px;
     }
 
     .toolbar {
@@ -414,28 +528,45 @@
     }
     .toolbar button {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      color: rgba(255, 255, 255, 0.15);
-      padding: 0.2rem 0.7rem;
+      border: 1px solid rgba(0, 255, 100, 0.03);
+      color: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.8rem;
       border-radius: 40px;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       cursor: pointer;
       transition: 0.3s;
       font-family: inherit;
+      letter-spacing: 0.5px;
     }
     .toolbar button:hover {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(0, 255, 100, 0.02);
       color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.06);
+      border-color: rgba(0, 255, 100, 0.06);
+    }
+    .toolbar button.copy-btn:hover {
+      border-color: #1DB954;
+      color: #1DB954;
+    }
+    .toolbar button.download-btn:hover {
+      border-color: #1DB954;
+      color: #1DB954;
+    }
+    .toolbar button.clear-btn:hover {
+      border-color: rgba(255, 50, 50, 0.15);
+      color: #ff6b6b;
+    }
+    .toolbar button.pdf-btn:hover {
+      border-color: #fbbf24;
+      color: #fbbf24;
     }
 
     .lang-badge {
       display: inline-block;
-      background: rgba(29, 185, 84, 0.08);
+      background: rgba(29, 185, 84, 0.06);
       color: #1DB954;
       padding: 0.05rem 0.5rem;
       border-radius: 20px;
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       font-weight: 500;
       margin-left: 0.2rem;
     }
@@ -443,39 +574,56 @@
     .analyze-btn {
       margin-top: 0.8rem;
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 0.6rem 2rem;
+      border: 1px solid rgba(0, 255, 100, 0.04);
+      padding: 0.7rem 2rem;
       border-radius: 60px;
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
       width: 100%;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    .analyze-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, transparent, rgba(0, 255, 100, 0.03), transparent);
+      transition: left 0.6s ease;
+    }
+    .analyze-btn:hover::before {
+      left: 100%;
     }
     .analyze-btn:hover {
-      background: rgba(255, 255, 255, 0.02);
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(0, 255, 100, 0.08);
+      background: rgba(0, 255, 100, 0.02);
     }
 
     #output {
       background: rgba(0, 0, 0, 0.15);
       padding: 1rem;
-      border-radius: 12px;
+      border-radius: 14px;
       min-height: 90px;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.4);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      line-height: 1.6;
+      font-size: 0.75rem;
+      line-height: 1.7;
       white-space: pre-wrap;
-      border: 1px solid rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(0, 255, 100, 0.02);
       margin-top: 1rem;
     }
     #output .placeholder {
-      color: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.02);
       font-family: 'Inter', sans-serif;
       text-align: center;
       padding: 1.2rem 0;
+      letter-spacing: 1px;
     }
 
     .spinner-container {
@@ -489,7 +637,7 @@
     .spinner {
       width: 28px;
       height: 28px;
-      border: 2px solid rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(0, 255, 100, 0.03);
       border-top: 2px solid #1DB954;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -499,63 +647,67 @@
       100% { transform: rotate(360deg); }
     }
     .spinner-text {
-      color: rgba(255, 255, 255, 0.08);
-      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.04);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
     }
 
     /* ============================================================
-       HISTORY
+       HISTORY — CYBER
        ============================================================ */
     .history-container {
       max-width: 780px;
       width: 100%;
     }
     .history-title {
-      font-size: 2rem;
-      font-weight: 600;
+      font-size: 2.2rem;
+      font-weight: 700;
       text-align: center;
       margin-bottom: 0.3rem;
       color: #ffffff;
+      letter-spacing: -0.5px;
     }
     .history-title span {
       color: #1DB954;
     }
     .history-sub {
-      color: rgba(255, 255, 255, 0.2);
-      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.1);
+      font-size: 0.85rem;
       text-align: center;
       margin-bottom: 2rem;
+      letter-spacing: 1px;
     }
 
     .history-card {
-      background: rgba(255, 255, 255, 0.015);
-      border-radius: 16px;
-      padding: 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(0, 255, 100, 0.04);
     }
 
     .history-item {
       background: rgba(255, 255, 255, 0.01);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      border-radius: 8px;
-      padding: 0.5rem 0.8rem;
+      border: 1px solid rgba(0, 255, 100, 0.02);
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
       margin-bottom: 0.4rem;
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.25);
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.15);
       transition: 0.2s;
     }
     .history-item:hover {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(0, 255, 100, 0.02);
+      border-color: rgba(0, 255, 100, 0.04);
     }
     .history-item .timestamp {
-      color: rgba(255, 255, 255, 0.06);
-      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.04);
+      font-size: 0.55rem;
       float: right;
     }
     .history-item .code-snippet {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.1);
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.05);
       margin-top: 0.1rem;
       white-space: nowrap;
       overflow: hidden;
@@ -566,128 +718,121 @@
       background: #1DB954;
       color: #000;
       font-weight: 600;
-      font-size: 0.5rem;
+      font-size: 0.45rem;
       padding: 0.05rem 0.4rem;
       border-radius: 20px;
       margin-top: 0.1rem;
     }
     .history-empty {
-      color: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.03);
       text-align: center;
       padding: 1.2rem 0;
+      letter-spacing: 1px;
     }
 
     .clear-history-btn {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      color: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 50, 50, 0.03);
+      color: rgba(255, 255, 255, 0.04);
       padding: 0.2rem 0.8rem;
       border-radius: 40px;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       cursor: pointer;
       transition: 0.3s;
       font-family: inherit;
       margin-top: 0.6rem;
+      letter-spacing: 0.5px;
     }
     .clear-history-btn:hover {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 50, 50, 0.02);
       color: #ff6b6b;
-      border-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 50, 50, 0.04);
     }
 
     /* ============================================================
-       FOOTER
+       FOOTER — CYBER
        ============================================================ */
     .footer {
       padding: 1.2rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.015);
+      border-top: 1px solid rgba(0, 255, 100, 0.02);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.04);
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.02);
       flex-wrap: wrap;
       gap: 1rem;
       max-width: 780px;
       width: 100%;
+      letter-spacing: 0.5px;
     }
     .footer a {
-      color: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.02);
       text-decoration: none;
       margin-left: 1.2rem;
       transition: 0.3s;
     }
     .footer a:hover {
-      color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.06);
     }
 
     /* ============================================================
        RESPONSIVE
        ============================================================ */
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.6rem;
-      }
-      .header {
-        padding: 1rem 1.5rem;
-      }
-      .nav {
-        gap: 1rem;
-      }
-      .code-area,
-      .history-card {
-        padding: 1.2rem;
-      }
-      .analyzer-title,
-      .history-title {
-        font-size: 1.6rem;
-      }
+      .hero .glitch-text { font-size: 2.6rem; }
+      .header { padding: 1rem 1.5rem; }
+      .nav { gap: 1rem; }
+      .code-area, .history-card { padding: 1.2rem; }
+      .analyzer-title, .history-title { font-size: 1.6rem; }
     }
     @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-      .hero p {
-        font-size: 0.85rem;
-      }
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
+      .hero .glitch-text { font-size: 2rem; }
+      .hero .sub-glitch { font-size: 0.85rem; }
+      .header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- ============================================================
-       ANIMATED NEBULA BACKGROUND
+       CYBER GRID
        ============================================================ -->
-  <div id="nebula-bg"></div>
+  <div id="cyber-grid"></div>
 
   <!-- ============================================================
-       FLOATING PARTICLES
+       HOLOGRAPHIC PARTICLES
        ============================================================ -->
-  <div id="particles"></div>
+  <div id="hologram-particles"></div>
 
   <!-- ============================================================
-       ENTRY ANIMATION — ATTENTION SEEKING
+       SCANNING LINE
+       ============================================================ -->
+  <div id="scan-line"></div>
+
+  <!-- ============================================================
+       ENTRY OVERLAY
        ============================================================ -->
   <div class="entry-overlay" id="entryOverlay">
-    <div class="glow-ring"></div>
-    <div class="glow-ring" style="animation-delay: 0.4s; width: 400px; height: 400px;"></div>
-    <div class="icon-wrapper">
+    <div class="glow-lines">
+      <span style="left: 10%; animation-delay: 0.2s;"></span>
+      <span style="left: 30%; animation-delay: 0.8s;"></span>
+      <span style="left: 50%; animation-delay: 1.4s;"></span>
+      <span style="left: 70%; animation-delay: 0.5s;"></span>
+      <span style="left: 90%; animation-delay: 1.1s;"></span>
+    </div>
+    <div class="neon-ring">
       <i class="fas fa-code"></i>
     </div>
     <h1>✦ ai <span>debug</span></h1>
-    <p>ast · gemini · code</p>
+    <p>ast · gemini · cyber core</p>
   </div>
 
   <!-- ============================================================
        HEADER
        ============================================================ -->
   <header class="header">
-    <div class="logo">✦ ai <span>debug</span></div>
+    <div class="logo"><i class="fas fa-bolt"></i> ai <span>debug</span></div>
     <nav class="nav">
       <a href="#home">Home</a>
       <a href="#analyzer">Analyzer</a>
@@ -701,8 +846,8 @@
        ============================================================ -->
   <section class="section visible" id="home">
     <div class="hero">
-      <h1>Code that <span class="highlight">thinks.</span></h1>
-      <p>Paste your Python code — get AST analysis + Gemini AI review instantly.</p>
+      <h1 class="glitch-text">Code that <span class="highlight">thinks.</span></h1>
+      <p class="sub-glitch">Paste your Python code — get AST analysis + Gemini AI review instantly.</p>
       <button class="btn-primary" id="tryItBtn">
         <i class="fas fa-play" style="margin-right: 6px;"></i> Try it now
       </button>
@@ -750,7 +895,7 @@ x = 10  # unused</textarea>
 
         <div id="output">
           <div class="placeholder">
-            <i class="fas fa-code" style="display: block; font-size: 1.2rem; margin-bottom: 0.2rem; color: rgba(255,255,255,0.03);"></i>
+            <i class="fas fa-code" style="display: block; font-size: 1.2rem; margin-bottom: 0.2rem; color: rgba(255,255,255,0.02);"></i>
             Results will appear here
           </div>
         </div>
@@ -785,7 +930,7 @@ x = 10  # unused</textarea>
   </section>
 
   <!-- ============================================================
-       AUDIO: MYSTERIOUS BACKGROUND SONG (auto-play)
+       AUDIO — CYBER
        ============================================================ -->
   <iframe
     width="0"
@@ -801,20 +946,20 @@ x = 10  # unused</textarea>
     // ============================================================
     // PARTICLES
     // ============================================================
-    const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 25; i++) {
+    const pContainer = document.getElementById('hologram-particles');
+    for (let i = 0; i < 30; i++) {
       const p = document.createElement('div');
-      p.className = 'particle';
-      const size = Math.random() * 3 + 1;
+      p.className = 'h-particle';
+      const size = Math.random() * 4 + 1;
       p.style.width = size + 'px';
       p.style.height = size + 'px';
       p.style.left = Math.random() * 100 + '%';
       p.style.top = Math.random() * 100 + '%';
-      p.style.setProperty('--duration', (Math.random() * 8 + 6) + 's');
-      p.style.setProperty('--tx', (Math.random() - 0.5) * 80 + 'px');
-      p.style.setProperty('--ty', (Math.random() - 0.5) * 80 + 'px');
-      p.style.animationDelay = (Math.random() * 4) + 's';
-      particlesContainer.appendChild(p);
+      p.style.setProperty('--duration', (Math.random() * 10 + 8) + 's');
+      p.style.setProperty('--tx', (Math.random() - 0.5) * 100 + 'px');
+      p.style.setProperty('--ty', (Math.random() - 0.5) * 100 + 'px');
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      pContainer.appendChild(p);
     }
 
     // ============================================================
@@ -907,7 +1052,7 @@ x = 10  # unused</textarea>
       document.getElementById('fileInput').value = '';
       updateStats();
       document.getElementById('output').innerHTML = `<div class="placeholder">
-        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.03);"></i>
+        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.02);"></i>
         Results will appear here
       </div>`;
     });
@@ -1079,12 +1224,12 @@ x = 10  # unused</textarea>
 
         output.innerHTML = `
           <div style="margin-bottom:0.6rem;">
-            <strong style="color:rgba(255,255,255,0.15);font-size:0.7rem;">📄 Code</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.5;background:rgba(0,0,0,0.1);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.015);margin-top:0.2rem;white-space:pre-wrap;color:rgba(255,255,255,0.5);">${code}</pre>
+            <strong style="color:rgba(255,255,255,0.08);font-size:0.65rem;">📄 Code</strong>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;line-height:1.5;background:rgba(0,0,0,0.08);padding:0.6rem;border-radius:8px;border:1px solid rgba(0,255,100,0.02);margin-top:0.2rem;white-space:pre-wrap;color:rgba(255,255,255,0.3);">${code}</pre>
           </div>
           <div>
-            <strong style="color:rgba(255,255,255,0.15);font-size:0.7rem;">📊 Analysis</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.08);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.015);margin-top:0.2rem;color:rgba(255,255,255,0.5);">${text}</pre>
+            <strong style="color:rgba(255,255,255,0.08);font-size:0.65rem;">📊 Analysis</strong>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.05);padding:0.6rem;border-radius:8px;border:1px solid rgba(0,255,100,0.02);margin-top:0.2rem;color:rgba(255,255,255,0.3);">${text}</pre>
           </div>
         `;
 
