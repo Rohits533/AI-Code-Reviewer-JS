@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Debug · Ultimate</title>
+  <title>Rohit Savan · AI Developer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     /* ===== RESET ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,22 +15,11 @@
       color: #ffffff;
       min-height: 100vh;
       overflow-x: hidden;
+      padding: 2rem 1.5rem;
       position: relative;
     }
 
-    /* ===== BG GRADIENT ===== */
-    .bg-gradient {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      background: radial-gradient(circle at 20% 20%, #1a1a2e, #0a0a0f);
-      pointer-events: none;
-    }
-
-    /* ===== PARTICLES ===== */
+    /* ===== PARTICLES BACKGROUND ===== */
     #particles {
       position: fixed;
       top: 0;
@@ -42,51 +30,10 @@
       pointer-events: none;
     }
 
-    /* ===== CURSOR GLOW ===== */
-    #cursorGlow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 255, 100, 0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      will-change: transform;
-      transition: opacity 0.3s;
-      filter: blur(8px);
-    }
-    #cursorGlow.hidden { opacity: 0; }
-
-    /* ===== ENTRY OVERLAY ===== */
-    .entry {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0a0a0f;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      pointer-events: none;
-      animation: entryOut 1.2s ease 1.4s forwards;
-    }
-    .entry .icon { font-size: 4rem; color: #1DB954; animation: pulseIn 1s ease forwards; }
-    .entry h1 { font-size: 2.5rem; font-weight: 700; color: #1DB954; margin-top: 0.5rem; letter-spacing: 2px; animation: slideUp 0.8s ease forwards; }
-    .entry p { color: #888; font-size: 1rem; margin-top: 0.3rem; animation: slideUp 1s ease forwards; }
-    @keyframes pulseIn { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
-    @keyframes slideUp { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
-    @keyframes entryOut { 0% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; } }
-
-    /* ===== MAIN CONTAINER ===== */
+    /* ===== CONTAINER ===== */
     .container {
-      max-width: 1100px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
       position: relative;
       z-index: 1;
     }
@@ -96,212 +43,349 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 0 2rem;
+      padding: 1rem 0 2.5rem;
       flex-wrap: wrap;
       gap: 1rem;
     }
-    .logo { font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
-    .logo span { color: #1DB954; }
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: -0.3px;
+    }
     .nav { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
-    .nav a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; transition: 0.2s; cursor: pointer; }
+    .nav a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: 0.2s;
+      cursor: pointer;
+    }
     .nav a:hover { color: #fff; }
-    .nav .btn { border: 1px solid rgba(255,255,255,0.12); padding: 0.4rem 1.2rem; border-radius: 40px; background: transparent; color: #fff; font-weight: 600; font-size: 0.8rem; transition: 0.25s; }
+    .nav .btn {
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      background: transparent;
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.8rem;
+      transition: 0.25s;
+    }
     .nav .btn:hover { background: #fff; color: #0a0a0f; }
 
     /* ===== HERO ===== */
-    .hero { padding: 2rem 0 3rem; }
-    .hero h1 { font-size: 3.5rem; font-weight: 700; line-height: 1.1; }
-    .hero h1 span { background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.5); max-width: 600px; margin: 1rem 0 2rem; line-height: 1.7; }
-    .hero .btn-primary { background: linear-gradient(135deg, #60a5fa, #a78bfa); border: none; padding: 0.7rem 2rem; border-radius: 60px; font-weight: 600; font-size: 1rem; color: #000; cursor: pointer; transition: 0.25s; box-shadow: 0 8px 24px rgba(96,165,250,0.2); }
-    .hero .btn-primary:hover { transform: scale(1.03); box-shadow: 0 12px 32px rgba(96,165,250,0.4); }
+    .hero { padding: 1rem 0 2.5rem; }
+    .hero h1 { font-size: 3.5rem; font-weight: 700; line-height: 1.1; color: #fff; }
+    .hero h1 .highlight { background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 600px;
+      margin: 1rem 0 2rem;
+      line-height: 1.7;
+    }
+    .hero .btn-primary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.6rem 2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero .btn-primary:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .hero-links {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-links a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-links a:hover { color: #fff; }
 
-    /* ===== STATS ===== */
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem; margin: 2rem 0 3rem; }
-    .stat { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 1.2rem; text-align: center; transition: 0.25s; }
-    .stat:hover { background: rgba(255,255,255,0.06); transform: translateY(-4px); }
-    .stat h3 { font-size: 2rem; font-weight: 700; color: #1DB954; }
-    .stat p { font-size: 0.7rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.5px; }
+    /* ===== PROJECTS ===== */
+    .projects { padding: 3rem 0; }
+    .projects-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .project-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: 0.25s;
+      cursor: default;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .project-item:hover {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .project-item .name { font-size: 1.1rem; font-weight: 500; color: #fff; }
+    .project-item .tags {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .project-item .tags span {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.04);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .project-item .tags .status {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1DB954;
+      background: rgba(29, 185, 84, 0.1);
+      border-color: rgba(29, 185, 84, 0.2);
+    }
+    .project-item .tags .winner {
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+      border-color: rgba(251, 191, 36, 0.2);
+    }
+    .project-item .tags .building {
+      color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.04);
+    }
 
     /* ===== SCROLL REVEAL ===== */
-    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
     .reveal.active { opacity: 1; transform: translateY(0); }
 
-    /* ===== SECTION TITLE ===== */
-    .section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem; border-left: 4px solid #1DB954; padding-left: 1rem; }
-
-    /* ===== CODE AREA ===== */
-    .code-area textarea {
-      width: 100%;
-      padding: 1.2rem;
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #e5e7eb;
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      resize: vertical;
-      min-height: 160px;
-      transition: border-color 0.2s;
-    }
-    .code-area textarea:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,0.15); }
-    .file-upload-area { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
-    .file-upload-label { background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 0.4rem 1.2rem; border-radius: 40px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; font-family: inherit; display: inline-flex; align-items: center; gap: 0.5rem; }
-    .file-upload-label:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); color: #fff; }
-    .file-name { color: rgba(255,255,255,0.4); font-size: 0.75rem; }
-    .code-stats { display: flex; gap: 1.5rem; margin-top: 0.5rem; font-size: 0.75rem; color: rgba(255,255,255,0.3); flex-wrap: wrap; }
-    .code-stats span { display: flex; align-items: center; gap: 0.3rem; }
-    .toolbar { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
-    .toolbar button { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); padding: 0.3rem 0.8rem; border-radius: 40px; font-size: 0.7rem; cursor: pointer; transition: 0.2s; font-family: inherit; }
-    .toolbar button:hover { background: rgba(255,255,255,0.05); color: #fff; border-color: rgba(255,255,255,0.2); }
-    .toolbar button.copy-btn:hover { border-color: #60a5fa; color: #60a5fa; }
-    .toolbar button.download-btn:hover { border-color: #1DB954; color: #1DB954; }
-    .toolbar button.clear-btn:hover { border-color: #ff6b6b; color: #ff6b6b; }
-    .toolbar button.pdf-btn:hover { border-color: #ff6b6b; color: #ff6b6b; }
-    .lang-badge { display: inline-block; background: rgba(96,165,250,0.15); color: #60a5fa; padding: 0.1rem 0.6rem; border-radius: 20px; font-size: 0.65rem; font-weight: 600; margin-left: 0.5rem; }
-    #output {
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 1.2rem;
-      border-radius: 16px;
-      min-height: 120px;
-      color: #e5e7eb;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      line-height: 1.7;
-      white-space: pre-wrap;
-      border: 1px solid rgba(255,255,255,0.06);
-      margin-top: 1.2rem;
-    }
-    #output .placeholder { color: rgba(255,255,255,0.25); font-family: 'Inter', sans-serif; text-align: center; padding: 2rem 0; }
-    .spinner-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 0; gap: 1rem; }
-    .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid #60a5fa; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .spinner-text { color: rgba(255,255,255,0.5); font-size: 0.9rem; animation: pulse-text 1.5s ease-in-out infinite; }
-    @keyframes pulse-text { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-    .analyze-btn { margin-top: 1rem; background: linear-gradient(135deg, #60a5fa, #a78bfa); border: none; padding: 0.7rem 2rem; border-radius: 60px; font-weight: 600; font-size: 1rem; color: #000; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 16px rgba(96,165,250,0.2); }
-    .analyze-btn:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(96,165,250,0.4); }
-
-    #historySection { margin-top: 1.5rem; }
-    .history-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); padding: 0.5rem 1.2rem; border-radius: 40px; font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-family: inherit; }
-    .history-toggle-btn:hover { background: rgba(255,255,255,0.05); color: #fff; border-color: rgba(255,255,255,0.3); }
-    .clear-history-btn { background: transparent; border: 1px solid rgba(255,50,50,0.2); color: rgba(255,255,255,0.5); padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-top: 0.5rem; font-family: inherit; }
-    .clear-history-btn:hover { background: rgba(255,50,50,0.1); color: #ff6b6b; border-color: rgba(255,50,50,0.4); }
-    .history-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 0.8rem 1rem; margin-bottom: 0.6rem; font-size: 0.8rem; color: rgba(255,255,255,0.7); transition: 0.2s; }
-    .history-item:hover { background: rgba(255,255,255,0.06); }
-    .history-item .timestamp { color: rgba(255,255,255,0.3); font-size: 0.7rem; float: right; }
-    .history-item .code-snippet { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
-    .history-item .issues-badge { display: inline-block; background: #1DB954; color: #000; font-weight: 600; font-size: 0.65rem; padding: 0.1rem 0.6rem; border-radius: 20px; margin-top: 0.2rem; }
-
-    /* ===== CONTACT ===== */
-    .contact-links { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1rem; }
-    .contact-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 1rem; transition: 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
-    .contact-links a:hover { color: #fff; }
-
-    /* ===== FOOTER ===== */
-    .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: rgba(255,255,255,0.25); flex-wrap: wrap; gap: 1rem; }
-    .footer a { color: rgba(255,255,255,0.25); text-decoration: none; margin-left: 1.5rem; transition: 0.2s; }
-    .footer a:hover { color: #60a5fa; }
-
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .stats { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 480px) { .hero h1 { font-size: 2rem; } .stats { grid-template-columns: 1fr; } .container { padding: 1rem; } }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .project-item { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2rem; }
+      .header { flex-direction: column; align-items: flex-start; }
+      .nav { gap: 1.2rem; }
+      body { padding: 1.2rem; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="bg-gradient"></div>
   <canvas id="particles"></canvas>
-  <div id="cursorGlow"></div>
-
-  <div class="entry">
-    <div class="icon"><i class="fas fa-code"></i></div>
-    <h1>✦ ai debug</h1>
-    <p>ast + gemini · spotify</p>
-  </div>
 
   <div class="container">
 
+    <!-- ===== HEADER ===== -->
     <header class="header">
-      <div class="logo">✦ ai <span>debug</span></div>
+      <div class="logo">Rohit Savan</div>
       <nav class="nav">
-        <a href="#home">Home</a>
-        <a href="#docs">Docs</a>
-        <a href="#contact" class="btn">Contact</a>
+        <a href="#">Work</a>
+        <a href="#">GitHub</a>
+        <a href="#" class="btn">Contact</a>
       </nav>
     </header>
 
-    <section id="home" class="hero">
-      <h1>Code that <span>thinks.</span></h1>
-      <p>Paste your Python code — get AST analysis + Gemini AI review instantly. Built for clarity, speed, and depth.</p>
-      <button class="btn-primary" id="tryItBtn"><i class="fas fa-play" style="margin-right:8px;"></i> Try it now</button>
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <h1>I build with <span class="highlight">it.</span></h1>
+      <p>17-year-old AI developer shipping production-grade applications — recently built <strong>AI Code Debugger</strong> (HTML/CSS/JS + Node.js + FastAPI + Gemini) to 18 live projects.</p>
+      <button class="btn-primary" id="exploreBtn">Explore My Work →</button>
+      <div class="hero-links">
+        <a href="https://github.com/Rohits533" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="mailto:rohitsavan360@gmail.com"><i class="fas fa-envelope"></i> Contact Me</a>
+      </div>
     </section>
 
-    <div class="stats">
-      <div class="stat"><h3>18</h3><p>projects shipped</p></div>
-      <div class="stat"><h3>4</h3><p>languages</p></div>
-      <div class="stat"><h3>100%</h3><p>self-taught</p></div>
-      <div class="stat"><h3>⚡</h3><p>ast + gemini</p></div>
-    </div>
+    <!-- ===== PROJECTS ===== -->
+    <section class="projects">
+      <div class="projects-grid">
 
-    <section id="docs">
-      <h2 class="section-title reveal">Docs · Analyzer</h2>
-      <div class="code-area">
-        <div class="file-upload-area reveal">
-          <label for="fileInput" class="file-upload-label"><i class="fas fa-upload"></i> Upload .py File</label>
-          <input type="file" id="fileInput" accept=".py" style="display: none;" />
-          <span id="fileName" class="file-name">No file selected</span>
-        </div>
-        <textarea id="codeInput" rows="6" class="reveal" placeholder="Paste your Python code here...">def add(a, b):
-    return a + b
-
-x = 10  # unused</textarea>
-        <div class="code-stats reveal">
-          <span id="lineCount">📄 Lines: 0</span>
-          <span id="charCount">📝 Characters: 0</span>
-          <span id="langDetect">🔤 Language: <span class="lang-badge" id="langBadge">Python</span></span>
-        </div>
-        <div class="toolbar reveal">
-          <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
-          <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> Download .txt</button>
-          <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
-          <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> Export PDF</button>
-        </div>
-        <button class="analyze-btn reveal" id="analyzeBtn">🔍 Analyze</button>
-        <div id="output" class="reveal">
-          <div class="placeholder">
-            <i class="fas fa-code" style="display:block; font-size:2rem; margin-bottom:0.5rem; color:#333;"></i>
-            Results will appear here
+        <div class="project-item reveal">
+          <span class="name">AI Code Debugger</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>html · css · js</span>
+            <span>node.js · fastapi</span>
+            <span>gemini · ast</span>
           </div>
         </div>
-        <div id="historySection" class="reveal">
-          <button id="toggleHistoryBtn" class="history-toggle-btn">📜 View Analysis History (<span id="historyCount">0</span>)</button>
-          <div id="historyList" style="display: none; margin-top: 0.8rem;"></div>
-          <button id="clearHistoryBtn" class="clear-history-btn" style="display: none;">🗑️ Clear History</button>
+
+        <div class="project-item reveal">
+          <span class="name">AI Code Migration Assistant</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>python · ast</span>
+            <span>streamlit · groq</span>
+          </div>
         </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Career Coach (Jobscan)</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>python · langchain</span>
+            <span>groq · sqlite</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Resume Builder</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>python · streamlit</span>
+            <span>groq · reportlab</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI News Summarizer</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>langchain · duckduckgo</span>
+            <span>streamlit · rag</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Assistant Platform</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>langchain · groq</span>
+            <span>streamlit · rag</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Student Performance Predictor</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>scikit-learn · randomforest</span>
+            <span>streamlit · matplotlib</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Image Analyzer</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>groq · llama vision</span>
+            <span>multimodal · streamlit</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Data Analyzer</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>pandas · scikit-learn</span>
+            <span>streamlit · matplotlib</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Study Planner</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>groq · streamlit</span>
+            <span>pdf · streaming</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Email Generator</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>groq · streamlit</span>
+            <span>streaming · 9 types</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Translator</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>groq · streamlit</span>
+            <span>20+ languages · pdf</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Flashcard Generator</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>groq · streamlit</span>
+            <span>json · animations</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Interview Coach</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>groq · streamlit</span>
+            <span>session state · pdf</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Story Generator</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>groq · streamlit</span>
+            <span>streaming · reportlab</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">AI Documentation Generator</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>ast · python · groq</span>
+            <span>streamlit · docs</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">Blinkit Clone (UI)</span>
+          <div class="tags">
+            <span class="status">LIVE</span>
+            <span>html · css · js</span>
+            <span>ui · template</span>
+          </div>
+        </div>
+
+        <div class="project-item reveal">
+          <span class="name">+ 1 More Project</span>
+          <div class="tags">
+            <span class="building">building...</span>
+            <span>next.js · fastapi</span>
+          </div>
+        </div>
+
       </div>
     </section>
-
-    <section id="contact">
-      <h2 class="section-title reveal">Contact</h2>
-      <div class="contact-links reveal">
-        <a href="https://github.com/Rohits533" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="mailto:rohitsavan360@gmail.com"><i class="fas fa-envelope"></i> Email</a>
-      </div>
-    </section>
-
-    <footer class="footer reveal">
-      <span>© 2026 · built with <span style="color:#1DB954;">✦</span> by rohit</span>
-      <div>
-        <a href="https://github.com/Rohits533">GitHub</a>
-        <a href="https://vercel.com">Vercel</a>
-        <a href="https://render.com">Render</a>
-      </div>
-    </footer>
 
   </div>
 
@@ -316,10 +400,10 @@ x = 10  # unused</textarea>
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        r: Math.random() * 2 + 1,
-        a: Math.random() * 0.4 + 0.1
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.5 + 0.5,
+        a: Math.random() * 0.3 + 0.1
       });
     }
     function drawParticles() {
@@ -337,18 +421,10 @@ x = 10  # unused</textarea>
       requestAnimationFrame(drawParticles);
     }
     drawParticles();
-
-    // ===== CURSOR GLOW =====
-    const glow = document.getElementById('cursorGlow');
-    document.addEventListener('mousemove', (e) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      glow.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
-      glow.classList.remove('hidden');
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
-    document.addEventListener('mouseleave', () => { glow.classList.add('hidden'); });
-    document.addEventListener('mouseenter', () => { glow.classList.remove('hidden'); });
-    if ('ontouchstart' in window) { glow.style.display = 'none'; }
 
     // ===== SCROLL REVEAL =====
     const reveals = document.querySelectorAll('.reveal');
@@ -363,189 +439,10 @@ x = 10  # unused</textarea>
     window.addEventListener('scroll', checkReveal);
     window.addEventListener('load', checkReveal);
 
-    // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('.nav a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && href.startsWith('#')) {
-          e.preventDefault();
-          const target = document.querySelector(href);
-          if (target) target.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
+    // ===== EXPLORE BUTTON =====
+    document.getElementById('exploreBtn').addEventListener('click', () => {
+      document.querySelector('.projects').scrollIntoView({ behavior: 'smooth' });
     });
-
-    // ===== TRY IT NOW =====
-    document.getElementById('tryItBtn').addEventListener('click', () => {
-      document.getElementById('docs').scrollIntoView({ behavior: 'smooth' });
-      document.getElementById('codeInput').focus();
-    });
-
-    // ===== KEYBOARD SHORTCUTS =====
-    document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault();
-        document.getElementById('analyzeBtn').click();
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
-        e.preventDefault();
-        document.getElementById('toggleHistoryBtn').click();
-      }
-    });
-
-    // ===== CODE STATS =====
-    function updateStats() {
-      const code = document.getElementById('codeInput').value;
-      const lines = code.split('\n').length;
-      const chars = code.length;
-      document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
-      document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
-      const langBadge = document.getElementById('langBadge');
-      if (code.includes('def ') || code.includes('import ') || code.includes('class ')) langBadge.textContent = 'Python';
-      else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) langBadge.textContent = 'JavaScript';
-      else if (code.includes('public class ') || code.includes('System.out.println')) langBadge.textContent = 'Java';
-      else langBadge.textContent = 'Unknown';
-    }
-    document.getElementById('codeInput').addEventListener('input', updateStats);
-    updateStats();
-
-    // ===== FILE UPLOAD =====
-    document.getElementById('fileInput').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      document.getElementById('fileName').textContent = file.name;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        document.getElementById('codeInput').value = event.target.result;
-        updateStats();
-      };
-      reader.readAsText(file);
-    });
-
-    // ===== CLEAR =====
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      document.getElementById('codeInput').value = '';
-      document.getElementById('fileName').textContent = 'No file selected';
-      document.getElementById('fileInput').value = '';
-      updateStats();
-      document.getElementById('output').innerHTML = `<div class="placeholder"><i class="fas fa-code" style="display:block; font-size:2rem; margin-bottom:0.5rem; color:#333;"></i>Results will appear here</div>`;
-    });
-
-    // ===== COPY =====
-    document.getElementById('copyBtn').addEventListener('click', async () => {
-      const output = document.getElementById('output').textContent;
-      if (output && !output.includes('Results will appear here')) {
-        try {
-          await navigator.clipboard.writeText(output);
-          const btn = document.getElementById('copyBtn');
-          btn.innerHTML = '✅ Copied!';
-          setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i> Copy', 2000);
-        } catch { alert('Failed to copy.'); }
-      } else { alert('No results to copy.'); }
-    });
-
-    // ===== DOWNLOAD =====
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-      const output = document.getElementById('output').textContent;
-      if (output && !output.includes('Results will appear here')) {
-        const blob = new Blob([output], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `analysis-${Date.now()}.txt`;
-        a.click();
-        URL.revokeObjectURL(url);
-      } else { alert('No results to download.'); }
-    });
-
-    // ===== PDF =====
-    document.getElementById('pdfBtn').addEventListener('click', () => {
-      const output = document.getElementById('output');
-      const content = output.textContent;
-      if (!content || content.includes('Results will appear here') || content.includes('Analyzing your code')) {
-        alert('No results to export. Please analyze some code first.');
-        return;
-      }
-      const tempDiv = document.createElement('div');
-      tempDiv.style.padding = '30px';
-      tempDiv.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      tempDiv.style.maxWidth = '800px';
-      tempDiv.style.margin = '0 auto';
-      tempDiv.style.background = '#ffffff';
-      tempDiv.style.color = '#1a1a1a';
-      tempDiv.style.borderRadius = '8px';
-      tempDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-      tempDiv.innerHTML = `
-        <h1 style="font-size:24px;font-weight:700;margin-bottom:4px;color:#1a1a1a;">🧠 AI Debug Report</h1>
-        <p style="color:#666;font-size:14px;margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:12px;">Generated on ${new Date().toLocaleString()}</p>
-        <pre style="font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;background:#f5f5f5;padding:16px;border-radius:6px;border:1px solid #e0e0e0;color:#1a1a1a;">${content}</pre>
-        <p style="color:#999;font-size:11px;margin-top:20px;border-top:1px solid #eee;padding-top:12px;text-align:center;">Built with ✦ ai debug · ast + gemini</p>
-      `;
-      document.body.appendChild(tempDiv);
-      html2pdf().set({ margin: [0.5,0.5,0.5,0.5], filename: `ai-debug-report-${Date.now()}.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, letterRendering: true, useCORS: true }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).from(tempDiv).save().then(() => { document.body.removeChild(tempDiv); });
-    });
-
-    // ===== HISTORY =====
-    function getHistory() { try { return JSON.parse(localStorage.getItem('analysisHistory')) || []; } catch { return []; } }
-    function saveToHistory(code, result) {
-      const history = getHistory();
-      const entry = { id: Date.now(), timestamp: new Date().toLocaleString(), code: code.slice(0,200) + (code.length>200?'...':''), fullCode: code, result: result, issues: result.ast_report?.issues_count ?? result.issues_count ?? 0 };
-      history.unshift(entry);
-      if (history.length > 50) history.pop();
-      localStorage.setItem('analysisHistory', JSON.stringify(history));
-      renderHistory();
-    }
-    function renderHistory() {
-      const history = getHistory();
-      const list = document.getElementById('historyList');
-      const count = document.getElementById('historyCount');
-      const clearBtn = document.getElementById('clearHistoryBtn');
-      if (!list || !count || !clearBtn) return;
-      count.textContent = history.length;
-      if (history.length === 0) { list.innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:0.8rem;padding:0.5rem 0;">No past analyses yet.</div>`; clearBtn.style.display = 'none'; return; }
-      clearBtn.style.display = 'inline-block';
-      list.innerHTML = history.map(item => `<div class="history-item"><span class="timestamp">${item.timestamp}</span><div><strong>${item.issues} issue${item.issues!==1?'s':''} found</strong></div><div class="code-snippet">${item.code}</div><span class="issues-badge">${item.issues} issues</span></div>`).join('');
-    }
-    function clearHistory() { if (confirm('Clear all saved analyses?')) { localStorage.removeItem('analysisHistory'); renderHistory(); } }
-    document.getElementById('toggleHistoryBtn').addEventListener('click', () => {
-      const list = document.getElementById('historyList');
-      if (list.style.display === 'none') { list.style.display = 'block'; renderHistory(); document.getElementById('toggleHistoryBtn').textContent = `📜 Hide History (${getHistory().length})`; }
-      else { list.style.display = 'none'; document.getElementById('toggleHistoryBtn').textContent = `📜 View Analysis History (${getHistory().length})`; }
-    });
-    document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
-
-    // ===== ANALYZE =====
-    document.getElementById('analyzeBtn').addEventListener('click', async () => {
-      const code = document.getElementById('codeInput').value;
-      const output = document.getElementById('output');
-      if (!code.trim()) { output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`; return; }
-      output.innerHTML = `<div class="spinner-container"><div class="spinner"></div><div class="spinner-text">Analyzing your code...</div></div>`;
-      try {
-        const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
-        const data = await res.json();
-        if (!res.ok) { output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`; return; }
-        const ast = data.ast_report || data;
-        let text = '📊 STATIC ANALYSIS (AST)\n----------------------------\n';
-        text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
-        text += `Unused Imports: ${(ast.unused_imports || []).join(', ') || 'None'}\n`;
-        text += `Total Issues: ${ast.issues_count || 0}\n\n`;
-        if (data.ai_review) { text += '🧠 AI REVIEW (Gemini)\n----------------------------\n' + data.ai_review; }
-        const highlightedCode = hljs.highlight(code, { language: 'python' }).value;
-        output.innerHTML = `
-          <div style="margin-bottom:1rem;">
-            <strong style="color:rgba(255,255,255,0.5);font-size:0.8rem;">📄 Code</strong>
-            <pre><code class="hljs language-python">${highlightedCode}</code></pre>
-          </div>
-          <div>
-            <strong style="color:rgba(255,255,255,0.5);font-size:0.8rem;">📊 Analysis</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;line-height:1.7;white-space:pre-wrap;background:rgba(255,255,255,0.04);padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.06);margin-top:0.5rem;">${text}</pre>
-          </div>
-        `;
-        saveToHistory(code, data);
-      } catch (err) { output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`; }
-    });
-
-    renderHistory();
   </script>
 </body>
 </html>
