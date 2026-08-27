@@ -18,6 +18,8 @@
     }
     html {
       scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
     }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -115,24 +117,44 @@
     }
 
     /* ============================================================
-       CONTAINER
+       FULL PAGE SPLIT SECTIONS
        ============================================================ */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
+    .section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      scroll-snap-align: start;
       position: relative;
       z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ============================================================
-       HEADER
+       HEADER (fixed)
        ============================================================ */
     .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 0 3rem;
+      z-index: 100;
+      background: rgba(6, 8, 10, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       flex-wrap: wrap;
       gap: 1rem;
     }
@@ -157,7 +179,7 @@
     .nav a {
       color: rgba(255, 255, 255, 0.4);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 400;
       transition: 0.3s;
       cursor: pointer;
@@ -181,7 +203,7 @@
     }
     .nav .btn {
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 0.4rem 1.4rem;
+      padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
       color: #fff;
@@ -198,14 +220,14 @@
     }
 
     /* ============================================================
-       HERO
+       HERO SECTION
        ============================================================ */
     .hero {
-      padding: 2rem 0 3rem;
       text-align: center;
+      padding: 4rem 1.5rem;
     }
     .hero h1 {
-      font-size: 4rem;
+      font-size: 4.5rem;
       font-weight: 900;
       line-height: 1.05;
       letter-spacing: -1px;
@@ -248,39 +270,57 @@
     }
 
     /* ============================================================
-       SCROLL TRIGGERED SECTIONS
+       SCROLL INDICATOR
        ============================================================ */
-    .section {
-      padding: 4rem 0;
-      opacity: 0;
-      transform: translateY(60px);
-      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: bounceDown 2s ease-in-out infinite;
     }
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .scroll-indicator i {
+      font-size: 1.2rem;
+    }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
     }
 
-    .section-title {
-      font-size: 2rem;
+    /* ============================================================
+       ANALYZER SECTION
+       ============================================================ */
+    .analyzer-container {
+      max-width: 900px;
+      width: 100%;
+    }
+    .analyzer-title {
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
+      text-align: center;
     }
-    .section-title span {
+    .analyzer-title span {
       background: linear-gradient(135deg, #60a5fa, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .section-sub {
+    .analyzer-sub {
       color: rgba(255, 255, 255, 0.4);
       font-size: 0.95rem;
+      text-align: center;
       margin-bottom: 2rem;
     }
 
-    /* ============================================================
-       CODE AREA
-       ============================================================ */
     .code-area {
       background: rgba(255, 255, 255, 0.02);
       backdrop-filter: blur(20px);
@@ -480,44 +520,41 @@
     }
 
     /* ============================================================
-       HISTORY
+       HISTORY SECTION
        ============================================================ */
-    #historySection {
-      margin-top: 1.5rem;
+    .history-container {
+      max-width: 900px;
+      width: 100%;
     }
-    .history-toggle-btn {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+    .history-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .history-title span {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .history-sub {
       color: rgba(255, 255, 255, 0.4);
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: 0.3s;
-      font-family: inherit;
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 2rem;
     }
-    .history-toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.04);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.12);
+
+    .history-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
-    .clear-history-btn {
-      background: transparent;
-      border: 1px solid rgba(255, 50, 50, 0.1);
-      color: rgba(255, 255, 255, 0.3);
-      padding: 0.2rem 0.8rem;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 0.5rem;
-      font-family: inherit;
-    }
-    .clear-history-btn:hover {
-      background: rgba(255, 50, 50, 0.06);
-      color: #ff6b6b;
-      border-color: rgba(255, 50, 50, 0.2);
-    }
+
     .history-item {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.04);
@@ -556,13 +593,36 @@
       border-radius: 20px;
       margin-top: 0.2rem;
     }
+    .history-empty {
+      color: rgba(255, 255, 255, 0.2);
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .clear-history-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 50, 50, 0.1);
+      color: rgba(255, 255, 255, 0.3);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: inherit;
+      margin-top: 1rem;
+      display: inline-block;
+    }
+    .clear-history-btn:hover {
+      background: rgba(255, 50, 50, 0.06);
+      color: #ff6b6b;
+      border-color: rgba(255, 50, 50, 0.2);
+    }
 
     /* ============================================================
        FOOTER
        ============================================================ */
     .footer {
-      margin-top: 4rem;
-      padding-top: 1.5rem;
+      padding: 2rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
       display: flex;
       justify-content: space-between;
@@ -571,6 +631,8 @@
       color: rgba(255, 255, 255, 0.15);
       flex-wrap: wrap;
       gap: 1rem;
+      max-width: 900px;
+      width: 100%;
     }
     .footer a {
       color: rgba(255, 255, 255, 0.15);
@@ -589,19 +651,19 @@
       .hero h1 {
         font-size: 2.8rem;
       }
-      .container {
-        padding: 1rem;
-      }
-      .code-area {
-        padding: 1.2rem;
-      }
       .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
+        padding: 1rem 1.5rem;
       }
       .nav {
         gap: 1.2rem;
+      }
+      .code-area,
+      .history-card {
+        padding: 1.2rem;
+      }
+      .analyzer-title,
+      .history-title {
+        font-size: 2rem;
       }
     }
     @media (max-width: 480px) {
@@ -610,6 +672,11 @@
       }
       .hero p {
         font-size: 0.95rem;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
       }
     }
   </style>
@@ -636,40 +703,47 @@
   <div class="shooting-star" style="--duration: 6.5s; top: 25%; left: 50%; animation-delay: 4s;"></div>
 
   <!-- ============================================================
-       CONTAINER
+       FIXED HEADER
        ============================================================ -->
-  <div class="container">
+  <header class="header">
+    <div class="logo">✦ ai <span>debug</span></div>
+    <nav class="nav">
+      <a href="#home">Home</a>
+      <a href="#analyzer">Analyzer</a>
+      <a href="#history">History</a>
+      <a href="#" class="btn">Contact</a>
+    </nav>
+  </header>
 
-    <!-- ===== HEADER ===== -->
-    <header class="header">
-      <div class="logo">✦ ai <span>debug</span></div>
-      <nav class="nav">
-        <a href="#home">Home</a>
-        <a href="#analyzer">Analyzer</a>
-        <a href="#history">History</a>
-        <a href="#" class="btn">Contact</a>
-      </nav>
-    </header>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="home">
+  <!-- ============================================================
+       SECTION 1: HERO
+       ============================================================ -->
+  <section class="section visible" id="home">
+    <div class="hero">
       <h1>Code that <span class="highlight">thinks.</span></h1>
       <p>
-        Paste your Python code — get AST analysis + Gemini AI review instantly.
+        Paste your Python code — get AST analysis + Gemini AI review instantly.<br />
         Built for clarity, speed, and depth.
       </p>
       <button class="btn-primary" id="tryItBtn">
         <i class="fas fa-play" style="margin-right: 8px;"></i> Try it now
       </button>
-    </section>
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </section>
 
-    <!-- ===== ANALYZER ===== -->
-    <section class="section" id="analyzer">
-      <h2 class="section-title">⚡ <span>Code Analyzer</span></h2>
-      <p class="section-sub">Paste your Python code below and get a professional review.</p>
+  <!-- ============================================================
+       SECTION 2: ANALYZER
+       ============================================================ -->
+  <section class="section" id="analyzer">
+    <div class="analyzer-container">
+      <h2 class="analyzer-title">⚡ <span>Code Analyzer</span></h2>
+      <p class="analyzer-sub">Paste your Python code and get a professional review.</p>
 
       <div class="code-area">
-
         <!-- File Upload -->
         <div class="file-upload-area">
           <label for="fileInput" class="file-upload-label">
@@ -710,32 +784,31 @@ x = 10  # unused</textarea>
             Results will appear here
           </div>
         </div>
-
-        <!-- History -->
-        <div id="historySection">
-          <button id="toggleHistoryBtn" class="history-toggle-btn">📜 View History (<span id="historyCount">0</span>)</button>
-          <div id="historyList" style="display: none; margin-top: 0.8rem;"></div>
-          <button id="clearHistoryBtn" class="clear-history-btn" style="display: none;">🗑️ Clear</button>
-        </div>
-
       </div>
-    </section>
+    </div>
+    <div class="scroll-indicator" style="position: relative; bottom: auto; margin-top: 2rem;">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
 
-    <!-- ===== HISTORY SECTION ===== -->
-    <section class="section" id="history">
-      <h2 class="section-title">📜 <span>Analysis History</span></h2>
-      <p class="section-sub">Your past analyses are saved locally in your browser.</p>
-      <div style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.04);">
-        <div id="historyListFull">
-          <div style="color: rgba(255,255,255,0.2); text-align: center; padding: 2rem 0;">
-            No past analyses yet. Run some code above!
-          </div>
+  <!-- ============================================================
+       SECTION 3: HISTORY
+       ============================================================ -->
+  <section class="section" id="history">
+    <div class="history-container">
+      <h2 class="history-title">📜 <span>Analysis History</span></h2>
+      <p class="history-sub">Your past analyses are saved locally.</p>
+
+      <div class="history-card">
+        <div id="historyList">
+          <div class="history-empty">No past analyses yet. Run some code!</div>
         </div>
+        <button id="clearHistoryBtn" class="clear-history-btn">🗑️ Clear All</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 3rem;">
       <span>© 2026 · built with <span style="color: #1DB954;">✦</span> by rohit</span>
       <div>
         <a href="https://github.com/Rohits533" target="_blank">GitHub</a>
@@ -743,8 +816,20 @@ x = 10  # unused</textarea>
         <a href="https://render.com" target="_blank">Render</a>
       </div>
     </footer>
+  </section>
 
-  </div>
+  <!-- ============================================================
+       AUDIO: MYSTERIOUS BACKGROUND SONG
+       ============================================================ -->
+  <iframe
+    width="0"
+    height="0"
+    scrolling="no"
+    frameborder="no"
+    allow="autoplay"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%231DB954&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+    style="position: fixed; bottom: 20px; right: 20px; z-index: 999; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);"
+  ></iframe>
 
   <script>
     // ============================================================
@@ -805,10 +890,6 @@ x = 10  # unused</textarea>
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
         document.getElementById('analyzeBtn').click();
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
-        e.preventDefault();
-        document.getElementById('toggleHistoryBtn').click();
       }
     });
 
@@ -963,38 +1044,14 @@ x = 10  # unused</textarea>
       if (history.length > 50) history.pop();
       localStorage.setItem('analysisHistory', JSON.stringify(history));
       renderHistory();
-      renderHistoryFull();
     }
 
     function renderHistory() {
-      const history = getHistory();
       const list = document.getElementById('historyList');
-      const count = document.getElementById('historyCount');
-      const clearBtn = document.getElementById('clearHistoryBtn');
-      if (!list || !count || !clearBtn) return;
-      count.textContent = history.length;
-      if (history.length === 0) {
-        list.innerHTML = `<div style="color:rgba(255,255,255,0.2);font-size:0.8rem;padding:0.5rem 0;">No past analyses yet.</div>`;
-        clearBtn.style.display = 'none';
-        return;
-      }
-      clearBtn.style.display = 'inline-block';
-      list.innerHTML = history.map(item => `
-        <div class="history-item">
-          <span class="timestamp">${item.timestamp}</span>
-          <div><strong>${item.issues} issue${item.issues !== 1 ? 's' : ''} found</strong></div>
-          <div class="code-snippet">${item.code}</div>
-          <span class="issues-badge">${item.issues} issues</span>
-        </div>
-      `).join('');
-    }
-
-    function renderHistoryFull() {
       const history = getHistory();
-      const list = document.getElementById('historyListFull');
       if (!list) return;
       if (history.length === 0) {
-        list.innerHTML = `<div style="color:rgba(255,255,255,0.2);text-align:center;padding:2rem 0;">No past analyses yet. Run some code above!</div>`;
+        list.innerHTML = `<div class="history-empty">No past analyses yet. Run some code!</div>`;
         return;
       }
       list.innerHTML = history.map(item => `
@@ -1011,21 +1068,8 @@ x = 10  # unused</textarea>
       if (confirm('Clear all saved analyses?')) {
         localStorage.removeItem('analysisHistory');
         renderHistory();
-        renderHistoryFull();
       }
     }
-
-    document.getElementById('toggleHistoryBtn').addEventListener('click', () => {
-      const list = document.getElementById('historyList');
-      if (list.style.display === 'none') {
-        list.style.display = 'block';
-        renderHistory();
-        document.getElementById('toggleHistoryBtn').textContent = `📜 Hide History (${getHistory().length})`;
-      } else {
-        list.style.display = 'none';
-        document.getElementById('toggleHistoryBtn').textContent = `📜 View History (${getHistory().length})`;
-      }
-    });
 
     document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
 
@@ -1066,12 +1110,10 @@ x = 10  # unused</textarea>
           text += '🧠 AI REVIEW (Gemini)\n----------------------------\n' + data.ai_review;
         }
 
-        const highlightedCode = hljs ? hljs.highlight(code, { language: 'python' }).value : code;
-
         output.innerHTML = `
           <div style="margin-bottom:1rem;">
             <strong style="color:rgba(255,255,255,0.4);font-size:0.8rem;">📄 Code</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;line-height:1.6;background:rgba(0,0,0,0.3);padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.04);margin-top:0.3rem;white-space:pre-wrap;color:#e5e7eb;">${highlightedCode}</pre>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;line-height:1.6;background:rgba(0,0,0,0.3);padding:1rem;border-radius:12px;border:1px solid rgba(255,255,255,0.04);margin-top:0.3rem;white-space:pre-wrap;color:#e5e7eb;">${code}</pre>
           </div>
           <div>
             <strong style="color:rgba(255,255,255,0.4);font-size:0.8rem;">📊 Analysis</strong>
@@ -1087,7 +1129,6 @@ x = 10  # unused</textarea>
     });
 
     renderHistory();
-    renderHistoryFull();
   </script>
 </body>
 </html>
