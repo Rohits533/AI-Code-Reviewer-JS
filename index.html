@@ -8,6 +8,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
     * {
       margin: 0;
       padding: 0;
@@ -16,23 +19,160 @@
     html {
       scroll-behavior: smooth;
       scroll-snap-type: y mandatory;
+      overflow-y: scroll;
     }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #0a0a0f;
       color: #ffffff;
       min-height: 100vh;
       overflow-x: hidden;
+      padding: 0;
+      position: relative;
     }
-    #bg {
+
+    /* ============================================================
+       ANIMATED NEBULA BACKGROUND
+       ============================================================ */
+    #nebula-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: radial-gradient(ellipse at 20% 50%, #0a0a0f 0%, #0a0a0f 70%);
+      pointer-events: none;
+    }
+    #nebula-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse at 70% 20%, rgba(29, 185, 84, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
+      animation: nebulaPulse 12s ease-in-out infinite alternate;
+    }
+    @keyframes nebulaPulse {
+      0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+      50% { transform: scale(1.05) rotate(1deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+    }
+
+    /* ============================================================
+       FLOATING PARTICLES
+       ============================================================ */
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      animation: float var(--duration) ease-in-out infinite alternate;
+    }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(1.2); opacity: 0.6; }
+    }
+
+    /* ============================================================
+       ENTRY ANIMATION — ATTENTION SEEKING
+       ============================================================ */
+    .entry-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background: #0a0a0f;
-      z-index: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      pointer-events: none;
+      animation: entryFadeOut 1.2s ease 2.0s forwards;
     }
+    .entry-overlay .icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(29, 185, 84, 0.06);
+      border: 1px solid rgba(29, 185, 84, 0.15);
+      animation: iconPulse 1.6s ease forwards;
+      box-shadow: 0 0 60px rgba(29, 185, 84, 0.05), inset 0 0 60px rgba(29, 185, 84, 0.02);
+    }
+    .entry-overlay .icon-wrapper i {
+      font-size: 4rem;
+      color: #1DB954;
+      animation: iconIn 1.2s ease forwards;
+    }
+    .entry-overlay h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 1.2rem;
+      letter-spacing: 2px;
+      animation: textIn 1.2s ease forwards;
+    }
+    .entry-overlay h1 span {
+      color: #1DB954;
+    }
+    .entry-overlay p {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1rem;
+      margin-top: 0.3rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      animation: textIn 1.4s ease forwards;
+    }
+    .entry-overlay .glow-ring {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(29, 185, 84, 0.04);
+      animation: ringExpand 2s ease forwards;
+    }
+    @keyframes iconPulse {
+      0% { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0px rgba(29, 185, 84, 0); }
+      60% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 80px rgba(29, 185, 84, 0.08); }
+      100% { transform: scale(1); opacity: 1; box-shadow: 0 0 40px rgba(29, 185, 84, 0.04); }
+    }
+    @keyframes iconIn {
+      0% { transform: scale(0.3) rotate(-30deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    @keyframes textIn {
+      0% { transform: translateY(40px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes ringExpand {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    @keyframes entryFadeOut {
+      0% { opacity: 1; visibility: visible; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* ============================================================
+       FULL PAGE SPLIT SECTIONS
+       ============================================================ */
     .section {
       min-height: 100vh;
       display: flex;
@@ -44,13 +184,17 @@
       position: relative;
       z-index: 1;
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .section.visible {
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
     .header {
       position: fixed;
       top: 0;
@@ -61,8 +205,9 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: rgba(10, 10, 15, 0.7);
-      backdrop-filter: blur(16px);
+      background: rgba(10, 10, 15, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       flex-wrap: wrap;
       gap: 1rem;
@@ -71,10 +216,10 @@
       font-size: 1.2rem;
       font-weight: 500;
       color: #ffffff;
+      letter-spacing: -0.3px;
     }
     .logo span {
-      color: #ffffff;
-      opacity: 0.4;
+      color: #1DB954;
     }
     .nav {
       display: flex;
@@ -86,6 +231,7 @@
       color: rgba(255, 255, 255, 0.2);
       text-decoration: none;
       font-size: 0.85rem;
+      font-weight: 400;
       transition: 0.3s;
       cursor: pointer;
     }
@@ -93,7 +239,7 @@
       color: #ffffff;
     }
     .nav .btn {
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
@@ -104,22 +250,25 @@
     }
     .nav .btn:hover {
       background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.1);
     }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
     .hero {
       text-align: center;
       padding: 4rem 1.5rem;
     }
     .hero h1 {
-      font-size: 3.8rem;
+      font-size: 4rem;
       font-weight: 700;
       line-height: 1.05;
       letter-spacing: -1px;
       color: #ffffff;
     }
     .hero h1 .highlight {
-      color: #ffffff;
-      opacity: 0.6;
+      color: #1DB954;
     }
     .hero p {
       font-size: 1rem;
@@ -143,6 +292,7 @@
       background: rgba(255, 255, 255, 0.03);
       border-color: rgba(255, 255, 255, 0.12);
     }
+
     .scroll-indicator {
       position: absolute;
       bottom: 2rem;
@@ -162,14 +312,13 @@
       font-size: 0.9rem;
     }
     @keyframes bounceDown {
-      0%,
-      100% {
-        transform: translateX(-50%) translateY(0);
-      }
-      50% {
-        transform: translateX(-50%) translateY(6px);
-      }
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
     }
+
+    /* ============================================================
+       ANALYZER
+       ============================================================ */
     .analyzer-container {
       max-width: 780px;
       width: 100%;
@@ -182,8 +331,7 @@
       color: #ffffff;
     }
     .analyzer-title span {
-      color: #ffffff;
-      opacity: 0.4;
+      color: #1DB954;
     }
     .analyzer-sub {
       color: rgba(255, 255, 255, 0.2);
@@ -191,12 +339,14 @@
       text-align: center;
       margin-bottom: 2rem;
     }
+
     .code-area {
       background: rgba(255, 255, 255, 0.015);
       border-radius: 16px;
       padding: 1.8rem;
       border: 1px solid rgba(255, 255, 255, 0.03);
     }
+
     .file-upload-area {
       display: flex;
       align-items: center;
@@ -227,6 +377,7 @@
       color: rgba(255, 255, 255, 0.1);
       font-size: 0.7rem;
     }
+
     .code-area textarea {
       width: 100%;
       padding: 1rem;
@@ -245,6 +396,7 @@
       outline: none;
       border-color: rgba(255, 255, 255, 0.08);
     }
+
     .code-stats {
       display: flex;
       gap: 1.2rem;
@@ -253,6 +405,7 @@
       color: rgba(255, 255, 255, 0.08);
       flex-wrap: wrap;
     }
+
     .toolbar {
       display: flex;
       gap: 0.4rem;
@@ -275,16 +428,18 @@
       color: #ffffff;
       border-color: rgba(255, 255, 255, 0.06);
     }
+
     .lang-badge {
       display: inline-block;
-      background: rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.4);
+      background: rgba(29, 185, 84, 0.08);
+      color: #1DB954;
       padding: 0.05rem 0.5rem;
       border-radius: 20px;
       font-size: 0.55rem;
       font-weight: 500;
       margin-left: 0.2rem;
     }
+
     .analyze-btn {
       margin-top: 0.8rem;
       background: transparent;
@@ -302,6 +457,7 @@
       background: rgba(255, 255, 255, 0.02);
       border-color: rgba(255, 255, 255, 0.08);
     }
+
     #output {
       background: rgba(0, 0, 0, 0.15);
       padding: 1rem;
@@ -321,6 +477,7 @@
       text-align: center;
       padding: 1.2rem 0;
     }
+
     .spinner-container {
       display: flex;
       flex-direction: column;
@@ -333,22 +490,22 @@
       width: 28px;
       height: 28px;
       border: 2px solid rgba(255, 255, 255, 0.03);
-      border-top: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid #1DB954;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     .spinner-text {
       color: rgba(255, 255, 255, 0.08);
       font-size: 0.75rem;
     }
+
+    /* ============================================================
+       HISTORY
+       ============================================================ */
     .history-container {
       max-width: 780px;
       width: 100%;
@@ -361,8 +518,7 @@
       color: #ffffff;
     }
     .history-title span {
-      color: #ffffff;
-      opacity: 0.4;
+      color: #1DB954;
     }
     .history-sub {
       color: rgba(255, 255, 255, 0.2);
@@ -370,12 +526,14 @@
       text-align: center;
       margin-bottom: 2rem;
     }
+
     .history-card {
       background: rgba(255, 255, 255, 0.015);
       border-radius: 16px;
       padding: 1.8rem;
       border: 1px solid rgba(255, 255, 255, 0.03);
     }
+
     .history-item {
       background: rgba(255, 255, 255, 0.01);
       border: 1px solid rgba(255, 255, 255, 0.02);
@@ -418,6 +576,7 @@
       text-align: center;
       padding: 1.2rem 0;
     }
+
     .clear-history-btn {
       background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.03);
@@ -435,6 +594,10 @@
       color: #ff6b6b;
       border-color: rgba(255, 255, 255, 0.04);
     }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
     .footer {
       padding: 1.2rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.015);
@@ -457,65 +620,10 @@
     .footer a:hover {
       color: rgba(255, 255, 255, 0.1);
     }
-    .entry-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0a0a0f;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 99999;
-      pointer-events: none;
-      animation: entryOut 0.8s ease 1.2s forwards;
-    }
-    .entry-overlay .icon {
-      font-size: 3.5rem;
-      color: #ffffff;
-      opacity: 0.8;
-      animation: pulseIn 0.8s ease forwards;
-    }
-    .entry-overlay h1 {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #ffffff;
-      margin-top: 0.5rem;
-      letter-spacing: 1px;
-      animation: slideUp 0.6s ease forwards;
-    }
-    @keyframes pulseIn {
-      0% {
-        transform: scale(0.7);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-    @keyframes slideUp {
-      0% {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-    @keyframes entryOut {
-      0% {
-        opacity: 1;
-        visibility: visible;
-      }
-      100% {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2.6rem;
@@ -526,6 +634,10 @@
       .nav {
         gap: 1rem;
       }
+      .code-area,
+      .history-card {
+        padding: 1.2rem;
+      }
       .analyzer-title,
       .history-title {
         font-size: 1.6rem;
@@ -534,6 +646,9 @@
     @media (max-width: 480px) {
       .hero h1 {
         font-size: 2rem;
+      }
+      .hero p {
+        font-size: 0.85rem;
       }
       .header {
         flex-direction: column;
@@ -545,13 +660,32 @@
 </head>
 <body>
 
-  <div id="bg"></div>
+  <!-- ============================================================
+       ANIMATED NEBULA BACKGROUND
+       ============================================================ -->
+  <div id="nebula-bg"></div>
 
+  <!-- ============================================================
+       FLOATING PARTICLES
+       ============================================================ -->
+  <div id="particles"></div>
+
+  <!-- ============================================================
+       ENTRY ANIMATION — ATTENTION SEEKING
+       ============================================================ -->
   <div class="entry-overlay" id="entryOverlay">
-    <div class="icon"><i class="fas fa-code"></i></div>
-    <h1>✦ ai debug</h1>
+    <div class="glow-ring"></div>
+    <div class="glow-ring" style="animation-delay: 0.4s; width: 400px; height: 400px;"></div>
+    <div class="icon-wrapper">
+      <i class="fas fa-code"></i>
+    </div>
+    <h1>✦ ai <span>debug</span></h1>
+    <p>ast · gemini · code</p>
   </div>
 
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
   <header class="header">
     <div class="logo">✦ ai <span>debug</span></div>
     <nav class="nav">
@@ -562,11 +696,16 @@
     </nav>
   </header>
 
+  <!-- ============================================================
+       SECTION 1: HERO
+       ============================================================ -->
   <section class="section visible" id="home">
     <div class="hero">
       <h1>Code that <span class="highlight">thinks.</span></h1>
       <p>Paste your Python code — get AST analysis + Gemini AI review instantly.</p>
-      <button class="btn-primary" id="tryItBtn"><i class="fas fa-play" style="margin-right:6px;"></i> Try it now</button>
+      <button class="btn-primary" id="tryItBtn">
+        <i class="fas fa-play" style="margin-right: 6px;"></i> Try it now
+      </button>
       <div class="scroll-indicator">
         <span>Scroll</span>
         <i class="fas fa-chevron-down"></i>
@@ -574,43 +713,59 @@
     </div>
   </section>
 
+  <!-- ============================================================
+       SECTION 2: ANALYZER
+       ============================================================ -->
   <section class="section" id="analyzer">
     <div class="analyzer-container">
       <h2 class="analyzer-title">⚡ <span>Code Analyzer</span></h2>
       <p class="analyzer-sub">Paste your Python code and get a professional review.</p>
+
       <div class="code-area">
         <div class="file-upload-area">
           <label for="fileInput" class="file-upload-label"><i class="fas fa-upload"></i> Upload .py File</label>
-          <input type="file" id="fileInput" accept=".py" style="display:none;" />
+          <input type="file" id="fileInput" accept=".py" style="display: none;" />
           <span id="fileName" class="file-name">No file selected</span>
         </div>
+
         <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def add(a, b):
     return a + b
 
 x = 10  # unused</textarea>
+
         <div class="code-stats">
           <span id="lineCount">📄 Lines: 0</span>
           <span id="charCount">📝 Characters: 0</span>
           <span id="langDetect">🔤 Language: <span class="lang-badge" id="langBadge">Python</span></span>
         </div>
+
         <div class="toolbar">
           <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
           <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> .txt</button>
           <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
           <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
         </div>
+
         <button class="analyze-btn" id="analyzeBtn">🔍 Analyze</button>
+
         <div id="output">
-          <div class="placeholder"><i class="fas fa-code" style="display:block;font-size:1.2rem;margin-bottom:0.2rem;color:rgba(255,255,255,0.03);"></i>Results will appear here</div>
+          <div class="placeholder">
+            <i class="fas fa-code" style="display: block; font-size: 1.2rem; margin-bottom: 0.2rem; color: rgba(255,255,255,0.03);"></i>
+            Results will appear here
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============================================================
+       SECTION 3: HISTORY
+       ============================================================ -->
   <section class="section" id="history">
     <div class="history-container">
       <h2 class="history-title">📜 <span>Analysis History</span></h2>
       <p class="history-sub">Your past analyses are saved locally.</p>
+
       <div class="history-card">
         <div id="historyList">
           <div class="history-empty">No past analyses yet.</div>
@@ -618,8 +773,9 @@ x = 10  # unused</textarea>
         <button id="clearHistoryBtn" class="clear-history-btn">🗑️ Clear All</button>
       </div>
     </div>
-    <footer class="footer" style="margin-top:2rem;">
-      <span>© 2026 · built with <span style="color:rgba(255,255,255,0.3);">✦</span> by rohit</span>
+
+    <footer class="footer" style="margin-top: 2rem;">
+      <span>© 2026 · built with <span style="color: #1DB954;">✦</span> by rohit</span>
       <div>
         <a href="https://github.com/Rohits533" target="_blank">GitHub</a>
         <a href="https://vercel.com" target="_blank">Vercel</a>
@@ -628,9 +784,42 @@ x = 10  # unused</textarea>
     </footer>
   </section>
 
-  <iframe width="0" height="0" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=ffffff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false" style="position:fixed;bottom:16px;right:16px;z-index:999;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.4);width:0;height:0;"></iframe>
+  <!-- ============================================================
+       AUDIO: MYSTERIOUS BACKGROUND SONG (auto-play)
+       ============================================================ -->
+  <iframe
+    width="0"
+    height="0"
+    scrolling="no"
+    frameborder="no"
+    allow="autoplay"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%231DB954&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+    style="position: fixed; bottom: 16px; right: 16px; z-index: 999; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); width: 0; height: 0;"
+  ></iframe>
 
   <script>
+    // ============================================================
+    // PARTICLES
+    // ============================================================
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 3 + 1;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.setProperty('--duration', (Math.random() * 8 + 6) + 's');
+      p.style.setProperty('--tx', (Math.random() - 0.5) * 80 + 'px');
+      p.style.setProperty('--ty', (Math.random() - 0.5) * 80 + 'px');
+      p.style.animationDelay = (Math.random() * 4) + 's';
+      particlesContainer.appendChild(p);
+    }
+
+    // ============================================================
+    // SCROLL REVEAL
+    // ============================================================
     const sections = document.querySelectorAll('.section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -639,8 +828,12 @@ x = 10  # unused</textarea>
         }
       });
     }, { threshold: 0.1 });
+
     sections.forEach(section => observer.observe(section));
 
+    // ============================================================
+    // SMOOTH SCROLL
+    // ============================================================
     document.querySelectorAll('.nav a').forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
@@ -657,6 +850,9 @@ x = 10  # unused</textarea>
       document.getElementById('codeInput').focus();
     });
 
+    // ============================================================
+    // KEYBOARD SHORTCUTS
+    // ============================================================
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
@@ -664,6 +860,9 @@ x = 10  # unused</textarea>
       }
     });
 
+    // ============================================================
+    // CODE STATS
+    // ============================================================
     function updateStats() {
       const code = document.getElementById('codeInput').value;
       const lines = code.split('\n').length;
@@ -684,6 +883,9 @@ x = 10  # unused</textarea>
     document.getElementById('codeInput').addEventListener('input', updateStats);
     updateStats();
 
+    // ============================================================
+    // FILE UPLOAD
+    // ============================================================
     document.getElementById('fileInput').addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -696,14 +898,23 @@ x = 10  # unused</textarea>
       reader.readAsText(file);
     });
 
+    // ============================================================
+    // CLEAR
+    // ============================================================
     document.getElementById('clearBtn').addEventListener('click', () => {
       document.getElementById('codeInput').value = '';
       document.getElementById('fileName').textContent = 'No file selected';
       document.getElementById('fileInput').value = '';
       updateStats();
-      document.getElementById('output').innerHTML = `<div class="placeholder"><i class="fas fa-code" style="display:block;font-size:1.2rem;margin-bottom:0.2rem;color:rgba(255,255,255,0.03);"></i>Results will appear here</div>`;
+      document.getElementById('output').innerHTML = `<div class="placeholder">
+        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.03);"></i>
+        Results will appear here
+      </div>`;
     });
 
+    // ============================================================
+    // COPY
+    // ============================================================
     document.getElementById('copyBtn').addEventListener('click', async () => {
       const output = document.getElementById('output').textContent;
       if (output && !output.includes('Results will appear here')) {
@@ -720,6 +931,9 @@ x = 10  # unused</textarea>
       }
     });
 
+    // ============================================================
+    // DOWNLOAD .TXT
+    // ============================================================
     document.getElementById('downloadBtn').addEventListener('click', () => {
       const output = document.getElementById('output').textContent;
       if (output && !output.includes('Results will appear here')) {
@@ -735,6 +949,9 @@ x = 10  # unused</textarea>
       }
     });
 
+    // ============================================================
+    // PDF
+    // ============================================================
     document.getElementById('pdfBtn').addEventListener('click', () => {
       const output = document.getElementById('output');
       const content = output.textContent;
@@ -769,6 +986,9 @@ x = 10  # unused</textarea>
       });
     });
 
+    // ============================================================
+    // HISTORY
+    // ============================================================
     function getHistory() {
       try {
         return JSON.parse(localStorage.getItem('analysisHistory')) || [];
@@ -820,6 +1040,9 @@ x = 10  # unused</textarea>
 
     document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
 
+    // ============================================================
+    // ANALYZE
+    // ============================================================
     document.getElementById('analyzeBtn').addEventListener('click', async () => {
       const code = document.getElementById('codeInput').value;
       const output = document.getElementById('output');
