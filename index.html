@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Code Reviewer</title>
+  <title>AI Code Reviewer · AERO</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -16,14 +16,21 @@
     html {
       scroll-behavior: smooth;
       scroll-snap-type: y mandatory;
+      overflow-y: scroll;
     }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0f;
+      background: #0a0a12;
       color: #ffffff;
       min-height: 100vh;
       overflow-x: hidden;
+      padding: 0;
+      position: relative;
     }
+
+    /* ============================================================
+       BACKGROUND — AERO STYLE
+       ============================================================ */
     #bg {
       position: fixed;
       top: 0;
@@ -31,7 +38,8 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      background: #0a0a0f;
+      background: #0a0a12;
+      pointer-events: none;
     }
     #bg::before {
       content: '';
@@ -40,14 +48,42 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(ellipse at 70% 20%, rgba(0, 200, 150, 0.06) 0%, transparent 50%),
-                  radial-gradient(ellipse at 30% 80%, rgba(0, 200, 150, 0.04) 0%, transparent 40%);
-      animation: pulse 14s ease-in-out infinite alternate;
+      background:
+        radial-gradient(ellipse at 70% 20%, rgba(0, 200, 150, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 80%, rgba(0, 200, 150, 0.03) 0%, transparent 40%);
+      animation: bgPulse 14s ease-in-out infinite alternate;
     }
-    @keyframes pulse {
+    @keyframes bgPulse {
       0% { opacity: 0.5; transform: scale(1); }
       100% { opacity: 1; transform: scale(1.04); }
     }
+
+    /* ============================================================
+       ROTATING ANIMATED LOGO IN BACKGROUND
+       ============================================================ */
+    #rotating-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      opacity: 0.04;
+      pointer-events: none;
+      font-size: 25rem;
+      font-weight: 900;
+      color: #00c896;
+      animation: rotateLogo 30s linear infinite;
+      letter-spacing: 10px;
+      user-select: none;
+    }
+    @keyframes rotateLogo {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* ============================================================
+       FLOATING PARTICLES
+       ============================================================ */
     #particles {
       position: fixed;
       top: 0;
@@ -60,20 +96,24 @@
     .particle {
       position: absolute;
       border-radius: 50%;
-      background: rgba(0, 200, 150, 0.08);
-      animation: float var(--d) ease-in-out infinite alternate;
+      background: rgba(0, 200, 150, 0.06);
+      animation: floatParticle var(--d) ease-in-out infinite alternate;
     }
-    @keyframes float {
+    @keyframes floatParticle {
       0% { transform: translate(0, 0); opacity: 0.1; }
-      100% { transform: translate(var(--tx), var(--ty)); opacity: 0.5; }
+      100% { transform: translate(var(--tx), var(--ty)); opacity: 0.4; }
     }
+
+    /* ============================================================
+       ENTRY ANIMATION
+       ============================================================ */
     .entry-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #0a0a0f;
+      background: #0a0a12;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -90,7 +130,7 @@
     .entry-overlay h1 {
       font-size: 2.5rem;
       font-weight: 600;
-      color: #fff;
+      color: #ffffff;
       margin-top: 0.8rem;
       animation: textIn 0.8s ease forwards;
     }
@@ -98,7 +138,7 @@
       color: #00c896;
     }
     .entry-overlay p {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.12);
       font-size: 0.9rem;
       margin-top: 0.3rem;
       animation: textIn 1s ease forwards;
@@ -116,6 +156,10 @@
       0% { opacity: 1; visibility: visible; }
       100% { opacity: 0; visibility: hidden; }
     }
+
+    /* ============================================================
+       SECTIONS — SPLIT PAGES
+       ============================================================ */
     .section {
       min-height: 100vh;
       display: flex;
@@ -134,6 +178,10 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
     .header {
       position: fixed;
       top: 0;
@@ -144,16 +192,18 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: rgba(10, 10, 15, 0.6);
+      background: rgba(10, 10, 18, 0.6);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0, 200, 150, 0.05);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 200, 150, 0.04);
       flex-wrap: wrap;
       gap: 1rem;
     }
     .logo {
       font-size: 1.2rem;
       font-weight: 500;
-      color: #fff;
+      color: #ffffff;
+      letter-spacing: 0.5px;
     }
     .logo span {
       color: #00c896;
@@ -165,21 +215,22 @@
       flex-wrap: wrap;
     }
     .nav a {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.15);
       text-decoration: none;
       font-size: 0.85rem;
       transition: 0.3s;
       cursor: pointer;
+      letter-spacing: 0.3px;
     }
     .nav a:hover {
-      color: #fff;
+      color: #ffffff;
     }
     .nav .btn {
       border: 1px solid rgba(0, 200, 150, 0.08);
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
-      color: #fff;
+      color: #ffffff;
       font-weight: 500;
       font-size: 0.8rem;
       transition: 0.3s;
@@ -188,6 +239,10 @@
       background: rgba(0, 200, 150, 0.04);
       border-color: rgba(0, 200, 150, 0.12);
     }
+
+    /* ============================================================
+       HERO — AERO STYLE
+       ============================================================ */
     .hero {
       text-align: center;
       padding: 4rem 1.5rem;
@@ -195,28 +250,29 @@
     .hero .badge {
       display: inline-block;
       background: rgba(0, 200, 150, 0.06);
-      border: 1px solid rgba(0, 200, 150, 0.1);
+      border: 1px solid rgba(0, 200, 150, 0.08);
       color: #00c896;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 500;
-      padding: 0.3rem 1rem;
+      padding: 0.3rem 1.2rem;
       border-radius: 40px;
       letter-spacing: 1px;
       text-transform: uppercase;
       margin-bottom: 1.5rem;
     }
     .hero h1 {
-      font-size: 4rem;
+      font-size: 4.2rem;
       font-weight: 700;
       line-height: 1.05;
-      color: #fff;
+      color: #ffffff;
+      letter-spacing: -0.5px;
     }
     .hero h1 .highlight {
       color: #00c896;
     }
     .hero p {
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.25);
       max-width: 520px;
       margin: 0.8rem auto 2rem;
       line-height: 1.7;
@@ -234,7 +290,7 @@
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.9rem;
-      color: #fff;
+      color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -257,11 +313,12 @@
       gap: 0.5rem;
     }
     .hero .btn-secondary:hover {
-      color: #fff;
+      color: #ffffff;
     }
     .hero .btn-secondary i {
       color: #00c896;
     }
+
     .scroll-indicator {
       position: absolute;
       bottom: 2rem;
@@ -271,19 +328,23 @@
       flex-direction: column;
       align-items: center;
       gap: 0.3rem;
-      color: rgba(255, 255, 255, 0.03);
-      font-size: 0.55rem;
+      color: rgba(255, 255, 255, 0.02);
+      font-size: 0.5rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       animation: bounceDown 2s ease-in-out infinite;
     }
     .scroll-indicator i {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
     @keyframes bounceDown {
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50% { transform: translateX(-50%) translateY(6px); }
     }
+
+    /* ============================================================
+       ANALYZER
+       ============================================================ */
     .analyzer-container {
       max-width: 780px;
       width: 100%;
@@ -293,23 +354,25 @@
       font-weight: 600;
       margin-bottom: 0.3rem;
       text-align: center;
-      color: #fff;
+      color: #ffffff;
     }
     .analyzer-title span {
       color: #00c896;
     }
     .analyzer-sub {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.12);
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 2rem;
     }
+
     .code-area {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.015);
       border-radius: 16px;
       padding: 1.8rem;
-      border: 1px solid rgba(0, 200, 150, 0.04);
+      border: 1px solid rgba(0, 200, 150, 0.03);
     }
+
     .file-upload-area {
       display: flex;
       align-items: center;
@@ -320,7 +383,7 @@
     .file-upload-label {
       background: rgba(255, 255, 255, 0.01);
       border: 1px dashed rgba(0, 200, 150, 0.04);
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.12);
       padding: 0.3rem 1rem;
       border-radius: 40px;
       font-size: 0.75rem;
@@ -334,18 +397,19 @@
     .file-upload-label:hover {
       background: rgba(0, 200, 150, 0.03);
       border-color: rgba(0, 200, 150, 0.06);
-      color: #fff;
+      color: #ffffff;
     }
     .file-name {
       color: rgba(255, 255, 255, 0.05);
       font-size: 0.7rem;
     }
+
     .code-area textarea {
       width: 100%;
       padding: 1rem;
       background: rgba(0, 0, 0, 0.3);
-      color: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(0, 200, 150, 0.04);
+      color: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 200, 150, 0.03);
       border-radius: 12px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
@@ -356,16 +420,18 @@
     }
     .code-area textarea:focus {
       outline: none;
-      border-color: rgba(0, 200, 150, 0.08);
+      border-color: rgba(0, 200, 150, 0.06);
     }
+
     .code-stats {
       display: flex;
       gap: 1.2rem;
       margin-top: 0.6rem;
       font-size: 0.65rem;
-      color: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.04);
       flex-wrap: wrap;
     }
+
     .toolbar {
       display: flex;
       gap: 0.4rem;
@@ -385,9 +451,10 @@
     }
     .toolbar button:hover {
       background: rgba(0, 200, 150, 0.02);
-      color: #fff;
+      color: #ffffff;
       border-color: rgba(0, 200, 150, 0.06);
     }
+
     .lang-badge {
       display: inline-block;
       background: rgba(0, 200, 150, 0.06);
@@ -398,6 +465,7 @@
       font-weight: 500;
       margin-left: 0.2rem;
     }
+
     .analyze-btn {
       margin-top: 0.8rem;
       background: transparent;
@@ -406,7 +474,7 @@
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.9rem;
-      color: #fff;
+      color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
       width: 100%;
@@ -415,12 +483,13 @@
       background: rgba(0, 200, 150, 0.02);
       border-color: rgba(0, 200, 150, 0.06);
     }
+
     #output {
       background: rgba(0, 0, 0, 0.15);
       padding: 1rem;
       border-radius: 12px;
       min-height: 90px;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.4);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.6;
@@ -429,11 +498,12 @@
       margin-top: 1rem;
     }
     #output .placeholder {
-      color: rgba(255, 255, 255, 0.03);
+      color: rgba(255, 255, 255, 0.02);
       font-family: 'Inter', sans-serif;
       text-align: center;
       padding: 1.2rem 0;
     }
+
     .spinner-container {
       display: flex;
       flex-direction: column;
@@ -455,9 +525,13 @@
       100% { transform: rotate(360deg); }
     }
     .spinner-text {
-      color: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.04);
       font-size: 0.75rem;
     }
+
+    /* ============================================================
+       HISTORY
+       ============================================================ */
     .history-container {
       max-width: 780px;
       width: 100%;
@@ -467,23 +541,25 @@
       font-weight: 600;
       text-align: center;
       margin-bottom: 0.3rem;
-      color: #fff;
+      color: #ffffff;
     }
     .history-title span {
       color: #00c896;
     }
     .history-sub {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.12);
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 2rem;
     }
+
     .history-card {
       background: rgba(255, 255, 255, 0.01);
       border-radius: 16px;
       padding: 1.8rem;
       border: 1px solid rgba(0, 200, 150, 0.03);
     }
+
     .history-item {
       background: rgba(255, 255, 255, 0.01);
       border: 1px solid rgba(0, 200, 150, 0.02);
@@ -491,7 +567,7 @@
       padding: 0.5rem 0.8rem;
       margin-bottom: 0.4rem;
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.12);
       transition: 0.2s;
     }
     .history-item:hover {
@@ -506,7 +582,7 @@
     .history-item .code-snippet {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.05);
       margin-top: 0.1rem;
       white-space: nowrap;
       overflow: hidden;
@@ -527,6 +603,7 @@
       text-align: center;
       padding: 1.2rem 0;
     }
+
     .clear-history-btn {
       background: transparent;
       border: 1px solid rgba(255, 50, 50, 0.03);
@@ -544,6 +621,10 @@
       color: #ff6b6b;
       border-color: rgba(255, 50, 50, 0.04);
     }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
     .footer {
       padding: 1.2rem 0;
       border-top: 1px solid rgba(0, 200, 150, 0.02);
@@ -566,32 +647,56 @@
     .footer a:hover {
       color: rgba(255, 255, 255, 0.06);
     }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.8rem; }
       .header { padding: 1rem 1.5rem; }
       .nav { gap: 1rem; }
       .code-area, .history-card { padding: 1.2rem; }
       .analyzer-title, .history-title { font-size: 1.6rem; }
+      #rotating-logo { font-size: 10rem; }
     }
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.2rem; }
       .hero p { font-size: 0.85rem; }
       .header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .hero .btn-group { flex-direction: column; align-items: center; }
+      #rotating-logo { font-size: 6rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ============================================================
+       ROTATING BACKGROUND LOGO
+       ============================================================ -->
+  <div id="rotating-logo">✦</div>
+
+  <!-- ============================================================
+       BACKGROUND
+       ============================================================ -->
   <div id="bg"></div>
+
+  <!-- ============================================================
+       PARTICLES
+       ============================================================ -->
   <div id="particles"></div>
 
+  <!-- ============================================================
+       ENTRY OVERLAY
+       ============================================================ -->
   <div class="entry-overlay" id="entryOverlay">
     <div class="icon"><i class="fas fa-code"></i></div>
     <h1>✦ ai <span>debug</span></h1>
     <p>ast · gemini · code</p>
   </div>
 
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
   <header class="header">
     <div class="logo">✦ ai <span>debug</span></div>
     <nav class="nav">
@@ -602,6 +707,9 @@
     </nav>
   </header>
 
+  <!-- ============================================================
+       SECTION 1: HERO
+       ============================================================ -->
   <section class="section visible" id="home">
     <div class="hero">
       <span class="badge">✦ AI Powered</span>
@@ -618,48 +726,67 @@
     </div>
   </section>
 
+  <!-- ============================================================
+       SECTION 2: ANALYZER
+       ============================================================ -->
   <section class="section" id="analyzer">
     <div class="analyzer-container">
       <h2 class="analyzer-title">⚡ <span>Code Analyzer</span></h2>
       <p class="analyzer-sub">Paste your Python code and get a professional review.</p>
+
       <div class="code-area">
         <div class="file-upload-area">
           <label for="fileInput" class="file-upload-label"><i class="fas fa-upload"></i> Upload .py File</label>
           <input type="file" id="fileInput" accept=".py" style="display:none;" />
           <span id="fileName" class="file-name">No file selected</span>
         </div>
-        <textarea id="codeInput" rows="7">def add(a, b):
+
+        <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def add(a, b):
     return a + b
 
 x = 10  # unused</textarea>
+
         <div class="code-stats">
           <span id="lineCount">📄 Lines: 0</span>
           <span id="charCount">📝 Characters: 0</span>
           <span id="langDetect">🔤 Language: <span class="lang-badge" id="langBadge">Python</span></span>
         </div>
+
         <div class="toolbar">
           <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
           <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> .txt</button>
           <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
           <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
         </div>
+
         <button class="analyze-btn" id="analyzeBtn">🔍 Analyze</button>
+
         <div id="output">
-          <div class="placeholder"><i class="fas fa-code" style="display:block;font-size:1.2rem;margin-bottom:0.2rem;color:rgba(255,255,255,0.02);"></i>Results will appear here</div>
+          <div class="placeholder">
+            <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.02);"></i>
+            Results will appear here
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============================================================
+       SECTION 3: HISTORY
+       ============================================================ -->
   <section class="section" id="history">
     <div class="history-container">
       <h2 class="history-title">📜 <span>Analysis History</span></h2>
       <p class="history-sub">Your past analyses are saved locally.</p>
+
       <div class="history-card">
-        <div id="historyList"><div class="history-empty">No past analyses yet.</div></div>
+        <div id="historyList">
+          <div class="history-empty">No past analyses yet.</div>
+        </div>
         <button id="clearHistoryBtn" class="clear-history-btn">🗑️ Clear All</button>
       </div>
     </div>
+
     <footer class="footer" style="margin-top:2rem;">
       <span>© 2026 · built with <span style="color:#00c896;">✦</span> by rohit</span>
       <div>
@@ -670,9 +797,23 @@ x = 10  # unused</textarea>
     </footer>
   </section>
 
-  <iframe width="0" height="0" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%2300c896&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false" style="position:fixed;bottom:16px;right:16px;z-index:999;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.4);width:0;height:0;"></iframe>
+  <!-- ============================================================
+       AUDIO
+       ============================================================ -->
+  <iframe
+    width="0"
+    height="0"
+    scrolling="no"
+    frameborder="no"
+    allow="autoplay"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%2300c896&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+    style="position:fixed;bottom:16px;right:16px;z-index:999;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.4);width:0;height:0;"
+  ></iframe>
 
   <script>
+    // ============================================================
+    // PARTICLES
+    // ============================================================
     const pContainer = document.getElementById('particles');
     for (let i = 0; i < 20; i++) {
       const p = document.createElement('div');
@@ -689,12 +830,23 @@ x = 10  # unused</textarea>
       pContainer.appendChild(p);
     }
 
+    // ============================================================
+    // SCROLL REVEAL
+    // ============================================================
     const sections = document.querySelectorAll('.section');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
     }, { threshold: 0.1 });
+
     sections.forEach(section => observer.observe(section));
 
+    // ============================================================
+    // SMOOTH SCROLL
+    // ============================================================
     document.querySelectorAll('.nav a').forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
@@ -715,6 +867,9 @@ x = 10  # unused</textarea>
       alert('🎬 Video feature coming soon!');
     });
 
+    // ============================================================
+    // KEYBOARD SHORTCUTS
+    // ============================================================
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
@@ -722,6 +877,9 @@ x = 10  # unused</textarea>
       }
     });
 
+    // ============================================================
+    // CODE STATS
+    // ============================================================
     function updateStats() {
       const code = document.getElementById('codeInput').value;
       const lines = code.split('\n').length;
@@ -729,14 +887,22 @@ x = 10  # unused</textarea>
       document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
       document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
       const langBadge = document.getElementById('langBadge');
-      if (code.includes('def ') || code.includes('import ') || code.includes('class ')) langBadge.textContent = 'Python';
-      else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) langBadge.textContent = 'JavaScript';
-      else if (code.includes('public class ') || code.includes('System.out.println')) langBadge.textContent = 'Java';
-      else langBadge.textContent = 'Unknown';
+      if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
+        langBadge.textContent = 'Python';
+      } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
+        langBadge.textContent = 'JavaScript';
+      } else if (code.includes('public class ') || code.includes('System.out.println')) {
+        langBadge.textContent = 'Java';
+      } else {
+        langBadge.textContent = 'Unknown';
+      }
     }
     document.getElementById('codeInput').addEventListener('input', updateStats);
     updateStats();
 
+    // ============================================================
+    // FILE UPLOAD
+    // ============================================================
     document.getElementById('fileInput').addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -749,14 +915,23 @@ x = 10  # unused</textarea>
       reader.readAsText(file);
     });
 
+    // ============================================================
+    // CLEAR
+    // ============================================================
     document.getElementById('clearBtn').addEventListener('click', () => {
       document.getElementById('codeInput').value = '';
       document.getElementById('fileName').textContent = 'No file selected';
       document.getElementById('fileInput').value = '';
       updateStats();
-      document.getElementById('output').innerHTML = `<div class="placeholder"><i class="fas fa-code" style="display:block;font-size:1.2rem;margin-bottom:0.2rem;color:rgba(255,255,255,0.02);"></i>Results will appear here</div>`;
+      document.getElementById('output').innerHTML = `<div class="placeholder">
+        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.02);"></i>
+        Results will appear here
+      </div>`;
     });
 
+    // ============================================================
+    // COPY
+    // ============================================================
     document.getElementById('copyBtn').addEventListener('click', async () => {
       const output = document.getElementById('output').textContent;
       if (output && !output.includes('Results will appear here')) {
@@ -765,10 +940,17 @@ x = 10  # unused</textarea>
           const btn = document.getElementById('copyBtn');
           btn.innerHTML = '✅ Copied!';
           setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i> Copy', 2000);
-        } catch { alert('Failed to copy.'); }
-      } else { alert('No results to copy.'); }
+        } catch {
+          alert('Failed to copy.');
+        }
+      } else {
+        alert('No results to copy.');
+      }
     });
 
+    // ============================================================
+    // DOWNLOAD .TXT
+    // ============================================================
     document.getElementById('downloadBtn').addEventListener('click', () => {
       const output = document.getElementById('output').textContent;
       if (output && !output.includes('Results will appear here')) {
@@ -779,9 +961,14 @@ x = 10  # unused</textarea>
         a.download = `analysis-${Date.now()}.txt`;
         a.click();
         URL.revokeObjectURL(url);
-      } else { alert('No results to download.'); }
+      } else {
+        alert('No results to download.');
+      }
     });
 
+    // ============================================================
+    // PDF
+    // ============================================================
     document.getElementById('pdfBtn').addEventListener('click', () => {
       const output = document.getElementById('output');
       const content = output.textContent;
@@ -811,11 +998,20 @@ x = 10  # unused</textarea>
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, letterRendering: true, useCORS: true },
         jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      }).from(tempDiv).save().then(() => { document.body.removeChild(tempDiv); });
+      }).from(tempDiv).save().then(() => {
+        document.body.removeChild(tempDiv);
+      });
     });
 
+    // ============================================================
+    // HISTORY
+    // ============================================================
     function getHistory() {
-      try { return JSON.parse(localStorage.getItem('analysisHistory')) || []; } catch { return []; }
+      try {
+        return JSON.parse(localStorage.getItem('analysisHistory')) || [];
+      } catch {
+        return [];
+      }
     }
 
     function saveToHistory(code, result) {
@@ -861,25 +1057,34 @@ x = 10  # unused</textarea>
 
     document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
 
+    // ============================================================
+    // ANALYZE
+    // ============================================================
     document.getElementById('analyzeBtn').addEventListener('click', async () => {
       const code = document.getElementById('codeInput').value;
       const output = document.getElementById('output');
+
       if (!code.trim()) {
         output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`;
         return;
       }
+
       output.innerHTML = `<div class="spinner-container"><div class="spinner"></div><div class="spinner-text">Analyzing...</div></div>`;
+
       try {
         const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code })
         });
+
         const data = await res.json();
+
         if (!res.ok) {
           output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`;
           return;
         }
+
         const ast = data.ast_report || data;
         let text = '📊 STATIC ANALYSIS (AST)\n----------------------------\n';
         text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
@@ -888,6 +1093,7 @@ x = 10  # unused</textarea>
         if (data.ai_review) {
           text += '🧠 AI REVIEW (Gemini)\n----------------------------\n' + data.ai_review;
         }
+
         output.innerHTML = `
           <div style="margin-bottom:0.6rem;">
             <strong style="color:rgba(255,255,255,0.08);font-size:0.65rem;">📄 Code</strong>
@@ -898,7 +1104,9 @@ x = 10  # unused</textarea>
             <pre style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.05);padding:0.6rem;border-radius:8px;border:1px solid rgba(0,200,150,0.02);margin-top:0.2rem;color:rgba(255,255,255,0.3);">${text}</pre>
           </div>
         `;
+
         saveToHistory(code, data);
+
       } catch (err) {
         output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`;
       }
