@@ -1,9 +1,9 @@
 import os
 import ast
-from fastapi import FastAPI
-from pydantic import BaseModel
 import uvicorn
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import google.generativeai as genai
 
 app = FastAPI()
@@ -25,11 +25,10 @@ def get_gemini_review(code: str):
         return "AI review not available (GOOGLE_API_KEY missing)"
     try:
         genai.configure(api_key=api_key)
-        # Using gemini-2.5-flash or gemini-2.0-flash as a current standard model
         model = genai.GenerativeModel("gemini-2.5-flash")
         
-        prompt = f"""You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements.
-Be concise and specific.
+        prompt = f"""You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements. Be concise and specific.
+
 Analyze this Python code:
 ```python
 {code}
@@ -57,7 +56,6 @@ async def analyze_code(request: CodeRequest):
     
     assigned = set()
     used = set()
-    
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign):
             for target in node.targets:
@@ -72,7 +70,6 @@ async def analyze_code(request: CodeRequest):
     
     imported = set()
     used_names = set()
-    
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
