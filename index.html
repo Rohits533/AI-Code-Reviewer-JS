@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Code Reviewer · AERO</title>
+  <title>ai debug · AERO</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -59,7 +59,7 @@
     }
 
     /* ============================================================
-       ROTATING ANIMATED LOGO IN BACKGROUND
+       VISIBLE ROTATING LOGO
        ============================================================ */
     #rotating-logo {
       position: fixed;
@@ -67,14 +67,15 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 0;
-      opacity: 0.04;
+      opacity: 0.06;
       pointer-events: none;
-      font-size: 25rem;
+      font-size: 30rem;
       font-weight: 900;
       color: #00c896;
       animation: rotateLogo 30s linear infinite;
       letter-spacing: 10px;
       user-select: none;
+      font-family: 'Inter', sans-serif;
     }
     @keyframes rotateLogo {
       0% { transform: translate(-50%, -50%) rotate(0deg); }
@@ -82,7 +83,7 @@
     }
 
     /* ============================================================
-       FLOATING PARTICLES
+       PARTICLES
        ============================================================ */
     #particles {
       position: fixed;
@@ -180,7 +181,7 @@
     }
 
     /* ============================================================
-       HEADER
+       HEADER — AERO
        ============================================================ */
     .header {
       position: fixed;
@@ -241,7 +242,7 @@
     }
 
     /* ============================================================
-       HERO — AERO STYLE
+       HERO — AERO
        ============================================================ */
     .hero {
       text-align: center;
@@ -657,21 +658,21 @@
       .nav { gap: 1rem; }
       .code-area, .history-card { padding: 1.2rem; }
       .analyzer-title, .history-title { font-size: 1.6rem; }
-      #rotating-logo { font-size: 10rem; }
+      #rotating-logo { font-size: 12rem; }
     }
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.2rem; }
       .hero p { font-size: 0.85rem; }
       .header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .hero .btn-group { flex-direction: column; align-items: center; }
-      #rotating-logo { font-size: 6rem; }
+      #rotating-logo { font-size: 8rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- ============================================================
-       ROTATING BACKGROUND LOGO
+       VISIBLE ROTATING BACKGROUND LOGO
        ============================================================ -->
   <div id="rotating-logo">✦</div>
 
