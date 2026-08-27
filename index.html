@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Code Reviewer · AERO</title>
+  <title>AI Code Reviewer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ============================================================
-       RESET & BASE
-       ============================================================ */
     * {
       margin: 0;
       padding: 0;
@@ -19,7 +16,6 @@
     html {
       scroll-behavior: smooth;
       scroll-snap-type: y mandatory;
-      overflow-y: scroll;
     }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -27,13 +23,7 @@
       color: #ffffff;
       min-height: 100vh;
       overflow-x: hidden;
-      padding: 0;
-      position: relative;
     }
-
-    /* ============================================================
-       ANIMATED BACKGROUND — AERO STYLE
-       ============================================================ */
     #bg {
       position: fixed;
       top: 0;
@@ -42,7 +32,6 @@
       height: 100%;
       z-index: 0;
       background: #0a0a0f;
-      pointer-events: none;
     }
     #bg::before {
       content: '';
@@ -51,20 +40,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background:
-        radial-gradient(ellipse at 70% 20%, rgba(0, 200, 150, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 80%, rgba(0, 200, 150, 0.04) 0%, transparent 40%),
-        radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 60%);
-      animation: bgPulse 14s ease-in-out infinite alternate;
+      background: radial-gradient(ellipse at 70% 20%, rgba(0, 200, 150, 0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 30% 80%, rgba(0, 200, 150, 0.04) 0%, transparent 40%);
+      animation: pulse 14s ease-in-out infinite alternate;
     }
-    @keyframes bgPulse {
+    @keyframes pulse {
       0% { opacity: 0.5; transform: scale(1); }
       100% { opacity: 1; transform: scale(1.04); }
     }
-
-    /* ============================================================
-       FLOATING PARTICLES
-       ============================================================ */
     #particles {
       position: fixed;
       top: 0;
@@ -78,16 +61,12 @@
       position: absolute;
       border-radius: 50%;
       background: rgba(0, 200, 150, 0.08);
-      animation: floatParticle var(--d) ease-in-out infinite alternate;
+      animation: float var(--d) ease-in-out infinite alternate;
     }
-    @keyframes floatParticle {
+    @keyframes float {
       0% { transform: translate(0, 0); opacity: 0.1; }
       100% { transform: translate(var(--tx), var(--ty)); opacity: 0.5; }
     }
-
-    /* ============================================================
-       ENTRY ANIMATION
-       ============================================================ */
     .entry-overlay {
       position: fixed;
       top: 0;
@@ -111,7 +90,7 @@
     .entry-overlay h1 {
       font-size: 2.5rem;
       font-weight: 600;
-      color: #ffffff;
+      color: #fff;
       margin-top: 0.8rem;
       animation: textIn 0.8s ease forwards;
     }
@@ -137,10 +116,6 @@
       0% { opacity: 1; visibility: visible; }
       100% { opacity: 0; visibility: hidden; }
     }
-
-    /* ============================================================
-       SECTIONS — SPLIT PAGES
-       ============================================================ */
     .section {
       min-height: 100vh;
       display: flex;
@@ -159,10 +134,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* ============================================================
-       HEADER
-       ============================================================ */
     .header {
       position: fixed;
       top: 0;
@@ -175,7 +146,6 @@
       z-index: 100;
       background: rgba(10, 10, 15, 0.6);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(0, 200, 150, 0.05);
       flex-wrap: wrap;
       gap: 1rem;
@@ -183,8 +153,7 @@
     .logo {
       font-size: 1.2rem;
       font-weight: 500;
-      color: #ffffff;
-      letter-spacing: 0.5px;
+      color: #fff;
     }
     .logo span {
       color: #00c896;
@@ -201,17 +170,16 @@
       font-size: 0.85rem;
       transition: 0.3s;
       cursor: pointer;
-      letter-spacing: 0.3px;
     }
     .nav a:hover {
-      color: #ffffff;
+      color: #fff;
     }
     .nav .btn {
       border: 1px solid rgba(0, 200, 150, 0.08);
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
-      color: #ffffff;
+      color: #fff;
       font-weight: 500;
       font-size: 0.8rem;
       transition: 0.3s;
@@ -220,10 +188,6 @@
       background: rgba(0, 200, 150, 0.04);
       border-color: rgba(0, 200, 150, 0.12);
     }
-
-    /* ============================================================
-       HERO — AERO STYLE
-       ============================================================ */
     .hero {
       text-align: center;
       padding: 4rem 1.5rem;
@@ -245,8 +209,7 @@
       font-size: 4rem;
       font-weight: 700;
       line-height: 1.05;
-      color: #ffffff;
-      letter-spacing: -0.5px;
+      color: #fff;
     }
     .hero h1 .highlight {
       color: #00c896;
@@ -257,7 +220,6 @@
       max-width: 520px;
       margin: 0.8rem auto 2rem;
       line-height: 1.7;
-      letter-spacing: 0.2px;
     }
     .hero .btn-group {
       display: flex;
@@ -272,7 +234,7 @@
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.9rem;
-      color: #ffffff;
+      color: #fff;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -295,12 +257,11 @@
       gap: 0.5rem;
     }
     .hero .btn-secondary:hover {
-      color: #ffffff;
+      color: #fff;
     }
     .hero .btn-secondary i {
       color: #00c896;
     }
-
     .scroll-indicator {
       position: absolute;
       bottom: 2rem;
@@ -323,10 +284,6 @@
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50% { transform: translateX(-50%) translateY(6px); }
     }
-
-    /* ============================================================
-       ANALYZER
-       ============================================================ */
     .analyzer-container {
       max-width: 780px;
       width: 100%;
@@ -336,7 +293,7 @@
       font-weight: 600;
       margin-bottom: 0.3rem;
       text-align: center;
-      color: #ffffff;
+      color: #fff;
     }
     .analyzer-title span {
       color: #00c896;
@@ -346,16 +303,13 @@
       font-size: 0.9rem;
       text-align: center;
       margin-bottom: 2rem;
-      letter-spacing: 0.3px;
     }
-
     .code-area {
       background: rgba(255, 255, 255, 0.02);
       border-radius: 16px;
       padding: 1.8rem;
       border: 1px solid rgba(0, 200, 150, 0.04);
     }
-
     .file-upload-area {
       display: flex;
       align-items: center;
@@ -380,13 +334,12 @@
     .file-upload-label:hover {
       background: rgba(0, 200, 150, 0.03);
       border-color: rgba(0, 200, 150, 0.06);
-      color: #ffffff;
+      color: #fff;
     }
     .file-name {
       color: rgba(255, 255, 255, 0.05);
       font-size: 0.7rem;
     }
-
     .code-area textarea {
       width: 100%;
       padding: 1rem;
@@ -394,7 +347,7 @@
       color: rgba(255, 255, 255, 0.7);
       border: 1px solid rgba(0, 200, 150, 0.04);
       border-radius: 12px;
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
       line-height: 1.6;
       resize: vertical;
@@ -405,7 +358,6 @@
       outline: none;
       border-color: rgba(0, 200, 150, 0.08);
     }
-
     .code-stats {
       display: flex;
       gap: 1.2rem;
@@ -414,7 +366,6 @@
       color: rgba(255, 255, 255, 0.05);
       flex-wrap: wrap;
     }
-
     .toolbar {
       display: flex;
       gap: 0.4rem;
@@ -434,10 +385,9 @@
     }
     .toolbar button:hover {
       background: rgba(0, 200, 150, 0.02);
-      color: #ffffff;
+      color: #fff;
       border-color: rgba(0, 200, 150, 0.06);
     }
-
     .lang-badge {
       display: inline-block;
       background: rgba(0, 200, 150, 0.06);
@@ -448,7 +398,6 @@
       font-weight: 500;
       margin-left: 0.2rem;
     }
-
     .analyze-btn {
       margin-top: 0.8rem;
       background: transparent;
@@ -457,7 +406,7 @@
       border-radius: 60px;
       font-weight: 500;
       font-size: 0.9rem;
-      color: #ffffff;
+      color: #fff;
       cursor: pointer;
       transition: 0.3s;
       width: 100%;
@@ -466,7 +415,6 @@
       background: rgba(0, 200, 150, 0.02);
       border-color: rgba(0, 200, 150, 0.06);
     }
-
     #output {
       background: rgba(0, 0, 0, 0.15);
       padding: 1rem;
@@ -486,7 +434,6 @@
       text-align: center;
       padding: 1.2rem 0;
     }
-
     .spinner-container {
       display: flex;
       flex-direction: column;
@@ -511,10 +458,6 @@
       color: rgba(255, 255, 255, 0.05);
       font-size: 0.75rem;
     }
-
-    /* ============================================================
-       HISTORY
-       ============================================================ */
     .history-container {
       max-width: 780px;
       width: 100%;
@@ -524,7 +467,7 @@
       font-weight: 600;
       text-align: center;
       margin-bottom: 0.3rem;
-      color: #ffffff;
+      color: #fff;
     }
     .history-title span {
       color: #00c896;
@@ -535,14 +478,12 @@
       text-align: center;
       margin-bottom: 2rem;
     }
-
     .history-card {
       background: rgba(255, 255, 255, 0.01);
       border-radius: 16px;
       padding: 1.8rem;
       border: 1px solid rgba(0, 200, 150, 0.03);
     }
-
     .history-item {
       background: rgba(255, 255, 255, 0.01);
       border: 1px solid rgba(0, 200, 150, 0.02);
@@ -586,7 +527,6 @@
       text-align: center;
       padding: 1.2rem 0;
     }
-
     .clear-history-btn {
       background: transparent;
       border: 1px solid rgba(255, 50, 50, 0.03);
@@ -604,10 +544,6 @@
       color: #ff6b6b;
       border-color: rgba(255, 50, 50, 0.04);
     }
-
-    /* ============================================================
-       FOOTER
-       ============================================================ */
     .footer {
       padding: 1.2rem 0;
       border-top: 1px solid rgba(0, 200, 150, 0.02);
@@ -630,10 +566,6 @@
     .footer a:hover {
       color: rgba(255, 255, 255, 0.06);
     }
-
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.8rem; }
       .header { padding: 1rem 1.5rem; }
@@ -651,28 +583,15 @@
 </head>
 <body>
 
-  <!-- ============================================================
-       BACKGROUND
-       ============================================================ -->
   <div id="bg"></div>
-
-  <!-- ============================================================
-       PARTICLES
-       ============================================================ -->
   <div id="particles"></div>
 
-  <!-- ============================================================
-       ENTRY OVERLAY
-       ============================================================ -->
   <div class="entry-overlay" id="entryOverlay">
     <div class="icon"><i class="fas fa-code"></i></div>
     <h1>✦ ai <span>debug</span></h1>
     <p>ast · gemini · code</p>
   </div>
 
-  <!-- ============================================================
-       HEADER
-       ============================================================ -->
   <header class="header">
     <div class="logo">✦ ai <span>debug</span></div>
     <nav class="nav">
@@ -683,21 +602,14 @@
     </nav>
   </header>
 
-  <!-- ============================================================
-       SECTION 1: HERO
-       ============================================================ -->
   <section class="section visible" id="home">
     <div class="hero">
       <span class="badge">✦ AI Powered</span>
       <h1>Code that <span class="highlight">thinks.</span></h1>
       <p>Paste your Python code — get AST analysis + Gemini AI review instantly.</p>
       <div class="btn-group">
-        <button class="btn-primary" id="tryItBtn">
-          <i class="fas fa-play" style="margin-right: 6px;"></i> Try it now
-        </button>
-        <button class="btn-secondary" id="watchBtn">
-          <i class="fas fa-play-circle"></i> Watch video
-        </button>
+        <button class="btn-primary" id="tryItBtn"><i class="fas fa-play" style="margin-right:6px;"></i> Try it now</button>
+        <button class="btn-secondary" id="watchBtn"><i class="fas fa-play-circle"></i> Watch video</button>
       </div>
       <div class="scroll-indicator">
         <span>Scroll</span>
@@ -706,69 +618,50 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       SECTION 2: ANALYZER
-       ============================================================ -->
   <section class="section" id="analyzer">
     <div class="analyzer-container">
       <h2 class="analyzer-title">⚡ <span>Code Analyzer</span></h2>
       <p class="analyzer-sub">Paste your Python code and get a professional review.</p>
-
       <div class="code-area">
         <div class="file-upload-area">
           <label for="fileInput" class="file-upload-label"><i class="fas fa-upload"></i> Upload .py File</label>
-          <input type="file" id="fileInput" accept=".py" style="display: none;" />
+          <input type="file" id="fileInput" accept=".py" style="display:none;" />
           <span id="fileName" class="file-name">No file selected</span>
         </div>
-
-        <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def add(a, b):
+        <textarea id="codeInput" rows="7">def add(a, b):
     return a + b
 
 x = 10  # unused</textarea>
-
         <div class="code-stats">
           <span id="lineCount">📄 Lines: 0</span>
           <span id="charCount">📝 Characters: 0</span>
           <span id="langDetect">🔤 Language: <span class="lang-badge" id="langBadge">Python</span></span>
         </div>
-
         <div class="toolbar">
           <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
           <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> .txt</button>
           <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
           <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
         </div>
-
         <button class="analyze-btn" id="analyzeBtn">🔍 Analyze</button>
-
         <div id="output">
-          <div class="placeholder">
-            <i class="fas fa-code" style="display: block; font-size: 1.2rem; margin-bottom: 0.2rem; color: rgba(255,255,255,0.02);"></i>
-            Results will appear here
-          </div>
+          <div class="placeholder"><i class="fas fa-code" style="display:block;font-size:1.2rem;margin-bottom:0.2rem;color:rgba(255,255,255,0.02);"></i>Results will appear here</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       SECTION 3: HISTORY
-       ============================================================ -->
   <section class="section" id="history">
     <div class="history-container">
       <h2 class="history-title">📜 <span>Analysis History</span></h2>
       <p class="history-sub">Your past analyses are saved locally.</p>
-
       <div class="history-card">
-        <div id="historyList">
-          <div class="history-empty">No past analyses yet.</div>
-        </div>
+        <div id="historyList"><div class="history-empty">No past analyses yet.</div></div>
         <button id="clearHistoryBtn" class="clear-history-btn">🗑️ Clear All</button>
       </div>
     </div>
-
-    <footer class="footer" style="margin-top: 2rem;">
-      <span>© 2026 · built with <span style="color: #00c896;">✦</span> by rohit</span>
+    <footer class="footer" style="margin-top:2rem;">
+      <span>© 2026 · built with <span style="color:#00c896;">✦</span> by rohit</span>
       <div>
         <a href="https://github.com/Rohits533" target="_blank">GitHub</a>
         <a href="https://vercel.com" target="_blank">Vercel</a>
@@ -777,23 +670,9 @@ x = 10  # unused</textarea>
     </footer>
   </section>
 
-  <!-- ============================================================
-       AUDIO
-       ============================================================ -->
-  <iframe
-    width="0"
-    height="0"
-    scrolling="no"
-    frameborder="no"
-    allow="autoplay"
-    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%2300c896&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
-    style="position: fixed; bottom: 16px; right: 16px; z-index: 999; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); width: 0; height: 0;"
-  ></iframe>
+  <iframe width="0" height="0" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%2300c896&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false" style="position:fixed;bottom:16px;right:16px;z-index:999;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.4);width:0;height:0;"></iframe>
 
   <script>
-    // ============================================================
-    // PARTICLES
-    // ============================================================
     const pContainer = document.getElementById('particles');
     for (let i = 0; i < 20; i++) {
       const p = document.createElement('div');
@@ -810,23 +689,12 @@ x = 10  # unused</textarea>
       pContainer.appendChild(p);
     }
 
-    // ============================================================
-    // SCROLL REVEAL
-    // ============================================================
     const sections = document.querySelectorAll('.section');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-
     sections.forEach(section => observer.observe(section));
 
-    // ============================================================
-    // SMOOTH SCROLL
-    // ============================================================
     document.querySelectorAll('.nav a').forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
@@ -844,13 +712,9 @@ x = 10  # unused</textarea>
     });
 
     document.getElementById('watchBtn').addEventListener('click', () => {
-      // Just a placeholder — you can add a video modal or link here
       alert('🎬 Video feature coming soon!');
     });
 
-    // ============================================================
-    // KEYBOARD SHORTCUTS
-    // ============================================================
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
@@ -858,9 +722,6 @@ x = 10  # unused</textarea>
       }
     });
 
-    // ============================================================
-    // CODE STATS
-    // ============================================================
     function updateStats() {
       const code = document.getElementById('codeInput').value;
       const lines = code.split('\n').length;
@@ -868,22 +729,14 @@ x = 10  # unused</textarea>
       document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
       document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
       const langBadge = document.getElementById('langBadge');
-      if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
-        langBadge.textContent = 'Python';
-      } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
-        langBadge.textContent = 'JavaScript';
-      } else if (code.includes('public class ') || code.includes('System.out.println')) {
-        langBadge.textContent = 'Java';
-      } else {
-        langBadge.textContent = 'Unknown';
-      }
+      if (code.includes('def ') || code.includes('import ') || code.includes('class ')) langBadge.textContent = 'Python';
+      else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) langBadge.textContent = 'JavaScript';
+      else if (code.includes('public class ') || code.includes('System.out.println')) langBadge.textContent = 'Java';
+      else langBadge.textContent = 'Unknown';
     }
     document.getElementById('codeInput').addEventListener('input', updateStats);
     updateStats();
 
-    // ============================================================
-    // FILE UPLOAD
-    // ============================================================
     document.getElementById('fileInput').addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -896,23 +749,14 @@ x = 10  # unused</textarea>
       reader.readAsText(file);
     });
 
-    // ============================================================
-    // CLEAR
-    // ============================================================
     document.getElementById('clearBtn').addEventListener('click', () => {
       document.getElementById('codeInput').value = '';
       document.getElementById('fileName').textContent = 'No file selected';
       document.getElementById('fileInput').value = '';
       updateStats();
-      document.getElementById('output').innerHTML = `<div class="placeholder">
-        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.02);"></i>
-        Results will appear here
-      </div>`;
+      document.getElementById('output').innerHTML = `<div class="placeholder"><i class="fas fa-code" style="display:block;font-size:1.2rem;margin-bottom:0.2rem;color:rgba(255,255,255,0.02);"></i>Results will appear here</div>`;
     });
 
-    // ============================================================
-    // COPY
-    // ============================================================
     document.getElementById('copyBtn').addEventListener('click', async () => {
       const output = document.getElementById('output').textContent;
       if (output && !output.includes('Results will appear here')) {
@@ -921,17 +765,10 @@ x = 10  # unused</textarea>
           const btn = document.getElementById('copyBtn');
           btn.innerHTML = '✅ Copied!';
           setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i> Copy', 2000);
-        } catch {
-          alert('Failed to copy.');
-        }
-      } else {
-        alert('No results to copy.');
-      }
+        } catch { alert('Failed to copy.'); }
+      } else { alert('No results to copy.'); }
     });
 
-    // ============================================================
-    // DOWNLOAD .TXT
-    // ============================================================
     document.getElementById('downloadBtn').addEventListener('click', () => {
       const output = document.getElementById('output').textContent;
       if (output && !output.includes('Results will appear here')) {
@@ -942,14 +779,9 @@ x = 10  # unused</textarea>
         a.download = `analysis-${Date.now()}.txt`;
         a.click();
         URL.revokeObjectURL(url);
-      } else {
-        alert('No results to download.');
-      }
+      } else { alert('No results to download.'); }
     });
 
-    // ============================================================
-    // PDF
-    // ============================================================
     document.getElementById('pdfBtn').addEventListener('click', () => {
       const output = document.getElementById('output');
       const content = output.textContent;
@@ -979,20 +811,11 @@ x = 10  # unused</textarea>
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, letterRendering: true, useCORS: true },
         jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      }).from(tempDiv).save().then(() => {
-        document.body.removeChild(tempDiv);
-      });
+      }).from(tempDiv).save().then(() => { document.body.removeChild(tempDiv); });
     });
 
-    // ============================================================
-    // HISTORY
-    // ============================================================
     function getHistory() {
-      try {
-        return JSON.parse(localStorage.getItem('analysisHistory')) || [];
-      } catch {
-        return [];
-      }
+      try { return JSON.parse(localStorage.getItem('analysisHistory')) || []; } catch { return []; }
     }
 
     function saveToHistory(code, result) {
@@ -1038,34 +861,25 @@ x = 10  # unused</textarea>
 
     document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
 
-    // ============================================================
-    // ANALYZE
-    // ============================================================
     document.getElementById('analyzeBtn').addEventListener('click', async () => {
       const code = document.getElementById('codeInput').value;
       const output = document.getElementById('output');
-
       if (!code.trim()) {
         output.innerHTML = `<div class="placeholder">⚠️ Please paste some code.</div>`;
         return;
       }
-
       output.innerHTML = `<div class="spinner-container"><div class="spinner"></div><div class="spinner-text">Analyzing...</div></div>`;
-
       try {
         const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code })
         });
-
         const data = await res.json();
-
         if (!res.ok) {
           output.innerHTML = `<div class="placeholder">❌ Error: ${data.error || 'Something went wrong'}</div>`;
           return;
         }
-
         const ast = data.ast_report || data;
         let text = '📊 STATIC ANALYSIS (AST)\n----------------------------\n';
         text += `Unused Variables: ${(ast.unused_variables || []).join(', ') || 'None'}\n`;
@@ -1074,7 +888,6 @@ x = 10  # unused</textarea>
         if (data.ai_review) {
           text += '🧠 AI REVIEW (Gemini)\n----------------------------\n' + data.ai_review;
         }
-
         output.innerHTML = `
           <div style="margin-bottom:0.6rem;">
             <strong style="color:rgba(255,255,255,0.08);font-size:0.65rem;">📄 Code</strong>
@@ -1085,9 +898,7 @@ x = 10  # unused</textarea>
             <pre style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.05);padding:0.6rem;border-radius:8px;border:1px solid rgba(0,200,150,0.02);margin-top:0.2rem;color:rgba(255,255,255,0.3);">${text}</pre>
           </div>
         `;
-
         saveToHistory(code, data);
-
       } catch (err) {
         output.innerHTML = `<div class="placeholder">❌ Network error: ${err.message}</div>`;
       }
