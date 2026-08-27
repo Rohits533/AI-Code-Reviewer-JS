@@ -15,7 +15,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      cursor: none;
     }
     html {
       scroll-behavior: smooth;
@@ -30,73 +29,24 @@
       overflow-x: hidden;
       padding: 0;
       position: relative;
-      cursor: none;
     }
 
     /* ============================================================
-       CUSTOM CIRCLE CURSOR
+       BACKGROUND
        ============================================================ */
-    .cursor-dot {
-      width: 8px;
-      height: 8px;
-      background: #60a5fa;
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, background 0.2s;
-    }
-    .cursor-ring {
-      width: 40px;
-      height: 40px;
-      border: 1.5px solid rgba(96, 165, 250, 0.3);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s, height 0.3s, border-color 0.3s;
-    }
-    .cursor-ring.hover {
-      width: 60px;
-      height: 60px;
-      border-color: rgba(96, 165, 250, 0.6);
-    }
-
-    /* ============================================================
-       NEBULA BACKGROUND
-       ============================================================ */
-    #nebula-bg {
+    #bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
-      background: radial-gradient(ellipse at 20% 50%, #0d1b2a 0%, #06080a 70%);
+      background: #0a0a0f;
       pointer-events: none;
-    }
-    #nebula-bg::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at 80% 30%, #1b1a3a 0%, transparent 50%),
-                  radial-gradient(ellipse at 40% 70%, #0f2a1f 0%, transparent 40%),
-                  radial-gradient(ellipse at 60% 20%, #1a0a2a 0%, transparent 30%);
-      opacity: 0.6;
-      animation: nebulaShift 20s ease-in-out infinite alternate;
-    }
-    @keyframes nebulaShift {
-      0% { transform: scale(1) rotate(0deg); }
-      100% { transform: scale(1.1) rotate(2deg); }
     }
 
     /* ============================================================
-       STARS
+       STARS (subtle)
        ============================================================ */
     #stars {
       position: fixed;
@@ -109,44 +59,13 @@
     }
     .star {
       position: absolute;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 50%;
       animation: twinkle var(--duration) ease-in-out infinite alternate;
     }
     @keyframes twinkle {
-      0% { opacity: 0.2; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1.2); }
-    }
-
-    /* ============================================================
-       SHOOTING STARS
-       ============================================================ */
-    .shooting-star {
-      position: fixed;
-      width: 2px;
-      height: 2px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 0 0 6px 2px rgba(100, 200, 255, 0.3);
-      animation: shoot var(--duration) linear infinite;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .shooting-star::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 80px;
-      height: 1px;
-      background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
-      transform: rotate(-45deg) translateX(-30px);
-    }
-    @keyframes shoot {
-      0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
-      10% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { transform: translate(-400px, 400px) rotate(-45deg); opacity: 0; }
+      0% { opacity: 0.1; }
+      100% { opacity: 0.4; }
     }
 
     /* ============================================================
@@ -165,34 +84,27 @@
       align-items: center;
       z-index: 99999;
       pointer-events: none;
-      animation: entryOut 1.2s ease 1.6s forwards;
+      animation: entryOut 0.8s ease 1.2s forwards;
     }
     .entry-overlay .icon {
-      font-size: 4rem;
+      font-size: 3.5rem;
       color: #60a5fa;
-      animation: pulseIn 1s ease forwards;
+      animation: pulseIn 0.8s ease forwards;
     }
     .entry-overlay h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
+      font-size: 2rem;
+      font-weight: 600;
       color: #ffffff;
       margin-top: 0.5rem;
-      letter-spacing: 2px;
-      animation: slideUp 0.8s ease forwards;
-    }
-    .entry-overlay p {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 1rem;
-      margin-top: 0.3rem;
-      animation: slideUp 1s ease forwards;
+      letter-spacing: 1px;
+      animation: slideUp 0.6s ease forwards;
     }
     @keyframes pulseIn {
-      0% { transform: scale(0.6); opacity: 0; }
-      70% { transform: scale(1.1); }
+      0% { transform: scale(0.7); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
     @keyframes slideUp {
-      0% { transform: translateY(30px); opacity: 0; }
+      0% { transform: translateY(20px); opacity: 0; }
       100% { transform: translateY(0); opacity: 1; }
     }
     @keyframes entryOut {
@@ -214,8 +126,8 @@
       position: relative;
       z-index: 1;
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(30px);
+      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .section.visible {
       opacity: 1;
@@ -235,17 +147,17 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: rgba(6, 8, 10, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       flex-wrap: wrap;
       gap: 1rem;
     }
     .logo {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #ffffff;
       letter-spacing: -0.3px;
     }
     .logo span {
@@ -264,24 +176,23 @@
       font-weight: 400;
       transition: 0.3s;
       cursor: pointer;
-      position: relative;
     }
     .nav a:hover {
-      color: #fff;
+      color: #ffffff;
     }
     .nav .btn {
       border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
       background: transparent;
-      color: #fff;
+      color: #ffffff;
       font-weight: 500;
       font-size: 0.8rem;
       transition: 0.3s;
     }
     .nav .btn:hover {
       background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.1);
     }
 
     /* ============================================================
@@ -292,36 +203,36 @@
       padding: 4rem 1.5rem;
     }
     .hero h1 {
-      font-size: 4rem;
-      font-weight: 800;
+      font-size: 3.8rem;
+      font-weight: 700;
       line-height: 1.05;
       letter-spacing: -1px;
+      color: #ffffff;
     }
     .hero h1 .highlight {
       color: #60a5fa;
     }
     .hero p {
-      font-size: 1.05rem;
-      color: rgba(255, 255, 255, 0.4);
-      max-width: 560px;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.35);
+      max-width: 520px;
       margin: 0.8rem auto 2rem;
       line-height: 1.7;
     }
     .hero .btn-primary {
-      background: #60a5fa;
-      border: none;
-      padding: 0.7rem 2.2rem;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.6rem 2rem;
       border-radius: 60px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #000;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 8px 32px rgba(96, 165, 250, 0.2);
     }
     .hero .btn-primary:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 48px rgba(96, 165, 250, 0.3);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
     .scroll-indicator {
@@ -333,32 +244,33 @@
       flex-direction: column;
       align-items: center;
       gap: 0.3rem;
-      color: rgba(255, 255, 255, 0.08);
-      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.06);
+      font-size: 0.55rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       animation: bounceDown 2s ease-in-out infinite;
     }
     .scroll-indicator i {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
     @keyframes bounceDown {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(8px); }
+      50% { transform: translateX(-50%) translateY(6px); }
     }
 
     /* ============================================================
        ANALYZER SECTION
        ============================================================ */
     .analyzer-container {
-      max-width: 820px;
+      max-width: 780px;
       width: 100%;
     }
     .analyzer-title {
-      font-size: 2.2rem;
-      font-weight: 700;
+      font-size: 2rem;
+      font-weight: 600;
       margin-bottom: 0.3rem;
       text-align: center;
+      color: #ffffff;
     }
     .analyzer-title span {
       color: #60a5fa;
@@ -372,12 +284,9 @@
 
     .code-area {
       background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
+      border-radius: 16px;
       padding: 1.8rem;
       border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
 
     .file-upload-area {
@@ -389,8 +298,8 @@
     }
     .file-upload-label {
       background: rgba(255, 255, 255, 0.03);
-      border: 1px dashed rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.4);
+      border: 1px dashed rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.3);
       padding: 0.3rem 1rem;
       border-radius: 40px;
       font-size: 0.75rem;
@@ -403,11 +312,11 @@
     }
     .file-upload-label:hover {
       background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.2);
-      color: #fff;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
     .file-name {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.15);
       font-size: 0.7rem;
     }
 
@@ -415,30 +324,28 @@
       width: 100%;
       padding: 1rem;
       background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       color: #e5e7eb;
       border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 14px;
+      border-radius: 12px;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
       font-size: 0.85rem;
       line-height: 1.6;
       resize: vertical;
-      min-height: 160px;
+      min-height: 150px;
       transition: border-color 0.3s;
     }
     .code-area textarea:focus {
       outline: none;
       border-color: #60a5fa;
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.05);
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.05);
     }
 
     .code-stats {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
       margin-top: 0.6rem;
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.12);
       flex-wrap: wrap;
     }
     .code-stats span {
@@ -456,8 +363,8 @@
     .toolbar button {
       background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.3);
-      padding: 0.25rem 0.7rem;
+      color: rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.7rem;
       border-radius: 40px;
       font-size: 0.65rem;
       cursor: pointer;
@@ -466,8 +373,8 @@
     }
     .toolbar button:hover {
       background: rgba(255, 255, 255, 0.03);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.08);
     }
     .toolbar button.copy-btn:hover {
       border-color: #60a5fa;
@@ -488,42 +395,39 @@
 
     .lang-badge {
       display: inline-block;
-      background: rgba(96, 165, 250, 0.08);
+      background: rgba(96, 165, 250, 0.06);
       color: #60a5fa;
       padding: 0.05rem 0.5rem;
       border-radius: 20px;
-      font-size: 0.6rem;
-      font-weight: 600;
+      font-size: 0.55rem;
+      font-weight: 500;
       margin-left: 0.2rem;
     }
 
     .analyze-btn {
       margin-top: 0.8rem;
-      background: #60a5fa;
-      border: none;
-      padding: 0.7rem 2rem;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.6rem 2rem;
       border-radius: 60px;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 0.9rem;
-      color: #000;
+      color: #ffffff;
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 4px 20px rgba(96, 165, 250, 0.15);
       width: 100%;
     }
     .analyze-btn:hover {
-      transform: scale(1.01);
-      box-shadow: 0 8px 32px rgba(96, 165, 250, 0.25);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.12);
     }
 
     #output {
       background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       padding: 1rem;
-      border-radius: 14px;
-      min-height: 100px;
-      color: #e5e7eb;
+      border-radius: 12px;
+      min-height: 90px;
+      color: rgba(255, 255, 255, 0.7);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.6;
@@ -532,10 +436,10 @@
       margin-top: 1rem;
     }
     #output .placeholder {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.08);
       font-family: 'Inter', sans-serif;
       text-align: center;
-      padding: 1.5rem 0;
+      padding: 1.2rem 0;
     }
 
     .spinner-container {
@@ -543,12 +447,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem 0;
-      gap: 0.8rem;
+      padding: 1.2rem 0;
+      gap: 0.6rem;
     }
     .spinner {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border: 2px solid rgba(255, 255, 255, 0.04);
       border-top: 2px solid #60a5fa;
       border-radius: 50%;
@@ -559,27 +463,23 @@
       100% { transform: rotate(360deg); }
     }
     .spinner-text {
-      color: rgba(255, 255, 255, 0.2);
-      font-size: 0.8rem;
-      animation: pulseText 1.5s ease-in-out infinite;
-    }
-    @keyframes pulseText {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
+      color: rgba(255, 255, 255, 0.12);
+      font-size: 0.75rem;
     }
 
     /* ============================================================
        HISTORY SECTION
        ============================================================ */
     .history-container {
-      max-width: 820px;
+      max-width: 780px;
       width: 100%;
     }
     .history-title {
-      font-size: 2.2rem;
-      font-weight: 700;
+      font-size: 2rem;
+      font-weight: 600;
       text-align: center;
       margin-bottom: 0.3rem;
+      color: #ffffff;
     }
     .history-title span {
       color: #60a5fa;
@@ -593,100 +493,96 @@
 
     .history-card {
       background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
+      border-radius: 16px;
       padding: 1.8rem;
       border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
     }
 
     .history-item {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.03);
-      border-radius: 10px;
-      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
       margin-bottom: 0.4rem;
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.35);
       transition: 0.2s;
     }
     .history-item:hover {
       background: rgba(255, 255, 255, 0.04);
     }
     .history-item .timestamp {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.1);
       font-size: 0.6rem;
       float: right;
     }
     .history-item .code-snippet {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.15);
       margin-top: 0.1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 85%;
     }
     .history-item .issues-badge {
       display: inline-block;
       background: #1DB954;
       color: #000;
       font-weight: 600;
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       padding: 0.05rem 0.4rem;
       border-radius: 20px;
       margin-top: 0.1rem;
     }
     .history-empty {
-      color: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.08);
       text-align: center;
-      padding: 1.5rem 0;
+      padding: 1.2rem 0;
     }
 
     .clear-history-btn {
       background: transparent;
-      border: 1px solid rgba(255, 50, 50, 0.06);
-      color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 50, 50, 0.04);
+      color: rgba(255, 255, 255, 0.1);
       padding: 0.2rem 0.8rem;
       border-radius: 40px;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       cursor: pointer;
       transition: 0.3s;
       font-family: inherit;
-      margin-top: 0.8rem;
+      margin-top: 0.6rem;
     }
     .clear-history-btn:hover {
-      background: rgba(255, 50, 50, 0.04);
+      background: rgba(255, 50, 50, 0.03);
       color: #ff6b6b;
-      border-color: rgba(255, 50, 50, 0.08);
+      border-color: rgba(255, 50, 50, 0.06);
     }
 
     /* ============================================================
        FOOTER
        ============================================================ */
     .footer {
-      padding: 1.5rem 0;
+      padding: 1.2rem 0;
       border-top: 1px solid rgba(255, 255, 255, 0.02);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.08);
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.06);
       flex-wrap: wrap;
       gap: 1rem;
-      max-width: 820px;
+      max-width: 780px;
       width: 100%;
     }
     .footer a {
-      color: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.06);
       text-decoration: none;
       margin-left: 1.2rem;
       transition: 0.3s;
     }
     .footer a:hover {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.15);
     }
 
     /* ============================================================
@@ -708,14 +604,7 @@
       }
       .analyzer-title,
       .history-title {
-        font-size: 1.8rem;
-      }
-      .cursor-dot,
-      .cursor-ring {
-        display: none;
-      }
-      * {
-        cursor: auto !important;
+        font-size: 1.6rem;
       }
     }
     @media (max-width: 480px) {
@@ -723,7 +612,7 @@
         font-size: 2rem;
       }
       .hero p {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
       .header {
         flex-direction: column;
@@ -736,15 +625,9 @@
 <body>
 
   <!-- ============================================================
-       CUSTOM CURSOR
+       BACKGROUND
        ============================================================ -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- ============================================================
-       NEBULA BACKGROUND
-       ============================================================ -->
-  <div id="nebula-bg"></div>
+  <div id="bg"></div>
 
   <!-- ============================================================
        STARS
@@ -752,21 +635,11 @@
   <div id="stars"></div>
 
   <!-- ============================================================
-       SHOOTING STARS
-       ============================================================ -->
-  <div class="shooting-star" style="--duration: 6s; top: 10%; left: 80%;"></div>
-  <div class="shooting-star" style="--duration: 8s; top: 20%; left: 60%; animation-delay: 3s;"></div>
-  <div class="shooting-star" style="--duration: 7s; top: 5%; left: 40%; animation-delay: 5s;"></div>
-  <div class="shooting-star" style="--duration: 9s; top: 15%; left: 90%; animation-delay: 2s;"></div>
-  <div class="shooting-star" style="--duration: 6.5s; top: 25%; left: 50%; animation-delay: 4s;"></div>
-
-  <!-- ============================================================
        ENTRY OVERLAY
        ============================================================ -->
   <div class="entry-overlay" id="entryOverlay">
     <div class="icon"><i class="fas fa-code"></i></div>
     <h1>✦ ai debug</h1>
-    <p>ast + gemini</p>
   </div>
 
   <!-- ============================================================
@@ -788,9 +661,7 @@
   <section class="section visible" id="home">
     <div class="hero">
       <h1>Code that <span class="highlight">thinks.</span></h1>
-      <p>
-        Paste your Python code — get AST analysis + Gemini AI review instantly.
-      </p>
+      <p>Paste your Python code — get AST analysis + Gemini AI review instantly.</p>
       <button class="btn-primary" id="tryItBtn">
         <i class="fas fa-play" style="margin-right: 6px;"></i> Try it now
       </button>
@@ -846,7 +717,7 @@ x = 10  # unused</textarea>
         <!-- Output -->
         <div id="output">
           <div class="placeholder">
-            <i class="fas fa-code" style="display: block; font-size: 1.5rem; margin-bottom: 0.3rem; color: rgba(255,255,255,0.05);"></i>
+            <i class="fas fa-code" style="display: block; font-size: 1.2rem; margin-bottom: 0.2rem; color: rgba(255,255,255,0.04);"></i>
             Results will appear here
           </div>
         </div>
@@ -891,54 +762,24 @@ x = 10  # unused</textarea>
     frameborder="no"
     allow="autoplay"
     src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/k-g-h-4/sets/fears-to-fathom-truck-radio&color=%2360a5fa&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
-    style="position: fixed; bottom: 20px; right: 20px; z-index: 999; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); width: 0; height: 0;"
+    style="position: fixed; bottom: 16px; right: 16px; z-index: 999; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.4); width: 0; height: 0;"
   ></iframe>
 
   <script>
     // ============================================================
-    // CUSTOM CURSOR
-    // ============================================================
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mouseX = 0,
-      mouseY = 0;
-    let ringX = 0,
-      ringY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-    });
-
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.1;
-      ringY += (mouseY - ringY) * 0.1;
-      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    document.querySelectorAll('a, button, .file-upload-label, .toolbar button').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-    });
-
-    // ============================================================
     // STARS
     // ============================================================
     const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 180; i++) {
+    for (let i = 0; i < 120; i++) {
       const star = document.createElement('div');
       star.className = 'star';
-      const size = Math.random() * 2 + 0.5;
+      const size = Math.random() * 1.5 + 0.5;
       star.style.width = size + 'px';
       star.style.height = size + 'px';
       star.style.left = Math.random() * 100 + '%';
       star.style.top = Math.random() * 100 + '%';
       star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-      star.style.animationDelay = (Math.random() * 5) + 's';
-      star.style.opacity = Math.random() * 0.5 + 0.1;
+      star.style.animationDelay = (Math.random() * 4) + 's';
       starsContainer.appendChild(star);
     }
 
@@ -1032,7 +873,7 @@ x = 10  # unused</textarea>
       document.getElementById('fileInput').value = '';
       updateStats();
       document.getElementById('output').innerHTML = `<div class="placeholder">
-        <i class="fas fa-code" style="display:block; font-size:1.5rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.05);"></i>
+        <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.04);"></i>
         Results will appear here
       </div>`;
     });
@@ -1177,7 +1018,7 @@ x = 10  # unused</textarea>
         return;
       }
 
-      output.innerHTML = `<div class="spinner-container"><div class="spinner"></div><div class="spinner-text">Analyzing your code...</div></div>`;
+      output.innerHTML = `<div class="spinner-container"><div class="spinner"></div><div class="spinner-text">Analyzing...</div></div>`;
 
       try {
         const res = await fetch('https://ai-code-reviewer-js.onrender.com/analyze', {
@@ -1203,13 +1044,13 @@ x = 10  # unused</textarea>
         }
 
         output.innerHTML = `
-          <div style="margin-bottom:0.8rem;">
-            <strong style="color:rgba(255,255,255,0.3);font-size:0.75rem;">📄 Code</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;line-height:1.5;background:rgba(0,0,0,0.2);padding:0.8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-top:0.2rem;white-space:pre-wrap;color:#e5e7eb;">${code}</pre>
+          <div style="margin-bottom:0.6rem;">
+            <strong style="color:rgba(255,255,255,0.2);font-size:0.7rem;">📄 Code</strong>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.5;background:rgba(0,0,0,0.15);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.02);margin-top:0.2rem;white-space:pre-wrap;color:rgba(255,255,255,0.7);">${code}</pre>
           </div>
           <div>
-            <strong style="color:rgba(255,255,255,0.3);font-size:0.75rem;">📊 Analysis</strong>
-            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.15);padding:0.8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-top:0.2rem;color:#e5e7eb;">${text}</pre>
+            <strong style="color:rgba(255,255,255,0.2);font-size:0.7rem;">📊 Analysis</strong>
+            <pre style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.6;white-space:pre-wrap;background:rgba(0,0,0,0.1);padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.02);margin-top:0.2rem;color:rgba(255,255,255,0.7);">${text}</pre>
           </div>
         `;
 
