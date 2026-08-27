@@ -19,18 +19,14 @@ class CodeRequest(BaseModel):
     code: str
 
 def get_gemini_review(code: str):
-    """Calls Gemini API for AI code review."""
     api_key = os.environ.get("GOOGLE_API_KEY")
     if not api_key:
         return "AI review not available (GOOGLE_API_KEY missing)"
     try:
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel("gemini-2.5-flash")
-        
-        prompt = f"""You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements. Be concise and specific.
-
-Analyze this Python code:
-```python
+                
+        prompt = f"""You are a senior code reviewer. Review the Python code for bugs, security issues, and improvements.Be concise and specific.Analyze this Python code:```python
 {code}
 ```"""
         response = model.generate_content(prompt)
@@ -41,8 +37,6 @@ Analyze this Python code:
 @app.post("/analyze")
 async def analyze_code(request: CodeRequest):
     code = request.code
-    
-    # --- AST Analysis ---
     try:
         tree = ast.parse(code)
     except SyntaxError as e:
@@ -85,10 +79,8 @@ async def analyze_code(request: CodeRequest):
     report["unused_imports"] = list(unused_imports)
     report["issues_count"] = len(report["unused_variables"]) + len(report["unused_imports"])
     
-    # --- AI Review (Gemini) ---
     ai_review = get_gemini_review(code)
     
-    # --- Combined Response ---
     return {
         "ast_report": report,
         "ai_review": ai_review
