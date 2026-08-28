@@ -64,7 +64,7 @@
                 -webkit-tap-highlight-color: transparent;
                 scroll-padding-top: 5.5rem;
                 overflow-x: clip;
-                scrollbar-color: var(--color-edge) var(--color-ink);
+                scrollbar-color: var(--color-accent) var(--color-ink);
                 scrollbar-width: thin;
             }
 
@@ -87,6 +87,7 @@
                 background: oklch(85% 0.25 120 / 0.25);
             }
 
+            /* ---- Custom Scrollbar with Accent ---- */
             ::-webkit-scrollbar {
                 width: 8px;
                 height: 8px;
@@ -95,12 +96,12 @@
                 background: var(--color-ink);
             }
             ::-webkit-scrollbar-thumb {
-                background: var(--color-edge);
+                background: oklch(85% 0.25 120 / 0.3);
                 border-radius: var(--radius-xl);
                 border: 2px solid var(--color-ink);
             }
             ::-webkit-scrollbar-thumb:hover {
-                background: oklch(100% 0 0 / 0.12);
+                background: oklch(85% 0.25 120 / 0.5);
             }
 
             button {
@@ -131,6 +132,53 @@
            COMPONENTS LAYER
            ============================================================ */
         @layer components {
+            /* ============================================================
+               RECOMMENDATION 1: ANIMATED BACKGROUND — Floating Orbs
+               ============================================================ */
+            .gradient-orb {
+                position: fixed;
+                border-radius: 50%;
+                filter: blur(120px);
+                pointer-events: none;
+                z-index: 0;
+                opacity: 0.3;
+                animation: orbFloat 20s ease-in-out infinite alternate;
+            }
+
+            .gradient-orb-1 {
+                width: 600px;
+                height: 600px;
+                top: -15%;
+                right: -10%;
+                background: radial-gradient(circle, oklch(85% 0.25 120 / 0.12), transparent 70%);
+                animation-delay: 0s;
+            }
+
+            .gradient-orb-2 {
+                width: 500px;
+                height: 500px;
+                bottom: -15%;
+                left: -10%;
+                background: radial-gradient(circle, oklch(60% 0.2 280 / 0.08), transparent 70%);
+                animation-delay: -7s;
+            }
+
+            .gradient-orb-3 {
+                width: 400px;
+                height: 400px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, oklch(85% 0.25 120 / 0.06), transparent 70%);
+                animation-delay: -14s;
+            }
+
+            @keyframes orbFloat {
+                0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+                50% { transform: translate(80px, -100px) scale(1.3); opacity: 0.5; }
+                100% { transform: translate(-60px, 60px) scale(0.8); opacity: 0.2; }
+            }
+
             /* ============================================================
                GREEN FLAME CURSOR
                ============================================================ */
@@ -176,7 +224,6 @@
                     box-shadow 0.4s var(--ease-out);
             }
 
-            /* ---- FLAME RING ---- */
             #custom-cursor .cursor-ring {
                 position: absolute;
                 top: 50%;
@@ -191,7 +238,6 @@
                 transition: all 0.5s var(--ease-out);
             }
 
-            /* ---- FLAME PARTICLES (CSS-Only) ---- */
             #custom-cursor .flame-particle {
                 position: absolute;
                 border-radius: 50%;
@@ -227,9 +273,10 @@
                 transform: translate(-50%, -50%);
             }
 
-            /* ============================================================
-               HOVER STATE — GREEN FLAME ACTIVATES
-               ============================================================ */
+            #custom-cursor .flame-particle.p1 { --tx1: -30px; --ty1: -30px; }
+            #custom-cursor .flame-particle.p2 { --tx2: 35px; --ty2: -25px; }
+            #custom-cursor .flame-particle.p3 { --tx3: -20px; --ty3: 35px; }
+
             #custom-cursor.hover {
                 width: 60px;
                 height: 60px;
@@ -249,12 +296,8 @@
             }
 
             @keyframes flameGlow {
-                0% {
-                    box-shadow: 0 0 40px oklch(85% 0.25 120 / 0.2), 0 0 80px oklch(85% 0.25 120 / 0.1), 0 0 120px oklch(85% 0.25 120 / 0.05);
-                }
-                100% {
-                    box-shadow: 0 0 60px oklch(85% 0.25 120 / 0.35), 0 0 100px oklch(85% 0.25 120 / 0.2), 0 0 150px oklch(85% 0.25 120 / 0.1);
-                }
+                0% { box-shadow: 0 0 40px oklch(85% 0.25 120 / 0.2), 0 0 80px oklch(85% 0.25 120 / 0.1), 0 0 120px oklch(85% 0.25 120 / 0.05); }
+                100% { box-shadow: 0 0 60px oklch(85% 0.25 120 / 0.35), 0 0 100px oklch(85% 0.25 120 / 0.2), 0 0 150px oklch(85% 0.25 120 / 0.1); }
             }
 
             #custom-cursor.hover .cursor-dot {
@@ -273,67 +316,32 @@
             }
 
             @keyframes ringFlame {
-                0%, 100% {
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 0.3;
-                    border-color: oklch(85% 0.25 120 / 0.15);
-                }
-                50% {
-                    transform: translate(-50%, -50%) scale(1.6);
-                    opacity: 0;
-                    border-color: oklch(85% 0.25 120 / 0.3);
-                }
+                0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; border-color: oklch(85% 0.25 120 / 0.15); }
+                50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; border-color: oklch(85% 0.25 120 / 0.3); }
             }
 
-            /* ---- Flame Particles Animation on Hover ---- */
             #custom-cursor.hover .flame-particle.p1 {
                 animation: flameParticle1 1.2s ease-out infinite;
             }
-
             #custom-cursor.hover .flame-particle.p2 {
                 animation: flameParticle2 1.4s ease-out infinite 0.3s;
             }
-
             #custom-cursor.hover .flame-particle.p3 {
                 animation: flameParticle3 1s ease-out infinite 0.6s;
             }
 
             @keyframes flameParticle1 {
-                0% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translate(calc(-50% + var(--tx1)), calc(-50% + var(--ty1))) scale(0);
-                }
+                0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(calc(-50% + var(--tx1)), calc(-50% + var(--ty1))) scale(0); }
             }
-
             @keyframes flameParticle2 {
-                0% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translate(calc(-50% + var(--tx2)), calc(-50% + var(--ty2))) scale(0);
-                }
+                0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(calc(-50% + var(--tx2)), calc(-50% + var(--ty2))) scale(0); }
             }
-
             @keyframes flameParticle3 {
-                0% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translate(calc(-50% + var(--tx3)), calc(-50% + var(--ty3))) scale(0);
-                }
+                0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                100% { opacity: 0; transform: translate(calc(-50% + var(--tx3)), calc(-50% + var(--ty3))) scale(0); }
             }
-
-            #custom-cursor .flame-particle.p1 { --tx1: -30px; --ty1: -30px; }
-            #custom-cursor .flame-particle.p2 { --tx2: 35px; --ty2: -25px; }
-            #custom-cursor .flame-particle.p3 { --tx3: -20px; --ty3: 35px; }
 
             /* ============================================================
                GLITCH TEXT
@@ -396,7 +404,9 @@
                 100% { transform: translate(0); }
             }
 
-            /* ---- BUTTONS ---- */
+            /* ============================================================
+               BUTTONS
+               ============================================================ */
             .btn-primary {
                 padding: 0.7rem 2.2rem;
                 border-radius: 60px;
@@ -453,7 +463,9 @@
                 border-color: var(--color-edge);
             }
 
-            /* ---- GLASS CARD ---- */
+            /* ============================================================
+               GLASS CARD with TILT EFFECT (Recommendation 3)
+               ============================================================ */
             .glass {
                 background: oklch(100% 0 0 / 0.02);
                 backdrop-filter: blur(var(--blur-2xl)) saturate(1.4);
@@ -463,12 +475,14 @@
                 transition: all 0.5s var(--ease-in-out);
                 position: relative;
                 overflow: hidden;
+                transform-style: preserve-3d;
+                perspective: 800px;
             }
 
             .glass:hover {
-                border-color: oklch(60% 0.2 280 / 0.06);
-                transform: translateY(-4px);
-                box-shadow: 0 12px 80px oklch(0% 0 0 / 0.4);
+                border-color: oklch(85% 0.25 120 / 0.15);
+                transform: perspective(800px) rotateX(2deg) rotateY(4deg) translateY(-4px);
+                box-shadow: 0 12px 80px oklch(85% 0.25 120 / 0.05);
             }
 
             .glass::before {
@@ -477,14 +491,57 @@
                 inset: 0;
                 border-radius: inherit;
                 padding: 1px;
-                background: linear-gradient(135deg, oklch(60% 0.2 280 / 0.04), transparent, oklch(60% 0.2 280 / 0.04));
+                background: linear-gradient(135deg, oklch(85% 0.25 120 / 0.04), transparent, oklch(85% 0.25 120 / 0.04));
                 -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
                 -webkit-mask-composite: xor;
                 mask-composite: exclude;
                 pointer-events: none;
             }
 
-            /* ---- TAG ---- */
+            /* ============================================================
+               FEATURED BADGE (Recommendation 2)
+               ============================================================ */
+            .featured-badge {
+                display: inline-block;
+                font-size: 0.5rem;
+                font-weight: 700;
+                padding: 0.1rem 0.5rem;
+                border-radius: var(--radius-xl);
+                background: oklch(85% 0.25 120 / 0.1);
+                color: var(--color-accent);
+                border: 1px solid oklch(85% 0.25 120 / 0.15);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                animation: pulse 2s var(--ease-in-out) infinite;
+            }
+
+            /* ============================================================
+               LIVE STATUS INDICATOR (Recommendation 4)
+               ============================================================ */
+            .status-dot {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: oklch(85% 0.25 120);
+                box-shadow: 0 0 20px oklch(85% 0.25 120 / 0.3);
+                animation: pulse 1.5s var(--ease-in-out) infinite;
+                margin-right: 0.4rem;
+                vertical-align: middle;
+            }
+
+            .status-text {
+                color: var(--color-fg-dim);
+                font-size: 0.7rem;
+                opacity: 0.5;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
+            /* ============================================================
+               TAG
+               ============================================================ */
             .tag {
                 background: oklch(60% 0.2 280 / 0.04);
                 border: 1px solid oklch(60% 0.2 280 / 0.06);
@@ -1048,8 +1105,9 @@
                 text-align: center;
             }
 
+            /* Recommendation 5: Larger Typography */
             .hero h1 {
-                font-size: 4rem;
+                font-size: 4.5rem;
                 font-weight: 700;
                 font-family: var(--font-display);
                 line-height: 1.05;
@@ -1064,7 +1122,7 @@
             }
 
             .hero .tagline {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
                 color: var(--color-fg-dim);
                 font-weight: 300;
                 margin-bottom: 0.8rem;
@@ -1075,7 +1133,7 @@
             }
 
             .hero .bio {
-                font-size: 0.95rem;
+                font-size: 1rem;
                 color: var(--color-fg-dim);
                 max-width: 480px;
                 line-height: 1.7;
@@ -1098,15 +1156,9 @@
                 z-index: 1;
             }
 
-            .about-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 4rem;
-                align-items: center;
-            }
-
+            /* Recommendation 5: Larger Typography */
             .about-text h2 {
-                font-size: 2.5rem;
+                font-size: 3rem;
                 font-weight: 700;
                 font-family: var(--font-display);
                 margin-bottom: 1.2rem;
@@ -1123,8 +1175,15 @@
                 color: var(--color-fg-dim);
                 line-height: 1.8;
                 margin-bottom: 1rem;
-                font-size: 0.95rem;
+                font-size: 1rem;
                 opacity: 0.6;
+            }
+
+            .about-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                align-items: center;
             }
 
             .about-stats {
@@ -1183,12 +1242,15 @@
                 border-radius: var(--radius-xl);
                 border: 1px solid var(--color-edge);
                 transition: 0.3s var(--ease-spring);
+                transform-style: preserve-3d;
+                perspective: 800px;
             }
 
             .about-feature:hover {
                 background: oklch(60% 0.2 280 / 0.02);
-                border-color: oklch(60% 0.2 280 / 0.04);
-                transform: translateX(6px);
+                border-color: oklch(85% 0.25 120 / 0.1);
+                transform: perspective(800px) rotateX(1deg) rotateY(2deg) translateX(6px);
+                box-shadow: 0 4px 30px oklch(85% 0.25 120 / 0.03);
             }
 
             .about-feature i {
@@ -1215,6 +1277,11 @@
                 z-index: 1;
             }
 
+            /* Recommendation 5: Larger Typography */
+            #stack h2 {
+                font-size: 3rem;
+            }
+
             .stack-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -1228,13 +1295,16 @@
                 border-radius: var(--radius-2xl);
                 border: 1px solid var(--color-edge);
                 transition: 0.4s var(--ease-spring);
+                transform-style: preserve-3d;
+                perspective: 800px;
+                position: relative;
             }
 
             .stack-card:hover {
                 background: oklch(60% 0.2 280 / 0.02);
-                border-color: oklch(60% 0.2 280 / 0.04);
-                transform: translateY(-8px);
-                box-shadow: 0 8px 40px oklch(0% 0 0 / 0.1);
+                border-color: oklch(85% 0.25 120 / 0.1);
+                transform: perspective(800px) rotateX(2deg) rotateY(4deg) translateY(-8px);
+                box-shadow: 0 12px 50px oklch(85% 0.25 120 / 0.04);
             }
 
             .stack-card .icon {
@@ -1310,12 +1380,14 @@
                 transition: 0.5s var(--ease-in-out);
                 position: relative;
                 overflow: hidden;
+                transform-style: preserve-3d;
+                perspective: 800px;
             }
 
             .debugger-area:hover {
-                border-color: oklch(60% 0.2 280 / 0.04);
-                transform: translateY(-4px);
-                box-shadow: 0 12px 60px oklch(0% 0 0 / 0.2);
+                border-color: oklch(85% 0.25 120 / 0.1);
+                transform: perspective(800px) rotateX(1deg) rotateY(2deg) translateY(-4px);
+                box-shadow: 0 12px 60px oklch(85% 0.25 120 / 0.04);
             }
 
             .debugger-area::before {
@@ -1498,7 +1570,7 @@
                 background: transparent;
             }
             #output::-webkit-scrollbar-thumb {
-                background: var(--color-edge);
+                background: oklch(85% 0.25 120 / 0.2);
                 border-radius: var(--radius-xl);
             }
 
@@ -1707,6 +1779,9 @@
             .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .about-stats { grid-template-columns: repeat(3, 1fr); }
             .stack-grid { grid-template-columns: repeat(4, 1fr); }
+            .hero h1 { font-size: 3.5rem; }
+            .about-text h2 { font-size: 2.5rem; }
+            #stack h2 { font-size: 2.5rem; }
         }
 
         @media (max-width: 768px) {
@@ -1723,6 +1798,8 @@
             .debugger-area { padding: 1.2rem; }
             .debugger-area textarea { font-size: 0.75rem; padding: 0.8rem; min-height: 150px; }
             .corrected-code { font-size: 0.6rem; padding: 0.6rem; }
+            .about-text h2 { font-size: 2rem; }
+            #stack h2 { font-size: 2rem; }
             #custom-cursor { display: none !important; }
             html.cursor-on, html.cursor-on * { cursor: auto !important; }
         }
@@ -1737,12 +1814,21 @@
             .about-feature { padding: 0.8rem; }
             .debugger-area { padding: 0.8rem; }
             .debugger-area textarea { font-size: 0.65rem; padding: 0.6rem; min-height: 120px; }
+            .about-text h2 { font-size: 1.6rem; }
+            #stack h2 { font-size: 1.6rem; }
             #custom-cursor { display: none !important; }
             html.cursor-on, html.cursor-on * { cursor: auto !important; }
         }
     </style>
 </head>
 <body>
+
+    <!-- ============================================================
+       RECOMMENDATION 1: ANIMATED BACKGROUND — Floating Orbs
+       ============================================================ -->
+    <div class="gradient-orb gradient-orb-1"></div>
+    <div class="gradient-orb gradient-orb-2"></div>
+    <div class="gradient-orb gradient-orb-3"></div>
 
     <!-- ============================================================
        GREEN FLAME CURSOR
@@ -1780,6 +1866,10 @@
             <a href="#home" id="navHome">Home</a>
             <a href="#about">About</a>
             <a href="#stack">Stack</a>
+            <!-- Recommendation 4: Live Status Indicator -->
+            <span class="status-text">
+                <span class="status-dot"></span> Ready
+            </span>
             <a href="mailto:rohitsavan360@gmail.com" class="btn-cta">Contact</a>
         </nav>
     </header>
@@ -1844,12 +1934,14 @@
                         </div>
                     </div>
                     <div class="about-features reveal-right">
+                        <!-- Recommendation 2: Featured Badge on AERO -->
                         <div class="about-feature reveal stagger-1">
                             <i class="fas fa-code"></i>
                             <div class="text">
                                 <strong>AST Analysis</strong>
                                 <span>Parse and analyze code structure in detail</span>
                             </div>
+                            <span class="featured-badge" style="margin-left:auto;">★ FLAGSHIP</span>
                         </div>
                         <div class="about-feature reveal stagger-2">
                             <i class="fas fa-brain"></i>
@@ -1880,7 +1972,7 @@
         <!-- ===== TECH STACK ===== -->
         <section id="stack">
             <div class="container">
-                <h2 class="text-center reveal" style="font-size:2.5rem; font-weight:700; font-family:var(--font-display); letter-spacing:-0.025em; margin-bottom:0.5rem;">
+                <h2 class="text-center reveal" style="font-weight:700; font-family:var(--font-display); letter-spacing:-0.025em; margin-bottom:0.5rem;">
                     🛠️ Tech <span style="color:var(--color-accent);">Stack</span>
                 </h2>
                 <p style="text-align:center; color:var(--color-fg-dim); font-size:1rem; margin-bottom:2.5rem; opacity:0.4;" class="reveal stagger-1">
@@ -1957,7 +2049,7 @@
                 <i class="fas fa-arrow-left"></i> Back to Home
             </button>
 
-            <h2 style="font-size:2.5rem; font-weight:700; font-family:var(--font-display); text-align:center; margin-bottom:0.3rem; letter-spacing:-2px; color:var(--color-fg);">
+            <h2 style="font-size:2.8rem; font-weight:700; font-family:var(--font-display); text-align:center; margin-bottom:0.3rem; letter-spacing:-2px; color:var(--color-fg);">
                 ⚡ <span style="color:var(--color-accent);">AI Code Debugger</span>
             </h2>
             <p style="text-align:center; color:var(--color-fg-dim); font-size:1rem; margin-bottom:2rem; opacity:0.4; font-weight:300;">
@@ -2034,7 +2126,6 @@
         }
         animateCursor();
 
-        // Hover — activates green flame
         document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .file-upload-label, .toolbar button, .analyze-btn, .nav a, .stack-card, .about-feature, .debugger-back-btn').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
