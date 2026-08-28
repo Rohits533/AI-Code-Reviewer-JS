@@ -33,6 +33,89 @@
     }
 
     /* ============================================================
+       ANIMATED GRADIENT BACKGROUND - VIBRANT
+       ============================================================ */
+    #animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 25%, #0a0a2e 50%, #1a0a2e 75%, #0a0a0f 100%);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease-in-out infinite alternate;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 0%; }
+      25% { background-position: 100% 0%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    #animated-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+      animation: orbPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes orbPulse {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* Floating gradient orbs */
+    .gradient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat 25s ease-in-out infinite alternate;
+      opacity: 0.3;
+    }
+    .gradient-orb-1 {
+      width: 600px;
+      height: 600px;
+      top: -15%;
+      right: -10%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
+      animation-delay: 0s;
+    }
+    .gradient-orb-2 {
+      width: 500px;
+      height: 500px;
+      bottom: -15%;
+      left: -10%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
+      animation-delay: -8s;
+    }
+    .gradient-orb-3 {
+      width: 400px;
+      height: 400px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.08), transparent 70%);
+      animation-delay: -16s;
+    }
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+      50% { transform: translate(80px, -100px) scale(1.3); opacity: 0.5; }
+      100% { transform: translate(-60px, 60px) scale(0.8); opacity: 0.2; }
+    }
+
+    /* ============================================================
        CUSTOM CURSOR
        ============================================================ */
     #custom-cursor {
@@ -42,8 +125,8 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.01);
+      border: 1.5px solid rgba(139, 92, 246, 0.2);
+      background: rgba(139, 92, 246, 0.02);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
@@ -52,7 +135,6 @@
                   border-color 0.3s ease;
       transform: translate(-50%, -50%);
       will-change: transform;
-      box-shadow: 0 0 60px rgba(139, 92, 246, 0.02);
     }
     #custom-cursor .cursor-dot {
       position: absolute;
@@ -62,36 +144,19 @@
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(139, 92, 246, 0.3);
       transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
     }
     #custom-cursor.hover {
       width: 64px;
       height: 64px;
-      background: rgba(139, 92, 246, 0.03);
-      border-color: rgba(139, 92, 246, 0.15);
-      box-shadow: 0 0 80px rgba(139, 92, 246, 0.05);
+      background: rgba(139, 92, 246, 0.04);
+      border-color: rgba(139, 92, 246, 0.3);
     }
     #custom-cursor.hover .cursor-dot {
       width: 6px;
       height: 6px;
-      background: rgba(139, 92, 246, 0.3);
-    }
-
-    /* ============================================================
-       BACKGROUND
-       ============================================================ */
-    #bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: 
-        radial-gradient(ellipse at 70% 30%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+      background: rgba(139, 92, 246, 0.5);
     }
 
     /* ============================================================
@@ -104,7 +169,7 @@
       transform: translateY(-50%);
       z-index: 0;
       pointer-events: none;
-      opacity: 0.02;
+      opacity: 0.025;
     }
     .rotating-logo-container .logo-text {
       font-size: 30rem;
@@ -119,41 +184,6 @@
       0% { transform: rotate(0deg) scale(1); }
       50% { transform: rotate(180deg) scale(1.05); }
       100% { transform: rotate(360deg) scale(1); }
-    }
-
-    /* ============================================================
-       FLOATING ORBS
-       ============================================================ */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      pointer-events: none;
-      z-index: 0;
-      animation: orbFloat 20s ease-in-out infinite alternate;
-      mix-blend-mode: screen;
-      will-change: transform;
-    }
-    .orb-1 {
-      width: 500px;
-      height: 500px;
-      top: -10%;
-      right: -10%;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.05), transparent 70%);
-      animation-delay: 0s;
-    }
-    .orb-2 {
-      width: 400px;
-      height: 400px;
-      bottom: -10%;
-      left: -10%;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.04), transparent 70%);
-      animation-delay: -7s;
-    }
-    @keyframes orbFloat {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-      50% { transform: translate(60px, -80px) scale(1.2); opacity: 0.4; }
-      100% { transform: translate(-40px, 40px) scale(0.9); opacity: 0.2; }
     }
 
     /* ============================================================
@@ -287,16 +317,21 @@
       top: 0;
       left: 0;
       height: 1.5px;
-      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa, #ec4899);
       background-size: 200% 100%;
       z-index: 999;
       width: 0%;
       transition: width 0.1s linear;
+      animation: shimmerProgress 3s ease-in-out infinite;
       box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    @keyframes shimmerProgress {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 200% 0%; }
     }
 
     /* ============================================================
-       HERO - CLEAN & MINIMAL
+       HERO
        ============================================================ */
     .hero {
       min-height: 100vh;
@@ -348,15 +383,20 @@
       color: #ffffff;
     }
     .hero h1 .highlight {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa, #ec4899);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: textShimmer 4s ease-in-out infinite;
+    }
+    @keyframes textShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     .hero p {
       font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.3);
       max-width: 440px;
       line-height: 1.8;
       font-weight: 300;
@@ -370,7 +410,7 @@
     }
 
     .btn-primary {
-      background: rgba(139, 92, 246, 0.04);
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.04), rgba(139, 92, 246, 0.02));
       border: 1px solid rgba(139, 92, 246, 0.06);
       padding: 0.6rem 2rem;
       border-radius: 60px;
@@ -411,7 +451,6 @@
       color: rgba(139, 92, 246, 0.3);
     }
 
-    /* Hero Visual */
     .hero-visual {
       display: flex;
       align-items: center;
@@ -433,6 +472,7 @@
       justify-content: center;
       padding: 2rem;
       position: relative;
+      overflow: hidden;
     }
     .hero-card::before {
       content: '';
@@ -441,7 +481,7 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
+      background: radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
       pointer-events: none;
     }
 
@@ -487,6 +527,256 @@
     }
     .hero-card-inner .code-preview .string {
       color: rgba(139, 92, 246, 0.08);
+    }
+
+    /* ============================================================
+       ABOUT SECTION - DETAILED
+       ============================================================ */
+    #about {
+      min-height: 100vh;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #about.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .about-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: -2px;
+      color: #ffffff;
+    }
+    .about-title span {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .about-sub {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .about-text h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .about-text h3 span {
+      color: #8b5cf6;
+    }
+    .about-text p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .about-features-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .about-features-list .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 0.8rem;
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      transition: 0.3s;
+    }
+    .about-features-list .feature-item:hover {
+      background: rgba(139, 92, 246, 0.02);
+      border-color: rgba(139, 92, 246, 0.04);
+    }
+    .about-features-list .feature-item i {
+      color: #8b5cf6;
+      font-size: 1rem;
+      margin-top: 0.1rem;
+    }
+    .about-features-list .feature-item .feature-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .about-features-list .feature-item .feature-text strong {
+      font-size: 0.85rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .about-features-list .feature-item .feature-text span {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.2);
+      font-weight: 300;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    .about-stats .stat-item {
+      text-align: center;
+    }
+    .about-stats .stat-item .number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .about-stats .stat-item .label {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 0.2rem;
+    }
+
+    /* ============================================================
+       FEATURES SECTION - DETAILED
+       ============================================================ */
+    #features {
+      min-height: 100vh;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #features.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .features-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: -2px;
+      color: #ffffff;
+    }
+    .features-title span {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .features-sub {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .feature-card {
+      border-radius: 20px;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.01);
+      backdrop-filter: blur(30px) saturate(1.5);
+      -webkit-backdrop-filter: blur(30px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(139, 92, 246, 0.04);
+      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.03);
+    }
+    .feature-card .icon {
+      font-size: 2rem;
+      color: #8b5cf6;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+    .feature-card p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.3);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .feature-card .feature-tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.55rem;
+      color: rgba(139, 92, 246, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid rgba(139, 92, 246, 0.03);
+      padding: 0.05rem 0.5rem;
+      border-radius: 12px;
     }
 
     /* ============================================================
@@ -899,11 +1189,6 @@
     .output-ai strong {
       color: #ffffff;
     }
-    .output-ai .ai-label {
-      color: #8b5cf6;
-      font-weight: 600;
-    }
-
     .output-summary {
       background: rgba(139, 92, 246, 0.02);
       padding: 0.8rem 1rem;
@@ -911,7 +1196,6 @@
       border: 1px solid rgba(139, 92, 246, 0.04);
       margin-bottom: 0.5rem;
     }
-
     .rating-bar {
       display: flex;
       align-items: center;
@@ -927,7 +1211,6 @@
       color: rgba(255,255,255,0.3);
       font-size: 0.7rem;
     }
-
     .corrected-code {
       background: rgba(0, 0, 0, 0.15);
       border-radius: 12px;
@@ -970,6 +1253,18 @@
       .rotating-logo-container {
         display: none;
       }
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-features-list {
+        grid-template-columns: 1fr;
+      }
+      .about-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
       .debugger-title {
         font-size: 2.2rem;
       }
@@ -998,6 +1293,16 @@
       .hero-card-inner .code-preview {
         font-size: 0.55rem;
         padding: 0.8rem;
+      }
+      .about-title, .features-title {
+        font-size: 2rem;
+      }
+      .about-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
       }
       #debugger-interface {
         padding: 7rem 1rem 1rem;
@@ -1040,6 +1345,9 @@
       .hero-card {
         min-height: 220px;
       }
+      .about-title, .features-title {
+        font-size: 1.6rem;
+      }
       .debugger-title {
         font-size: 1.5rem;
       }
@@ -1058,11 +1366,12 @@
 <body>
 
   <!-- ============================================================
-       CUSTOM CURSOR
+       ANIMATED GRADIENT BACKGROUND
        ============================================================ -->
-  <div id="custom-cursor">
-    <div class="cursor-dot"></div>
-  </div>
+  <div id="animated-bg"></div>
+  <div class="gradient-orb gradient-orb-1"></div>
+  <div class="gradient-orb gradient-orb-2"></div>
+  <div class="gradient-orb gradient-orb-3"></div>
 
   <!-- ============================================================
        ROTATING LOGO
@@ -1072,15 +1381,11 @@
   </div>
 
   <!-- ============================================================
-       ORBS
+       CUSTOM CURSOR
        ============================================================ -->
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-
-  <!-- ============================================================
-       BACKGROUND
-       ============================================================ -->
-  <div id="bg"></div>
+  <div id="custom-cursor">
+    <div class="cursor-dot"></div>
+  </div>
 
   <!-- ============================================================
        SCROLL PROGRESS
@@ -1096,14 +1401,16 @@
       AERO<span>.</span>
     </div>
     <nav class="nav">
-      <a href="#home" id="navHome">Home</a>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
       <i class="fas fa-search search-icon"></i>
       <a href="mailto:rohitsavan360@gmail.com" class="btn-cta">Get in Touch</a>
     </nav>
   </header>
 
   <!-- ============================================================
-       HERO - CLEAN & MINIMAL
+       HERO
        ============================================================ -->
   <section class="hero" id="home">
     <div class="hero-content">
@@ -1137,6 +1444,128 @@
               &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"clean code"</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT SECTION - DETAILED
+       ============================================================ -->
+  <section id="about">
+    <div class="about-container">
+      <h2 class="about-title">📖 <span>About AERO</span></h2>
+      <p class="about-sub">Revolutionizing code analysis with AI intelligence</p>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <h3>AI-Powered <span>Code Intelligence</span></h3>
+          <p>
+            AERO AI Code Debugger is a cutting-edge tool designed to help developers 
+            write cleaner, more efficient Python code. By combining Abstract Syntax Tree (AST) 
+            analysis with Google's Gemini AI, it provides comprehensive code reviews and insights 
+            that go beyond traditional linters.
+          </p>
+          <p>
+            Whether you're a beginner learning Python or an experienced developer looking 
+            to optimize your code, AERO provides actionable feedback that helps you grow 
+            as a programmer.
+          </p>
+
+          <div class="about-features-list">
+            <div class="feature-item">
+              <i class="fas fa-check-circle"></i>
+              <div class="feature-text">
+                <strong>AST Analysis</strong>
+                <span>Parse and analyze code structure</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-check-circle"></i>
+              <div class="feature-text">
+                <strong>Gemini AI Review</strong>
+                <span>Intelligent code recommendations</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-check-circle"></i>
+              <div class="feature-text">
+                <strong>Corrected Code</strong>
+                <span>Get fixed code automatically</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-check-circle"></i>
+              <div class="feature-text">
+                <strong>Privacy First</strong>
+                <span>All data stored locally</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-stats">
+          <div class="stat-item">
+            <div class="number">18+</div>
+            <div class="label">Projects</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">100%</div>
+            <div class="label">Privacy Focused</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">24/7</div>
+            <div class="label">Available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURES SECTION - DETAILED
+       ============================================================ -->
+  <section id="features">
+    <div class="features-container">
+      <h2 class="features-title">⚡ <span>Features</span></h2>
+      <p class="features-sub">Everything you need for professional code analysis</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-code"></i></span>
+          <h3>AST Analysis</h3>
+          <p>Parse and analyze Python code structure to detect unused variables, long lines, missing docstrings, and more.</p>
+          <span class="feature-tag">Static Analysis</span>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-brain"></i></span>
+          <h3>Gemini AI Review</h3>
+          <p>Get intelligent code reviews with summary, issues, performance analysis, security concerns, and rating powered by Google's Gemini AI.</p>
+          <span class="feature-tag">AI Powered</span>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-file-upload"></i></span>
+          <h3>File Upload Support</h3>
+          <p>Upload your .py files directly or paste code into the editor for instant analysis with full syntax highlighting.</p>
+          <span class="feature-tag">Easy Input</span>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-download"></i></span>
+          <h3>Export Reports</h3>
+          <p>Download analysis results as PDF, TXT, or copy to clipboard for sharing and documentation with your team.</p>
+          <span class="feature-tag">Shareable</span>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-keyboard"></i></span>
+          <h3>Keyboard Shortcuts</h3>
+          <p>Work faster with Ctrl+Enter to analyze, Ctrl+L to focus the editor, and Escape to clear the code.</p>
+          <span class="feature-tag">Productivity</span>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-shield-alt"></i></span>
+          <h3>Security Analysis</h3>
+          <p>Detect potential security vulnerabilities like bare except, unsafe imports, and other common security issues.</p>
+          <span class="feature-tag">Secure Code</span>
         </div>
       </div>
     </div>
@@ -1220,7 +1649,7 @@ print(fibonacci(10))</textarea>
     }
     animateCursor();
 
-    document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .search-icon, .hero-card, .nav a, .file-upload-label, .toolbar button, .analyze-btn, .back-btn, .fab').forEach(el => {
+    document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .search-icon, .hero-card, .nav a, .file-upload-label, .toolbar button, .analyze-btn, .back-btn, .fab, .feature-card, .feature-item').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
@@ -1231,7 +1660,7 @@ print(fibonacci(10))</textarea>
     }
 
     // ============================================================
-    // SCROLL PROGRESS
+    // SCROLL PROGRESS & HEADER
     // ============================================================
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
@@ -1247,6 +1676,20 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
+    // SCROLL REVEAL
+    // ============================================================
+    const sections = document.querySelectorAll('#about, #features');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => observer.observe(section));
+
+    // ============================================================
     // FAB
     // ============================================================
     document.getElementById('fabBtn').addEventListener('click', () => {
@@ -1259,7 +1702,11 @@ print(fibonacci(10))</textarea>
     function showDebugger() {
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
+      const aboutSection = document.getElementById('about');
+      const featuresSection = document.getElementById('features');
       heroSection.style.display = 'none';
+      aboutSection.style.display = 'none';
+      featuresSection.style.display = 'none';
       debuggerSection.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => document.getElementById('codeInput').focus(), 500);
@@ -1270,19 +1717,12 @@ print(fibonacci(10))</textarea>
     document.getElementById('backBtn').addEventListener('click', () => {
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
+      const aboutSection = document.getElementById('about');
+      const featuresSection = document.getElementById('features');
       debuggerSection.classList.remove('active');
       heroSection.style.display = 'flex';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    document.getElementById('navHome').addEventListener('click', (e) => {
-      e.preventDefault();
-      const debuggerSection = document.getElementById('debugger-interface');
-      const heroSection = document.querySelector('.hero');
-      if (debuggerSection.classList.contains('active')) {
-        debuggerSection.classList.remove('active');
-        heroSection.style.display = 'flex';
-      }
+      aboutSection.style.display = 'block';
+      featuresSection.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
