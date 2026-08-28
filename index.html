@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AERO · AI Code Debugger</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         /* ============================================================
@@ -14,10 +15,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: none !important;
         }
 
         html {
             scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
         }
 
         body {
@@ -42,7 +45,169 @@
         }
 
         /* ============================================================
-           ENTRY ANIMATION
+           ANIMATED CURSOR - GLITCH STYLE
+           ============================================================ */
+        #custom-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.3s ease,
+                border-color 0.3s ease;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.05);
+        }
+
+        #custom-cursor .cursor-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.4);
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+        }
+
+        #custom-cursor.hover {
+            width: 64px;
+            height: 64px;
+            background: rgba(139, 92, 246, 0.06);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 80px rgba(139, 92, 246, 0.08);
+        }
+
+        #custom-cursor.hover .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+        }
+
+        /* ============================================================
+           ANIMATED BACKGROUND - PREMIUM
+           ============================================================ */
+        #animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 25%, #0a0a2e 50%, #1a0a2e 75%, #0a0a0f 100%);
+            background-size: 400% 400%;
+            animation: gradientMove 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 0%;
+            }
+            25% {
+                background-position: 100% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            75% {
+                background-position: 0% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        #animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 40%);
+            animation: orbPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbPulse {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Floating Orbs */
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 25s ease-in-out infinite alternate;
+            opacity: 0.3;
+        }
+
+        .gradient-orb-1 {
+            width: 700px;
+            height: 700px;
+            top: -20%;
+            right: -10%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
+            animation-delay: 0s;
+        }
+
+        .gradient-orb-2 {
+            width: 600px;
+            height: 600px;
+            bottom: -20%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12), transparent 70%);
+            animation-delay: -8s;
+        }
+
+        .gradient-orb-3 {
+            width: 500px;
+            height: 500px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.06), transparent 70%);
+            animation-delay: -16s;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translate(80px, -100px) scale(1.3);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translate(-60px, 60px) scale(0.8);
+                opacity: 0.2;
+            }
+        }
+
+        /* ============================================================
+           ENTRY ANIMATION - GLITCH THEME
            ============================================================ */
         .entry-overlay {
             position: fixed;
@@ -57,36 +222,40 @@
             align-items: center;
             z-index: 99999;
             pointer-events: none;
-            animation: entryFadeOut 1.6s ease 2s forwards;
+            animation: entryFadeOut 1.8s ease 2.4s forwards;
         }
 
         .entry-overlay .loader {
-            width: 48px;
-            height: 48px;
+            width: 60px;
+            height: 60px;
             border: 2px solid rgba(139, 92, 246, 0.05);
             border-top: 2px solid #8b5cf6;
             border-radius: 50%;
             animation: spinLoader 1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-            box-shadow: 0 0 60px rgba(139, 92, 246, 0.03);
+            box-shadow: 0 0 80px rgba(139, 92, 246, 0.03);
         }
 
         @keyframes spinLoader {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .entry-overlay .loader-text {
             margin-top: 1.5rem;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.03);
-            letter-spacing: 6px;
+            letter-spacing: 8px;
             text-transform: uppercase;
             font-weight: 300;
         }
 
         .entry-overlay .loader-bar {
-            width: 160px;
-            height: 1.5px;
+            width: 200px;
+            height: 2px;
             background: rgba(139, 92, 246, 0.02);
             border-radius: 2px;
             margin-top: 1rem;
@@ -101,39 +270,175 @@
             width: 100%;
             background: linear-gradient(90deg, transparent, #8b5cf6, #a78bfa, transparent);
             border-radius: 2px;
-            animation: loadingProgress 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: loadingProgress 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             position: absolute;
             left: -100%;
         }
 
         @keyframes loadingProgress {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
         }
 
         @keyframes entryFadeOut {
-            0% { opacity: 1; visibility: visible; backdrop-filter: blur(0px); }
-            100% { opacity: 0; visibility: hidden; backdrop-filter: blur(20px); }
+            0% {
+                opacity: 1;
+                visibility: visible;
+                backdrop-filter: blur(0px);
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                backdrop-filter: blur(30px);
+            }
         }
 
         /* ============================================================
-           BACKGROUND
+           GLITCH TEXT ANIMATION
            ============================================================ */
-        #bg {
-            position: fixed;
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            40% {
+                transform: translate(-2px, -2px);
+            }
+            60% {
+                transform: translate(2px, 2px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
             pointer-events: none;
-            background:
-                radial-gradient(ellipse at 70% 30%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 30% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+        }
+
+        .glitch-text::before {
+            color: #8b5cf6;
+            animation: glitchBefore 3s infinite;
+            opacity: 0.7;
+            clip-path: inset(20% 0 60% 0);
+        }
+
+        .glitch-text::after {
+            color: #a78bfa;
+            animation: glitchAfter 3s infinite;
+            opacity: 0.5;
+            clip-path: inset(60% 0 20% 0);
+        }
+
+        @keyframes glitchBefore {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-4px, 3px);
+            }
+            40% {
+                transform: translate(3px, -4px);
+            }
+            60% {
+                transform: translate(-3px, 2px);
+            }
+            80% {
+                transform: translate(4px, -2px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        @keyframes glitchAfter {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(4px, -3px);
+            }
+            40% {
+                transform: translate(-3px, 4px);
+            }
+            60% {
+                transform: translate(3px, -2px);
+            }
+            80% {
+                transform: translate(-4px, 2px);
+            }
+            100% {
+                transform: translate(0);
+            }
         }
 
         /* ============================================================
-           HEADER - CLEAN MINIMAL
+           SCROLL PROGRESS
+           ============================================================ */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa, #ec4899);
+            background-size: 200% 100%;
+            z-index: 999;
+            width: 0%;
+            transition: width 0.1s linear;
+            animation: shimmerProgress 3s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
+        }
+
+        @keyframes shimmerProgress {
+            0%,
+            100% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 200% 0%;
+            }
+        }
+
+        /* ============================================================
+           GLASS EFFECTS - PREMIUM
+           ============================================================ */
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px) saturate(1.5);
+            -webkit-backdrop-filter: blur(40px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-premium:hover {
+            border-color: rgba(139, 92, 246, 0.06);
+            box-shadow: 0 8px 80px rgba(139, 92, 246, 0.04);
+        }
+
+        /* ============================================================
+           HEADER
            ============================================================ */
         .header {
             position: fixed;
@@ -157,7 +462,7 @@
         .header.scrolled {
             background: rgba(10, 10, 15, 0.4);
             border-bottom: 1px solid rgba(139, 92, 246, 0.03);
-            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.2);
         }
 
         .logo {
@@ -185,24 +490,30 @@
         }
 
         .logo .logo-dot {
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: #8b5cf6;
             display: inline-block;
             animation: pulseDot 2s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
         }
 
         @keyframes pulseDot {
             0%,
-            100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.2; transform: scale(0.5); }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.2;
+                transform: scale(0.5);
+            }
         }
 
         .nav {
             display: flex;
-            gap: 1.8rem;
+            gap: 2rem;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -216,7 +527,7 @@
             font-weight: 400;
             position: relative;
             text-transform: uppercase;
-            cursor: pointer;
+            cursor: none !important;
         }
 
         .nav a::before {
@@ -240,7 +551,7 @@
         }
 
         .nav .btn-cta {
-            padding: 0.3rem 1.2rem;
+            padding: 0.35rem 1.2rem;
             border-radius: 40px;
             background: rgba(139, 92, 246, 0.03);
             border: 1px solid rgba(139, 92, 246, 0.06);
@@ -251,7 +562,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             backdrop-filter: blur(8px);
-            cursor: pointer;
+            cursor: none !important;
         }
 
         .nav .btn-cta:hover {
@@ -262,23 +573,7 @@
         }
 
         /* ============================================================
-           SCROLL PROGRESS
-           ============================================================ */
-        #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 1.5px;
-            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
-            background-size: 200% 100%;
-            z-index: 999;
-            width: 0%;
-            transition: width 0.1s linear;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.05);
-        }
-
-        /* ============================================================
-           HERO - MINIMAL
+           HERO - WITH GLITCH
            ============================================================ */
         .hero {
             min-height: 60vh;
@@ -300,12 +595,18 @@
         }
 
         @keyframes heroIn {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: -2px;
@@ -319,7 +620,7 @@
         }
 
         .hero .tagline {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: rgba(255, 255, 255, 0.15);
             font-weight: 300;
             margin-bottom: 0.8rem;
@@ -348,17 +649,17 @@
         .btn-primary {
             background: rgba(139, 92, 246, 0.04);
             border: 1px solid rgba(139, 92, 246, 0.06);
-            padding: 0.6rem 2rem;
+            padding: 0.7rem 2.2rem;
             border-radius: 60px;
             font-weight: 400;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #ffffff;
             transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             backdrop-filter: blur(8px);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            cursor: pointer;
+            cursor: none !important;
         }
 
         .btn-primary:hover {
@@ -370,15 +671,15 @@
         .btn-secondary {
             background: transparent;
             border: none;
-            padding: 0.6rem 1.5rem;
+            padding: 0.7rem 1.5rem;
             font-weight: 400;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.15);
             transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            cursor: pointer;
+            cursor: none !important;
         }
 
         .btn-secondary:hover {
@@ -391,7 +692,229 @@
         }
 
         /* ============================================================
-           DEBUGGER INTERFACE
+           ABOUT SECTION
+           ============================================================ */
+        #about {
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #about.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        .about-text h2 span {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-text p {
+            color: rgba(255, 255, 255, 0.3);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .about-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .about-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: 0.3s;
+        }
+
+        .about-stat:hover {
+            background: rgba(139, 92, 246, 0.02);
+            border-color: rgba(139, 92, 246, 0.04);
+            transform: translateY(-4px);
+        }
+
+        .about-stat .number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-stat .label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.2rem;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .about-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: 0.3s;
+        }
+
+        .about-feature-item:hover {
+            background: rgba(139, 92, 246, 0.02);
+            border-color: rgba(139, 92, 246, 0.04);
+            transform: translateX(6px);
+        }
+
+        .about-feature-item i {
+            color: #8b5cf6;
+            font-size: 1.2rem;
+            width: 30px;
+        }
+
+        .about-feature-item .feature-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .about-feature-item .feature-text strong {
+            font-size: 0.9rem;
+            color: #ffffff;
+        }
+
+        .about-feature-item .feature-text span {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ============================================================
+           TECH STACK SECTION
+           ============================================================ */
+        #stack {
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #stack.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stack-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .stack-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stack-title span {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stack-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stack-card {
+            text-align: center;
+            padding: 1.8rem 1rem;
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: default;
+        }
+
+        .stack-card:hover {
+            background: rgba(139, 92, 246, 0.03);
+            border-color: rgba(139, 92, 246, 0.06);
+            transform: translateY(-8px);
+            box-shadow: 0 8px 40px rgba(139, 92, 246, 0.04);
+        }
+
+        .stack-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stack-card .name {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+        }
+
+        .stack-card .tag {
+            display: inline-block;
+            margin-top: 0.3rem;
+            font-size: 0.5rem;
+            color: rgba(139, 92, 246, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(139, 92, 246, 0.02);
+            padding: 0.05rem 0.4rem;
+            border-radius: 8px;
+        }
+
+        /* ============================================================
+           DEBUGGER SECTION
            ============================================================ */
         .debugger-section {
             padding: 2rem 2rem 4rem;
@@ -456,7 +979,7 @@
             align-items: center;
             gap: 0.4rem;
             backdrop-filter: blur(8px);
-            cursor: pointer;
+            cursor: none !important;
         }
 
         .file-upload-label:hover {
@@ -522,7 +1045,7 @@
             align-items: center;
             gap: 0.3rem;
             backdrop-filter: blur(8px);
-            cursor: pointer;
+            cursor: none !important;
         }
 
         .toolbar button:hover {
@@ -557,7 +1080,7 @@
             box-shadow: 0 4px 30px rgba(139, 92, 246, 0.08);
             position: relative;
             overflow: hidden;
-            cursor: pointer;
+            cursor: none !important;
         }
 
         .analyze-btn::after {
@@ -637,8 +1160,12 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .spinner-text {
@@ -648,8 +1175,13 @@
         }
 
         @keyframes pulseText {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+            }
         }
 
         /* ============================================================
@@ -715,31 +1247,41 @@
             border-left: 2px solid #fbbf24;
             background: rgba(251, 191, 36, 0.02);
         }
-        .output-issue.warning .issue-icon { color: #fbbf24; }
+        .output-issue.warning .issue-icon {
+            color: #fbbf24;
+        }
 
         .output-issue.style {
             border-left: 2px solid #60a5fa;
             background: rgba(96, 165, 250, 0.02);
         }
-        .output-issue.style .issue-icon { color: #60a5fa; }
+        .output-issue.style .issue-icon {
+            color: #60a5fa;
+        }
 
         .output-issue.info {
             border-left: 2px solid #8b5cf6;
             background: rgba(139, 92, 246, 0.02);
         }
-        .output-issue.info .issue-icon { color: #8b5cf6; }
+        .output-issue.info .issue-icon {
+            color: #8b5cf6;
+        }
 
         .output-issue.error {
             border-left: 2px solid #f87171;
             background: rgba(248, 113, 113, 0.02);
         }
-        .output-issue.error .issue-icon { color: #f87171; }
+        .output-issue.error .issue-icon {
+            color: #f87171;
+        }
 
         .output-issue.success {
             border-left: 2px solid #34d399;
             background: rgba(52, 211, 153, 0.02);
         }
-        .output-issue.success .issue-icon { color: #34d399; }
+        .output-issue.success .issue-icon {
+            color: #34d399;
+        }
 
         .output-ai {
             font-size: 0.75rem;
@@ -822,10 +1364,28 @@
                 font-size: 0.6rem;
             }
             .hero h1 {
-                font-size: 2.4rem;
+                font-size: 2.8rem;
             }
             .hero .bio {
                 font-size: 0.85rem;
+            }
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .about-stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.8rem;
+            }
+            .about-stat {
+                padding: 1rem;
+            }
+            .about-stat .number {
+                font-size: 1.6rem;
+            }
+            .stack-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
             }
             .debugger-section {
                 padding: 1rem 1rem 2rem;
@@ -846,7 +1406,7 @@
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             .nav {
                 gap: 0.6rem;
@@ -860,6 +1420,15 @@
                 padding: 0.5rem 1.2rem;
                 font-size: 0.7rem;
             }
+            .about-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .stack-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .about-feature-item {
+                padding: 0.8rem;
+            }
             .debugger-area {
                 padding: 0.8rem;
             }
@@ -868,33 +1437,52 @@
                 padding: 0.6rem;
                 min-height: 120px;
             }
+            #custom-cursor {
+                display: none !important;
+            }
+            body {
+                cursor: auto !important;
+            }
+            * {
+                cursor: auto !important;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-         ENTRY ANIMATION
-         ============================================================ -->
+       ANIMATED CURSOR
+       ============================================================ -->
+    <div id="custom-cursor">
+        <div class="cursor-dot"></div>
+    </div>
+
+    <!-- ============================================================
+       ANIMATED BACKGROUND
+       ============================================================ -->
+    <div id="animated-bg"></div>
+    <div class="gradient-orb gradient-orb-1"></div>
+    <div class="gradient-orb gradient-orb-2"></div>
+    <div class="gradient-orb gradient-orb-3"></div>
+
+    <!-- ============================================================
+       ENTRY ANIMATION
+       ============================================================ -->
     <div class="entry-overlay" id="entryOverlay">
         <div class="loader"></div>
-        <div class="loader-text">Loading AERO</div>
+        <div class="loader-text">Initializing AERO</div>
         <div class="loader-bar"></div>
     </div>
 
     <!-- ============================================================
-         BACKGROUND
-         ============================================================ -->
-    <div id="bg"></div>
-
-    <!-- ============================================================
-         SCROLL PROGRESS
-         ============================================================ -->
+       SCROLL PROGRESS
+       ============================================================ -->
     <div id="scroll-progress"></div>
 
     <!-- ============================================================
-         HEADER
-         ============================================================ -->
+       HEADER
+       ============================================================ -->
     <header class="header" id="header">
         <div class="logo">
             <span class="hash">#</span> aero<span>.</span>
@@ -902,20 +1490,24 @@
         </div>
         <nav class="nav">
             <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#stack">Stack</a>
             <a href="#debugger">Debugger</a>
-            <a href="mailto:rohitsavan360@gmail.com" class="btn-cta">Get in Touch</a>
+            <a href="mailto:rohitsavan360@gmail.com" class="btn-cta">Contact</a>
         </nav>
     </header>
 
     <!-- ============================================================
-         HERO
-         ============================================================ -->
+       HERO
+       ============================================================ -->
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>
                 <span class="hash">#</span> aero
             </h1>
-            <p class="tagline">AI Code <span class="highlight">Debugger</span></p>
+            <p class="tagline">
+                AI Code <span class="highlight glitch-text" data-text="Debugger">Debugger</span>
+            </p>
             <p class="bio">
                 AST parsing + Gemini AI review. Paste your Python code and get detailed analysis with corrected code instantly.
             </p>
@@ -931,8 +1523,125 @@
     </section>
 
     <!-- ============================================================
-         DEBUGGER
-         ============================================================ -->
+       ABOUT SECTION
+       ============================================================ -->
+    <section id="about">
+        <div class="about-container">
+            <div class="about-text">
+                <h2>About <span>AERO</span></h2>
+                <p>
+                    <strong style="color:#8b5cf6;">AERO</strong> is an advanced AI-powered code debugging tool that combines
+                    <strong style="color:#8b5cf6;">Abstract Syntax Tree (AST) analysis</strong> with
+                    <strong style="color:#8b5cf6;">Google's Gemini AI</strong> to provide professional-grade code reviews.
+                </p>
+                <p>
+                    Built by <strong style="color:#8b5cf6;">Rohit Savan</strong>, a 17-year-old AI developer from Mumbai,
+                    AERO helps developers write cleaner, more efficient Python code by identifying issues,
+                    suggesting improvements, and even generating corrected code automatically.
+                </p>
+                <div class="about-stats-grid">
+                    <div class="about-stat">
+                        <div class="number">17+</div>
+                        <div class="label">Projects</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="number">100%</div>
+                        <div class="label">Self Taught</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="number">24/7</div>
+                        <div class="label">Available</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-features">
+                <div class="about-feature-item">
+                    <i class="fas fa-code"></i>
+                    <div class="feature-text">
+                        <strong>AST Analysis</strong>
+                        <span>Parse and analyze code structure in detail</span>
+                    </div>
+                </div>
+                <div class="about-feature-item">
+                    <i class="fas fa-brain"></i>
+                    <div class="feature-text">
+                        <strong>Gemini AI Review</strong>
+                        <span>Intelligent code recommendations and ratings</span>
+                    </div>
+                </div>
+                <div class="about-feature-item">
+                    <i class="fas fa-wand-magic"></i>
+                    <div class="feature-text">
+                        <strong>Corrected Code</strong>
+                        <span>Get fixed code automatically generated</span>
+                    </div>
+                </div>
+                <div class="about-feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="feature-text">
+                        <strong>Privacy First</strong>
+                        <span>All analysis done locally, no data stored</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       TECH STACK SECTION
+       ============================================================ -->
+    <section id="stack">
+        <div class="stack-container">
+            <h2 class="stack-title">🛠️ Tech <span>Stack</span></h2>
+            <p class="stack-sub">Technologies powering AERO AI Code Debugger</p>
+            <div class="stack-grid">
+                <div class="stack-card">
+                    <span class="icon">🐍</span>
+                    <div class="name">Python</div>
+                    <span class="tag">Core</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">🤖</span>
+                    <div class="name">Gemini AI</div>
+                    <span class="tag">AI</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">🔮</span>
+                    <div class="name">AST</div>
+                    <span class="tag">Parsing</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">🎨</span>
+                    <div class="name">Streamlit</div>
+                    <span class="tag">UI</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">📊</span>
+                    <div class="name">ReportLab</div>
+                    <span class="tag">PDF</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">🐙</span>
+                    <div class="name">GitHub</div>
+                    <span class="tag">Version</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">☁️</span>
+                    <div class="name">Deployment</div>
+                    <span class="tag">Hosting</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">🎯</span>
+                    <div class="name">Prompt Eng.</div>
+                    <span class="tag">AI</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       DEBUGGER
+       ============================================================ -->
     <section class="debugger-section" id="debugger">
         <div class="debugger-container">
             <div class="debugger-area">
@@ -943,11 +1652,11 @@
                 </div>
 
                 <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
+                    if n <= 1:
+                    return n
+                    return fibonacci(n-1) + fibonacci(n-2)
 
-print(fibonacci(10))</textarea>
+                    print(fibonacci(10))</textarea>
 
                 <div class="code-stats">
                     <span id="lineCount">📄 Lines: 0</span>
@@ -975,16 +1684,50 @@ print(fibonacci(10))</textarea>
     </section>
 
     <!-- ============================================================
-         FOOTER
-         ============================================================ -->
+       FOOTER
+       ============================================================ -->
     <div class="footer">
         <p>Built with <span class="hash">♥</span> by <span class="hash"># rohit.savan</span> • 2026</p>
     </div>
 
     <!-- ============================================================
-         SCRIPTS
-         ============================================================ -->
+       SCRIPTS
+       ============================================================ -->
     <script>
+        // ============================================================
+        // CUSTOM CURSOR
+        // ============================================================
+        const cursor = document.getElementById('custom-cursor');
+        let cursorX = 0,
+            cursorY = 0;
+        let targetX = 0,
+            targetY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (targetX - cursorX) * 0.12;
+            cursorY += (targetY - cursorY) * 0.12;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .file-upload-label, .toolbar button, .analyze-btn, .nav a, .stack-card, .about-feature-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        if ('ontouchstart' in window) {
+            cursor.style.display = 'none';
+            document.body.style.cursor = 'auto';
+            document.querySelectorAll('*').forEach(el => el.style.cursor = 'auto');
+        }
+
         // ============================================================
         // SCROLL PROGRESS
         // ============================================================
@@ -1000,6 +1743,20 @@ print(fibonacci(10))</textarea>
                 document.getElementById('header').classList.remove('scrolled');
             }
         });
+
+        // ============================================================
+        // SCROLL REVEAL
+        // ============================================================
+        const sections = document.querySelectorAll('#about, #stack');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
 
         // ============================================================
         // LAUNCH DEBUGGER
@@ -1105,11 +1862,11 @@ print(fibonacci(10))</textarea>
             document.getElementById('codeInput').value = '';
             updateStats();
             document.getElementById('output').innerHTML = `
-            <div class="placeholder">
-              <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.01);"></i>
-              Results will appear here
-            </div>
-          `;
+                    <div class="placeholder">
+                      <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.01);"></i>
+                      Results will appear here
+                    </div>
+                  `;
         });
 
         // ============================================================
@@ -1128,12 +1885,12 @@ print(fibonacci(10))</textarea>
             element.style.backgroundColor = '#f5f0ff';
             element.style.color = '#1a1a2e';
             element.innerHTML = `
-            <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
-            <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
-              ${content}
-            </div>
-            <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
-          `;
+                    <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
+                    <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
+                      ${content}
+                    </div>
+                    <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
+                  `;
             document.body.appendChild(element);
             html2pdf().set({ margin: 1, filename: 'analysis-report.pdf' }).from(element).save().then(() => {
                 document.body.removeChild(element);
@@ -1151,49 +1908,49 @@ print(fibonacci(10))</textarea>
             const code = document.getElementById('codeInput').value.trim();
             if (!code) {
                 document.getElementById('output').innerHTML = `
-              <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
-                ⚠️ Please paste some Python code first.
-              </div>
-            `;
+                      <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
+                        ⚠️ Please paste some Python code first.
+                      </div>
+                    `;
                 return;
             }
 
             document.getElementById('output').innerHTML = `
-            <div class="spinner-container">
-              <div class="spinner"></div>
-              <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
-            </div>
-          `;
+                    <div class="spinner-container">
+                      <div class="spinner"></div>
+                      <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
+                    </div>
+                  `;
 
             try {
                 const astResult = detailedASTAnalysis(code);
                 const correctedCode = generateCorrectedCode(code, astResult);
 
                 const prompt = `
-              You are an expert Python code reviewer. Analyze this code in detail and provide:
-              1. COMPREHENSIVE SUMMARY: (2-3 sentences)
-              2. DETAILED ISSUES: List with line numbers, type, severity, explanation
-              3. PERFORMANCE ANALYSIS: Time/space complexity
-              4. SECURITY CONCERNS: Any vulnerabilities
-              5. CODE QUALITY SCORES: Readability, Maintainability, Efficiency, Security (X/10)
-              6. RATING: Overall X/10 with justification
-              7. BEST PRACTICES: 3-4 suggestions
+                      You are an expert Python code reviewer. Analyze this code in detail and provide:
+                      1. COMPREHENSIVE SUMMARY: (2-3 sentences)
+                      2. DETAILED ISSUES: List with line numbers, type, severity, explanation
+                      3. PERFORMANCE ANALYSIS: Time/space complexity
+                      4. SECURITY CONCERNS: Any vulnerabilities
+                      5. CODE QUALITY SCORES: Readability, Maintainability, Efficiency, Security (X/10)
+                      6. RATING: Overall X/10 with justification
+                      7. BEST PRACTICES: 3-4 suggestions
 
-              Code:
-              ${code}
+                      Code:
+                      ${code}
 
-              Format:
-              SUMMARY: [summary]
-              ISSUES: [line X - type - severity - explanation]
-              PERFORMANCE: [analysis]
-              SECURITY: [concerns]
-              READABILITY: [X/10]
-              MAINTAINABILITY: [X/10]
-              EFFICIENCY: [X/10]
-              SECURITY_SCORE: [X/10]
-              RATING: [X/10 - justification]
-              PRACTICES: [suggestions]
-            `;
+                      Format:
+                      SUMMARY: [summary]
+                      ISSUES: [line X - type - severity - explanation]
+                      PERFORMANCE: [analysis]
+                      SECURITY: [concerns]
+                      READABILITY: [X/10]
+                      MAINTAINABILITY: [X/10]
+                      EFFICIENCY: [X/10]
+                      SECURITY_SCORE: [X/10]
+                      RATING: [X/10 - justification]
+                      PRACTICES: [suggestions]
+                    `;
 
                 let geminiResponse = '';
                 try {
@@ -1217,10 +1974,10 @@ print(fibonacci(10))</textarea>
 
             } catch (err) {
                 document.getElementById('output').innerHTML = `
-              <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
-                ❌ Error: ${err.message}
-              </div>
-            `;
+                      <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
+                        ❌ Error: ${err.message}
+                      </div>
+                    `;
             }
         });
 
@@ -1390,11 +2147,11 @@ print(fibonacci(10))</textarea>
             // AST Analysis
             html += `<div class="output-section">`;
             html += `<div class="output-section-title">
-            <i class="fas fa-code"></i> AST Analysis
-            <span class="badge">${astResult.issueCount} issues</span>
-            <span class="badge" style="color:#fbbf24;">${astResult.warningCount} warnings</span>
-            <span class="badge" style="color:#f87171;">${astResult.errorCount} errors</span>
-          </div>`;
+                    <i class="fas fa-code"></i> AST Analysis
+                    <span class="badge">${astResult.issueCount} issues</span>
+                    <span class="badge" style="color:#fbbf24;">${astResult.warningCount} warnings</span>
+                    <span class="badge" style="color:#f87171;">${astResult.errorCount} errors</span>
+                  </div>`;
 
             html +=
                 `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:0.3rem;margin-bottom:0.6rem;padding:0.4rem;background:rgba(255,255,255,0.01);border-radius:6px;font-size:0.6rem;color:rgba(255,255,255,0.1);">`;
@@ -1407,9 +2164,9 @@ print(fibonacci(10))</textarea>
 
             if (astResult.issues.length === 0) {
                 html += `<div class="output-issue success">
-              <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
-              <span>✅ No issues found — clean code!</span>
-            </div>`;
+                          <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
+                          <span>✅ No issues found — clean code!</span>
+                        </div>`;
             } else {
                 astResult.issues.forEach(issue => {
                     const typeClass = issue.type;
@@ -1420,11 +2177,11 @@ print(fibonacci(10))</textarea>
                         issue.severity === 'High' ? '#f87171' :
                         issue.severity === 'Medium' ? '#fbbf24' : '#60a5fa';
                     html += `<div class="output-issue ${typeClass}">
-                <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
-                <span class="issue-icon"><i class="fas ${icon}"></i></span>
-                <span>${issue.msg}</span>
-                <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:rgba(255,255,255,0.02);padding:0.05rem 0.3rem;border-radius:8px;">${issue.severity || 'Info'}</span>
-              </div>`;
+                                <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
+                                <span class="issue-icon"><i class="fas ${icon}"></i></span>
+                                <span>${issue.msg}</span>
+                                <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:rgba(255,255,255,0.02);padding:0.05rem 0.3rem;border-radius:8px;">${issue.severity || 'Info'}</span>
+                              </div>`;
                 });
             }
             html += `</div>`;
@@ -1432,9 +2189,9 @@ print(fibonacci(10))</textarea>
             // Gemini AI Review
             html += `<div class="output-section">`;
             html += `<div class="output-section-title">
-            <i class="fas fa-brain"></i> Gemini AI Review
-            <span class="badge">v2.0-flash</span>
-          </div>`;
+                    <i class="fas fa-brain"></i> Gemini AI Review
+                    <span class="badge">v2.0-flash</span>
+                  </div>`;
 
             if (geminiText && geminiText.length > 10) {
                 const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
@@ -1450,30 +2207,30 @@ print(fibonacci(10))</textarea>
 
                 if (summaryMatch) {
                     html += `<div class="output-summary">
-                <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
-                <div style="margin-top:0.2rem;color:rgba(255,255,255,0.4);font-size:0.75rem;">${summaryMatch[1].trim()}</div>
-              </div>`;
+                                <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
+                                <div style="margin-top:0.2rem;color:rgba(255,255,255,0.4);font-size:0.75rem;">${summaryMatch[1].trim()}</div>
+                              </div>`;
                 }
 
                 if (issuesMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                <strong style="color:#f87171;font-size:0.65rem;">📋 Issues & Improvements</strong>
-                <div class="output-ai" style="margin-top:0.2rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
-              </div>`;
+                                <strong style="color:#f87171;font-size:0.65rem;">📋 Issues & Improvements</strong>
+                                <div class="output-ai" style="margin-top:0.2rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+                              </div>`;
                 }
 
                 if (performanceMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                <strong style="color:#60a5fa;font-size:0.65rem;">⚡ Performance</strong>
-                <div class="output-ai" style="margin-top:0.2rem;">${performanceMatch[1].trim()}</div>
-              </div>`;
+                                <strong style="color:#60a5fa;font-size:0.65rem;">⚡ Performance</strong>
+                                <div class="output-ai" style="margin-top:0.2rem;">${performanceMatch[1].trim()}</div>
+                              </div>`;
                 }
 
                 if (securityMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                <strong style="color:#f87171;font-size:0.65rem;">🔒 Security</strong>
-                <div class="output-ai" style="margin-top:0.2rem;">${securityMatch[1].trim()}</div>
-              </div>`;
+                                <strong style="color:#f87171;font-size:0.65rem;">🔒 Security</strong>
+                                <div class="output-ai" style="margin-top:0.2rem;">${securityMatch[1].trim()}</div>
+                              </div>`;
                 }
 
                 // Scores
@@ -1491,10 +2248,10 @@ print(fibonacci(10))</textarea>
                         const num = score.match(/\d+(\.\d+)?/);
                         const stars = num ? Math.round(parseFloat(num[0]) / 2) : 0;
                         html += `<div style="text-align:center;padding:0.2rem;background:rgba(255,255,255,0.01);border-radius:4px;">
-                  <div style="font-size:0.5rem;color:rgba(255,255,255,0.1);">${s.label}</div>
-                  <div style="font-size:0.7rem;font-weight:600;color:#ffffff;">${score}</div>
-                  <div style="font-size:0.4rem;color:#fbbf24;">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
-                </div>`;
+                                  <div style="font-size:0.5rem;color:rgba(255,255,255,0.1);">${s.label}</div>
+                                  <div style="font-size:0.7rem;font-weight:600;color:#ffffff;">${score}</div>
+                                  <div style="font-size:0.4rem;color:#fbbf24;">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
+                                </div>`;
                     }
                 });
                 html += `</div>`;
@@ -1504,19 +2261,19 @@ print(fibonacci(10))</textarea>
                     const ratingNum = ratingText.match(/\d+(\.\d+)?/);
                     const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
                     html += `<div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:rgba(139,92,246,0.02);border-radius:6px;border:1px solid rgba(139,92,246,0.02);">
-                <div class="rating-bar">
-                  <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                  <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
-                  <span class="rating-text">${ratingText}</span>
-                </div>
-              </div>`;
+                                <div class="rating-bar">
+                                  <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                                  <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
+                                  <span class="rating-text">${ratingText}</span>
+                                </div>
+                              </div>`;
                 }
 
                 if (practicesMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                <strong style="color:#34d399;font-size:0.65rem;">💡 Best Practices</strong>
-                <div class="output-ai" style="margin-top:0.2rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
-              </div>`;
+                                <strong style="color:#34d399;font-size:0.65rem;">💡 Best Practices</strong>
+                                <div class="output-ai" style="margin-top:0.2rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+                              </div>`;
                 }
             } else {
                 // Fallback
@@ -1525,21 +2282,21 @@ print(fibonacci(10))</textarea>
                     astResult.warningCount > 0 ? 7 : 9;
                 const stars = Math.round(fallbackRating / 2);
                 html += `<div class="output-summary">
-              <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
-              <div style="margin-top:0.2rem;color:rgba(255,255,255,0.3);font-size:0.75rem;">
-                ${astResult.criticalCount > 0 ? '⚠️ Critical issues found.' :
-                  astResult.errorCount > 0 ? '⚠️ Issues found that need attention.' :
-                  astResult.warningCount > 0 ? '📝 Code has some warnings to address.' :
-                  '✅ Code is clean and well-structured.'}
-              </div>
-            </div>
-            <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:rgba(139,92,246,0.02);border-radius:6px;border:1px solid rgba(139,92,246,0.02);">
-              <div class="rating-bar">
-                <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
-                <span class="rating-text">${fallbackRating}/10</span>
-              </div>
-            </div>`;
+                          <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
+                          <div style="margin-top:0.2rem;color:rgba(255,255,255,0.3);font-size:0.75rem;">
+                            ${astResult.criticalCount > 0 ? '⚠️ Critical issues found.' :
+                              astResult.errorCount > 0 ? '⚠️ Issues found that need attention.' :
+                              astResult.warningCount > 0 ? '📝 Code has some warnings to address.' :
+                              '✅ Code is clean and well-structured.'}
+                          </div>
+                        </div>
+                        <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:rgba(139,92,246,0.02);border-radius:6px;border:1px solid rgba(139,92,246,0.02);">
+                          <div class="rating-bar">
+                            <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                            <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
+                            <span class="rating-text">${fallbackRating}/10</span>
+                          </div>
+                        </div>`;
             }
             html += `</div>`;
 
@@ -1547,9 +2304,9 @@ print(fibonacci(10))</textarea>
             if (correctedCode !== originalCode) {
                 html += `<div class="output-section">`;
                 html += `<div class="output-section-title">
-              <i class="fas fa-check-circle" style="color:#34d399;"></i> Corrected Code
-              <span class="badge" style="background:rgba(52,211,153,0.06);color:#34d399;">Issues Resolved</span>
-            </div>`;
+                          <i class="fas fa-check-circle" style="color:#34d399;"></i> Corrected Code
+                          <span class="badge" style="background:rgba(52,211,153,0.06);color:#34d399;">Issues Resolved</span>
+                        </div>`;
                 html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
                 html += `</div>`;
             }
