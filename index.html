@@ -792,7 +792,7 @@
       border: 1px solid rgba(139, 92, 246, 0.02);
       margin-top: 1.2rem;
       transition: 0.4s;
-      max-height: 600px;
+      max-height: 700px;
       overflow-y: auto;
     }
     #output::-webkit-scrollbar {
@@ -897,217 +897,6 @@
     }
 
     /* ============================================================
-       FEATURES SECTION
-       ============================================================ */
-    #features {
-      min-height: 100vh;
-      padding: 8rem 2rem 4rem;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    #features.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .features-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .features-title {
-      font-size: 2.8rem;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      letter-spacing: -2px;
-      color: #ffffff;
-    }
-    .features-title span {
-      color: #8b5cf6;
-    }
-    .features-sub {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      font-weight: 300;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .feature-card {
-      border-radius: 20px;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(30px) saturate(1.5);
-      -webkit-backdrop-filter: blur(30px) saturate(1.5);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .feature-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(139, 92, 246, 0.06);
-      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.04);
-    }
-    .feature-card .icon {
-      font-size: 2rem;
-      color: #8b5cf6;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .feature-card h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #ffffff;
-    }
-    .feature-card p {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.3);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    /* ============================================================
-       ABOUT SECTION
-       ============================================================ */
-    #about {
-      min-height: 100vh;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    #about.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .about-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .about-title {
-      font-size: 2.8rem;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      letter-spacing: -2px;
-      color: #ffffff;
-    }
-    .about-title span {
-      color: #8b5cf6;
-    }
-    .about-sub {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      font-weight: 300;
-    }
-
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    .about-text {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-    .about-text h3 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .about-text h3 span {
-      color: #8b5cf6;
-    }
-    .about-text p {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.3);
-      line-height: 1.9;
-      font-weight: 300;
-    }
-    .about-text .about-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-    .about-text .about-list li {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.9rem;
-    }
-    .about-text .about-list li i {
-      color: #8b5cf6;
-      font-size: 0.8rem;
-      width: 20px;
-    }
-
-    .about-visual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .about-card {
-      width: 100%;
-      max-width: 450px;
-      aspect-ratio: 1;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.01);
-      backdrop-filter: blur(60px) saturate(2);
-      -webkit-backdrop-filter: blur(60px) saturate(2);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    .about-card-inner {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .about-card-inner .big-icon {
-      font-size: 4rem;
-      color: rgba(139, 92, 246, 0.1);
-    }
-    .about-card-inner .stat-number {
-      font-size: 3rem;
-      font-weight: 800;
-      color: #ffffff;
-    }
-    .about-card-inner .stat-label {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.2);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    /* ============================================================
        OUTPUT STYLES - DETAILED
        ============================================================ */
     .output-section {
@@ -1126,10 +915,11 @@
       color: #8b5cf6;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
     .output-section-title .badge {
       font-size: 0.55rem;
@@ -1210,6 +1000,7 @@
       align-items: center;
       gap: 1rem;
       margin-top: 0.3rem;
+      flex-wrap: wrap;
     }
     .rating-bar .stars {
       color: #fbbf24;
@@ -1218,6 +1009,33 @@
     .rating-bar .rating-text {
       color: rgba(255,255,255,0.3);
       font-size: 0.7rem;
+    }
+
+    /* Corrected Code Section */
+    .corrected-code {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.6);
+      white-space: pre-wrap;
+      border: 1px solid rgba(52, 211, 153, 0.1);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .corrected-code .diff-add {
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.05);
+    }
+    .corrected-code .diff-remove {
+      color: #f87171;
+      background: rgba(248, 113, 113, 0.05);
+    }
+    .corrected-code .line-num {
+      color: rgba(255,255,255,0.05);
+      user-select: none;
     }
 
     /* ============================================================
@@ -1252,16 +1070,6 @@
         display: none;
       }
       .debugger-title {
-        font-size: 2.2rem;
-      }
-      .about-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .about-text .about-list li {
-        justify-content: center;
-      }
-      .features-title, .about-title {
         font-size: 2.2rem;
       }
     }
@@ -1305,15 +1113,6 @@
       .debugger-title {
         font-size: 1.8rem;
       }
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-      .features-title, .about-title {
-        font-size: 1.8rem;
-      }
-      .about-text h3 {
-        font-size: 1.4rem;
-      }
       .rotating-logo-container {
         display: none;
       }
@@ -1354,8 +1153,9 @@
         padding: 0.8rem;
         min-height: 150px;
       }
-      .features-title, .about-title {
-        font-size: 1.5rem;
+      .corrected-code {
+        font-size: 0.65rem;
+        padding: 0.8rem;
       }
     }
   </style>
@@ -1370,7 +1170,7 @@
   </div>
 
   <!-- ============================================================
-       ROTATING LOGO - LEFT SIDE
+       ROTATING LOGO
        ============================================================ -->
   <div class="rotating-logo-container">
     <div class="logo-text">✦</div>
@@ -1403,8 +1203,6 @@
     </div>
     <nav class="nav">
       <a href="#home" id="navHome">Home</a>
-      <a href="#features">Features</a>
-      <a href="#about">About</a>
       <i class="fas fa-search search-icon"></i>
       <a href="mailto:rohitsavan360@gmail.com" class="btn-cta">Get in Touch</a>
     </nav>
@@ -1461,101 +1259,13 @@
   </section>
 
   <!-- ============================================================
-       FEATURES SECTION
-       ============================================================ -->
-  <section id="features">
-    <div class="features-container">
-      <h2 class="features-title">⚡ <span>Features</span></h2>
-      <p class="features-sub">What makes AERO AI Code Debugger powerful</p>
-
-      <div class="features-grid">
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-code"></i></span>
-          <h3>AST Analysis</h3>
-          <p>Parse and analyze Python code structure to detect unused variables, long lines, missing docstrings, and more.</p>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-brain"></i></span>
-          <h3>Gemini AI Review</h3>
-          <p>Get intelligent code reviews with summary, issues, and rating powered by Google's Gemini AI model.</p>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-file-upload"></i></span>
-          <h3>File Upload Support</h3>
-          <p>Upload your .py files directly or paste code into the editor for instant analysis.</p>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-download"></i></span>
-          <h3>Export Reports</h3>
-          <p>Download analysis results as PDF, TXT, or copy to clipboard for sharing and documentation.</p>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-keyboard"></i></span>
-          <h3>Keyboard Shortcuts</h3>
-          <p>Work faster with Ctrl+Enter to analyze and Ctrl+L to focus the editor.</p>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-history"></i></span>
-          <h3>History Tracking</h3>
-          <p>All your analyses are saved locally for easy reference and comparison.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       ABOUT SECTION
-       ============================================================ -->
-  <section id="about">
-    <div class="about-container">
-      <h2 class="about-title">📖 <span>About</span></h2>
-      <p class="about-sub">Learn more about AERO AI Code Debugger</p>
-
-      <div class="about-content">
-        <div class="about-text">
-          <h3>AI-Powered <span>Code Intelligence</span></h3>
-          <p>
-            AERO AI Code Debugger is a cutting-edge tool designed to help developers 
-            write cleaner, more efficient Python code. By combining Abstract Syntax Tree (AST) 
-            analysis with Google's Gemini AI, it provides comprehensive code reviews and insights.
-          </p>
-          <ul class="about-list">
-            <li><i class="fas fa-check-circle"></i> Real-time code analysis</li>
-            <li><i class="fas fa-check-circle"></i> AI-powered recommendations</li>
-            <li><i class="fas fa-check-circle"></i> Clean, modern glass UI</li>
-            <li><i class="fas fa-check-circle"></i> Privacy-focused local storage</li>
-            <li><i class="fas fa-check-circle"></i> Built with ❤️ for developers</li>
-          </ul>
-          <div style="margin-top:0.5rem;">
-            <button class="btn-primary" id="aboutDiscoverBtn" style="padding:0.6rem 2rem;font-size:0.85rem;">
-              <i class="fas fa-arrow-right"></i> Try the Debugger
-            </button>
-          </div>
-        </div>
-        <div class="about-visual">
-          <div class="about-card">
-            <div class="about-card-inner">
-              <div class="big-icon"><i class="fas fa-rocket"></i></div>
-              <div class="stat-number">18+</div>
-              <div class="stat-label">Projects Completed</div>
-              <div style="color:rgba(255,255,255,0.1);font-size:0.7rem;margin-top:0.5rem;">
-                <i class="fas fa-code"></i> Built with Python & Gemini
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
        DEBUGGER INTERFACE
        ============================================================ -->
   <section id="debugger-interface">
     <div class="debugger-container">
       <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Home</button>
       <h2 class="debugger-title">⚡ <span>AI Code Debugger</span></h2>
-      <p class="debugger-sub">Paste your Python code and get detailed AST analysis + AI review instantly.</p>
+      <p class="debugger-sub">Paste your Python code and get detailed AST analysis + AI review with corrected code.</p>
 
       <div class="debugger-area">
         <div class="file-upload-area">
@@ -1590,7 +1300,7 @@ print(fibonacci(10))</textarea>
           <div class="placeholder">
             <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
             Results will appear here<br />
-            <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review</span>
+            <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review + Corrected code</span>
           </div>
         </div>
       </div>
@@ -1653,20 +1363,6 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
-    // SCROLL REVEAL
-    // ============================================================
-    const sections = document.querySelectorAll('#features, #about');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    sections.forEach(section => observer.observe(section));
-
-    // ============================================================
     // FAB
     // ============================================================
     document.getElementById('fabBtn').addEventListener('click', () => {
@@ -1680,25 +1376,18 @@ print(fibonacci(10))</textarea>
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
       heroSection.style.display = 'none';
-      document.getElementById('features').style.display = 'none';
-      document.getElementById('about').style.display = 'none';
       debuggerSection.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => document.getElementById('codeInput').focus(), 500);
     }
 
     document.getElementById('discoverBtn').addEventListener('click', showDebugger);
-    document.getElementById('aboutDiscoverBtn').addEventListener('click', showDebugger);
 
     document.getElementById('backBtn').addEventListener('click', () => {
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
-      const featuresSection = document.getElementById('features');
-      const aboutSection = document.getElementById('about');
       debuggerSection.classList.remove('active');
       heroSection.style.display = 'flex';
-      featuresSection.style.display = 'block';
-      aboutSection.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
@@ -1706,13 +1395,9 @@ print(fibonacci(10))</textarea>
       e.preventDefault();
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
-      const featuresSection = document.getElementById('features');
-      const aboutSection = document.getElementById('about');
       if (debuggerSection.classList.contains('active')) {
         debuggerSection.classList.remove('active');
         heroSection.style.display = 'flex';
-        featuresSection.style.display = 'block';
-        aboutSection.style.display = 'block';
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -1819,7 +1504,7 @@ print(fibonacci(10))</textarea>
         <div class="placeholder">
           <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
           Results will appear here<br />
-          <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review</span>
+          <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review + Corrected code</span>
         </div>
       `;
     });
@@ -1853,7 +1538,7 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
-    // ANALYZE - DETAILED AST + GEMINI
+    // ANALYZE - DETAILED AST + GEMINI + CORRECTED CODE
     // ============================================================
     const GEMINI_API_KEY = 'AIzaSyC5LdN6q_9UzLt6s9JXkX8YqG6o3fS2mP0';
     const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_API_KEY;
@@ -1878,20 +1563,44 @@ print(fibonacci(10))</textarea>
 
       try {
         const astResult = detailedASTAnalysis(code);
+        const correctedCode = generateCorrectedCode(code, astResult);
 
         const prompt = `
-          You are an expert Python code reviewer. Analyze this code in detail and provide:
-          1. A comprehensive summary (2-3 sentences explaining what the code does and its quality)
-          2. 5-8 specific issues or improvements with line numbers if possible
-          3. A rating out of 10 with justification
-          4. Best practices suggestions (2-3)
+          You are an expert Python code reviewer with 10+ years of experience. Analyze this code in extreme detail and provide:
+
+          1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
+          
+          2. DETAILED ISSUES: List 5-10 specific issues with:
+             - Line number reference
+             - Issue type (Bug, Style, Performance, Security, Best Practice)
+             - Severity (Critical, High, Medium, Low)
+             - Explanation of why it's an issue
+             - How to fix it
+          
+          3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
+          
+          4. SECURITY CONCERNS: Any potential security vulnerabilities
+          
+          5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
+          
+          6. RATING: Overall rating out of 10 with detailed justification
+          
+          7. BEST PRACTICES: 3-4 specific best practices that should be followed
+
           Code:
           ${code}
+
           Format your response as:
           SUMMARY: [detailed summary]
-          ISSUES: [list each issue with line number suggestion if possible]
-          RATING: [X/10 - brief justification]
-          PRACTICES: [2-3 best practice suggestions]
+          ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
+          PERFORMANCE: [time/space complexity analysis]
+          SECURITY: [any security concerns]
+          READABILITY: [X/10]
+          MAINTAINABILITY: [X/10]
+          EFFICIENCY: [X/10]
+          SECURITY_SCORE: [X/10]
+          RATING: [X/10 - detailed justification]
+          PRACTICES: [3-4 best practices]
         `;
 
         let geminiResponse = '';
@@ -1913,7 +1622,7 @@ print(fibonacci(10))</textarea>
           geminiResponse = '';
         }
 
-        const outputHtml = buildDetailedOutput(astResult, geminiResponse, code);
+        const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode);
         document.getElementById('output').innerHTML = outputHtml;
 
       } catch (err) {
@@ -1934,19 +1643,12 @@ print(fibonacci(10))</textarea>
       const totalLines = lines.length;
       const codeLength = code.length;
       
-      // Count imports
       const imports = lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from '));
-      
-      // Count functions
       const functions = lines.filter(l => l.trim().startsWith('def '));
-      
-      // Count classes
       const classes = lines.filter(l => l.trim().startsWith('class '));
-      
-      // Count comments
       const comments = lines.filter(l => l.trim().startsWith('#'));
       
-      // Find unused variables
+      // Unused variables
       const varPattern = /^(\s*)(\w+)\s*=\s*(.+)/;
       const allVars = [];
       const usedVars = new Set();
@@ -1972,21 +1674,21 @@ print(fibonacci(10))</textarea>
           if (i !== v.line - 1 && l.includes(v.name)) used = true;
         });
         if (!used) {
-          issues.push({ line: v.line, type: 'warning', msg: `Unused variable '${v.name}'` });
+          issues.push({ line: v.line, type: 'warning', msg: `Unused variable '${v.name}'`, severity: 'Medium' });
         }
       });
       
-      // Check line length
+      // Line length
       lines.forEach((line, idx) => {
         if (line.length > 79) {
-          issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)` });
+          issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)`, severity: 'Low' });
         }
         if (line.length > 100) {
-          issues.push({ line: idx + 1, type: 'error', msg: `Line extremely long (${line.length} chars) - consider breaking it up` });
+          issues.push({ line: idx + 1, type: 'error', msg: `Line extremely long (${line.length} chars) - break it up`, severity: 'High' });
         }
       });
       
-      // Check docstrings for functions
+      // Docstrings
       lines.forEach((line, idx) => {
         if (line.trim().startsWith('def ') && idx < lines.length - 1) {
           let hasDocstring = false;
@@ -1999,13 +1701,9 @@ print(fibonacci(10))</textarea>
             if (next && !next.startsWith('#')) break;
           }
           if (!hasDocstring) {
-            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function' });
+            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function', severity: 'Medium' });
           }
         }
-      });
-      
-      // Check class docstrings
-      lines.forEach((line, idx) => {
         if (line.trim().startsWith('class ') && idx < lines.length - 1) {
           let hasDocstring = false;
           for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
@@ -2017,12 +1715,12 @@ print(fibonacci(10))</textarea>
             if (next && !next.startsWith('#')) break;
           }
           if (!hasDocstring) {
-            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for class' });
+            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for class', severity: 'Medium' });
           }
         }
       });
       
-      // Check nested depth
+      // Nesting depth
       let maxDepth = 0;
       let currentDepth = 0;
       lines.forEach(line => {
@@ -2036,30 +1734,35 @@ print(fibonacci(10))</textarea>
       });
       
       if (maxDepth > 20) {
-        issues.push({ line: 0, type: 'warning', msg: `High nesting depth (${Math.floor(maxDepth/4)} levels) - consider refactoring` });
+        issues.push({ line: 0, type: 'warning', msg: `High nesting depth (${Math.floor(maxDepth/4)} levels) - consider refactoring`, severity: 'Medium' });
       }
       
-      // Check for TODO/FIXME
+      // TODO/FIXME
       lines.forEach((line, idx) => {
         if (line.toLowerCase().includes('todo') || line.toLowerCase().includes('fixme')) {
-          issues.push({ line: idx + 1, type: 'info', msg: 'TODO/FIXME found - pending task' });
+          issues.push({ line: idx + 1, type: 'info', msg: 'TODO/FIXME found - pending task', severity: 'Low' });
         }
       });
       
-      // Check for print statements (debugging)
+      // Print statements
       const prints = lines.filter(l => l.trim().startsWith('print('));
       if (prints.length > 3) {
-        issues.push({ line: 0, type: 'info', msg: `Multiple print statements (${prints.length}) - consider using logging for production` });
+        issues.push({ line: 0, type: 'info', msg: `Multiple print statements (${prints.length}) - consider using logging`, severity: 'Low' });
       }
       
-      // Check for bare except
+      // Bare except
       lines.forEach((line, idx) => {
         if (line.trim().match(/^except\s*:/)) {
-          issues.push({ line: idx + 1, type: 'error', msg: 'Bare except - catches all exceptions, hide bugs. Use specific exceptions' });
+          issues.push({ line: idx + 1, type: 'error', msg: 'Bare except - catches all exceptions, hides bugs. Use specific exceptions', severity: 'Critical' });
         }
       });
       
-      // Return detailed stats
+      // Complexity
+      const conditions = lines.filter(l => l.includes('if ') || l.includes('elif ') || l.includes('else:') || l.includes('for ') || l.includes('while '));
+      if (conditions.length > 10) {
+        issues.push({ line: 0, type: 'warning', msg: `High complexity (${conditions.length} conditionals) - consider breaking down`, severity: 'Medium' });
+      }
+      
       return {
         issues: issues,
         stats: {
@@ -2070,20 +1773,66 @@ print(fibonacci(10))</textarea>
           classes: classes.length,
           comments: comments.length,
           blankLines: lines.filter(l => l.trim() === '').length,
-          maxIndent: maxDepth
+          maxIndent: maxDepth,
+          conditionals: conditions.length,
+          prints: prints.length
         },
         issueCount: issues.length,
         warningCount: issues.filter(i => i.type === 'warning').length,
         styleCount: issues.filter(i => i.type === 'style').length,
         errorCount: issues.filter(i => i.type === 'error').length,
-        infoCount: issues.filter(i => i.type === 'info').length
+        infoCount: issues.filter(i => i.type === 'info').length,
+        criticalCount: issues.filter(i => i.severity === 'Critical').length
       };
+    }
+
+    // ============================================================
+    // GENERATE CORRECTED CODE
+    // ============================================================
+    function generateCorrectedCode(code, astResult) {
+      let corrected = code;
+      const lines = code.split('\n');
+      
+      // Fix missing docstrings for functions
+      const newLines = [];
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        newLines.push(line);
+        
+        if (line.trim().startsWith('def ') && i < lines.length - 1) {
+          let hasDocstring = false;
+          for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
+            const next = lines[j].trim();
+            if (next.startsWith('"""') || next.startsWith("'''")) {
+              hasDocstring = true;
+              break;
+            }
+            if (next && !next.startsWith('#')) break;
+          }
+          if (!hasDocstring) {
+            const indent = line.match(/^\s*/)[0];
+            newLines.push(`${indent}    """`);
+            const funcName = line.match(/def\s+(\w+)/);
+            newLines.push(`${indent}    ${funcName ? funcName[1] : 'function'} documentation.`);
+            newLines.push(`${indent}    """`);
+          }
+        }
+        
+        // Fix bare except
+        if (line.trim().match(/^except\s*:/)) {
+          newLines[newLines.length - 1] = line.replace('except:', 'except Exception as e:');
+          newLines.push(`    print(f"Error: {e}")  # Log the error properly`);
+        }
+      }
+      
+      corrected = newLines.join('\n');
+      return corrected;
     }
 
     // ============================================================
     // BUILD DETAILED OUTPUT
     // ============================================================
-    function buildDetailedOutput(astResult, geminiText, code) {
+    function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode) {
       let html = '';
       
       // ====== AST ANALYSIS SECTION ======
@@ -2094,16 +1843,19 @@ print(fibonacci(10))</textarea>
         <span class="badge" style="color:#fbbf24;">${astResult.warningCount} warnings</span>
         <span class="badge" style="color:#60a5fa;">${astResult.styleCount} style</span>
         <span class="badge" style="color:#f87171;">${astResult.errorCount} errors</span>
+        <span class="badge" style="color:#ef4444;">${astResult.criticalCount} critical</span>
       </div>`;
       
-      // Stats
-      html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.5rem;margin-bottom:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
+      // Stats grid
+      html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:0.5rem;margin-bottom:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.totalLines}</span> lines</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.functions}</span> functions</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.classes}</span> classes</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.imports}</span> imports</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.comments}</span> comments</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.blankLines}</span> blank lines</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.conditionals}</span> conditionals</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.prints}</span> prints</div>`;
       html += `</div>`;
       
       // Issues list
@@ -2118,10 +1870,14 @@ print(fibonacci(10))</textarea>
           const icon = issue.type === 'warning' ? 'fa-exclamation-triangle' : 
                        issue.type === 'style' ? 'fa-paint-brush' : 
                        issue.type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
+          const severityColor = issue.severity === 'Critical' ? '#ef4444' : 
+                               issue.severity === 'High' ? '#f87171' : 
+                               issue.severity === 'Medium' ? '#fbbf24' : '#60a5fa';
           html += `<div class="output-issue ${typeClass}">
             <span class="line-num">${issue.line > 0 ? `Line ${issue.line}` : 'General'}</span>
             <span class="issue-icon"><i class="fas ${icon}"></i></span>
             <span>${issue.msg}</span>
+            <span style="font-size:0.55rem;color:${severityColor};margin-left:auto;background:rgba(255,255,255,0.02);padding:0.05rem 0.4rem;border-radius:10px;">${issue.severity || 'Info'}</span>
           </div>`;
         });
       }
@@ -2135,9 +1891,14 @@ print(fibonacci(10))</textarea>
       </div>`;
       
       if (geminiText && geminiText.length > 10) {
-        // Parse AI response
-        const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|RATING:|PRACTICES:|$)/i);
-        const issuesMatch = geminiText.match(/ISSUES:\s*([^]*?)(?=RATING:|PRACTICES:|$)/i);
+        const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+        const issuesMatch = geminiText.match(/ISSUES:\s*([^]*?)(?=PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+        const performanceMatch = geminiText.match(/PERFORMANCE:\s*([^]*?)(?=SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+        const securityMatch = geminiText.match(/SECURITY:\s*([^]*?)(?=READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+        const readabilityMatch = geminiText.match(/READABILITY:\s*([^]*?)(?=MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+        const maintainabilityMatch = geminiText.match(/MAINTAINABILITY:\s*([^]*?)(?=EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+        const efficiencyMatch = geminiText.match(/EFFICIENCY:\s*([^]*?)(?=SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+        const securityScoreMatch = geminiText.match(/SECURITY_SCORE:\s*([^]*?)(?=RATING:|PRACTICES:|$)/i);
         const ratingMatch = geminiText.match(/RATING:\s*([^]*?)(?=PRACTICES:|$)/i);
         const practicesMatch = geminiText.match(/PRACTICES:\s*([^]*?)(?=$)/i);
         
@@ -2149,28 +1910,66 @@ print(fibonacci(10))</textarea>
         }
         
         if (issuesMatch) {
-          html += `<div style="margin-top:0.5rem;">
-            <strong style="color:#8b5cf6;font-size:0.75rem;">📋 Issues & Improvements</strong>
+          html += `<div style="margin-top:0.8rem;">
+            <strong style="color:#f87171;font-size:0.75rem;">📋 Issues & Improvements</strong>
             <div class="output-ai" style="margin-top:0.3rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
           </div>`;
         }
+        
+        if (performanceMatch) {
+          html += `<div style="margin-top:0.8rem;">
+            <strong style="color:#60a5fa;font-size:0.75rem;">⚡ Performance Analysis</strong>
+            <div class="output-ai" style="margin-top:0.3rem;">${performanceMatch[1].trim()}</div>
+          </div>`;
+        }
+        
+        if (securityMatch) {
+          html += `<div style="margin-top:0.8rem;">
+            <strong style="color:#f87171;font-size:0.75rem;">🔒 Security Concerns</strong>
+            <div class="output-ai" style="margin-top:0.3rem;">${securityMatch[1].trim()}</div>
+          </div>`;
+        }
+        
+        // Score grid
+        html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.5rem;margin-top:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
+        
+        const scores = [
+          { label: 'Readability', match: readabilityMatch },
+          { label: 'Maintainability', match: maintainabilityMatch },
+          { label: 'Efficiency', match: efficiencyMatch },
+          { label: 'Security', match: securityScoreMatch }
+        ];
+        
+        scores.forEach(s => {
+          if (s.match) {
+            const score = s.match[1].trim();
+            const num = score.match(/\d+(\.\d+)?/);
+            const stars = num ? Math.round(parseFloat(num[0]) / 2) : 0;
+            html += `<div style="text-align:center;padding:0.3rem;background:rgba(255,255,255,0.01);border-radius:6px;">
+              <div style="font-size:0.6rem;color:rgba(255,255,255,0.2);">${s.label}</div>
+              <div style="font-size:0.85rem;font-weight:600;color:#ffffff;">${score}</div>
+              <div style="font-size:0.5rem;color:#fbbf24;">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
+            </div>`;
+          }
+        });
+        html += `</div>`;
         
         if (ratingMatch) {
           const ratingText = ratingMatch[1].trim();
           const ratingNum = ratingText.match(/\d+(\.\d+)?/);
           const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
-          html += `<div style="margin-top:0.5rem;">
+          html += `<div style="margin-top:0.8rem;padding:0.5rem 0.8rem;background:rgba(139,92,246,0.03);border-radius:8px;border:1px solid rgba(139,92,246,0.04);">
             <div class="rating-bar">
-              <span style="color:#8b5cf6;font-weight:600;">⭐ Rating</span>
-              <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
+              <span style="color:#8b5cf6;font-weight:600;font-size:0.8rem;">⭐ Overall Rating</span>
+              <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
               <span class="rating-text">${ratingText}</span>
             </div>
           </div>`;
         }
         
         if (practicesMatch) {
-          html += `<div style="margin-top:0.5rem;">
-            <strong style="color:#8b5cf6;font-size:0.75rem;">💡 Best Practices</strong>
+          html += `<div style="margin-top:0.8rem;">
+            <strong style="color:#34d399;font-size:0.75rem;">💡 Best Practices</strong>
             <div class="output-ai" style="margin-top:0.3rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
           </div>`;
         }
@@ -2178,24 +1977,53 @@ print(fibonacci(10))</textarea>
         html += `<div style="color:rgba(255,255,255,0.3);font-size:0.8rem;padding:0.5rem 0;">
           <i class="fas fa-spinner fa-spin"></i> AI review generated with fallback intelligence.
         </div>`;
-        // Fallback review
-        const fallbackRating = astResult.errorCount === 0 ? (astResult.warningCount === 0 ? 9 : 7) : 5;
+        const fallbackRating = astResult.criticalCount > 0 ? 4 : 
+                              astResult.errorCount > 0 ? 5 : 
+                              astResult.warningCount > 0 ? 7 : 9;
         const stars = Math.round(fallbackRating / 2);
         html += `<div class="output-summary">
           <strong style="color:#8b5cf6;">📌 Summary</strong>
-          <div style="margin-top:0.3rem;color:rgba(255,255,255,0.6);">The code is ${astResult.errorCount === 0 ? 'functionally correct' : 'has some issues'} with ${astResult.issueCount} total issues found.</div>
+          <div style="margin-top:0.3rem;color:rgba(255,255,255,0.6);">
+            ${astResult.criticalCount > 0 ? '⚠️ Critical issues found that need immediate attention.' :
+              astResult.errorCount > 0 ? '⚠️ Several issues found that should be addressed.' :
+              astResult.warningCount > 0 ? '📝 Code is functional but has some warnings to address.' :
+              '✅ Code is clean and well-structured.'}
+          </div>
         </div>
-        <div style="margin-top:0.5rem;">
+        <div style="margin-top:0.8rem;padding:0.5rem 0.8rem;background:rgba(139,92,246,0.03);border-radius:8px;border:1px solid rgba(139,92,246,0.04);">
           <div class="rating-bar">
-            <span style="color:#8b5cf6;font-weight:600;">⭐ Rating</span>
+            <span style="color:#8b5cf6;font-weight:600;font-size:0.8rem;">⭐ Overall Rating</span>
             <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
-            <span class="rating-text">${fallbackRating}/10 - ${fallbackRating >= 8 ? 'Good code quality' : fallbackRating >= 6 ? 'Needs some improvements' : 'Significant improvements needed'}</span>
+            <span class="rating-text">${fallbackRating}/10 - ${fallbackRating >= 8 ? 'Good code quality' : fallbackRating >= 6 ? 'Needs improvements' : 'Significant issues to fix'}</span>
           </div>
         </div>`;
       }
       html += `</div>`;
       
+      // ====== CORRECTED CODE ======
+      if (correctedCode !== originalCode) {
+        html += `<div class="output-section">`;
+        html += `<div class="output-section-title">
+          <i class="fas fa-check-circle" style="color:#34d399;"></i> Corrected Code 
+          <span class="badge" style="background:rgba(52,211,153,0.1);color:#34d399;">Issues Resolved</span>
+        </div>`;
+        html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
+        html += `<div style="margin-top:0.5rem;font-size:0.65rem;color:rgba(255,255,255,0.1);">
+          <i class="fas fa-info-circle"></i> Changes made: Added docstrings, fixed bare except, improved code style
+        </div>`;
+        html += `</div>`;
+      }
+      
       return html;
+    }
+
+    // ============================================================
+    // ESCAPE HTML
+    // ============================================================
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
   </script>
 </body>
