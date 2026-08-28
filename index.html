@@ -2909,7 +2909,7 @@ print(fibonacci(10))</textarea>
                     <div class="code-stats">
                         <span id="lineCount">📄 Lines: 0</span>
                         <span id="charCount">📝 Characters: 0</span>
-                        <span id="langDetect">🔤 Language: <span style="background:oklch(60% 0.2 280 / 0.04); color:var(--color-purple); padding:0.05rem 0.5rem; border-radius:20px; font-size:0.55rem; font-weight:600; margin-left:0.2rem;" id="langBadge">Python</span></span>
+                        <span id="langDetect">🔤 Language: <span style="background:oklch(60% 0.2 280 / 0.04); color:var(--color-purple); padding:0.05rem 0.5rem; border-radius:20px; font-size:0.55rem; font-weight:600; margin-left:0.2rem;" id="langBadge">❓ Unknown</span></span>
                     </div>
 
                     <div class="toolbar">
@@ -3394,22 +3394,7 @@ print(fibonacci(10))</textarea>
         });
 
         // ============================================================
-        // CODE STATS
-        // ============================================================
-        function updateStats() {
-            const code = document.getElementById('codeInput').value;
-            const lines = code.split('\n').length;
-            const chars = code.length;
-            document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
-            document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
-
-            const lang = detectLanguage(code);
-            const langDisplay = getLanguageDisplay(lang);
-            document.getElementById('langBadge').textContent = langDisplay;
-        }
-
-        // ============================================================
-        // MULTI-LANGUAGE SUPPORT
+        // CODE STATS — FIXED LANGUAGE DETECTION
         // ============================================================
         function detectLanguage(code) {
             if (/function\s+\w+\s*\(/.test(code) || /const\s+\w+\s*=\s*\(/.test(code) || /let\s+\w+\s*=\s*\(/.test(code) || /=>/.test(code)) {
@@ -3421,7 +3406,7 @@ print(fibonacci(10))</textarea>
             if (/public\s+class/.test(code) || /System\.out\.println/.test(code) || /public\s+static\s+void\s+main/.test(code)) {
                 return 'java';
             }
-            if (/#include\s*</.test(code) || /using\s+namespace\s+std/.test(code) || /int\s+main\s*\(/.test(code) && /std::/.test(code)) {
+            if (/#include\s*</.test(code) || /using\s+namespace\s+std/.test(code)) {
                 return 'cpp';
             }
             if (/package\s+\w+/.test(code) || /func\s+\w+/.test(code) || /fmt\.Println/.test(code)) {
@@ -3446,8 +3431,20 @@ print(fibonacci(10))</textarea>
             return langMap[language] || '❓ Unknown';
         }
 
+        function updateStats() {
+            const code = document.getElementById('codeInput').value;
+            const lines = code.split('\n').length;
+            const chars = code.length;
+            document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
+            document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
+
+            const lang = detectLanguage(code);
+            const langDisplay = getLanguageDisplay(lang);
+            document.getElementById('langBadge').textContent = langDisplay;
+        }
+
         // ============================================================
-        // LANGUAGE-SPECIFIC AST ANALYSIS — FIXED
+        // LANGUAGE-SPECIFIC AST ANALYSIS
         // ============================================================
         function analyzeASTForLanguage(code, language) {
             const issues = [];
@@ -3518,8 +3515,7 @@ print(fibonacci(10))</textarea>
 
                 case 'cpp':
                     lines.forEach((line, idx) => {
-                        if (/std::shared_ptr/.test(line) || /std::unique_ptr/.test(line) || /\*\s*\w+/.test(line) && !
-                            line.includes('nullptr')) {
+                        if (/std::shared_ptr/.test(line) || /std::unique_ptr/.test(line)) {
                             issues.push({ line: idx + 1, type: 'style', msg: 'Consider using smart pointers',
                                 severity: 'Medium' });
                         }
@@ -3588,7 +3584,6 @@ print(fibonacci(10))</textarea>
                 }
             });
 
-            // ✅ FIXED: Return full object with stats
             return {
                 issues: issues,
                 stats: {
@@ -4182,6 +4177,11 @@ print(fibonacci(10))</textarea>
 
         // Initial update for language detection
         updateStats();
+
+        // ============================================================
+        // MAKE SURE LANGUAGE UPDATES ON INPUT
+        // ============================================================
+        document.getElementById('codeInput').addEventListener('input', updateStats);
     </script>
 
 </body>
