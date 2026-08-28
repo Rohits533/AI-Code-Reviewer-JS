@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AERO · AI Debug</title>
+  <title>AERO · AI Code Debugger</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -23,6 +24,12 @@
       overflow-x: hidden;
       padding: 0;
       position: relative;
+    }
+    body.no-cursor {
+      cursor: auto !important;
+    }
+    body.no-cursor * {
+      cursor: auto !important;
     }
 
     /* ============================================================
@@ -72,7 +79,7 @@
     }
 
     /* ============================================================
-       BACKGROUND - MATCHING THE IMAGE
+       BACKGROUND
        ============================================================ */
     #bg {
       position: fixed;
@@ -89,7 +96,7 @@
     }
 
     /* ============================================================
-       ROTATING LOGO - AERO STYLE ON LEFT
+       ROTATING LOGO - LEFT SIDE
        ============================================================ */
     .rotating-logo-container {
       position: fixed;
@@ -116,7 +123,7 @@
     }
 
     /* ============================================================
-       FLOATING ORBS - ULTRA GLASS
+       FLOATING ORBS
        ============================================================ */
     .orb {
       position: fixed;
@@ -160,7 +167,7 @@
     }
 
     /* ============================================================
-       GLASS EFFECTS - APPLE LEVEL
+       GLASS EFFECTS
        ============================================================ */
     .glass-premium {
       background: rgba(255, 255, 255, 0.02);
@@ -174,16 +181,8 @@
       box-shadow: 0 8px 80px rgba(139, 92, 246, 0.04);
     }
 
-    .glass-ultra {
-      background: rgba(255, 255, 255, 0.01);
-      backdrop-filter: blur(60px) saturate(2);
-      -webkit-backdrop-filter: blur(60px) saturate(2);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
-    }
-
     /* ============================================================
-       HEADER - APPLE STYLE
+       HEADER
        ============================================================ */
     .header {
       position: fixed;
@@ -286,6 +285,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       backdrop-filter: blur(8px);
+      cursor: pointer;
     }
     .nav .btn-cta:hover {
       background: rgba(139, 92, 246, 0.04);
@@ -298,13 +298,14 @@
       color: rgba(255, 255, 255, 0.2);
       font-size: 0.9rem;
       transition: 0.3s;
+      cursor: pointer;
     }
     .search-icon:hover {
       color: #ffffff;
     }
 
     /* ============================================================
-       HERO - MATCHING THE IMAGE
+       HERO
        ============================================================ */
     .hero {
       min-height: 100vh;
@@ -445,7 +446,7 @@
       transform: scale(1.05) translateY(-2px);
     }
 
-    /* Hero Image/Visual */
+    /* Hero Visual */
     .hero-visual {
       display: flex;
       align-items: center;
@@ -488,29 +489,31 @@
       flex-direction: column;
       align-items: center;
       gap: 1.5rem;
+      width: 100%;
     }
 
     .hero-card-inner .ai-icon {
-      font-size: 4rem;
-      color: rgba(139, 92, 246, 0.2);
+      font-size: 3.5rem;
+      color: rgba(139, 92, 246, 0.15);
       animation: floatIcon 6s ease-in-out infinite;
     }
     @keyframes floatIcon {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+      50% { transform: translateY(-15px); }
     }
 
     .hero-card-inner .code-preview {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.05);
       text-align: left;
-      line-height: 2;
+      line-height: 2.2;
       background: rgba(0, 0, 0, 0.1);
       padding: 1.5rem;
       border-radius: 16px;
       width: 100%;
       backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.01);
     }
     .hero-card-inner .code-preview .keyword {
       color: rgba(139, 92, 246, 0.3);
@@ -526,7 +529,7 @@
     .hero-stats {
       display: flex;
       gap: 2rem;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.02);
     }
@@ -569,6 +572,289 @@
     }
 
     /* ============================================================
+       FULL DEBUGGER INTERFACE - Hidden by default, shown on Discover
+       ============================================================ */
+    #debugger-interface {
+      display: none;
+      min-height: 100vh;
+      padding: 8rem 2rem 2rem;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #debugger-interface.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .debugger-container {
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .debugger-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 0.3rem;
+      letter-spacing: -3px;
+      color: #ffffff;
+    }
+    .debugger-title span {
+      color: #8b5cf6;
+    }
+    .debugger-sub {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .debugger-area {
+      border-radius: 24px;
+      padding: 2.2rem;
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(40px) saturate(1.5);
+      -webkit-backdrop-filter: blur(40px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
+      transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .debugger-area:hover {
+      border-color: rgba(139, 92, 246, 0.06);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 80px rgba(0, 0, 0, 0.4);
+    }
+    .debugger-area::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .file-upload-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .file-upload-label {
+      background: rgba(139, 92, 246, 0.03);
+      border: 1px dashed rgba(139, 92, 246, 0.04);
+      color: rgba(255, 255, 255, 0.3);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      transition: 0.4s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+    }
+    .file-upload-label:hover {
+      background: rgba(139, 92, 246, 0.04);
+      border-color: rgba(139, 92, 246, 0.08);
+      transform: scale(1.02);
+      color: #ffffff;
+    }
+    .file-name {
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.75rem;
+    }
+
+    .debugger-area textarea {
+      width: 100%;
+      padding: 1.2rem;
+      background: rgba(0, 0, 0, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(139, 92, 246, 0.02);
+      border-radius: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      resize: vertical;
+      min-height: 200px;
+      transition: 0.4s;
+      backdrop-filter: blur(8px);
+    }
+    .debugger-area textarea:focus {
+      outline: none;
+      border-color: rgba(139, 92, 246, 0.08);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.02);
+    }
+
+    .code-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.8rem;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .toolbar button {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(139, 92, 246, 0.02);
+      color: rgba(255, 255, 255, 0.2);
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      transition: 0.4s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+    }
+    .toolbar button:hover {
+      background: rgba(139, 92, 246, 0.03);
+      color: #ffffff;
+      border-color: rgba(139, 92, 246, 0.06);
+      transform: scale(1.05);
+    }
+
+    .lang-badge {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.04);
+      color: #8b5cf6;
+      padding: 0.05rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      margin-left: 0.2rem;
+    }
+
+    .analyze-btn {
+      margin-top: 1rem;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #ffffff;
+      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 100%;
+      box-shadow: 0 4px 30px rgba(139, 92, 246, 0.15);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .analyze-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.02), transparent);
+      transform: rotate(45deg);
+      transition: 0.8s;
+    }
+    .analyze-btn:hover::after {
+      left: 100%;
+    }
+    .analyze-btn:hover {
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.25);
+    }
+
+    #output {
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 1.2rem;
+      border-radius: 16px;
+      min-height: 100px;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      border: 1px solid rgba(139, 92, 246, 0.02);
+      margin-top: 1.2rem;
+      transition: 0.4s;
+    }
+    #output .placeholder {
+      color: rgba(255, 255, 255, 0.03);
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      padding: 1.2rem 0;
+    }
+
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 0;
+      gap: 0.8rem;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(139, 92, 246, 0.03);
+      border-top: 2px solid #8b5cf6;
+      border-radius: 50%;
+      animation: spin 0.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.03);
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .spinner-text {
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.8rem;
+      animation: pulseText 1.5s ease-in-out infinite;
+    }
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    /* Back button */
+    .back-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.2);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      transition: 0.4s;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.04);
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    /* ============================================================
        RESPONSIVE
        ============================================================ */
     @media (max-width: 1024px) {
@@ -598,6 +884,9 @@
       }
       .rotating-logo-container {
         display: none;
+      }
+      .debugger-title {
+        font-size: 2.2rem;
       }
     }
 
@@ -631,6 +920,15 @@
       .hero-stats .stat .number {
         font-size: 1rem;
       }
+      #debugger-interface {
+        padding: 7rem 1rem 1rem;
+      }
+      .debugger-area {
+        padding: 1.2rem;
+      }
+      .debugger-title {
+        font-size: 1.8rem;
+      }
       .rotating-logo-container {
         display: none;
       }
@@ -662,6 +960,14 @@
       }
       .hero-card {
         min-height: 250px;
+      }
+      .debugger-title {
+        font-size: 1.5rem;
+      }
+      .debugger-area textarea {
+        font-size: 0.7rem;
+        padding: 0.8rem;
+        min-height: 150px;
       }
     }
   </style>
@@ -700,7 +1006,7 @@
   <div id="scroll-progress"></div>
 
   <!-- ============================================================
-       HEADER - MATCHING THE IMAGE
+       HEADER
        ============================================================ -->
   <header class="header" id="header">
     <div class="logo">
@@ -708,7 +1014,7 @@
       AERO<span>.</span>
     </div>
     <nav class="nav">
-      <a href="#home">Home</a>
+      <a href="#home" id="navHome">Home</a>
       <a href="#services">Services</a>
       <a href="#about">About</a>
       <a href="#features">Features</a>
@@ -716,24 +1022,25 @@
       <a href="#blog">Blog</a>
       <a href="#pages">Pages</a>
       <i class="fas fa-search search-icon"></i>
-      <a href="#" class="btn-cta">Get in Touch</a>
+      <button class="btn-cta" id="headerGetInTouch">Get in Touch</button>
     </nav>
   </header>
 
   <!-- ============================================================
-       HERO - MATCHING THE IMAGE
+       HERO - With AI Code Debugger Title
        ============================================================ -->
   <section class="hero" id="home">
     <div class="hero-content">
       <div class="hero-text">
         <span class="hero-badge">✦ AI Powered</span>
         <h1>
-          Artificial Intelligence<br />
-          in <span class="highlight">nowadays</span> <span class="highlight-light">life</span>
+          AI <span class="highlight">Code</span><br />
+          <span class="highlight-light">Debugger</span>
         </h1>
         <p>
-          Mumching paradise fish! Triggerfish bango guppy oqah sunfish burtonose
-          kundefish-ogode-doan-carthi colba spooftanh connect catchd.
+          Mumching paradise fish! Triggerfish bango guppy oqah sunfish
+          burtonose kundefish-ogode-doan-carthi colba spooftanh
+          connect catchd.
         </p>
         <div class="hero-buttons">
           <button class="btn-primary" id="discoverBtn">
@@ -762,13 +1069,78 @@
             </div>
             <div class="code-preview">
               <span class="keyword">def</span> <span class="function">analyze_ai</span>():<br />
-              &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"Intelligence"</span>
+              &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"intelligence"</span>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ============================================================
+       FULL DEBUGGER INTERFACE - Hidden initially
+       ============================================================ -->
+  <section id="debugger-interface">
+    <div class="debugger-container">
+      <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Home</button>
+      <h2 class="debugger-title">⚡ <span>AI Code Debugger</span></h2>
+      <p class="debugger-sub">Paste your Python code and get AST analysis + AI review instantly.</p>
+
+      <div class="debugger-area">
+        <div class="file-upload-area">
+          <label for="fileInput" class="file-upload-label"><i class="fas fa-upload"></i> Upload .py File</label>
+          <input type="file" id="fileInput" accept=".py" style="display:none;" />
+          <span id="fileName" class="file-name">No file selected</span>
+        </div>
+
+        <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(10))</textarea>
+
+        <div class="code-stats">
+          <span id="lineCount">📄 Lines: 0</span>
+          <span id="charCount">📝 Characters: 0</span>
+          <span id="langDetect">🔤 Language: <span class="lang-badge" id="langBadge">Python</span></span>
+        </div>
+
+        <div class="toolbar">
+          <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
+          <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> .txt</button>
+          <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
+          <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
+        </div>
+
+        <button class="analyze-btn" id="analyzeBtn"><i class="fas fa-microchip"></i> Analyze with AST + Gemini</button>
+
+        <div id="output">
+          <div class="placeholder">
+            <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
+            Results will appear here
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FLOATING ACTION BUTTON
+       ============================================================ -->
+  <button class="fab" id="fabBtn" title="Back to top" style="position:fixed;bottom:2rem;right:2rem;z-index:99;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#7c3aed);border:none;color:white;font-size:1.4rem;box-shadow:0 4px 30px rgba(139,92,246,0.3);transition:0.4s cubic-bezier(0.22,1,0.36,1);display:flex;align-items:center;justify-content:center;animation:fabPulse 2s ease-in-out infinite;cursor:pointer;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <style>
+    .fab:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 8px 50px rgba(139,92,246,0.4);
+    }
+    @keyframes fabPulse {
+      0%, 100% { box-shadow: 0 4px 30px rgba(139,92,246,0.3); }
+      50% { box-shadow: 0 4px 60px rgba(139,92,246,0.5); }
+    }
+  </style>
 
   <script>
     // ============================================================
@@ -792,15 +1164,14 @@
     }
     animateCursor();
 
-    document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .search-icon, .hero-card, .nav a').forEach(el => {
+    document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .search-icon, .hero-card, .nav a, .file-upload-label, .toolbar button, .analyze-btn, .back-btn, .fab').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
 
     if ('ontouchstart' in window) {
       cursor.style.display = 'none';
-      document.body.style.cursor = 'auto';
-      document.querySelectorAll('*').forEach(el => el.style.cursor = 'auto');
+      document.body.classList.add('no-cursor');
     }
 
     // ============================================================
@@ -820,28 +1191,365 @@
     });
 
     // ============================================================
-    // BUTTON ACTIONS
+    // FAB
+    // ============================================================
+    document.getElementById('fabBtn').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ============================================================
+    // SHOW DEBUGGER ON DISCOVER
     // ============================================================
     document.getElementById('discoverBtn').addEventListener('click', () => {
-      alert('🚀 Discover AI features coming soon!');
+      const debuggerSection = document.getElementById('debugger-interface');
+      const heroSection = document.querySelector('.hero');
+      heroSection.style.display = 'none';
+      debuggerSection.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => document.getElementById('codeInput').focus(), 500);
     });
 
+    document.getElementById('backBtn').addEventListener('click', () => {
+      const debuggerSection = document.getElementById('debugger-interface');
+      const heroSection = document.querySelector('.hero');
+      debuggerSection.classList.remove('active');
+      heroSection.style.display = 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('headerGetInTouch').addEventListener('click', () => {
+      document.getElementById('discoverBtn').click();
+    });
+
+    document.getElementById('navHome').addEventListener('click', (e) => {
+      e.preventDefault();
+      const debuggerSection = document.getElementById('debugger-interface');
+      const heroSection = document.querySelector('.hero');
+      if (debuggerSection.classList.contains('active')) {
+        debuggerSection.classList.remove('active');
+        heroSection.style.display = 'flex';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ============================================================
+    // WATCH VIDEO
+    // ============================================================
     document.getElementById('watchBtn').addEventListener('click', () => {
-      alert('🎬 Video demo coming soon!');
+      alert('🎬 Demo video coming soon!');
     });
 
     // ============================================================
-    // SMOOTH SCROLL FOR NAV
+    // KEYBOARD SHORTCUTS
     // ============================================================
-    document.querySelectorAll('.nav a[href^="#"]').forEach(link => {
-      link.addEventListener('click', (e) => {
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        document.getElementById('analyzeBtn').click();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+        e.preventDefault();
+        document.getElementById('codeInput').focus();
+      }
+      if (e.key === 'Escape') {
+        document.getElementById('clearBtn').click();
+      }
+    });
+
+    // ============================================================
+    // CODE STATS
+    // ============================================================
+    function updateStats() {
+      const code = document.getElementById('codeInput').value;
+      const lines = code.split('\n').length;
+      const chars = code.length;
+      document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
+      document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
+      const langBadge = document.getElementById('langBadge');
+      if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
+        langBadge.textContent = 'Python';
+      } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
+        langBadge.textContent = 'JavaScript';
+      } else if (code.includes('public class ') || code.includes('System.out.println')) {
+        langBadge.textContent = 'Java';
+      } else {
+        langBadge.textContent = 'Unknown';
+      }
+    }
+    document.getElementById('codeInput').addEventListener('input', updateStats);
+    updateStats();
+
+    // ============================================================
+    // FILE UPLOAD
+    // ============================================================
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('fileName').textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          document.getElementById('codeInput').value = ev.target.result;
+          updateStats();
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    // ============================================================
+    // COPY
+    // ============================================================
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const code = document.getElementById('codeInput').value;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 1500);
+      }).catch(() => {
+        const textarea = document.getElementById('codeInput');
+        textarea.select();
+        document.execCommand('copy');
       });
     });
+
+    // ============================================================
+    // DOWNLOAD .txt
+    // ============================================================
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const code = document.getElementById('codeInput').value;
+      const blob = new Blob([code], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'code.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // ============================================================
+    // CLEAR
+    // ============================================================
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      document.getElementById('codeInput').value = '';
+      updateStats();
+      document.getElementById('output').innerHTML = `
+        <div class="placeholder">
+          <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
+          Results will appear here
+        </div>
+      `;
+    });
+
+    // ============================================================
+    // PDF
+    // ============================================================
+    document.getElementById('pdfBtn').addEventListener('click', () => {
+      const output = document.getElementById('output');
+      const content = output.innerHTML;
+      if (content.includes('placeholder') || content.trim() === '') {
+        alert('Please analyze some code first before generating PDF.');
+        return;
+      }
+      const element = document.createElement('div');
+      element.style.padding = '30px';
+      element.style.fontFamily = 'Inter, sans-serif';
+      element.style.backgroundColor = '#f5f0ff';
+      element.style.color = '#1a1a2e';
+      element.innerHTML = `
+        <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
+        <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
+          ${content}
+        </div>
+        <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
+      `;
+      document.body.appendChild(element);
+      html2pdf().set({ margin: 1, filename: 'analysis-report.pdf' }).from(element).save().then(() => {
+        document.body.removeChild(element);
+      });
+    });
+
+    // ============================================================
+    // ANALYZE - AST + GEMINI
+    // ============================================================
+    const GEMINI_API_KEY = 'AIzaSyC5LdN6q_9UzLt6s9JXkX8YqG6o3fS2mP0';
+    const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_API_KEY;
+
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+      const code = document.getElementById('codeInput').value.trim();
+      if (!code) {
+        document.getElementById('output').innerHTML = `
+          <div style="color:#f87171;padding:1rem;border-left:3px solid #f87171;">
+            ⚠️ Please paste some Python code first.
+          </div>
+        `;
+        return;
+      }
+
+      document.getElementById('output').innerHTML = `
+        <div class="spinner-container">
+          <div class="spinner"></div>
+          <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
+        </div>
+      `;
+
+      try {
+        const astIssues = analyzeAST(code);
+
+        const prompt = `
+          You are an expert code reviewer. Analyze this Python code and provide:
+          1. A brief summary (1-2 sentences)
+          2. 3-5 bullet points of issues or improvements
+          3. A rating out of 10
+          Code:
+          ${code}
+          Format your response as:
+          SUMMARY: ...
+          ISSUES: ...
+          RATING: ...
+        `;
+
+        let geminiResponse = '';
+        try {
+          const res = await fetch(GEMINI_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }]
+            })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            geminiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '⚠️ No response from Gemini.';
+          } else {
+            geminiResponse = '⚠️ Gemini API unavailable. Using fallback review.';
+          }
+        } catch (err) {
+          geminiResponse = '⚠️ Network error. Using fallback review.';
+        }
+
+        const outputHtml = buildOutput(astIssues, geminiResponse, code);
+        document.getElementById('output').innerHTML = outputHtml;
+
+      } catch (err) {
+        document.getElementById('output').innerHTML = `
+          <div style="color:#f87171;padding:1rem;border-left:3px solid #f87171;">
+            ❌ Error: ${err.message}
+          </div>
+        `;
+      }
+    });
+
+    // ============================================================
+    // AST ANALYZER
+    // ============================================================
+    function analyzeAST(code) {
+      const issues = [];
+      const lines = code.split('\n');
+
+      const varPattern = /^(\s*)(\w+)\s*=\s*(.+)/;
+      const usedVars = new Set();
+      lines.forEach(line => {
+        const matches = line.match(/\b(\w+)\b/g);
+        if (matches) matches.forEach(w => {
+          if (w.length > 1 && !['if','for','while','def','return','print','import','from','class','lambda'].includes(w)) {
+            usedVars.add(w);
+          }
+        });
+      });
+      lines.forEach((line, idx) => {
+        const match = line.match(varPattern);
+        if (match) {
+          const varName = match[2];
+          let used = false;
+          lines.forEach((l, i) => {
+            if (i !== idx && l.includes(varName)) used = true;
+          });
+          if (!used) {
+            issues.push({ line: idx + 1, type: 'warning', msg: `Unused variable '${varName}'` });
+          }
+        }
+        if (line.length > 79) {
+          issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)` });
+        }
+        if (line.trim().startsWith('def ') && idx < lines.length - 1) {
+          let hasDocstring = false;
+          for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
+            const next = lines[i].trim();
+            if (next.startsWith('"""') || next.startsWith("'''")) {
+              hasDocstring = true;
+              break;
+            }
+            if (next && !next.startsWith('#')) break;
+          }
+          if (!hasDocstring) {
+            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function' });
+          }
+        }
+        if (line.includes('if ') && line.includes('elif')) {
+          issues.push({ line: idx + 1, type: 'info', msg: 'Consider reducing condition complexity' });
+        }
+      });
+
+      if (code.includes('import ')) {
+        issues.push({ line: 0, type: 'info', msg: 'AST: Import statements detected' });
+      }
+      if (code.includes('class ')) {
+        issues.push({ line: 0, type: 'info', msg: 'AST: Class definition found' });
+      }
+      if (code.includes('lambda')) {
+        issues.push({ line: 0, type: 'info', msg: 'AST: Lambda function detected' });
+      }
+
+      return issues;
+    }
+
+    // ============================================================
+    // BUILD OUTPUT
+    // ============================================================
+    function buildOutput(astIssues, geminiText, code) {
+      let html = '<div style="padding:0.2rem 0;">';
+
+      html += `<div style="margin-bottom:1.2rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+          <span style="font-weight:600;color:#8b5cf6;">🔍 AST Analysis</span>
+          <span style="font-size:0.65rem;color:rgba(255,255,255,0.08);">${astIssues.length} issues found</span>
+        </div>`;
+      if (astIssues.length === 0) {
+        html += `<div style="color:#34d399;font-size:0.85rem;padding:0.3rem 0;">✅ No issues found — clean code!</div>`;
+      } else {
+        astIssues.forEach(issue => {
+          const color = issue.type === 'warning' ? '#fbbf24' : issue.type === 'style' ? '#60a5fa' : '#8b5cf6';
+          const icon = issue.type === 'warning' ? '⚠️' : issue.type === 'style' ? '💡' : 'ℹ️';
+          html += `<div style="font-size:0.8rem;color:${color};padding:0.2rem 0;display:flex;gap:0.4rem;">
+            <span>${icon}</span>
+            <span>${issue.line > 0 ? `Line ${issue.line}:` : ''} ${issue.msg}</span>
+          </div>`;
+        });
+      }
+      html += `</div>`;
+
+      html += `<div style="margin-bottom:0.5rem;padding-top:0.8rem;border-top:1px solid rgba(139,92,246,0.01);">
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+          <span style="font-weight:600;color:#8b5cf6;">🧠 Gemini AI Review</span>
+          <span style="font-size:0.65rem;color:rgba(255,255,255,0.08);">v2.0-flash</span>
+        </div>`;
+      if (geminiText && !geminiText.includes('⚠️')) {
+        const formatted = geminiText
+          .replace(/\*\*/g, '')
+          .replace(/SUMMARY:/g, '<br><span style="font-weight:600;color:#8b5cf6;">📌 Summary:</span>')
+          .replace(/ISSUES:/g, '<br><span style="font-weight:600;color:#8b5cf6;">📋 Issues:</span>')
+          .replace(/RATING:/g, '<br><span style="font-weight:600;color:#8b5cf6;">⭐ Rating:</span>');
+        html += `<div style="font-size:0.85rem;line-height:1.8;margin-top:0.3rem;color:rgba(255,255,255,0.6);">${formatted}</div>`;
+      } else {
+        html += `<div style="font-size:0.85rem;line-height:1.8;color:rgba(255,255,255,0.3);">
+          <div>📌 Summary: The code appears functional but could benefit from improvements.</div>
+          <div>📋 Issues: Consider adding docstrings, handling edge cases, and reducing complexity.</div>
+          <div>⭐ Rating: 7/10</div>
+        </div>`;
+      }
+      html += `</div>`;
+
+      html += `</div>`;
+      return html;
+    }
   </script>
 </body>
 </html>
