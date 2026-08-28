@@ -131,45 +131,34 @@
            COMPONENTS LAYER
            ============================================================ */
         @layer components {
-            /* ---- FLAME GRADIENT CURSOR ---- */
+            /* ============================================================
+               GREEN FLAME CURSOR
+               ============================================================ */
             #custom-cursor {
                 position: fixed;
                 pointer-events: none;
                 z-index: 99999;
-                width: 44px;
-                height: 44px;
+                width: 36px;
+                height: 36px;
                 border-radius: 50%;
-                background: radial-gradient(circle at 30% 30%, 
-                    #ff6b35 0%, 
-                    #f7931e 25%, 
-                    #ffd700 50%, 
-                    #ff6b6b 75%, 
-                    #8b5cf6 100%
+                background: radial-gradient(circle at 50% 50%, 
+                    oklch(85% 0.25 120 / 0.3) 0%,
+                    oklch(85% 0.25 120 / 0.1) 50%,
+                    transparent 100%
                 );
-                background-size: 200% 200%;
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);
-                border: 2px solid rgba(255, 215, 0, 0.3);
-                transition: width 0.3s var(--ease-spring),
-                    height 0.3s var(--ease-spring),
-                    border-color 0.3s var(--ease-out),
-                    background 0.1s ease;
+                backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(2px);
+                border: 1.5px solid oklch(85% 0.25 120 / 0.15);
                 transform: translate(-50%, -50%);
-                will-change: transform, background-position;
+                will-change: transform, width, height, box-shadow, border-color;
+                transition: width 0.4s var(--ease-spring),
+                    height 0.4s var(--ease-spring),
+                    box-shadow 0.4s var(--ease-out),
+                    border-color 0.4s var(--ease-out),
+                    background 0.4s var(--ease-out);
                 box-shadow: 
-                    0 0 30px rgba(255, 107, 53, 0.2),
-                    0 0 60px rgba(247, 147, 30, 0.1),
-                    inset 0 0 20px rgba(255, 215, 0, 0.1);
-                animation: cursorPulse 3s ease-in-out infinite;
-            }
-
-            @keyframes cursorPulse {
-                0%, 100% { 
-                    box-shadow: 0 0 30px rgba(255, 107, 53, 0.2), 0 0 60px rgba(247, 147, 30, 0.1);
-                }
-                50% { 
-                    box-shadow: 0 0 50px rgba(255, 107, 53, 0.3), 0 0 80px rgba(247, 147, 30, 0.15), 0 0 100px rgba(139, 92, 246, 0.1);
-                }
+                    0 0 20px oklch(85% 0.25 120 / 0.05),
+                    inset 0 0 15px oklch(85% 0.25 120 / 0.03);
             }
 
             #custom-cursor .cursor-dot {
@@ -177,102 +166,178 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 4px;
-                height: 4px;
+                width: 3px;
+                height: 3px;
                 border-radius: 50%;
-                background: #ffffff;
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-                transition: width 0.3s var(--ease-spring),
-                    height 0.3s var(--ease-spring),
-                    background 0.3s var(--ease-out);
+                background: oklch(85% 0.25 120);
+                box-shadow: 0 0 15px oklch(85% 0.25 120 / 0.3);
+                transition: width 0.4s var(--ease-spring),
+                    height 0.4s var(--ease-spring),
+                    box-shadow 0.4s var(--ease-out);
             }
 
+            /* ---- FLAME RING ---- */
             #custom-cursor .cursor-ring {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 50px;
                 border-radius: 50%;
-                border: 1px solid rgba(255, 215, 0, 0.1);
-                animation: ringPulse 2s ease-in-out infinite;
+                border: 1px solid oklch(85% 0.25 120 / 0.05);
                 pointer-events: none;
+                opacity: 0;
+                transition: all 0.5s var(--ease-out);
             }
 
-            @keyframes ringPulse {
-                0%, 100% { 
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 0.5;
-                }
-                50% { 
-                    transform: translate(-50%, -50%) scale(1.4);
-                    opacity: 0;
-                }
-            }
-
-            #custom-cursor .cursor-trail {
+            /* ---- FLAME PARTICLES (CSS-Only) ---- */
+            #custom-cursor .flame-particle {
                 position: absolute;
+                border-radius: 50%;
+                pointer-events: none;
+                opacity: 0;
+                transition: all 0.8s var(--ease-out);
+            }
+
+            #custom-cursor .flame-particle.p1 {
+                width: 8px;
+                height: 8px;
+                background: oklch(85% 0.25 120 / 0.3);
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                background: radial-gradient(circle, 
-                    rgba(255, 107, 53, 0.1) 0%, 
-                    rgba(247, 147, 30, 0.05) 50%, 
-                    transparent 70%
-                );
-                animation: trailPulse 3s ease-in-out infinite;
-                pointer-events: none;
             }
 
-            @keyframes trailPulse {
-                0%, 100% { 
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 0.3;
-                }
-                50% { 
-                    transform: translate(-50%, -50%) scale(1.5);
-                    opacity: 0.1;
-                }
+            #custom-cursor .flame-particle.p2 {
+                width: 12px;
+                height: 12px;
+                background: oklch(85% 0.25 120 / 0.15);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
 
+            #custom-cursor .flame-particle.p3 {
+                width: 6px;
+                height: 6px;
+                background: oklch(85% 0.25 120 / 0.4);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            /* ============================================================
+               HOVER STATE — GREEN FLAME ACTIVATES
+               ============================================================ */
             #custom-cursor.hover {
-                width: 64px;
-                height: 64px;
-                border-color: rgba(255, 215, 0, 0.6);
+                width: 60px;
+                height: 60px;
+                border-color: oklch(85% 0.25 120 / 0.35);
+                background: radial-gradient(circle at 50% 50%, 
+                    oklch(85% 0.25 120 / 0.4) 0%,
+                    oklch(85% 0.25 120 / 0.2) 30%,
+                    oklch(85% 0.25 120 / 0.08) 60%,
+                    transparent 100%
+                );
                 box-shadow: 
-                    0 0 50px rgba(255, 107, 53, 0.3),
-                    0 0 80px rgba(247, 147, 30, 0.2),
-                    0 0 120px rgba(139, 92, 246, 0.15),
-                    inset 0 0 30px rgba(255, 215, 0, 0.15);
+                    0 0 40px oklch(85% 0.25 120 / 0.2),
+                    0 0 80px oklch(85% 0.25 120 / 0.1),
+                    0 0 120px oklch(85% 0.25 120 / 0.05),
+                    inset 0 0 30px oklch(85% 0.25 120 / 0.1);
+                animation: flameGlow 1s ease-in-out infinite alternate;
+            }
+
+            @keyframes flameGlow {
+                0% {
+                    box-shadow: 0 0 40px oklch(85% 0.25 120 / 0.2), 0 0 80px oklch(85% 0.25 120 / 0.1), 0 0 120px oklch(85% 0.25 120 / 0.05);
+                }
+                100% {
+                    box-shadow: 0 0 60px oklch(85% 0.25 120 / 0.35), 0 0 100px oklch(85% 0.25 120 / 0.2), 0 0 150px oklch(85% 0.25 120 / 0.1);
+                }
             }
 
             #custom-cursor.hover .cursor-dot {
-                width: 6px;
-                height: 6px;
-                background: #ffffff;
-                box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+                width: 5px;
+                height: 5px;
+                background: oklch(95% 0.25 120);
+                box-shadow: 0 0 30px oklch(85% 0.25 120 / 0.5), 0 0 60px oklch(85% 0.25 120 / 0.2);
             }
 
             #custom-cursor.hover .cursor-ring {
-                border-color: rgba(255, 215, 0, 0.3);
-                animation-duration: 1s;
+                width: 80px;
+                height: 80px;
+                border-color: oklch(85% 0.25 120 / 0.2);
+                opacity: 1;
+                animation: ringFlame 1.2s ease-in-out infinite;
             }
 
-            #custom-cursor.hover .cursor-trail {
-                width: 120px;
-                height: 120px;
-                background: radial-gradient(circle, 
-                    rgba(255, 107, 53, 0.15) 0%, 
-                    rgba(247, 147, 30, 0.08) 50%, 
-                    transparent 70%
-                );
+            @keyframes ringFlame {
+                0%, 100% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0.3;
+                    border-color: oklch(85% 0.25 120 / 0.15);
+                }
+                50% {
+                    transform: translate(-50%, -50%) scale(1.6);
+                    opacity: 0;
+                    border-color: oklch(85% 0.25 120 / 0.3);
+                }
             }
 
-            /* ---- GLITCH TEXT ---- */
+            /* ---- Flame Particles Animation on Hover ---- */
+            #custom-cursor.hover .flame-particle.p1 {
+                animation: flameParticle1 1.2s ease-out infinite;
+            }
+
+            #custom-cursor.hover .flame-particle.p2 {
+                animation: flameParticle2 1.4s ease-out infinite 0.3s;
+            }
+
+            #custom-cursor.hover .flame-particle.p3 {
+                animation: flameParticle3 1s ease-out infinite 0.6s;
+            }
+
+            @keyframes flameParticle1 {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(calc(-50% + var(--tx1)), calc(-50% + var(--ty1))) scale(0);
+                }
+            }
+
+            @keyframes flameParticle2 {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(calc(-50% + var(--tx2)), calc(-50% + var(--ty2))) scale(0);
+                }
+            }
+
+            @keyframes flameParticle3 {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(calc(-50% + var(--tx3)), calc(-50% + var(--ty3))) scale(0);
+                }
+            }
+
+            #custom-cursor .flame-particle.p1 { --tx1: -30px; --ty1: -30px; }
+            #custom-cursor .flame-particle.p2 { --tx2: 35px; --ty2: -25px; }
+            #custom-cursor .flame-particle.p3 { --tx3: -20px; --ty3: 35px; }
+
+            /* ============================================================
+               GLITCH TEXT
+               ============================================================ */
             .glitch {
                 position: relative;
                 display: inline-block;
@@ -1680,10 +1745,12 @@
 <body>
 
     <!-- ============================================================
-       FLAME GRADIENT CURSOR
+       GREEN FLAME CURSOR
        ============================================================ -->
     <div id="custom-cursor">
-        <div class="cursor-trail"></div>
+        <div class="flame-particle p1"></div>
+        <div class="flame-particle p2"></div>
+        <div class="flame-particle p3"></div>
         <div class="cursor-ring"></div>
         <div class="cursor-dot"></div>
     </div>
@@ -1945,33 +2012,17 @@
        ============================================================ -->
     <script>
         // ============================================================
-        // FLAME GRADIENT CURSOR - ANIMATED BACKGROUND POSITION
+        // GREEN FLAME CURSOR
         // ============================================================
         const cursor = document.getElementById('custom-cursor');
         let cursorX = 0,
             cursorY = 0;
         let targetX = 0,
             targetY = 0;
-        let angle = 0;
 
         document.addEventListener('mousemove', (e) => {
             targetX = e.clientX;
             targetY = e.clientY;
-
-            // Update gradient position based on mouse movement
-            const xPercent = (e.clientX / window.innerWidth) * 100;
-            const yPercent = (e.clientY / window.innerHeight) * 100;
-            cursor.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
-
-            // Rotate gradient based on movement
-            angle += 2;
-            cursor.style.background = `radial-gradient(circle at ${xPercent}% ${yPercent}%, 
-                #ff6b35 0%, 
-                #f7931e 25%, 
-                #ffd700 50%, 
-                #ff6b6b 75%, 
-                #8b5cf6 100%
-            )`;
         });
 
         function animateCursor() {
@@ -1983,7 +2034,7 @@
         }
         animateCursor();
 
-        // Hover effect
+        // Hover — activates green flame
         document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .file-upload-label, .toolbar button, .analyze-btn, .nav a, .stack-card, .about-feature, .debugger-back-btn').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
