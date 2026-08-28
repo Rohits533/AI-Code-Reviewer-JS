@@ -42,8 +42,8 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.02);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.01);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
@@ -52,7 +52,7 @@
                   border-color 0.3s ease;
       transform: translate(-50%, -50%);
       will-change: transform;
-      box-shadow: 0 0 60px rgba(139, 92, 246, 0.05);
+      box-shadow: 0 0 60px rgba(139, 92, 246, 0.02);
     }
     #custom-cursor .cursor-dot {
       position: absolute;
@@ -62,20 +62,20 @@
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.2);
       transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
     }
     #custom-cursor.hover {
       width: 64px;
       height: 64px;
-      background: rgba(139, 92, 246, 0.04);
-      border-color: rgba(139, 92, 246, 0.2);
-      box-shadow: 0 0 80px rgba(139, 92, 246, 0.08);
+      background: rgba(139, 92, 246, 0.03);
+      border-color: rgba(139, 92, 246, 0.15);
+      box-shadow: 0 0 80px rgba(139, 92, 246, 0.05);
     }
     #custom-cursor.hover .cursor-dot {
       width: 6px;
       height: 6px;
-      background: rgba(139, 92, 246, 0.4);
+      background: rgba(139, 92, 246, 0.3);
     }
 
     /* ============================================================
@@ -90,9 +90,8 @@
       z-index: 0;
       pointer-events: none;
       background: 
-        radial-gradient(ellipse at 70% 30%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.02) 0%, transparent 70%);
+        radial-gradient(ellipse at 70% 30%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
     }
 
     /* ============================================================
@@ -105,14 +104,14 @@
       transform: translateY(-50%);
       z-index: 0;
       pointer-events: none;
-      opacity: 0.03;
+      opacity: 0.02;
     }
     .rotating-logo-container .logo-text {
       font-size: 30rem;
       font-weight: 900;
       color: #8b5cf6;
       animation: rotateLogo 40s linear infinite;
-      text-shadow: 0 0 100px rgba(139, 92, 246, 0.1);
+      text-shadow: 0 0 100px rgba(139, 92, 246, 0.05);
       user-select: none;
       letter-spacing: -20px;
     }
@@ -140,7 +139,7 @@
       height: 500px;
       top: -10%;
       right: -10%;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent 70%);
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.05), transparent 70%);
       animation-delay: 0s;
     }
     .orb-2 {
@@ -148,37 +147,13 @@
       height: 400px;
       bottom: -10%;
       left: -10%;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.06), transparent 70%);
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.04), transparent 70%);
       animation-delay: -7s;
     }
-    .orb-3 {
-      width: 300px;
-      height: 300px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(236, 72, 153, 0.04), transparent 70%);
-      animation-delay: -14s;
-    }
     @keyframes orbFloat {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-      50% { transform: translate(60px, -80px) scale(1.2); opacity: 0.6; }
-      100% { transform: translate(-40px, 40px) scale(0.9); opacity: 0.3; }
-    }
-
-    /* ============================================================
-       GLASS EFFECTS
-       ============================================================ */
-    .glass-premium {
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(40px) saturate(1.8);
-      -webkit-backdrop-filter: blur(40px) saturate(1.8);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
-    }
-    .glass-premium:hover {
-      border-color: rgba(139, 92, 246, 0.06);
-      box-shadow: 0 8px 80px rgba(139, 92, 246, 0.04);
+      0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+      50% { transform: translate(60px, -80px) scale(1.2); opacity: 0.4; }
+      100% { transform: translate(-40px, 40px) scale(0.9); opacity: 0.2; }
     }
 
     /* ============================================================
@@ -194,23 +169,22 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: rgba(10, 10, 15, 0.2);
-      backdrop-filter: blur(40px) saturate(1.6);
-      -webkit-backdrop-filter: blur(40px) saturate(1.6);
+      background: rgba(10, 10, 15, 0.15);
+      backdrop-filter: blur(40px) saturate(1.4);
+      -webkit-backdrop-filter: blur(40px) saturate(1.4);
       border-bottom: 1px solid rgba(255, 255, 255, 0.02);
       flex-wrap: wrap;
       gap: 1rem;
       transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     }
     .header.scrolled {
-      background: rgba(10, 10, 15, 0.5);
-      border-bottom: 1px solid rgba(139, 92, 246, 0.04);
-      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.2);
+      background: rgba(10, 10, 15, 0.4);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.03);
+      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
     }
 
     .logo {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: #ffffff;
       letter-spacing: -0.5px;
@@ -232,7 +206,7 @@
       background: #8b5cf6;
       display: inline-block;
       animation: pulseDot 2s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
     }
     @keyframes pulseDot {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -246,12 +220,12 @@
       flex-wrap: wrap;
     }
     .nav a {
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.2);
       text-decoration: none;
       font-size: 0.75rem;
       transition: 0.4s;
       letter-spacing: 0.5px;
-      font-weight: 500;
+      font-weight: 400;
       position: relative;
       text-transform: uppercase;
       cursor: pointer;
@@ -275,13 +249,13 @@
     }
 
     .nav .btn-cta {
-      padding: 0.4rem 1.4rem;
+      padding: 0.35rem 1.2rem;
       border-radius: 40px;
-      background: rgba(139, 92, 246, 0.02);
-      border: 1px solid rgba(139, 92, 246, 0.04);
-      color: rgba(255, 255, 255, 0.4);
-      font-weight: 500;
-      font-size: 0.75rem;
+      background: rgba(139, 92, 246, 0.04);
+      border: 1px solid rgba(139, 92, 246, 0.06);
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: 400;
+      font-size: 0.7rem;
       transition: 0.4s;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -289,15 +263,15 @@
       cursor: pointer;
     }
     .nav .btn-cta:hover {
-      background: rgba(139, 92, 246, 0.04);
-      border-color: rgba(139, 92, 246, 0.08);
+      background: rgba(139, 92, 246, 0.06);
+      border-color: rgba(139, 92, 246, 0.1);
       color: #ffffff;
       transform: scale(1.05);
     }
 
     .search-icon {
-      color: rgba(255, 255, 255, 0.2);
-      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.85rem;
       transition: 0.3s;
       cursor: pointer;
     }
@@ -306,7 +280,23 @@
     }
 
     /* ============================================================
-       HERO
+       SCROLL PROGRESS
+       ============================================================ */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 1.5px;
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+      background-size: 200% 100%;
+      z-index: 999;
+      width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+
+    /* ============================================================
+       HERO - CLEAN & MINIMAL
        ============================================================ */
     .hero {
       min-height: 100vh;
@@ -319,79 +309,55 @@
     }
 
     .hero-content {
-      max-width: 1200px;
+      max-width: 1000px;
       width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: center;
       opacity: 0;
-      transform: translateY(40px);
-      animation: heroIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+      transform: translateY(30px);
+      animation: heroIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
     }
     @keyframes heroIn {
-      0% { opacity: 0; transform: translateY(40px); }
+      0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
     .hero-text {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.2rem;
     }
 
     .hero-badge {
       display: inline-block;
-      background: rgba(139, 92, 246, 0.03);
-      border: 1px solid rgba(139, 92, 246, 0.04);
-      color: rgba(255, 255, 255, 0.2);
-      font-size: 0.7rem;
+      color: rgba(139, 92, 246, 0.4);
+      font-size: 0.65rem;
       font-weight: 500;
-      padding: 0.3rem 1rem;
-      border-radius: 40px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       width: fit-content;
-      backdrop-filter: blur(8px);
-      animation: pulseBadge 3s ease-in-out infinite;
-    }
-    @keyframes pulseBadge {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
     }
 
     .hero h1 {
-      font-size: 4.5rem;
+      font-size: 3.8rem;
       font-weight: 800;
       line-height: 1.05;
-      letter-spacing: -3px;
+      letter-spacing: -2px;
       color: #ffffff;
-      max-width: 600px;
     }
     .hero h1 .highlight {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa, #ec4899);
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: textShimmer 6s ease-in-out infinite;
-    }
-    @keyframes textShimmer {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    .hero h1 .highlight-light {
-      background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .hero p {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.3);
-      max-width: 480px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.25);
+      max-width: 440px;
       line-height: 1.8;
       font-weight: 300;
     }
@@ -400,16 +366,16 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-top: 0.5rem;
+      margin-top: 0.3rem;
     }
 
     .btn-primary {
       background: rgba(139, 92, 246, 0.04);
-      border: 1px solid rgba(139, 92, 246, 0.08);
-      padding: 0.7rem 2.2rem;
+      border: 1px solid rgba(139, 92, 246, 0.06);
+      padding: 0.6rem 2rem;
       border-radius: 60px;
-      font-weight: 500;
-      font-size: 0.85rem;
+      font-weight: 400;
+      font-size: 0.8rem;
       color: #ffffff;
       transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
       backdrop-filter: blur(8px);
@@ -420,33 +386,32 @@
     }
     .btn-primary:hover {
       background: rgba(139, 92, 246, 0.06);
-      border-color: rgba(139, 92, 246, 0.12);
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 4px 40px rgba(139, 92, 246, 0.04);
+      border-color: rgba(139, 92, 246, 0.1);
+      transform: scale(1.03) translateY(-2px);
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      padding: 0.7rem 2.2rem;
-      border-radius: 60px;
-      font-weight: 500;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.3);
+      background: transparent;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.2);
       transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      backdrop-filter: blur(8px);
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       cursor: pointer;
     }
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.02);
-      border-color: rgba(255, 255, 255, 0.04);
       color: #ffffff;
-      transform: scale(1.05) translateY(-2px);
+      transform: scale(1.03);
+    }
+    .btn-secondary i {
+      color: rgba(139, 92, 246, 0.3);
     }
 
+    /* Hero Visual */
     .hero-visual {
       display: flex;
       align-items: center;
@@ -455,20 +420,19 @@
 
     .hero-card {
       width: 100%;
-      max-width: 500px;
-      aspect-ratio: 1.2;
-      border-radius: 30px;
+      max-width: 450px;
+      aspect-ratio: 1.1;
+      border-radius: 24px;
       background: rgba(255, 255, 255, 0.01);
-      backdrop-filter: blur(60px) saturate(2);
-      -webkit-backdrop-filter: blur(60px) saturate(2);
+      backdrop-filter: blur(40px) saturate(1.4);
+      -webkit-backdrop-filter: blur(40px) saturate(1.4);
       border: 1px solid rgba(255, 255, 255, 0.02);
-      box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
       padding: 2rem;
+      position: relative;
     }
     .hero-card::before {
       content: '';
@@ -488,86 +452,41 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.2rem;
       width: 100%;
     }
 
     .hero-card-inner .ai-icon {
-      font-size: 3.5rem;
-      color: rgba(139, 92, 246, 0.15);
+      font-size: 3rem;
+      color: rgba(139, 92, 246, 0.08);
       animation: floatIcon 6s ease-in-out infinite;
     }
     @keyframes floatIcon {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-10px); }
     }
 
     .hero-card-inner .code-preview {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.05);
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.04);
       text-align: left;
       line-height: 2.2;
-      background: rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
-      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.08);
+      padding: 1.2rem;
+      border-radius: 14px;
       width: 100%;
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.01);
     }
     .hero-card-inner .code-preview .keyword {
-      color: rgba(139, 92, 246, 0.3);
-    }
-    .hero-card-inner .code-preview .function {
       color: rgba(139, 92, 246, 0.2);
     }
+    .hero-card-inner .code-preview .function {
+      color: rgba(139, 92, 246, 0.12);
+    }
     .hero-card-inner .code-preview .string {
-      color: rgba(139, 92, 246, 0.15);
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 2.5rem;
-      margin-top: 0.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.02);
-    }
-    .hero-stats .stat {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-    }
-    .hero-stats .stat .number {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .hero-stats .stat .label {
-      font-size: 0.6rem;
-      color: rgba(255, 255, 255, 0.1);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* ============================================================
-       SCROLL PROGRESS
-       ============================================================ */
-    #scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #8b5cf6, #a78bfa, #8b5cf6);
-      background-size: 200% 100%;
-      z-index: 999;
-      width: 0%;
-      transition: width 0.1s linear;
-      animation: shimmerProgress 3s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-    }
-    @keyframes shimmerProgress {
-      0%, 100% { background-position: 0% 0%; }
-      50% { background-position: 200% 0%; }
+      color: rgba(139, 92, 246, 0.08);
     }
 
     /* ============================================================
@@ -872,32 +791,30 @@
       bottom: 2rem;
       right: 2rem;
       z-index: 99;
-      width: 56px;
-      height: 56px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      border: none;
-      color: white;
-      font-size: 1.4rem;
-      box-shadow: 0 4px 30px rgba(139, 92, 246, 0.3);
+      background: rgba(139, 92, 246, 0.04);
+      border: 1px solid rgba(139, 92, 246, 0.06);
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1.2rem;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: fabPulse 2s ease-in-out infinite;
       cursor: pointer;
+      backdrop-filter: blur(8px);
     }
     .fab:hover {
-      transform: scale(1.1) rotate(90deg);
-      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.4);
-    }
-    @keyframes fabPulse {
-      0%, 100% { box-shadow: 0 4px 30px rgba(139,92,246,0.3); }
-      50% { box-shadow: 0 4px 60px rgba(139,92,246,0.5); }
+      background: rgba(139, 92, 246, 0.06);
+      border-color: rgba(139, 92, 246, 0.1);
+      transform: scale(1.05) rotate(90deg);
+      color: #ffffff;
     }
 
     /* ============================================================
-       OUTPUT STYLES - DETAILED
+       OUTPUT STYLES
        ============================================================ */
     .output-section {
       margin-bottom: 1.5rem;
@@ -1011,7 +928,6 @@
       font-size: 0.7rem;
     }
 
-    /* Corrected Code Section */
     .corrected-code {
       background: rgba(0, 0, 0, 0.15);
       border-radius: 12px;
@@ -1025,18 +941,6 @@
       max-height: 300px;
       overflow-y: auto;
     }
-    .corrected-code .diff-add {
-      color: #34d399;
-      background: rgba(52, 211, 153, 0.05);
-    }
-    .corrected-code .diff-remove {
-      color: #f87171;
-      background: rgba(248, 113, 113, 0.05);
-    }
-    .corrected-code .line-num {
-      color: rgba(255,255,255,0.05);
-      user-select: none;
-    }
 
     /* ============================================================
        RESPONSIVE
@@ -1048,7 +952,7 @@
         text-align: center;
       }
       .hero h1 {
-        font-size: 3.5rem;
+        font-size: 3rem;
         max-width: 100%;
       }
       .hero p {
@@ -1058,9 +962,6 @@
         margin: 0 auto;
       }
       .hero-buttons {
-        justify-content: center;
-      }
-      .hero-stats {
         justify-content: center;
       }
       .hero-card {
@@ -1082,27 +983,21 @@
         gap: 1rem;
       }
       .nav a {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
       }
       .hero h1 {
-        font-size: 2.8rem;
-        letter-spacing: -2px;
+        font-size: 2.4rem;
+        letter-spacing: -1px;
       }
       .hero-content {
         padding: 0 0.5rem;
       }
       .hero-card {
-        min-height: 300px;
+        min-height: 280px;
       }
       .hero-card-inner .code-preview {
-        font-size: 0.6rem;
-        padding: 1rem;
-      }
-      .hero-stats {
-        gap: 1.5rem;
-      }
-      .hero-stats .stat .number {
-        font-size: 1rem;
+        font-size: 0.55rem;
+        padding: 0.8rem;
       }
       #debugger-interface {
         padding: 7rem 1rem 1rem;
@@ -1129,21 +1024,21 @@
 
     @media (max-width: 480px) {
       .hero h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
       .nav {
         gap: 0.6rem;
       }
       .nav a {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
         letter-spacing: 0px;
       }
       .btn-primary, .btn-secondary {
-        padding: 0.5rem 1.5rem;
-        font-size: 0.75rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.7rem;
       }
       .hero-card {
-        min-height: 250px;
+        min-height: 220px;
       }
       .debugger-title {
         font-size: 1.5rem;
@@ -1154,7 +1049,7 @@
         min-height: 150px;
       }
       .corrected-code {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         padding: 0.8rem;
       }
     }
@@ -1181,7 +1076,6 @@
        ============================================================ -->
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
 
   <!-- ============================================================
        BACKGROUND
@@ -1209,7 +1103,7 @@
   </header>
 
   <!-- ============================================================
-       HERO
+       HERO - CLEAN & MINIMAL
        ============================================================ -->
   <section class="hero" id="home">
     <div class="hero-content">
@@ -1217,40 +1111,30 @@
         <span class="hero-badge">✦ AI Powered</span>
         <h1>
           AI <span class="highlight">Code</span><br />
-          <span class="highlight-light">Debugger</span>
+          Debugger
         </h1>
         <p>
-          A powerful AI-driven code analysis tool that helps you debug, optimize, 
-          and understand your Python code using AST parsing and Gemini AI intelligence.
+          Intelligent code analysis with AST parsing and Gemini AI.
+          Paste your Python code and get detailed insights instantly.
         </p>
         <div class="hero-buttons">
           <button class="btn-primary" id="discoverBtn">
-            <i class="fas fa-arrow-right"></i> Discover
+            <i class="fas fa-arrow-right"></i> Launch Debugger
           </button>
           <button class="btn-secondary" id="watchBtn">
-            <i class="fas fa-play-circle"></i> Watch video
+            <i class="fas fa-play-circle"></i> Watch demo
           </button>
-        </div>
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="number">18+</span>
-            <span class="label">Projects</span>
-          </div>
-          <div class="stat">
-            <span class="number">×</span>
-            <span class="label">300</span>
-          </div>
         </div>
       </div>
       <div class="hero-visual">
         <div class="hero-card">
           <div class="hero-card-inner">
             <div class="ai-icon">
-              <i class="fas fa-brain"></i>
+              <i class="fas fa-code"></i>
             </div>
             <div class="code-preview">
-              <span class="keyword">def</span> <span class="function">analyze_ai</span>():<br />
-              &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"intelligence"</span>
+              <span class="keyword">def</span> <span class="function">analyze</span>():<br />
+              &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"clean code"</span>
             </div>
           </div>
         </div>
@@ -1263,7 +1147,7 @@
        ============================================================ -->
   <section id="debugger-interface">
     <div class="debugger-container">
-      <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Home</button>
+      <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
       <h2 class="debugger-title">⚡ <span>AI Code Debugger</span></h2>
       <p class="debugger-sub">Paste your Python code and get detailed AST analysis + AI review with corrected code.</p>
 
@@ -1793,7 +1677,6 @@ print(fibonacci(10))</textarea>
       let corrected = code;
       const lines = code.split('\n');
       
-      // Fix missing docstrings for functions
       const newLines = [];
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
@@ -1818,7 +1701,6 @@ print(fibonacci(10))</textarea>
           }
         }
         
-        // Fix bare except
         if (line.trim().match(/^except\s*:/)) {
           newLines[newLines.length - 1] = line.replace('except:', 'except Exception as e:');
           newLines.push(`    print(f"Error: {e}")  # Log the error properly`);
@@ -1835,7 +1717,7 @@ print(fibonacci(10))</textarea>
     function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode) {
       let html = '';
       
-      // ====== AST ANALYSIS SECTION ======
+      // AST ANALYSIS
       html += `<div class="output-section">`;
       html += `<div class="output-section-title">
         <i class="fas fa-code"></i> AST Analysis 
@@ -1846,19 +1728,15 @@ print(fibonacci(10))</textarea>
         <span class="badge" style="color:#ef4444;">${astResult.criticalCount} critical</span>
       </div>`;
       
-      // Stats grid
-      html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:0.5rem;margin-bottom:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
+      html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:0.5rem;margin-bottom:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.totalLines}</span> lines</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.functions}</span> functions</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.classes}</span> classes</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.imports}</span> imports</div>`;
       html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.comments}</span> comments</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.blankLines}</span> blank lines</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.conditionals}</span> conditionals</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.prints}</span> prints</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.blankLines}</span> blank</div>`;
       html += `</div>`;
       
-      // Issues list
       if (astResult.issues.length === 0) {
         html += `<div class="output-issue success">
           <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
@@ -1883,7 +1761,7 @@ print(fibonacci(10))</textarea>
       }
       html += `</div>`;
       
-      // ====== GEMINI AI REVIEW ======
+      // GEMINI AI REVIEW
       html += `<div class="output-section">`;
       html += `<div class="output-section-title">
         <i class="fas fa-brain"></i> Gemini AI Review 
@@ -1930,8 +1808,7 @@ print(fibonacci(10))</textarea>
           </div>`;
         }
         
-        // Score grid
-        html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.5rem;margin-top:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
+        html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.5rem;margin-top:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
         
         const scores = [
           { label: 'Readability', match: readabilityMatch },
@@ -1974,9 +1851,6 @@ print(fibonacci(10))</textarea>
           </div>`;
         }
       } else {
-        html += `<div style="color:rgba(255,255,255,0.3);font-size:0.8rem;padding:0.5rem 0;">
-          <i class="fas fa-spinner fa-spin"></i> AI review generated with fallback intelligence.
-        </div>`;
         const fallbackRating = astResult.criticalCount > 0 ? 4 : 
                               astResult.errorCount > 0 ? 5 : 
                               astResult.warningCount > 0 ? 7 : 9;
@@ -2000,7 +1874,7 @@ print(fibonacci(10))</textarea>
       }
       html += `</div>`;
       
-      // ====== CORRECTED CODE ======
+      // CORRECTED CODE
       if (correctedCode !== originalCode) {
         html += `<div class="output-section">`;
         html += `<div class="output-section-title">
@@ -2009,7 +1883,7 @@ print(fibonacci(10))</textarea>
         </div>`;
         html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
         html += `<div style="margin-top:0.5rem;font-size:0.65rem;color:rgba(255,255,255,0.1);">
-          <i class="fas fa-info-circle"></i> Changes made: Added docstrings, fixed bare except, improved code style
+          <i class="fas fa-info-circle"></i> Changes: Added docstrings, fixed bare except, improved code style
         </div>`;
         html += `</div>`;
       }
