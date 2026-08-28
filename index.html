@@ -131,24 +131,45 @@
            COMPONENTS LAYER
            ============================================================ */
         @layer components {
+            /* ---- FLAME GRADIENT CURSOR ---- */
             #custom-cursor {
                 position: fixed;
                 pointer-events: none;
                 z-index: 99999;
-                width: 40px;
-                height: 40px;
+                width: 44px;
+                height: 44px;
                 border-radius: 50%;
-                border: 1.5px solid var(--color-edge);
-                background: oklch(100% 0 0 / 0.02);
-                backdrop-filter: blur(var(--blur-sm));
-                -webkit-backdrop-filter: blur(var(--blur-sm));
+                background: radial-gradient(circle at 30% 30%, 
+                    #ff6b35 0%, 
+                    #f7931e 25%, 
+                    #ffd700 50%, 
+                    #ff6b6b 75%, 
+                    #8b5cf6 100%
+                );
+                background-size: 200% 200%;
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                border: 2px solid rgba(255, 215, 0, 0.3);
                 transition: width 0.3s var(--ease-spring),
                     height 0.3s var(--ease-spring),
-                    background 0.3s var(--ease-out),
-                    border-color 0.3s var(--ease-out);
+                    border-color 0.3s var(--ease-out),
+                    background 0.1s ease;
                 transform: translate(-50%, -50%);
-                will-change: transform;
-                box-shadow: 0 0 60px oklch(60% 0.2 280 / 0.05);
+                will-change: transform, background-position;
+                box-shadow: 
+                    0 0 30px rgba(255, 107, 53, 0.2),
+                    0 0 60px rgba(247, 147, 30, 0.1),
+                    inset 0 0 20px rgba(255, 215, 0, 0.1);
+                animation: cursorPulse 3s ease-in-out infinite;
+            }
+
+            @keyframes cursorPulse {
+                0%, 100% { 
+                    box-shadow: 0 0 30px rgba(255, 107, 53, 0.2), 0 0 60px rgba(247, 147, 30, 0.1);
+                }
+                50% { 
+                    box-shadow: 0 0 50px rgba(255, 107, 53, 0.3), 0 0 80px rgba(247, 147, 30, 0.15), 0 0 100px rgba(139, 92, 246, 0.1);
+                }
             }
 
             #custom-cursor .cursor-dot {
@@ -159,28 +180,99 @@
                 width: 4px;
                 height: 4px;
                 border-radius: 50%;
-                background: var(--color-accent);
+                background: #ffffff;
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
                 transition: width 0.3s var(--ease-spring),
                     height 0.3s var(--ease-spring),
                     background 0.3s var(--ease-out);
-                box-shadow: 0 0 30px oklch(85% 0.25 120 / 0.2);
+            }
+
+            #custom-cursor .cursor-ring {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                border: 1px solid rgba(255, 215, 0, 0.1);
+                animation: ringPulse 2s ease-in-out infinite;
+                pointer-events: none;
+            }
+
+            @keyframes ringPulse {
+                0%, 100% { 
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0.5;
+                }
+                50% { 
+                    transform: translate(-50%, -50%) scale(1.4);
+                    opacity: 0;
+                }
+            }
+
+            #custom-cursor .cursor-trail {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background: radial-gradient(circle, 
+                    rgba(255, 107, 53, 0.1) 0%, 
+                    rgba(247, 147, 30, 0.05) 50%, 
+                    transparent 70%
+                );
+                animation: trailPulse 3s ease-in-out infinite;
+                pointer-events: none;
+            }
+
+            @keyframes trailPulse {
+                0%, 100% { 
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0.3;
+                }
+                50% { 
+                    transform: translate(-50%, -50%) scale(1.5);
+                    opacity: 0.1;
+                }
             }
 
             #custom-cursor.hover {
                 width: 64px;
                 height: 64px;
-                background: oklch(60% 0.2 280 / 0.06);
-                border-color: oklch(60% 0.2 280 / 0.3);
-                box-shadow: 0 0 80px oklch(60% 0.2 280 / 0.08);
+                border-color: rgba(255, 215, 0, 0.6);
+                box-shadow: 
+                    0 0 50px rgba(255, 107, 53, 0.3),
+                    0 0 80px rgba(247, 147, 30, 0.2),
+                    0 0 120px rgba(139, 92, 246, 0.15),
+                    inset 0 0 30px rgba(255, 215, 0, 0.15);
             }
 
             #custom-cursor.hover .cursor-dot {
-                width: 8px;
-                height: 8px;
-                background: var(--color-purple);
-                box-shadow: 0 0 40px oklch(60% 0.2 280 / 0.4);
+                width: 6px;
+                height: 6px;
+                background: #ffffff;
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
             }
 
+            #custom-cursor.hover .cursor-ring {
+                border-color: rgba(255, 215, 0, 0.3);
+                animation-duration: 1s;
+            }
+
+            #custom-cursor.hover .cursor-trail {
+                width: 120px;
+                height: 120px;
+                background: radial-gradient(circle, 
+                    rgba(255, 107, 53, 0.15) 0%, 
+                    rgba(247, 147, 30, 0.08) 50%, 
+                    transparent 70%
+                );
+            }
+
+            /* ---- GLITCH TEXT ---- */
             .glitch {
                 position: relative;
                 display: inline-block;
@@ -188,24 +280,12 @@
             }
 
             @keyframes glitch {
-                0% {
-                    transform: translate(0);
-                }
-                20% {
-                    transform: translate(-2px, 2px);
-                }
-                40% {
-                    transform: translate(-2px, -2px);
-                }
-                60% {
-                    transform: translate(2px, 2px);
-                }
-                80% {
-                    transform: translate(2px, -2px);
-                }
-                100% {
-                    transform: translate(0);
-                }
+                0% { transform: translate(0); }
+                20% { transform: translate(-2px, 2px); }
+                40% { transform: translate(-2px, -2px); }
+                60% { transform: translate(2px, 2px); }
+                80% { transform: translate(2px, -2px); }
+                100% { transform: translate(0); }
             }
 
             .glitch::before,
@@ -234,47 +314,24 @@
             }
 
             @keyframes glitchBefore {
-                0% {
-                    transform: translate(0);
-                }
-                20% {
-                    transform: translate(-4px, 3px);
-                }
-                40% {
-                    transform: translate(3px, -4px);
-                }
-                60% {
-                    transform: translate(-3px, 2px);
-                }
-                80% {
-                    transform: translate(4px, -2px);
-                }
-                100% {
-                    transform: translate(0);
-                }
+                0% { transform: translate(0); }
+                20% { transform: translate(-4px, 3px); }
+                40% { transform: translate(3px, -4px); }
+                60% { transform: translate(-3px, 2px); }
+                80% { transform: translate(4px, -2px); }
+                100% { transform: translate(0); }
             }
 
             @keyframes glitchAfter {
-                0% {
-                    transform: translate(0);
-                }
-                20% {
-                    transform: translate(4px, -3px);
-                }
-                40% {
-                    transform: translate(-3px, 4px);
-                }
-                60% {
-                    transform: translate(3px, -2px);
-                }
-                80% {
-                    transform: translate(-4px, 2px);
-                }
-                100% {
-                    transform: translate(0);
-                }
+                0% { transform: translate(0); }
+                20% { transform: translate(4px, -3px); }
+                40% { transform: translate(-3px, 4px); }
+                60% { transform: translate(3px, -2px); }
+                80% { transform: translate(-4px, 2px); }
+                100% { transform: translate(0); }
             }
 
+            /* ---- BUTTONS ---- */
             .btn-primary {
                 padding: 0.7rem 2.2rem;
                 border-radius: 60px;
@@ -331,6 +388,7 @@
                 border-color: var(--color-edge);
             }
 
+            /* ---- GLASS CARD ---- */
             .glass {
                 background: oklch(100% 0 0 / 0.02);
                 backdrop-filter: blur(var(--blur-2xl)) saturate(1.4);
@@ -361,6 +419,7 @@
                 pointer-events: none;
             }
 
+            /* ---- TAG ---- */
             .tag {
                 background: oklch(60% 0.2 280 / 0.04);
                 border: 1px solid oklch(60% 0.2 280 / 0.06);
@@ -612,7 +671,7 @@
                 backdrop-filter: blur(var(--blur-2xl));
             }
 
-            /* ---- Scroll Animations ---- */
+            /* ---- SCROLL ANIMATIONS ---- */
             .reveal {
                 opacity: 0;
                 transform: translateY(40px);
@@ -657,17 +716,6 @@
                 transform: translateX(0);
             }
 
-            .reveal-rotate {
-                opacity: 0;
-                transform: rotate(-5deg) scale(0.95);
-                transition: all 1.2s var(--ease-spring);
-            }
-
-            .reveal-rotate.active {
-                opacity: 1;
-                transform: rotate(0deg) scale(1);
-            }
-
             .stagger-1 {
                 transition-delay: 0.1s;
             }
@@ -685,30 +733,17 @@
             }
 
             @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
             }
 
             @keyframes spin {
-                to {
-                    transform: rotate(360deg);
-                }
+                to { transform: rotate(360deg); }
             }
 
             @keyframes pulse {
-                0%,
-                100% {
-                    opacity: 1;
-                }
-                50% {
-                    opacity: 0.5;
-                }
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
             }
 
             .animate-fade-in-up {
@@ -721,28 +756,18 @@
                 animation: spin 0.8s linear infinite;
             }
 
-            .delay-100 {
-                animation-delay: 0.1s;
-            }
-            .delay-200 {
-                animation-delay: 0.2s;
-            }
-            .delay-300 {
-                animation-delay: 0.3s;
-            }
-            .delay-400 {
-                animation-delay: 0.4s;
-            }
-            .delay-500 {
-                animation-delay: 0.5s;
-            }
+            .delay-100 { animation-delay: 0.1s; }
+            .delay-200 { animation-delay: 0.2s; }
+            .delay-300 { animation-delay: 0.3s; }
+            .delay-400 { animation-delay: 0.4s; }
+            .delay-500 { animation-delay: 0.5s; }
         }
 
         /* ============================================================
            SPECIFIC LAYER
            ============================================================ */
         @layer specific {
-            /* ---- Entry Overlay ---- */
+            /* ---- ENTRY OVERLAY ---- */
             .entry-overlay {
                 position: fixed;
                 inset: 0;
@@ -757,16 +782,8 @@
             }
 
             @keyframes entryFadeOut {
-                0% {
-                    opacity: 1;
-                    visibility: visible;
-                    backdrop-filter: blur(0px);
-                }
-                100% {
-                    opacity: 0;
-                    visibility: hidden;
-                    backdrop-filter: blur(30px);
-                }
+                0% { opacity: 1; visibility: visible; backdrop-filter: blur(0px); }
+                100% { opacity: 0; visibility: hidden; backdrop-filter: blur(30px); }
             }
 
             .entry-loader {
@@ -811,15 +828,11 @@
             }
 
             @keyframes loadingProgress {
-                0% {
-                    left: -100%;
-                }
-                100% {
-                    left: 100%;
-                }
+                0% { left: -100%; }
+                100% { left: 100%; }
             }
 
-            /* ---- Scroll Progress ---- */
+            /* ---- SCROLL PROGRESS ---- */
             #scroll-progress {
                 position: fixed;
                 top: 0;
@@ -835,16 +848,11 @@
             }
 
             @keyframes shimmerProgress {
-                0%,
-                100% {
-                    background-position: 0% 0%;
-                }
-                50% {
-                    background-position: 200% 0%;
-                }
+                0%, 100% { background-position: 0% 0%; }
+                50% { background-position: 200% 0%; }
             }
 
-            /* ---- Header ---- */
+            /* ---- HEADER ---- */
             .header {
                 position: fixed;
                 top: 0;
@@ -958,7 +966,7 @@
                 transform: scale(1.05);
             }
 
-            /* ---- Hero ---- */
+            /* ---- HERO ---- */
             .hero {
                 min-height: 100vh;
                 display: flex;
@@ -1018,7 +1026,7 @@
                 justify-content: center;
             }
 
-            /* ---- About ---- */
+            /* ---- ABOUT ---- */
             #about {
                 padding: 4rem 2rem;
                 position: relative;
@@ -1135,7 +1143,7 @@
                 opacity: 0.5;
             }
 
-            /* ---- Stack ---- */
+            /* ---- STACK ---- */
             #stack {
                 padding: 4rem 2rem;
                 position: relative;
@@ -1190,9 +1198,7 @@
                 opacity: 0.2;
             }
 
-            /* ============================================================
-               DEBUGGER PAGE — Hidden by default, shown on "Try It Now"
-               ============================================================ */
+            /* ---- DEBUGGER ---- */
             #debugger-page {
                 display: none;
                 min-height: 100vh;
@@ -1465,7 +1471,7 @@
                 opacity: 0.3;
             }
 
-            /* ---- Output Styles ---- */
+            /* ---- OUTPUT STYLES ---- */
             .output-section {
                 margin-bottom: 1.2rem;
                 padding-bottom: 1.2rem;
@@ -1529,41 +1535,31 @@
                 border-left: 2px solid oklch(85% 0.15 80);
                 background: oklch(85% 0.15 80 / 0.02);
             }
-            .output-issue.warning .issue-icon {
-                color: oklch(85% 0.15 80);
-            }
+            .output-issue.warning .issue-icon { color: oklch(85% 0.15 80); }
 
             .output-issue.style {
                 border-left: 2px solid oklch(70% 0.15 240);
                 background: oklch(70% 0.15 240 / 0.02);
             }
-            .output-issue.style .issue-icon {
-                color: oklch(70% 0.15 240);
-            }
+            .output-issue.style .issue-icon { color: oklch(70% 0.15 240); }
 
             .output-issue.info {
                 border-left: 2px solid var(--color-purple);
                 background: oklch(60% 0.2 280 / 0.02);
             }
-            .output-issue.info .issue-icon {
-                color: var(--color-purple);
-            }
+            .output-issue.info .issue-icon { color: var(--color-purple); }
 
             .output-issue.error {
                 border-left: 2px solid oklch(70% 0.15 20);
                 background: oklch(70% 0.15 20 / 0.02);
             }
-            .output-issue.error .issue-icon {
-                color: oklch(70% 0.15 20);
-            }
+            .output-issue.error .issue-icon { color: oklch(70% 0.15 20); }
 
             .output-issue.success {
                 border-left: 2px solid oklch(85% 0.2 160);
                 background: oklch(85% 0.2 160 / 0.02);
             }
-            .output-issue.success .issue-icon {
-                color: oklch(85% 0.2 160);
-            }
+            .output-issue.success .issue-icon { color: oklch(85% 0.2 160); }
 
             .output-ai {
                 font-size: 0.75rem;
@@ -1618,7 +1614,7 @@
                 opacity: 0.7;
             }
 
-            /* ---- Footer ---- */
+            /* ---- FOOTER ---- */
             .footer {
                 text-align: center;
                 padding: 2rem;
@@ -1634,137 +1630,61 @@
                 color: var(--color-accent);
             }
 
-            /* ============================================================
-               HOME PAGE VISIBILITY
-               ============================================================ */
-            #home-page {
-                display: block;
-            }
-
-            #home-page.hidden {
-                display: none;
-            }
+            /* ---- HOME PAGE VISIBILITY ---- */
+            #home-page { display: block; }
+            #home-page.hidden { display: none; }
         }
 
         /* ============================================================
            RESPONSIVE
            ============================================================ */
         @media (max-width: 1024px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .about-stats {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .stack-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-stats { grid-template-columns: repeat(3, 1fr); }
+            .stack-grid { grid-template-columns: repeat(4, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .header {
-                padding: 0.6rem 1.2rem;
-            }
-            .nav {
-                gap: 1rem;
-            }
-            .nav a {
-                font-size: 0.6rem;
-            }
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            .hero .bio {
-                font-size: 0.85rem;
-            }
-            .about-stats {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.8rem;
-            }
-            .about-stat {
-                padding: 1rem;
-            }
-            .about-stat .number {
-                font-size: 1.6rem;
-            }
-            .stack-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-            }
-            #debugger-page {
-                padding: 7rem 1rem 2rem;
-            }
-            .debugger-area {
-                padding: 1.2rem;
-            }
-            .debugger-area textarea {
-                font-size: 0.75rem;
-                padding: 0.8rem;
-                min-height: 150px;
-            }
-            .corrected-code {
-                font-size: 0.6rem;
-                padding: 0.6rem;
-            }
-            #custom-cursor {
-                display: none !important;
-            }
-            html.cursor-on,
-            html.cursor-on * {
-                cursor: auto !important;
-            }
+            .header { padding: 0.6rem 1.2rem; }
+            .nav { gap: 1rem; }
+            .nav a { font-size: 0.6rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero .bio { font-size: 0.85rem; }
+            .about-stats { grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+            .about-stat { padding: 1rem; }
+            .about-stat .number { font-size: 1.6rem; }
+            .stack-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+            #debugger-page { padding: 7rem 1rem 2rem; }
+            .debugger-area { padding: 1.2rem; }
+            .debugger-area textarea { font-size: 0.75rem; padding: 0.8rem; min-height: 150px; }
+            .corrected-code { font-size: 0.6rem; padding: 0.6rem; }
+            #custom-cursor { display: none !important; }
+            html.cursor-on, html.cursor-on * { cursor: auto !important; }
         }
 
         @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            .nav {
-                gap: 0.6rem;
-            }
-            .nav a {
-                font-size: 0.5rem;
-                letter-spacing: 0px;
-            }
-            .btn-primary,
-            .btn-secondary {
-                padding: 0.5rem 1.2rem;
-                font-size: 0.7rem;
-            }
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-            .stack-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .about-feature {
-                padding: 0.8rem;
-            }
-            .debugger-area {
-                padding: 0.8rem;
-            }
-            .debugger-area textarea {
-                font-size: 0.65rem;
-                padding: 0.6rem;
-                min-height: 120px;
-            }
-            #custom-cursor {
-                display: none !important;
-            }
-            html.cursor-on,
-            html.cursor-on * {
-                cursor: auto !important;
-            }
+            .hero h1 { font-size: 2.2rem; }
+            .nav { gap: 0.6rem; }
+            .nav a { font-size: 0.5rem; letter-spacing: 0px; }
+            .btn-primary, .btn-secondary { padding: 0.5rem 1.2rem; font-size: 0.7rem; }
+            .about-stats { grid-template-columns: 1fr; }
+            .stack-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-feature { padding: 0.8rem; }
+            .debugger-area { padding: 0.8rem; }
+            .debugger-area textarea { font-size: 0.65rem; padding: 0.6rem; min-height: 120px; }
+            #custom-cursor { display: none !important; }
+            html.cursor-on, html.cursor-on * { cursor: auto !important; }
         }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-       CUSTOM CURSOR
+       FLAME GRADIENT CURSOR
        ============================================================ -->
     <div id="custom-cursor">
+        <div class="cursor-trail"></div>
+        <div class="cursor-ring"></div>
         <div class="cursor-dot"></div>
     </div>
 
@@ -1896,834 +1816,850 @@
                 <h2 class="text-center reveal" style="font-size:2.5rem; font-weight:700; font-family:var(--font-display); letter-spacing:-0.025em; margin-bottom:0.5rem;">
                     🛠️ Tech <span style="color:var(--color-accent);">Stack</span>
                 </h2>
-                <p style="text-align:center; color:var(--color-fg-dim); font-size:1rem; margin-bottom:2.5rem; opacity:0.4;"
-                class="reveal stagger-1">
-                Technologies powering AERO AI Code Debugger
-            </p>
-            <div class="stack-grid">
-                <div class="stack-card reveal-scale stagger-1">
-                    <span class="icon">🐍</span>
-                    <div class="name">Python</div>
-                    <span class="tag">Core</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-2">
-                    <span class="icon">🎨</span>
-                    <div class="name">Streamlit</div>
-                    <span class="tag">UI Framework</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-3">
-                    <span class="icon">🤖</span>
-                    <div class="name">Gemini AI</div>
-                    <span class="tag">AI Model</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-4">
-                    <span class="icon">🔮</span>
-                    <div class="name">AST</div>
-                    <span class="tag">Code Parsing</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-5">
-                    <span class="icon">📊</span>
-                    <div class="name">ReportLab</div>
-                    <span class="tag">PDF Export</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-1">
-                    <span class="icon">🐙</span>
-                    <div class="name">GitHub</div>
-                    <span class="tag">Version Control</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-2">
-                    <span class="icon">▲</span>
-                    <div class="name">Vercel</div>
-                    <span class="tag">Hosting</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-3">
-                    <span class="icon">⚡</span>
-                    <div class="name">Render</div>
-                    <span class="tag">Hosting</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-4">
-                    <span class="icon">📜</span>
-                    <div class="name">JavaScript</div>
-                    <span class="tag">Frontend</span>
-                </div>
-                <div class="stack-card reveal-scale stagger-5">
-                    <span class="icon">🎯</span>
-                    <div class="name">HTML/CSS</div>
-                    <span class="tag">Styling</span>
+                <p style="text-align:center; color:var(--color-fg-dim); font-size:1rem; margin-bottom:2.5rem; opacity:0.4;" class="reveal stagger-1">
+                    Technologies powering AERO AI Code Debugger
+                </p>
+                <div class="stack-grid">
+                    <div class="stack-card reveal-scale stagger-1">
+                        <span class="icon">🐍</span>
+                        <div class="name">Python</div>
+                        <span class="tag">Core</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-2">
+                        <span class="icon">🎨</span>
+                        <div class="name">Streamlit</div>
+                        <span class="tag">UI Framework</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-3">
+                        <span class="icon">🤖</span>
+                        <div class="name">Gemini AI</div>
+                        <span class="tag">AI Model</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-4">
+                        <span class="icon">🔮</span>
+                        <div class="name">AST</div>
+                        <span class="tag">Code Parsing</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-5">
+                        <span class="icon">📊</span>
+                        <div class="name">ReportLab</div>
+                        <span class="tag">PDF Export</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-1">
+                        <span class="icon">🐙</span>
+                        <div class="name">GitHub</div>
+                        <span class="tag">Version Control</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-2">
+                        <span class="icon">▲</span>
+                        <div class="name">Vercel</div>
+                        <span class="tag">Hosting</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-3">
+                        <span class="icon">⚡</span>
+                        <div class="name">Render</div>
+                        <span class="tag">Hosting</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-4">
+                        <span class="icon">📜</span>
+                        <div class="name">JavaScript</div>
+                        <span class="tag">Frontend</span>
+                    </div>
+                    <div class="stack-card reveal-scale stagger-5">
+                        <span class="icon">🎯</span>
+                        <div class="name">HTML/CSS</div>
+                        <span class="tag">Styling</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <p>Built with <span class="hash">♥</span> by <span class="hash"># rohit.savan</span> • 2026</p>
-    </footer>
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <p>Built with <span class="hash">♥</span> by <span class="hash"># rohit.savan</span> • 2026</p>
+        </footer>
 
-</div>
+    </div>
 
-<!-- ============================================================
-   DEBUGGER PAGE — Separate Page
-   ============================================================ -->
-<div id="debugger-page">
-    <div class="container" style="max-width:56rem;">
-        <button class="debugger-back-btn" id="backToHomeBtn">
-            <i class="fas fa-arrow-left"></i> Back to Home
-        </button>
-
-        <h2 style="font-size:2.5rem; font-weight:700; font-family:var(--font-display); text-align:center; margin-bottom:0.3rem; letter-spacing:-2px; color:var(--color-fg);">
-            ⚡ <span style="color:var(--color-accent);">AI Code Debugger</span>
-        </h2>
-        <p style="text-align:center; color:var(--color-fg-dim); font-size:1rem; margin-bottom:2rem; opacity:0.4; font-weight:300;">
-            Paste your Python code and get detailed AST analysis + AI review with corrected code.
-        </p>
-
-        <div class="debugger-area">
-            <div class="file-upload-area">
-                <label for="fileInput" class="file-upload-label">
-                    <i class="fas fa-upload"></i> Upload .py
-                </label>
-                <input type="file" id="fileInput" accept=".py" style="display:none;" />
-                <span id="fileName" class="file-name">No file selected</span>
-            </div>
-
-            <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def fibonacci(n):
-                if n <= 1:
-                return n
-                return fibonacci(n-1) + fibonacci(n-2)
-
-                print(fibonacci(10))</textarea>
-
-            <div class="code-stats">
-                <span id="lineCount">📄 Lines: 0</span>
-                <span id="charCount">📝 Characters: 0</span>
-                <span id="langDetect">🔤 Language: <span style="background:oklch(60% 0.2 280 / 0.04); color:var(--color-purple); padding:0.05rem 0.5rem; border-radius:20px; font-size:0.55rem; font-weight:600; margin-left:0.2rem;" id="langBadge">Python</span></span>
-            </div>
-
-            <div class="toolbar">
-                <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
-                <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> .txt</button>
-                <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
-                <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
-            </div>
-
-            <button class="analyze-btn" id="analyzeBtn">
-                <i class="fas fa-microchip"></i> Analyze with AST + Gemini
+    <!-- ============================================================
+       DEBUGGER PAGE
+       ============================================================ -->
+    <div id="debugger-page">
+        <div class="container" style="max-width:56rem;">
+            <button class="debugger-back-btn" id="backToHomeBtn">
+                <i class="fas fa-arrow-left"></i> Back to Home
             </button>
 
-            <div id="output">
-                <div class="placeholder">
-                    <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; opacity:0.1;"></i>
-                    Results will appear here
+            <h2 style="font-size:2.5rem; font-weight:700; font-family:var(--font-display); text-align:center; margin-bottom:0.3rem; letter-spacing:-2px; color:var(--color-fg);">
+                ⚡ <span style="color:var(--color-accent);">AI Code Debugger</span>
+            </h2>
+            <p style="text-align:center; color:var(--color-fg-dim); font-size:1rem; margin-bottom:2rem; opacity:0.4; font-weight:300;">
+                Paste your Python code and get detailed AST analysis + AI review with corrected code.
+            </p>
+
+            <div class="debugger-area">
+                <div class="file-upload-area">
+                    <label for="fileInput" class="file-upload-label">
+                        <i class="fas fa-upload"></i> Upload .py
+                    </label>
+                    <input type="file" id="fileInput" accept=".py" style="display:none;" />
+                    <span id="fileName" class="file-name">No file selected</span>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- ============================================================
-   SCRIPTS
-   ============================================================ -->
-<script>
-    // ============================================================
-    // CUSTOM CURSOR
-    // ============================================================
-    const cursor = document.getElementById('custom-cursor');
-    let cursorX = 0,
-        cursorY = 0;
-    let targetX = 0,
-        targetY = 0;
+                <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def fibonacci(n):
+                    if n <= 1:
+                    return n
+                    return fibonacci(n-1) + fibonacci(n-2)
 
-    document.addEventListener('mousemove', (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-    });
+                    print(fibonacci(10))</textarea>
 
-    function animateCursor() {
-        cursorX += (targetX - cursorX) * 0.12;
-        cursorY += (targetY - cursorY) * 0.12;
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
-        requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
+                <div class="code-stats">
+                    <span id="lineCount">📄 Lines: 0</span>
+                    <span id="charCount">📝 Characters: 0</span>
+                    <span id="langDetect">🔤 Language: <span style="background:oklch(60% 0.2 280 / 0.04); color:var(--color-purple); padding:0.05rem 0.5rem; border-radius:20px; font-size:0.55rem; font-weight:600; margin-left:0.2rem;" id="langBadge">Python</span></span>
+                </div>
 
-    document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .file-upload-label, .toolbar button, .analyze-btn, .nav a, .stack-card, .about-feature, .debugger-back-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
+                <div class="toolbar">
+                    <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> .txt</button>
+                    <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
+                    <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
+                </div>
 
-    if ('ontouchstart' in window) {
-        cursor.style.display = 'none';
-        document.documentElement.classList.remove('cursor-on');
-        document.body.style.cursor = 'auto';
-        document.querySelectorAll('*').forEach(el => el.style.cursor = 'auto');
-    }
+                <button class="analyze-btn" id="analyzeBtn">
+                    <i class="fas fa-microchip"></i> Analyze with AST + Gemini
+                </button>
 
-    // ============================================================
-    // SCROLL PROGRESS & HEADER
-    // ============================================================
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrollTop / docHeight) * 100;
-        document.getElementById('scroll-progress').style.width = progress + '%';
-
-        if (scrollTop > 50) {
-            document.getElementById('header').classList.add('scrolled');
-        } else {
-            document.getElementById('header').classList.remove('scrolled');
-        }
-    });
-
-    // ============================================================
-    // SCROLL REVEAL
-    // ============================================================
-    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-rotate');
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    reveals.forEach(el => revealObserver.observe(el));
-
-    // ============================================================
-    // PAGE NAVIGATION - HOME / DEBUGGER
-    // ============================================================
-    const homePage = document.getElementById('home-page');
-    const debuggerPage = document.getElementById('debugger-page');
-
-    function showDebugger() {
-        homePage.classList.add('hidden');
-        debuggerPage.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => document.getElementById('codeInput').focus(), 500);
-    }
-
-    function showHome() {
-        homePage.classList.remove('hidden');
-        debuggerPage.classList.remove('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    document.getElementById('tryItNowBtn').addEventListener('click', showDebugger);
-    document.getElementById('backToHomeBtn').addEventListener('click', showHome);
-
-    document.getElementById('navHome').addEventListener('click', (e) => {
-        e.preventDefault();
-        if (debuggerPage.classList.contains('active')) {
-            showHome();
-        } else {
-            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-
-    document.getElementById('watchBtn').addEventListener('click', () => {
-        alert('🎬 Demo video coming soon!');
-    });
-
-    // ============================================================
-    // KEYBOARD SHORTCUTS
-    // ============================================================
-    document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-            e.preventDefault();
-            document.getElementById('analyzeBtn').click();
-        }
-        if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
-            e.preventDefault();
-            document.getElementById('codeInput').focus();
-        }
-        if (e.key === 'Escape') {
-            document.getElementById('clearBtn').click();
-        }
-    });
-
-    // ============================================================
-    // CODE STATS
-    // ============================================================
-    function updateStats() {
-        const code = document.getElementById('codeInput').value;
-        const lines = code.split('\n').length;
-        const chars = code.length;
-        document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
-        document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
-        const langBadge = document.getElementById('langBadge');
-        if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
-            langBadge.textContent = 'Python';
-        } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
-            langBadge.textContent = 'JavaScript';
-        } else if (code.includes('public class ') || code.includes('System.out.println')) {
-            langBadge.textContent = 'Java';
-        } else {
-            langBadge.textContent = 'Unknown';
-        }
-    }
-    document.getElementById('codeInput').addEventListener('input', updateStats);
-    updateStats();
-
-    // ============================================================
-    // FILE UPLOAD
-    // ============================================================
-    document.getElementById('fileInput').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            document.getElementById('fileName').textContent = file.name;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                document.getElementById('codeInput').value = ev.target.result;
-                updateStats();
-            };
-            reader.readAsText(file);
-        }
-    });
-
-    // ============================================================
-    // COPY
-    // ============================================================
-    document.getElementById('copyBtn').addEventListener('click', () => {
-        const code = document.getElementById('codeInput').value;
-        navigator.clipboard.writeText(code).then(() => {
-            const btn = document.getElementById('copyBtn');
-            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 1500);
-        }).catch(() => {
-            const textarea = document.getElementById('codeInput');
-            textarea.select();
-            document.execCommand('copy');
-        });
-    });
-
-    // ============================================================
-    // DOWNLOAD .txt
-    // ============================================================
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-        const code = document.getElementById('codeInput').value;
-        const blob = new Blob([code], { type: 'text/plain' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'code.txt';
-        a.click();
-        URL.revokeObjectURL(a.href);
-    });
-
-    // ============================================================
-    // CLEAR
-    // ============================================================
-    document.getElementById('clearBtn').addEventListener('click', () => {
-        document.getElementById('codeInput').value = '';
-        updateStats();
-        document.getElementById('output').innerHTML = `
+                <div id="output">
                     <div class="placeholder">
                         <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; opacity:0.1;"></i>
                         Results will appear here
                     </div>
-                `;
-    });
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // ============================================================
-    // PDF
-    // ============================================================
-    document.getElementById('pdfBtn').addEventListener('click', () => {
-        const output = document.getElementById('output');
-        const content = output.innerHTML;
-        if (content.includes('placeholder') || content.trim() === '') {
-            alert('Please analyze some code first before generating PDF.');
-            return;
-        }
-        const element = document.createElement('div');
-        element.style.padding = '30px';
-        element.style.fontFamily = 'Inter, sans-serif';
-        element.style.backgroundColor = '#f5f0ff';
-        element.style.color = '#1a1a2e';
-        element.innerHTML = `
-                    <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
-                    <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
-                        ${content}
-                    </div>
-                    <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
-                `;
-        document.body.appendChild(element);
-        html2pdf().set({ margin: 1, filename: 'analysis-report.pdf' }).from(element).save().then(() => {
-            document.body.removeChild(element);
+    <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+    <script>
+        // ============================================================
+        // FLAME GRADIENT CURSOR - ANIMATED BACKGROUND POSITION
+        // ============================================================
+        const cursor = document.getElementById('custom-cursor');
+        let cursorX = 0,
+            cursorY = 0;
+        let targetX = 0,
+            targetY = 0;
+        let angle = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+
+            // Update gradient position based on mouse movement
+            const xPercent = (e.clientX / window.innerWidth) * 100;
+            const yPercent = (e.clientY / window.innerHeight) * 100;
+            cursor.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+
+            // Rotate gradient based on movement
+            angle += 2;
+            cursor.style.background = `radial-gradient(circle at ${xPercent}% ${yPercent}%, 
+                #ff6b35 0%, 
+                #f7931e 25%, 
+                #ffd700 50%, 
+                #ff6b6b 75%, 
+                #8b5cf6 100%
+            )`;
         });
-    });
 
-    // ============================================================
-    // ANALYZE - DETAILED AST + GEMINI + ALWAYS CORRECTED CODE
-    // ============================================================
-    const GEMINI_API_KEY = 'AIzaSyC5LdN6q_9UzLt6s9JXkX8YqG6o3fS2mP0';
-    const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' +
-        GEMINI_API_KEY;
+        function animateCursor() {
+            cursorX += (targetX - cursorX) * 0.12;
+            cursorY += (targetY - cursorY) * 0.12;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
-    document.getElementById('analyzeBtn').addEventListener('click', async () => {
-        const code = document.getElementById('codeInput').value.trim();
-        if (!code) {
-            document.getElementById('output').innerHTML = `
-                        <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
-                            ⚠️ Please paste some Python code first.
-                        </div>
-                    `;
-            return;
+        // Hover effect
+        document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .file-upload-label, .toolbar button, .analyze-btn, .nav a, .stack-card, .about-feature, .debugger-back-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        if ('ontouchstart' in window) {
+            cursor.style.display = 'none';
+            document.documentElement.classList.remove('cursor-on');
+            document.body.style.cursor = 'auto';
+            document.querySelectorAll('*').forEach(el => el.style.cursor = 'auto');
         }
 
-        document.getElementById('output').innerHTML = `
-                    <div class="spinner-container">
-                        <div class="spinner"></div>
-                        <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
-                    </div>
-                `;
+        // ============================================================
+        // SCROLL PROGRESS & HEADER
+        // ============================================================
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('scroll-progress').style.width = progress + '%';
 
-        try {
-            const astResult = detailedASTAnalysis(code);
-            const correctedCode = generateCorrectedCode(code, astResult);
+            if (scrollTop > 50) {
+                document.getElementById('header').classList.add('scrolled');
+            } else {
+                document.getElementById('header').classList.remove('scrolled');
+            }
+        });
 
-            const prompt = `
-                        You are an expert Python code reviewer with 10+ years of experience. Analyze this code in extreme detail and provide:
-
-                        1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
-
-                        2. DETAILED ISSUES: List 5-10 specific issues with:
-                           - Line number reference
-                           - Issue type (Bug, Style, Performance, Security, Best Practice)
-                           - Severity (Critical, High, Medium, Low)
-                           - Explanation of why it's an issue
-                           - How to fix it
-
-                        3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
-
-                        4. SECURITY CONCERNS: Any potential security vulnerabilities
-
-                        5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
-
-                        6. RATING: Overall rating out of 10 with detailed justification
-
-                        7. BEST PRACTICES: 3-4 specific best practices that should be followed
-
-                        Code:
-                        ${code}
-
-                        Format your response as:
-                        SUMMARY: [detailed summary]
-                        ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
-                        PERFORMANCE: [time/space complexity analysis]
-                        SECURITY: [any security concerns]
-                        READABILITY: [X/10]
-                        MAINTAINABILITY: [X/10]
-                        EFFICIENCY: [X/10]
-                        SECURITY_SCORE: [X/10]
-                        RATING: [X/10 - detailed justification]
-                        PRACTICES: [3-4 best practices]
-                    `;
-
-            let geminiResponse = '';
-            try {
-                const res = await fetch(GEMINI_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    geminiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        // ============================================================
+        // SCROLL REVEAL
+        // ============================================================
+        const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                 }
-            } catch (err) {
-                geminiResponse = '';
-            }
+            });
+        }, { threshold: 0.1 });
 
-            const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode);
-            document.getElementById('output').innerHTML = outputHtml;
+        reveals.forEach(el => revealObserver.observe(el));
 
-        } catch (err) {
-            document.getElementById('output').innerHTML = `
-                        <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
-                            ❌ Error: ${err.message}
-                        </div>
-                    `;
+        // ============================================================
+        // PAGE NAVIGATION
+        // ============================================================
+        const homePage = document.getElementById('home-page');
+        const debuggerPage = document.getElementById('debugger-page');
+
+        function showDebugger() {
+            homePage.classList.add('hidden');
+            debuggerPage.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => document.getElementById('codeInput').focus(), 500);
         }
-    });
 
-    // ============================================================
-    // DETAILED AST ANALYSIS
-    // ============================================================
-    function detailedASTAnalysis(code) {
-        const issues = [];
-        const lines = code.split('\n');
+        function showHome() {
+            homePage.classList.remove('hidden');
+            debuggerPage.classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-        const varPattern = /^(\s*)(\w+)\s*=\s*(.+)/;
-        const allVars = [];
-        const usedVars = new Set();
+        document.getElementById('tryItNowBtn').addEventListener('click', showDebugger);
+        document.getElementById('backToHomeBtn').addEventListener('click', showHome);
 
-        lines.forEach(line => {
-            const match = line.match(varPattern);
-            if (match) {
-                allVars.push({ name: match[2], line: lines.indexOf(line) + 1 });
-            }
-            const words = line.match(/\b(\w+)\b/g);
-            if (words) {
-                words.forEach(w => {
-                    if (w.length > 1 && !['if', 'for', 'while', 'def', 'return', 'print', 'import',
-                            'from', 'class', 'lambda', 'in', 'is', 'not', 'or', 'and', 'True',
-                            'False', 'None', 'elif', 'else', 'try', 'except', 'finally', 'with',
-                            'as', 'pass', 'break', 'continue', 'raise', 'yield', 'global',
-                            'nonlocal', 'assert', 'del'
-                        ].includes(w)) {
-                        usedVars.add(w);
-                    }
-                });
+        document.getElementById('navHome').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (debuggerPage.classList.contains('active')) {
+                showHome();
+            } else {
+                document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
             }
         });
 
-        allVars.forEach(v => {
-            let used = false;
-            lines.forEach((l, i) => {
-                if (i !== v.line - 1 && l.includes(v.name)) used = true;
+        document.getElementById('watchBtn').addEventListener('click', () => {
+            alert('🎬 Demo video coming soon!');
+        });
+
+        // ============================================================
+        // KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('analyzeBtn').click();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+                e.preventDefault();
+                document.getElementById('codeInput').focus();
+            }
+            if (e.key === 'Escape') {
+                document.getElementById('clearBtn').click();
+            }
+        });
+
+        // ============================================================
+        // CODE STATS
+        // ============================================================
+        function updateStats() {
+            const code = document.getElementById('codeInput').value;
+            const lines = code.split('\n').length;
+            const chars = code.length;
+            document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
+            document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
+            const langBadge = document.getElementById('langBadge');
+            if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
+                langBadge.textContent = 'Python';
+            } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
+                langBadge.textContent = 'JavaScript';
+            } else if (code.includes('public class ') || code.includes('System.out.println')) {
+                langBadge.textContent = 'Java';
+            } else {
+                langBadge.textContent = 'Unknown';
+            }
+        }
+        document.getElementById('codeInput').addEventListener('input', updateStats);
+        updateStats();
+
+        // ============================================================
+        // FILE UPLOAD
+        // ============================================================
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('fileName').textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    document.getElementById('codeInput').value = ev.target.result;
+                    updateStats();
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // ============================================================
+        // COPY
+        // ============================================================
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const code = document.getElementById('codeInput').value;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 1500);
+            }).catch(() => {
+                const textarea = document.getElementById('codeInput');
+                textarea.select();
+                document.execCommand('copy');
             });
-            if (!used) {
-                issues.push({ line: v.line, type: 'warning', msg: `Unused variable '${v.name}'`,
+        });
+
+        // ============================================================
+        // DOWNLOAD .txt
+        // ============================================================
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const code = document.getElementById('codeInput').value;
+            const blob = new Blob([code], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'code.txt';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+
+        // ============================================================
+        // CLEAR
+        // ============================================================
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.getElementById('codeInput').value = '';
+            updateStats();
+            document.getElementById('output').innerHTML = `
+                            <div class="placeholder">
+                                <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; opacity:0.1;"></i>
+                                Results will appear here
+                            </div>
+                        `;
+        });
+
+        // ============================================================
+        // PDF
+        // ============================================================
+        document.getElementById('pdfBtn').addEventListener('click', () => {
+            const output = document.getElementById('output');
+            const content = output.innerHTML;
+            if (content.includes('placeholder') || content.trim() === '') {
+                alert('Please analyze some code first before generating PDF.');
+                return;
+            }
+            const element = document.createElement('div');
+            element.style.padding = '30px';
+            element.style.fontFamily = 'Inter, sans-serif';
+            element.style.backgroundColor = '#f5f0ff';
+            element.style.color = '#1a1a2e';
+            element.innerHTML = `
+                            <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
+                            <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
+                                ${content}
+                            </div>
+                            <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
+                        `;
+            document.body.appendChild(element);
+            html2pdf().set({ margin: 1, filename: 'analysis-report.pdf' }).from(element).save().then(() => {
+                document.body.removeChild(element);
+            });
+        });
+
+        // ============================================================
+        // ANALYZE
+        // ============================================================
+        const GEMINI_API_KEY = 'AIzaSyC5LdN6q_9UzLt6s9JXkX8YqG6o3fS2mP0';
+        const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' +
+            GEMINI_API_KEY;
+
+        document.getElementById('analyzeBtn').addEventListener('click', async () => {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                document.getElementById('output').innerHTML = `
+                                <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
+                                    ⚠️ Please paste some Python code first.
+                                </div>
+                            `;
+                return;
+            }
+
+            document.getElementById('output').innerHTML = `
+                            <div class="spinner-container">
+                                <div class="spinner"></div>
+                                <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
+                            </div>
+                        `;
+
+            try {
+                const astResult = detailedASTAnalysis(code);
+                const correctedCode = generateCorrectedCode(code, astResult);
+
+                const prompt = `
+                                You are an expert Python code reviewer with 10+ years of experience. Analyze this code in extreme detail and provide:
+
+                                1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
+
+                                2. DETAILED ISSUES: List 5-10 specific issues with:
+                                   - Line number reference
+                                   - Issue type (Bug, Style, Performance, Security, Best Practice)
+                                   - Severity (Critical, High, Medium, Low)
+                                   - Explanation of why it's an issue
+                                   - How to fix it
+
+                                3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
+
+                                4. SECURITY CONCERNS: Any potential security vulnerabilities
+
+                                5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
+
+                                6. RATING: Overall rating out of 10 with detailed justification
+
+                                7. BEST PRACTICES: 3-4 specific best practices that should be followed
+
+                                Code:
+                                ${code}
+
+                                Format your response as:
+                                SUMMARY: [detailed summary]
+                                ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
+                                PERFORMANCE: [time/space complexity analysis]
+                                SECURITY: [any security concerns]
+                                READABILITY: [X/10]
+                                MAINTAINABILITY: [X/10]
+                                EFFICIENCY: [X/10]
+                                SECURITY_SCORE: [X/10]
+                                RATING: [X/10 - detailed justification]
+                                PRACTICES: [3-4 best practices]
+                            `;
+
+                let geminiResponse = '';
+                try {
+                    const res = await fetch(GEMINI_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }]
+                        })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        geminiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                    }
+                } catch (err) {
+                    geminiResponse = '';
+                }
+
+                const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode);
+                document.getElementById('output').innerHTML = outputHtml;
+
+            } catch (err) {
+                document.getElementById('output').innerHTML = `
+                                <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
+                                    ❌ Error: ${err.message}
+                                </div>
+                            `;
+            }
+        });
+
+        // ============================================================
+        // DETAILED AST ANALYSIS
+        // ============================================================
+        function detailedASTAnalysis(code) {
+            const issues = [];
+            const lines = code.split('\n');
+
+            const varPattern = /^(\s*)(\w+)\s*=\s*(.+)/;
+            const allVars = [];
+            const usedVars = new Set();
+
+            lines.forEach(line => {
+                const match = line.match(varPattern);
+                if (match) {
+                    allVars.push({ name: match[2], line: lines.indexOf(line) + 1 });
+                }
+                const words = line.match(/\b(\w+)\b/g);
+                if (words) {
+                    words.forEach(w => {
+                        if (w.length > 1 && !['if', 'for', 'while', 'def', 'return', 'print', 'import',
+                                'from', 'class', 'lambda', 'in', 'is', 'not', 'or', 'and', 'True',
+                                'False', 'None', 'elif', 'else', 'try', 'except', 'finally', 'with',
+                                'as', 'pass', 'break', 'continue', 'raise', 'yield', 'global',
+                                'nonlocal', 'assert', 'del'
+                            ].includes(w)) {
+                            usedVars.add(w);
+                        }
+                    });
+                }
+            });
+
+            allVars.forEach(v => {
+                let used = false;
+                lines.forEach((l, i) => {
+                    if (i !== v.line - 1 && l.includes(v.name)) used = true;
+                });
+                if (!used) {
+                    issues.push({ line: v.line, type: 'warning', msg: `Unused variable '${v.name}'`,
+                        severity: 'Medium' });
+                }
+            });
+
+            lines.forEach((line, idx) => {
+                if (line.length > 79) {
+                    issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)`,
+                        severity: 'Low' });
+                }
+                if (line.length > 100) {
+                    issues.push({ line: idx + 1, type: 'error', msg: `Line extremely long (${line.length} chars)`,
+                        severity: 'High' });
+                }
+            });
+
+            lines.forEach((line, idx) => {
+                if (line.trim().startsWith('def ') && idx < lines.length - 1) {
+                    let hasDocstring = false;
+                    for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
+                        const next = lines[i].trim();
+                        if (next.startsWith('"""') || next.startsWith("'''")) {
+                            hasDocstring = true;
+                            break;
+                        }
+                        if (next && !next.startsWith('#')) break;
+                    }
+                    if (!hasDocstring) {
+                        issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function',
+                            severity: 'Medium' });
+                    }
+                }
+                if (line.trim().startsWith('class ') && idx < lines.length - 1) {
+                    let hasDocstring = false;
+                    for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
+                        const next = lines[i].trim();
+                        if (next.startsWith('"""') || next.startsWith("'''")) {
+                            hasDocstring = true;
+                            break;
+                        }
+                        if (next && !next.startsWith('#')) break;
+                    }
+                    if (!hasDocstring) {
+                        issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for class',
+                            severity: 'Medium' });
+                    }
+                }
+            });
+
+            lines.forEach((line, idx) => {
+                if (line.trim().match(/^except\s*:/)) {
+                    issues.push({ line: idx + 1, type: 'error', msg: 'Bare except - use specific exceptions',
+                        severity: 'Critical' });
+                }
+            });
+
+            const conditions = lines.filter(l => l.includes('if ') || l.includes('elif ') || l.includes('else:') || l
+                .includes('for ') || l.includes('while '));
+            if (conditions.length > 10) {
+                issues.push({ line: 0, type: 'warning', msg: `High complexity (${conditions.length} conditionals)`,
                     severity: 'Medium' });
             }
-        });
 
-        lines.forEach((line, idx) => {
-            if (line.length > 79) {
-                issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)`,
-                    severity: 'Low' });
-            }
-            if (line.length > 100) {
-                issues.push({ line: idx + 1, type: 'error', msg: `Line extremely long (${line.length} chars)`,
-                    severity: 'High' });
-            }
-        });
-
-        lines.forEach((line, idx) => {
-            if (line.trim().startsWith('def ') && idx < lines.length - 1) {
-                let hasDocstring = false;
-                for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
-                    const next = lines[i].trim();
-                    if (next.startsWith('"""') || next.startsWith("'''")) {
-                        hasDocstring = true;
-                        break;
-                    }
-                    if (next && !next.startsWith('#')) break;
-                }
-                if (!hasDocstring) {
-                    issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function',
-                        severity: 'Medium' });
-                }
-            }
-            if (line.trim().startsWith('class ') && idx < lines.length - 1) {
-                let hasDocstring = false;
-                for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
-                    const next = lines[i].trim();
-                    if (next.startsWith('"""') || next.startsWith("'''")) {
-                        hasDocstring = true;
-                        break;
-                    }
-                    if (next && !next.startsWith('#')) break;
-                }
-                if (!hasDocstring) {
-                    issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for class',
-                        severity: 'Medium' });
-                }
-            }
-        });
-
-        lines.forEach((line, idx) => {
-            if (line.trim().match(/^except\s*:/)) {
-                issues.push({ line: idx + 1, type: 'error', msg: 'Bare except - use specific exceptions',
-                    severity: 'Critical' });
-            }
-        });
-
-        const conditions = lines.filter(l => l.includes('if ') || l.includes('elif ') || l.includes('else:') || l
-            .includes('for ') || l.includes('while '));
-        if (conditions.length > 10) {
-            issues.push({ line: 0, type: 'warning', msg: `High complexity (${conditions.length} conditionals)`,
-                severity: 'Medium' });
+            return {
+                issues: issues,
+                stats: {
+                    totalLines: lines.length,
+                    functions: lines.filter(l => l.trim().startsWith('def ')).length,
+                    classes: lines.filter(l => l.trim().startsWith('class ')).length,
+                    imports: lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from '))
+                        .length,
+                    comments: lines.filter(l => l.trim().startsWith('#')).length,
+                    blankLines: lines.filter(l => l.trim() === '').length,
+                    conditionals: conditions.length
+                },
+                issueCount: issues.length,
+                warningCount: issues.filter(i => i.type === 'warning').length,
+                styleCount: issues.filter(i => i.type === 'style').length,
+                errorCount: issues.filter(i => i.type === 'error').length,
+                criticalCount: issues.filter(i => i.severity === 'Critical').length
+            };
         }
 
-        return {
-            issues: issues,
-            stats: {
-                totalLines: lines.length,
-                functions: lines.filter(l => l.trim().startsWith('def ')).length,
-                classes: lines.filter(l => l.trim().startsWith('class ')).length,
-                imports: lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from '))
-                    .length,
-                comments: lines.filter(l => l.trim().startsWith('#')).length,
-                blankLines: lines.filter(l => l.trim() === '').length,
-                conditionals: conditions.length
-            },
-            issueCount: issues.length,
-            warningCount: issues.filter(i => i.type === 'warning').length,
-            styleCount: issues.filter(i => i.type === 'style').length,
-            errorCount: issues.filter(i => i.type === 'error').length,
-            criticalCount: issues.filter(i => i.severity === 'Critical').length
-        };
-    }
+        // ============================================================
+        // GENERATE CORRECTED CODE
+        // ============================================================
+        function generateCorrectedCode(code, astResult) {
+            const lines = code.split('\n');
+            const newLines = [];
 
-    // ============================================================
-    // GENERATE CORRECTED CODE
-    // ============================================================
-    function generateCorrectedCode(code, astResult) {
-        const lines = code.split('\n');
-        const newLines = [];
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                let modifiedLine = line;
 
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            let modifiedLine = line;
+                if (line.trim().match(/^except\s*:/)) {
+                    modifiedLine = line.replace('except:', 'except Exception as e:');
+                    newLines.push(modifiedLine);
+                    const indent = line.match(/^\s*/)[0];
+                    newLines.push(`${indent}    print(f"Error: {e}")  # Log the error properly`);
+                    continue;
+                }
 
-            if (line.trim().match(/^except\s*:/)) {
-                modifiedLine = line.replace('except:', 'except Exception as e:');
                 newLines.push(modifiedLine);
-                const indent = line.match(/^\s*/)[0];
-                newLines.push(`${indent}    print(f"Error: {e}")  # Log the error properly`);
-                continue;
-            }
 
-            newLines.push(modifiedLine);
-
-            if (line.trim().startsWith('def ') && i < lines.length - 1) {
-                let hasDocstring = false;
-                for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
-                    const next = lines[j].trim();
-                    if (next.startsWith('"""') || next.startsWith("'''")) {
-                        hasDocstring = true;
-                        break;
+                if (line.trim().startsWith('def ') && i < lines.length - 1) {
+                    let hasDocstring = false;
+                    for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
+                        const next = lines[j].trim();
+                        if (next.startsWith('"""') || next.startsWith("'''")) {
+                            hasDocstring = true;
+                            break;
+                        }
+                        if (next && !next.startsWith('#')) break;
                     }
-                    if (next && !next.startsWith('#')) break;
+                    if (!hasDocstring) {
+                        const indent = line.match(/^\s*/)[0];
+                        const funcName = line.match(/def\s+(\w+)/);
+                        newLines.push(`${indent}    """`);
+                        newLines.push(`${indent}    ${funcName ? funcName[1] : 'function'} documentation.`);
+                        newLines.push(`${indent}    """`);
+                    }
                 }
-                if (!hasDocstring) {
-                    const indent = line.match(/^\s*/)[0];
-                    const funcName = line.match(/def\s+(\w+)/);
-                    newLines.push(`${indent}    """`);
-                    newLines.push(`${indent}    ${funcName ? funcName[1] : 'function'} documentation.`);
-                    newLines.push(`${indent}    """`);
+
+                if (line.trim().startsWith('class ') && i < lines.length - 1) {
+                    let hasDocstring = false;
+                    for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
+                        const next = lines[j].trim();
+                        if (next.startsWith('"""') || next.startsWith("'''")) {
+                            hasDocstring = true;
+                            break;
+                        }
+                        if (next && !next.startsWith('#')) break;
+                    }
+                    if (!hasDocstring) {
+                        const indent = line.match(/^\s*/)[0];
+                        const className = line.match(/class\s+(\w+)/);
+                        newLines.push(`${indent}    """`);
+                        newLines.push(`${indent}    ${className ? className[1] : 'class'} documentation.`);
+                        newLines.push(`${indent}    """`);
+                    }
                 }
             }
 
-            if (line.trim().startsWith('class ') && i < lines.length - 1) {
-                let hasDocstring = false;
-                for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
-                    const next = lines[j].trim();
-                    if (next.startsWith('"""') || next.startsWith("'''")) {
-                        hasDocstring = true;
-                        break;
-                    }
-                    if (next && !next.startsWith('#')) break;
-                }
-                if (!hasDocstring) {
-                    const indent = line.match(/^\s*/)[0];
-                    const className = line.match(/class\s+(\w+)/);
-                    newLines.push(`${indent}    """`);
-                    newLines.push(`${indent}    ${className ? className[1] : 'class'} documentation.`);
-                    newLines.push(`${indent}    """`);
-                }
-            }
+            return newLines.join('\n');
         }
 
-        return newLines.join('\n');
-    }
+        // ============================================================
+        // BUILD DETAILED OUTPUT
+        // ============================================================
+        function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode) {
+            let html = '';
 
-    // ============================================================
-    // BUILD DETAILED OUTPUT
-    // ============================================================
-    function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode) {
-        let html = '';
-
-        // AST Analysis
-        html += `<div class="output-section">`;
-        html += `<div class="output-section-title">
-                        <i class="fas fa-code"></i> AST Analysis
-                        <span class="badge">${astResult.issueCount} issues</span>
-                        <span class="badge" style="color:oklch(85% 0.15 80);">${astResult.warningCount} warnings</span>
-                        <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.errorCount} errors</span>
-                        <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.criticalCount} critical</span>
-                    </div>`;
-
-        html +=
-            `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:0.3rem;margin-bottom:0.6rem;padding:0.4rem;background:oklch(100% 0 0 / 0.01);border-radius:6px;font-size:0.6rem;color:var(--color-fg-dim);opacity:0.3;">`;
-        html += `<div><span style="color:var(--color-fg);">${astResult.stats.totalLines}</span> lines</div>`;
-        html += `<div><span style="color:var(--color-fg);">${astResult.stats.functions}</span> functions</div>`;
-        html += `<div><span style="color:var(--color-fg);">${astResult.stats.classes}</span> classes</div>`;
-        html += `<div><span style="color:var(--color-fg);">${astResult.stats.imports}</span> imports</div>`;
-        html += `<div><span style="color:var(--color-fg);">${astResult.stats.comments}</span> comments</div>`;
-        html += `<div><span style="color:var(--color-fg);">${astResult.stats.conditionals}</span> conditionals</div>`;
-        html += `</div>`;
-
-        if (astResult.issues.length === 0) {
-            html += `<div class="output-issue success">
-                            <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
-                            <span>✅ No issues found — clean code!</span>
-                        </div>`;
-        } else {
-            astResult.issues.forEach(issue => {
-                const typeClass = issue.type;
-                const icon = issue.type === 'warning' ? 'fa-exclamation-triangle' :
-                    issue.type === 'style' ? 'fa-paint-brush' :
-                    issue.type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
-                const severityColor = issue.severity === 'Critical' ? 'oklch(70% 0.15 20)' :
-                    issue.severity === 'High' ? 'oklch(80% 0.15 30)' :
-                    issue.severity === 'Medium' ? 'oklch(85% 0.15 80)' : 'oklch(70% 0.15 240)';
-                html += `<div class="output-issue ${typeClass}">
-                                <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
-                                <span class="issue-icon"><i class="fas ${icon}"></i></span>
-                                <span>${issue.msg}</span>
-                                <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:oklch(100% 0 0 / 0.02);padding:0.05rem 0.3rem;border-radius:8px;opacity:0.5;">${issue.severity || 'Info'}</span>
+            // AST Analysis
+            html += `<div class="output-section">`;
+            html += `<div class="output-section-title">
+                                <i class="fas fa-code"></i> AST Analysis
+                                <span class="badge">${astResult.issueCount} issues</span>
+                                <span class="badge" style="color:oklch(85% 0.15 80);">${astResult.warningCount} warnings</span>
+                                <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.errorCount} errors</span>
+                                <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.criticalCount} critical</span>
                             </div>`;
-            });
-        }
-        html += `</div>`;
-
-        // Gemini AI Review
-        html += `<div class="output-section">`;
-        html += `<div class="output-section-title">
-                        <i class="fas fa-brain"></i> Gemini AI Review
-                        <span class="badge">v2.0-flash</span>
-                    </div>`;
-
-        if (geminiText && geminiText.length > 10) {
-            const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-            const issuesMatch = geminiText.match(/ISSUES:\s*([^]*?)(?=PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-            const performanceMatch = geminiText.match(/PERFORMANCE:\s*([^]*?)(?=SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-            const securityMatch = geminiText.match(/SECURITY:\s*([^]*?)(?=READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-            const readabilityMatch = geminiText.match(/READABILITY:\s*([^]*?)(?=MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-            const maintainabilityMatch = geminiText.match(/MAINTAINABILITY:\s*([^]*?)(?=EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-            const efficiencyMatch = geminiText.match(/EFFICIENCY:\s*([^]*?)(?=SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-            const securityScoreMatch = geminiText.match(/SECURITY_SCORE:\s*([^]*?)(?=RATING:|PRACTICES:|$)/i);
-            const ratingMatch = geminiText.match(/RATING:\s*([^]*?)(?=PRACTICES:|$)/i);
-            const practicesMatch = geminiText.match(/PRACTICES:\s*([^]*?)(?=$)/i);
-
-            if (summaryMatch) {
-                html += `<div class="output-summary">
-                                <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
-                                <div style="margin-top:0.2rem;color:var(--color-fg-dim);font-size:0.75rem;opacity:0.6;">${summaryMatch[1].trim()}</div>
-                            </div>`;
-            }
-
-            if (issuesMatch) {
-                html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">📋 Issues & Improvements</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
-                            </div>`;
-            }
-
-            if (performanceMatch) {
-                html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:oklch(70% 0.15 240);font-size:0.65rem;">⚡ Performance</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${performanceMatch[1].trim()}</div>
-                            </div>`;
-            }
-
-            if (securityMatch) {
-                html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">🔒 Security</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${securityMatch[1].trim()}</div>
-                            </div>`;
-            }
 
             html +=
-                `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:0.3rem;margin-top:0.6rem;padding:0.4rem;background:oklch(100% 0 0 / 0.01);border-radius:6px;">`;
-            const scores = [
-                { label: 'Readability', match: readabilityMatch },
-                { label: 'Maintainability', match: maintainabilityMatch },
-                { label: 'Efficiency', match: efficiencyMatch },
-                { label: 'Security', match: securityScoreMatch }
-            ];
-            scores.forEach(s => {
-                if (s.match) {
-                    const score = s.match[1].trim();
-                    const num = score.match(/\d+(\.\d+)?/);
-                    const stars = num ? Math.round(parseFloat(num[0]) / 2) : 0;
-                    html += `<div style="text-align:center;padding:0.2rem;background:oklch(100% 0 0 / 0.01);border-radius:4px;">
-                                    <div style="font-size:0.5rem;color:var(--color-fg-dim);opacity:0.3;">${s.label}</div>
-                                    <div style="font-size:0.7rem;font-weight:600;color:var(--color-fg);">${score}</div>
-                                    <div style="font-size:0.4rem;color:oklch(85% 0.15 80);">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
-                                </div>`;
-                }
-            });
+                `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:0.3rem;margin-bottom:0.6rem;padding:0.4rem;background:oklch(100% 0 0 / 0.01);border-radius:6px;font-size:0.6rem;color:var(--color-fg-dim);opacity:0.3;">`;
+            html += `<div><span style="color:var(--color-fg);">${astResult.stats.totalLines}</span> lines</div>`;
+            html += `<div><span style="color:var(--color-fg);">${astResult.stats.functions}</span> functions</div>`;
+            html += `<div><span style="color:var(--color-fg);">${astResult.stats.classes}</span> classes</div>`;
+            html += `<div><span style="color:var(--color-fg);">${astResult.stats.imports}</span> imports</div>`;
+            html += `<div><span style="color:var(--color-fg);">${astResult.stats.comments}</span> comments</div>`;
+            html += `<div><span style="color:var(--color-fg);">${astResult.stats.conditionals}</span> conditionals</div>`;
             html += `</div>`;
 
-            if (ratingMatch) {
-                const ratingText = ratingMatch[1].trim();
-                const ratingNum = ratingText.match(/\d+(\.\d+)?/);
-                const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
-                html += `<div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:oklch(60% 0.2 280 / 0.02);border-radius:6px;border:1px solid oklch(60% 0.2 280 / 0.02);">
-                                <div class="rating-bar">
-                                    <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                                    <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
-                                    <span class="rating-text">${ratingText}</span>
+            if (astResult.issues.length === 0) {
+                html += `<div class="output-issue success">
+                                    <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
+                                    <span>✅ No issues found — clean code!</span>
+                                </div>`;
+            } else {
+                astResult.issues.forEach(issue => {
+                    const typeClass = issue.type;
+                    const icon = issue.type === 'warning' ? 'fa-exclamation-triangle' :
+                        issue.type === 'style' ? 'fa-paint-brush' :
+                        issue.type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
+                    const severityColor = issue.severity === 'Critical' ? 'oklch(70% 0.15 20)' :
+                        issue.severity === 'High' ? 'oklch(80% 0.15 30)' :
+                        issue.severity === 'Medium' ? 'oklch(85% 0.15 80)' : 'oklch(70% 0.15 240)';
+                    html += `<div class="output-issue ${typeClass}">
+                                        <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
+                                        <span class="issue-icon"><i class="fas ${icon}"></i></span>
+                                        <span>${issue.msg}</span>
+                                        <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:oklch(100% 0 0 / 0.02);padding:0.05rem 0.3rem;border-radius:8px;opacity:0.5;">${issue.severity || 'Info'}</span>
+                                    </div>`;
+                });
+            }
+            html += `</div>`;
+
+            // Gemini AI Review
+            html += `<div class="output-section">`;
+            html += `<div class="output-section-title">
+                                <i class="fas fa-brain"></i> Gemini AI Review
+                                <span class="badge">v2.0-flash</span>
+                            </div>`;
+
+            if (geminiText && geminiText.length > 10) {
+                const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+                const issuesMatch = geminiText.match(/ISSUES:\s*([^]*?)(?=PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+                const performanceMatch = geminiText.match(/PERFORMANCE:\s*([^]*?)(?=SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+                const securityMatch = geminiText.match(/SECURITY:\s*([^]*?)(?=READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+                const readabilityMatch = geminiText.match(/READABILITY:\s*([^]*?)(?=MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+                const maintainabilityMatch = geminiText.match(/MAINTAINABILITY:\s*([^]*?)(?=EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+                const efficiencyMatch = geminiText.match(/EFFICIENCY:\s*([^]*?)(?=SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
+                const securityScoreMatch = geminiText.match(/SECURITY_SCORE:\s*([^]*?)(?=RATING:|PRACTICES:|$)/i);
+                const ratingMatch = geminiText.match(/RATING:\s*([^]*?)(?=PRACTICES:|$)/i);
+                const practicesMatch = geminiText.match(/PRACTICES:\s*([^]*?)(?=$)/i);
+
+                if (summaryMatch) {
+                    html += `<div class="output-summary">
+                                        <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
+                                        <div style="margin-top:0.2rem;color:var(--color-fg-dim);font-size:0.75rem;opacity:0.6;">${summaryMatch[1].trim()}</div>
+                                    </div>`;
+                }
+
+                if (issuesMatch) {
+                    html += `<div style="margin-top:0.6rem;">
+                                        <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">📋 Issues & Improvements</strong>
+                                        <div class="output-ai" style="margin-top:0.2rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+                                    </div>`;
+                }
+
+                if (performanceMatch) {
+                    html += `<div style="margin-top:0.6rem;">
+                                        <strong style="color:oklch(70% 0.15 240);font-size:0.65rem;">⚡ Performance</strong>
+                                        <div class="output-ai" style="margin-top:0.2rem;">${performanceMatch[1].trim()}</div>
+                                    </div>`;
+                }
+
+                if (securityMatch) {
+                    html += `<div style="margin-top:0.6rem;">
+                                        <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">🔒 Security</strong>
+                                        <div class="output-ai" style="margin-top:0.2rem;">${securityMatch[1].trim()}</div>
+                                    </div>`;
+                }
+
+                html +=
+                    `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:0.3rem;margin-top:0.6rem;padding:0.4rem;background:oklch(100% 0 0 / 0.01);border-radius:6px;">`;
+                const scores = [
+                    { label: 'Readability', match: readabilityMatch },
+                    { label: 'Maintainability', match: maintainabilityMatch },
+                    { label: 'Efficiency', match: efficiencyMatch },
+                    { label: 'Security', match: securityScoreMatch }
+                ];
+                scores.forEach(s => {
+                    if (s.match) {
+                        const score = s.match[1].trim();
+                        const num = score.match(/\d+(\.\d+)?/);
+                        const stars = num ? Math.round(parseFloat(num[0]) / 2) : 0;
+                        html += `<div style="text-align:center;padding:0.2rem;background:oklch(100% 0 0 / 0.01);border-radius:4px;">
+                                            <div style="font-size:0.5rem;color:var(--color-fg-dim);opacity:0.3;">${s.label}</div>
+                                            <div style="font-size:0.7rem;font-weight:600;color:var(--color-fg);">${score}</div>
+                                            <div style="font-size:0.4rem;color:oklch(85% 0.15 80);">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
+                                        </div>`;
+                    }
+                });
+                html += `</div>`;
+
+                if (ratingMatch) {
+                    const ratingText = ratingMatch[1].trim();
+                    const ratingNum = ratingText.match(/\d+(\.\d+)?/);
+                    const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
+                    html += `<div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:oklch(60% 0.2 280 / 0.02);border-radius:6px;border:1px solid oklch(60% 0.2 280 / 0.02);">
+                                        <div class="rating-bar">
+                                            <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                                            <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
+                                            <span class="rating-text">${ratingText}</span>
+                                        </div>
+                                    </div>`;
+                }
+
+                if (practicesMatch) {
+                    html += `<div style="margin-top:0.6rem;">
+                                        <strong style="color:oklch(85% 0.2 160);font-size:0.65rem;">💡 Best Practices</strong>
+                                        <div class="output-ai" style="margin-top:0.2rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+                                    </div>`;
+                }
+            } else {
+                const fallbackRating = astResult.criticalCount > 0 ? 4 :
+                    astResult.errorCount > 0 ? 5 :
+                    astResult.warningCount > 0 ? 7 : 9;
+                const stars = Math.round(fallbackRating / 2);
+                html += `<div class="output-summary">
+                                    <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
+                                    <div style="margin-top:0.2rem;color:var(--color-fg-dim);font-size:0.75rem;opacity:0.5;">
+                                        ${astResult.criticalCount > 0 ? '⚠️ Critical issues found that need immediate attention.' :
+                                            astResult.errorCount > 0 ? '⚠️ Several issues found that should be addressed.' :
+                                            astResult.warningCount > 0 ? '📝 Code is functional but has some warnings to address.' :
+                                            '✅ Code is clean and well-structured.'}
+                                    </div>
                                 </div>
-                            </div>`;
+                                <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:oklch(60% 0.2 280 / 0.02);border-radius:6px;border:1px solid oklch(60% 0.2 280 / 0.02);">
+                                    <div class="rating-bar">
+                                        <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                                        <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
+                                        <span class="rating-text">${fallbackRating}/10</span>
+                                    </div>
+                                </div>`;
             }
+            html += `</div>`;
 
-            if (practicesMatch) {
-                html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:oklch(85% 0.2 160);font-size:0.65rem;">💡 Best Practices</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+            // Corrected Code
+            html += `<div class="output-section">`;
+            html += `<div class="output-section-title">
+                                <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Corrected Code
+                                <span class="badge" style="background:oklch(85% 0.2 160 / 0.06); color:oklch(85% 0.2 160);">${correctedCode !== originalCode ? 'Issues Resolved' : 'No Changes Needed'}</span>
                             </div>`;
+            html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
+
+            if (correctedCode !== originalCode) {
+                html += `<div style="margin-top:0.4rem;font-size:0.55rem;color:var(--color-fg-dim);opacity:0.3;">
+                                    <i class="fas fa-info-circle"></i> Changes: Added docstrings, fixed bare except, improved code style
+                                </div>`;
+            } else {
+                html += `<div style="margin-top:0.4rem;font-size:0.55rem;color:var(--color-fg-dim);opacity:0.3;">
+                                    <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Code is already clean — no corrections needed!
+                                </div>`;
             }
-        } else {
-            const fallbackRating = astResult.criticalCount > 0 ? 4 :
-                astResult.errorCount > 0 ? 5 :
-                astResult.warningCount > 0 ? 7 : 9;
-            const stars = Math.round(fallbackRating / 2);
-            html += `<div class="output-summary">
-                            <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
-                            <div style="margin-top:0.2rem;color:var(--color-fg-dim);font-size:0.75rem;opacity:0.5;">
-                                ${astResult.criticalCount > 0 ? '⚠️ Critical issues found that need immediate attention.' :
-                                    astResult.errorCount > 0 ? '⚠️ Several issues found that should be addressed.' :
-                                    astResult.warningCount > 0 ? '📝 Code is functional but has some warnings to address.' :
-                                    '✅ Code is clean and well-structured.'}
-                            </div>
-                        </div>
-                        <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:oklch(60% 0.2 280 / 0.02);border-radius:6px;border:1px solid oklch(60% 0.2 280 / 0.02);">
-                            <div class="rating-bar">
-                                <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                                <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
-                                <span class="rating-text">${fallbackRating}/10</span>
-                            </div>
-                        </div>`;
+            html += `</div>`;
+
+            return html;
         }
-        html += `</div>`;
 
-        // Corrected Code
-        html += `<div class="output-section">`;
-        html += `<div class="output-section-title">
-                        <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Corrected Code
-                        <span class="badge" style="background:oklch(85% 0.2 160 / 0.06); color:oklch(85% 0.2 160);">${correctedCode !== originalCode ? 'Issues Resolved' : 'No Changes Needed'}</span>
-                    </div>`;
-        html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
-
-        if (correctedCode !== originalCode) {
-            html += `<div style="margin-top:0.4rem;font-size:0.55rem;color:var(--color-fg-dim);opacity:0.3;">
-                            <i class="fas fa-info-circle"></i> Changes: Added docstrings, fixed bare except, improved code style
-                        </div>`;
-        } else {
-            html += `<div style="margin-top:0.4rem;font-size:0.55rem;color:var(--color-fg-dim);opacity:0.3;">
-                            <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Code is already clean — no corrections needed!
-                        </div>`;
+        // ============================================================
+        // ESCAPE HTML
+        // ============================================================
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
-        html += `</div>`;
-
-        return html;
-    }
-
-    // ============================================================
-    // ESCAPE HTML
-    // ============================================================
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-</script>
+    </script>
 
 </body>
 </html>
