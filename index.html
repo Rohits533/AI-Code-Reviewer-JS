@@ -134,7 +134,7 @@
         }
 
         /* ============================================================
-           LOADING SCREEN — WITH EXPLOSIVE BLAST
+           LOADING SCREEN
            ============================================================ */
         @layer specific {
             .loading-screen {
@@ -166,7 +166,6 @@
                 min-height: 300px;
             }
 
-            /* ---- Typing Text ---- */
             .loading-screen .typing-container {
                 font-size: 4rem;
                 font-weight: 800;
@@ -216,7 +215,6 @@
                 animation: pulse 2s var(--ease-in-out) infinite;
             }
 
-            /* ---- Explosion Particles ---- */
             .explosion-particle {
                 position: fixed;
                 pointer-events: none;
@@ -236,7 +234,6 @@
                 }
             }
 
-            /* ---- Loading Bar ---- */
             .loading-screen .loader-bar-wrapper {
                 width: 280px;
                 height: 3px;
@@ -287,7 +284,6 @@
                 border-color: var(--color-edge);
             }
 
-            /* ---- PULSE ---- */
             @keyframes pulse {
                 0%,
                 100% {
@@ -1128,16 +1124,6 @@
 
         .diff-view .diff-panel.corrected pre {
             color: oklch(85% 0.2 160 / 0.6);
-        }
-
-        @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
         }
 
         /* ============================================================
@@ -2631,7 +2617,7 @@
 <body>
 
     <!-- ============================================================
-       LOADING SCREEN — WITH EXPLOSIVE BLAST
+       LOADING SCREEN
        ============================================================ -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader-wrapper">
@@ -2899,7 +2885,7 @@
                 ⚡ <span style="color:var(--color-accent);">AI Code Debugger</span>
             </h2>
             <p style="text-align:center; color:var(--color-fg-dim); font-size:1rem; margin-bottom:2rem; opacity:0.4; font-weight:300;">
-                Paste your Python code and get detailed AST analysis + AI review with corrected code.
+                Paste your code and get detailed AST analysis + AI review with corrected code.
             </p>
 
             <div class="animated-border">
@@ -2913,7 +2899,7 @@
                         <span id="fileName" class="file-name">No file selected</span>
                     </div>
 
-                    <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def fibonacci(n):
+                    <textarea id="codeInput" rows="7" placeholder="Paste your code here...">def fibonacci(n):
     if n <= 1:
         return n
     return fibonacci(n-1) + fibonacci(n-2)
@@ -2957,7 +2943,7 @@ print(fibonacci(10))</textarea>
        ============================================================ -->
     <script>
         // ============================================================
-        // LOADING SCREEN — TYPING + EXPLOSION
+        // LOADING SCREEN
         // ============================================================
         const loadingScreen = document.getElementById('loadingScreen');
         const typingText = document.getElementById('typingText');
@@ -2976,7 +2962,6 @@ print(fibonacci(10))</textarea>
                 loaderBar.style.width = ((charIndex / fullText.length) * 70) + '%';
                 setTimeout(typeText, 80 + Math.random() * 40);
             } else {
-                // Done typing
                 loaderBar.style.width = '100%';
                 setTimeout(() => {
                     enterHint.style.opacity = '0.5';
@@ -2984,7 +2969,6 @@ print(fibonacci(10))</textarea>
             }
         }
 
-        // Start typing
         setTimeout(typeText, 500);
 
         // ============================================================
@@ -2994,21 +2978,17 @@ print(fibonacci(10))</textarea>
             if (isExploding) return;
             isExploding = true;
 
-            // Get the text position
             const container = document.getElementById('typingContainer');
             const rect = container.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
 
-            // Get the text content and split into characters
             const text = typingText.textContent;
             const chars = text.split('');
 
-            // Remove the original text
             typingText.textContent = '';
             cursorBlink.style.display = 'none';
 
-            // Create explosion particles for each character
             chars.forEach((char, index) => {
                 const particle = document.createElement('div');
                 particle.className = 'explosion-particle';
@@ -3027,7 +3007,6 @@ print(fibonacci(10))</textarea>
                 particle.style.zIndex = '99998';
                 particle.style.textShadow = '0 0 30px rgba(139, 92, 246, 0.3)';
 
-                // Random direction and distance
                 const angle = Math.random() * Math.PI * 2;
                 const distance = 100 + Math.random() * 400;
                 const tx = Math.cos(angle) * distance;
@@ -3036,10 +3015,8 @@ print(fibonacci(10))</textarea>
                 particle.style.setProperty('--tx', tx + 'px');
                 particle.style.setProperty('--ty', ty + 'px');
 
-                // Random rotation
                 const rotation = (Math.random() - 0.5) * 720;
 
-                // Custom keyframes for this particle
                 const keyframes = [
                     { transform: 'translate(-50%, -50%) scale(1) rotate(0deg)', opacity: 1 },
                     { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0.2) rotate(${rotation}deg)`,
@@ -3054,13 +3031,11 @@ print(fibonacci(10))</textarea>
                 particle.animate(keyframes, options);
                 document.body.appendChild(particle);
 
-                // Remove particle after animation
                 setTimeout(() => {
                     particle.remove();
                 }, 1200);
             });
 
-            // Also create some extra spark particles
             for (let i = 0; i < 80; i++) {
                 const spark = document.createElement('div');
                 spark.className = 'explosion-particle';
@@ -3101,18 +3076,13 @@ print(fibonacci(10))</textarea>
                 }, 1200);
             }
 
-            // Hide loading screen after explosion
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
-                // Show the page content
                 document.querySelector('#home-page').style.display = 'block';
                 document.querySelector('#home-page').style.opacity = '1';
             }, 800);
         }
 
-        // ============================================================
-        // TRIGGER EXPLOSION ON CLICK OR ENTER
-        // ============================================================
         enterHint.addEventListener('click', triggerExplosion);
 
         document.addEventListener('keydown', (e) => {
@@ -3328,7 +3298,6 @@ print(fibonacci(10))</textarea>
         const homePage = document.getElementById('home-page');
         const debuggerPage = document.getElementById('debugger-page');
 
-        // Hide home page initially (loading screen handles it)
         homePage.style.display = 'none';
         homePage.style.opacity = '0';
 
@@ -3433,19 +3402,185 @@ print(fibonacci(10))</textarea>
             const chars = code.length;
             document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
             document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
-            const langBadge = document.getElementById('langBadge');
-            if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
-                langBadge.textContent = 'Python';
-            } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
-                langBadge.textContent = 'JavaScript';
-            } else if (code.includes('public class ') || code.includes('System.out.println')) {
-                langBadge.textContent = 'Java';
-            } else {
-                langBadge.textContent = 'Unknown';
-            }
+            
+            // Detect language
+            const lang = detectLanguage(code);
+            const langDisplay = getLanguageDisplay(lang);
+            document.getElementById('langBadge').textContent = langDisplay;
         }
-        document.getElementById('codeInput').addEventListener('input', updateStats);
-        updateStats();
+
+        // ============================================================
+        // MULTI-LANGUAGE SUPPORT — NEW FUNCTIONS
+        // ============================================================
+        function detectLanguage(code) {
+            // JavaScript/TypeScript
+            if (/function\s+\w+\s*\(/.test(code) || /const\s+\w+\s*=\s*\(/.test(code) || /let\s+\w+\s*=\s*\(/.test(code) || /=>/.test(code)) {
+                return 'javascript';
+            }
+            // Python
+            if (/def\s+\w+\s*\(/.test(code) || /import\s+\w+/.test(code) || /class\s+\w+/.test(code) || /print\(/.test(code)) {
+                return 'python';
+            }
+            // Java
+            if (/public\s+class/.test(code) || /System\.out\.println/.test(code) || /public\s+static\s+void\s+main/.test(code)) {
+                return 'java';
+            }
+            // C++
+            if (/#include\s*</.test(code) || /using\s+namespace\s+std/.test(code) || /int\s+main\s*\(/.test(code) && /std::/.test(code)) {
+                return 'cpp';
+            }
+            // Go
+            if (/package\s+\w+/.test(code) || /func\s+\w+/.test(code) || /fmt\.Println/.test(code)) {
+                return 'go';
+            }
+            // Rust
+            if (/fn\s+\w+/.test(code) || /let\s+mut/.test(code) || /println!/.test(code)) {
+                return 'rust';
+            }
+            return 'unknown';
+        }
+
+        function getLanguageDisplay(language) {
+            const langMap = {
+                'python': '🐍 Python',
+                'javascript': '📜 JavaScript',
+                'java': '☕ Java',
+                'cpp': '⚡ C++',
+                'go': '🐹 Go',
+                'rust': '🦀 Rust',
+                'unknown': '❓ Unknown'
+            };
+            return langMap[language] || '❓ Unknown';
+        }
+
+        // ============================================================
+        // LANGUAGE-SPECIFIC AST ANALYSIS
+        // ============================================================
+        function analyzeASTForLanguage(code, language) {
+            const issues = [];
+            const lines = code.split('\n');
+
+            switch(language) {
+                case 'python':
+                    lines.forEach((line, idx) => {
+                        if (/^\s*\w+\s*=/.test(line) && !line.includes('return') && !line.includes('print')) {
+                            const varName = line.match(/^\s*(\w+)\s*=/);
+                            if (varName) {
+                                let used = false;
+                                lines.forEach((l, i) => {
+                                    if (i !== idx && l.includes(varName[1])) used = true;
+                                });
+                                if (!used) {
+                                    issues.push({ line: idx + 1, type: 'warning', msg: `Unused variable '${varName[1]}'`, severity: 'Medium' });
+                                }
+                            }
+                        }
+                        if (/^\s*def\s+\w+/.test(line) && idx < lines.length - 1) {
+                            let hasDocstring = false;
+                            for (let i = idx + 1; i < Math.min(idx + 3, lines.length); i++) {
+                                if (lines[i].trim().startsWith('"""') || lines[i].trim().startsWith("'''")) {
+                                    hasDocstring = true;
+                                    break;
+                                }
+                            }
+                            if (!hasDocstring) {
+                                issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function', severity: 'Medium' });
+                            }
+                        }
+                    });
+                    break;
+
+                case 'javascript':
+                    lines.forEach((line, idx) => {
+                        if (/console\.log/.test(line)) {
+                            issues.push({ line: idx + 1, type: 'info', msg: 'console.log found - remove in production', severity: 'Low' });
+                        }
+                        if (/var\s+\w+/.test(line)) {
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Use let or const instead of var', severity: 'Medium' });
+                        }
+                        if (!line.includes('{') && !line.includes('}') && line.trim() && !line.trim().endsWith(';') && !line.trim().endsWith('/*')) {
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Missing semicolon', severity: 'Low' });
+                        }
+                    });
+                    break;
+
+                case 'java':
+                    lines.forEach((line, idx) => {
+                        if (/System\.out\.println/.test(line)) {
+                            issues.push({ line: idx + 1, type: 'info', msg: 'System.out.println found - use logging framework', severity: 'Low' });
+                        }
+                        if (/class\s+\w+/.test(line) && !line.includes('public') && !line.includes('private') && !line.includes('protected')) {
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Add access modifier for class', severity: 'Medium' });
+                        }
+                    });
+                    break;
+
+                case 'cpp':
+                    lines.forEach((line, idx) => {
+                        if (/std::shared_ptr/.test(line) || /std::unique_ptr/.test(line) || /\*\s*\w+/.test(line) && !line.includes('nullptr')) {
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Consider using smart pointers', severity: 'Medium' });
+                        }
+                        if (/using\s+namespace\s+std/.test(line)) {
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Avoid using namespace std in headers', severity: 'Low' });
+                        }
+                    });
+                    break;
+
+                case 'go':
+                    lines.forEach((line, idx) => {
+                        if (/^\s*\w+\s*:=/.test(line) || /^\s*var\s+\w+/.test(line)) {
+                            const varName = line.match(/^\s*(\w+)\s*[:=]/);
+                            if (varName) {
+                                let used = false;
+                                lines.forEach((l, i) => {
+                                    if (i !== idx && l.includes(varName[1]) && !l.includes('_ =')) used = true;
+                                });
+                                if (!used) {
+                                    issues.push({ line: idx + 1, type: 'warning', msg: `Unused variable '${varName[1]}'`, severity: 'Medium' });
+                                }
+                            }
+                        }
+                        if (/err\s*:=\s*/.test(line) && idx < lines.length - 1) {
+                            let hasErrorHandling = false;
+                            for (let i = idx + 1; i < Math.min(idx + 3, lines.length); i++) {
+                                if (lines[i].includes('if err != nil')) {
+                                    hasErrorHandling = true;
+                                    break;
+                                }
+                            }
+                            if (!hasErrorHandling) {
+                                issues.push({ line: idx + 1, type: 'warning', msg: 'Error not handled', severity: 'High' });
+                            }
+                        }
+                    });
+                    break;
+
+                default:
+                    lines.forEach((line, idx) => {
+                        if (line.length > 100) {
+                            issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars)`, severity: 'Low' });
+                        }
+                    });
+            }
+
+            // Common checks
+            lines.forEach((line, idx) => {
+                if (/TODO|FIXME|HACK/.test(line)) {
+                    issues.push({ line: idx + 1, type: 'info', msg: 'TODO/FIXME found', severity: 'Low' });
+                }
+                if (line.trim() === '' && idx > 0 && idx < lines.length - 1) {
+                    let emptyCount = 0;
+                    for (let i = idx; i < lines.length && lines[i].trim() === ''; i++) {
+                        emptyCount++;
+                    }
+                    if (emptyCount > 2) {
+                        issues.push({ line: idx + 1, type: 'style', msg: 'Too many consecutive blank lines', severity: 'Low' });
+                    }
+                }
+            });
+
+            return issues;
+        }
 
         // ============================================================
         // FILE UPLOAD
@@ -3594,11 +3729,15 @@ print(fibonacci(10))</textarea>
             if (!code) {
                 document.getElementById('output').innerHTML = `
                             <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
-                                ⚠️ Please paste some Python code first.
+                                ⚠️ Please paste some code first.
                             </div>
                         `;
                 return;
             }
+
+            // Detect language
+            const language = detectLanguage(code);
+            const langDisplay = getLanguageDisplay(language);
 
             document.getElementById('output').innerHTML = `
                         <div class="skeleton-loader">
@@ -3611,34 +3750,50 @@ print(fibonacci(10))</textarea>
                     `;
 
             try {
-                const astResult = detailedASTAnalysis(code);
-                const correctedCode = generateCorrectedCode(code, astResult);
+                // Use language-specific AST analysis
+                const astResult = analyzeASTForLanguage(code, language);
+                const correctedCode = generateCorrectedCode(code, astResult, language);
 
                 const prompt = `
-                            You are an expert Python code reviewer with 10+ years of experience. Analyze this code in extreme detail and provide:
+                            You are an expert code reviewer with 10+ years of experience in ${language.toUpperCase()}.
 
-                            1. COMPREHENSIVE SUMMARY: (3-4 sentences)
-                            2. DETAILED ISSUES: List with line numbers, type, severity, explanation, fix
-                            3. PERFORMANCE ANALYSIS: Time/space complexity
-                            4. SECURITY CONCERNS
-                            5. CODE QUALITY SCORE: Readability, Maintainability, Efficiency, Security (X/10)
-                            6. RATING: Overall X/10 with justification
-                            7. BEST PRACTICES: 3-4 suggestions
+                            The code is written in ${language.toUpperCase()}.
+
+                            Analyze this code in extreme detail and provide:
+
+                            1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
+
+                            2. DETAILED ISSUES: List 5-10 specific issues with:
+                               - Line number reference
+                               - Issue type (Bug, Style, Performance, Security, Best Practice)
+                               - Severity (Critical, High, Medium, Low)
+                               - Explanation of why it's an issue
+                               - How to fix it
+
+                            3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
+
+                            4. SECURITY CONCERNS: Any potential security vulnerabilities
+
+                            5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
+
+                            6. RATING: Overall rating out of 10 with detailed justification
+
+                            7. BEST PRACTICES: 3-4 specific best practices for ${language.toUpperCase()} that should be followed
 
                             Code:
                             ${code}
 
-                            Format:
-                            SUMMARY: [summary]
-                            ISSUES: [line X - type - severity - explanation - fix]
-                            PERFORMANCE: [analysis]
-                            SECURITY: [concerns]
+                            Format your response as:
+                            SUMMARY: [detailed summary]
+                            ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
+                            PERFORMANCE: [time/space complexity analysis]
+                            SECURITY: [any security concerns]
                             READABILITY: [X/10]
                             MAINTAINABILITY: [X/10]
                             EFFICIENCY: [X/10]
                             SECURITY_SCORE: [X/10]
-                            RATING: [X/10 - justification]
-                            PRACTICES: [suggestions]
+                            RATING: [X/10 - detailed justification]
+                            PRACTICES: [3-4 best practices]
                         `;
 
                 let geminiResponse = '';
@@ -3658,7 +3813,10 @@ print(fibonacci(10))</textarea>
                     geminiResponse = '';
                 }
 
-                const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode);
+                // Update language badge with detected language
+                document.getElementById('langBadge').textContent = langDisplay;
+
+                const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode, language);
                 document.getElementById('output').innerHTML = outputHtml;
 
             } catch (err) {
@@ -3671,129 +3829,9 @@ print(fibonacci(10))</textarea>
         });
 
         // ============================================================
-        // DETAILED AST ANALYSIS
-        // ============================================================
-        function detailedASTAnalysis(code) {
-            const issues = [];
-            const lines = code.split('\n');
-
-            const varPattern = /^(\s*)(\w+)\s*=\s*(.+)/;
-            const allVars = [];
-            const usedVars = new Set();
-
-            lines.forEach(line => {
-                const match = line.match(varPattern);
-                if (match) {
-                    allVars.push({ name: match[2], line: lines.indexOf(line) + 1 });
-                }
-                const words = line.match(/\b(\w+)\b/g);
-                if (words) {
-                    words.forEach(w => {
-                        if (w.length > 1 && !['if', 'for', 'while', 'def', 'return', 'print', 'import',
-                                'from', 'class', 'lambda', 'in', 'is', 'not', 'or', 'and', 'True',
-                                'False', 'None', 'elif', 'else', 'try', 'except', 'finally', 'with',
-                                'as', 'pass', 'break', 'continue', 'raise', 'yield', 'global',
-                                'nonlocal', 'assert', 'del'
-                            ].includes(w)) {
-                            usedVars.add(w);
-                        }
-                    });
-                }
-            });
-
-            allVars.forEach(v => {
-                let used = false;
-                lines.forEach((l, i) => {
-                    if (i !== v.line - 1 && l.includes(v.name)) used = true;
-                });
-                if (!used) {
-                    issues.push({ line: v.line, type: 'warning', msg: `Unused variable '${v.name}'`,
-                        severity: 'Medium' });
-                }
-            });
-
-            lines.forEach((line, idx) => {
-                if (line.length > 79) {
-                    issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)`,
-                        severity: 'Low' });
-                }
-                if (line.length > 100) {
-                    issues.push({ line: idx + 1, type: 'error', msg: `Line extremely long (${line.length} chars)`,
-                        severity: 'High' });
-                }
-            });
-
-            lines.forEach((line, idx) => {
-                if (line.trim().startsWith('def ') && idx < lines.length - 1) {
-                    let hasDocstring = false;
-                    for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
-                        const next = lines[i].trim();
-                        if (next.startsWith('"""') || next.startsWith("'''")) {
-                            hasDocstring = true;
-                            break;
-                        }
-                        if (next && !next.startsWith('#')) break;
-                    }
-                    if (!hasDocstring) {
-                        issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function',
-                            severity: 'Medium' });
-                    }
-                }
-                if (line.trim().startsWith('class ') && idx < lines.length - 1) {
-                    let hasDocstring = false;
-                    for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
-                        const next = lines[i].trim();
-                        if (next.startsWith('"""') || next.startsWith("'''")) {
-                            hasDocstring = true;
-                            break;
-                        }
-                        if (next && !next.startsWith('#')) break;
-                    }
-                    if (!hasDocstring) {
-                        issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for class',
-                            severity: 'Medium' });
-                    }
-                }
-            });
-
-            lines.forEach((line, idx) => {
-                if (line.trim().match(/^except\s*:/)) {
-                    issues.push({ line: idx + 1, type: 'error', msg: 'Bare except - use specific exceptions',
-                        severity: 'Critical' });
-                }
-            });
-
-            const conditions = lines.filter(l => l.includes('if ') || l.includes('elif ') || l.includes('else:') || l
-                .includes('for ') || l.includes('while '));
-            if (conditions.length > 10) {
-                issues.push({ line: 0, type: 'warning', msg: `High complexity (${conditions.length} conditionals)`,
-                    severity: 'Medium' });
-            }
-
-            return {
-                issues: issues,
-                stats: {
-                    totalLines: lines.length,
-                    functions: lines.filter(l => l.trim().startsWith('def ')).length,
-                    classes: lines.filter(l => l.trim().startsWith('class ')).length,
-                    imports: lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from '))
-                        .length,
-                    comments: lines.filter(l => l.trim().startsWith('#')).length,
-                    blankLines: lines.filter(l => l.trim() === '').length,
-                    conditionals: conditions.length
-                },
-                issueCount: issues.length,
-                warningCount: issues.filter(i => i.type === 'warning').length,
-                styleCount: issues.filter(i => i.type === 'style').length,
-                errorCount: issues.filter(i => i.type === 'error').length,
-                criticalCount: issues.filter(i => i.severity === 'Critical').length
-            };
-        }
-
-        // ============================================================
         // GENERATE CORRECTED CODE
         // ============================================================
-        function generateCorrectedCode(code, astResult) {
+        function generateCorrectedCode(code, astResult, language) {
             const lines = code.split('\n');
             const newLines = [];
 
@@ -3801,7 +3839,7 @@ print(fibonacci(10))</textarea>
                 const line = lines[i];
                 let modifiedLine = line;
 
-                if (line.trim().match(/^except\s*:/)) {
+                if (language === 'python' && line.trim().match(/^except\s*:/)) {
                     modifiedLine = line.replace('except:', 'except Exception as e:');
                     newLines.push(modifiedLine);
                     const indent = line.match(/^\s*/)[0];
@@ -3811,7 +3849,7 @@ print(fibonacci(10))</textarea>
 
                 newLines.push(modifiedLine);
 
-                if (line.trim().startsWith('def ') && i < lines.length - 1) {
+                if (language === 'python' && line.trim().startsWith('def ') && i < lines.length - 1) {
                     let hasDocstring = false;
                     for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
                         const next = lines[j].trim();
@@ -3830,7 +3868,7 @@ print(fibonacci(10))</textarea>
                     }
                 }
 
-                if (line.trim().startsWith('class ') && i < lines.length - 1) {
+                if (language === 'python' && line.trim().startsWith('class ') && i < lines.length - 1) {
                     let hasDocstring = false;
                     for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
                         const next = lines[j].trim();
@@ -3847,6 +3885,11 @@ print(fibonacci(10))</textarea>
                         newLines.push(`${indent}    ${className ? className[1] : 'class'} documentation.`);
                         newLines.push(`${indent}    """`);
                     }
+                }
+
+                if (language === 'javascript' && /var\s+\w+/.test(line)) {
+                    modifiedLine = line.replace('var', 'let');
+                    newLines[newLines.length - 1] = modifiedLine;
                 }
             }
 
@@ -3879,8 +3922,13 @@ print(fibonacci(10))</textarea>
         // ============================================================
         // BUILD DETAILED OUTPUT
         // ============================================================
-        function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode) {
+        function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode, language) {
             let html = '';
+
+            // Language header
+            html += `<div style="margin-bottom:0.8rem;font-size:0.6rem;color:var(--color-fg-dim);opacity:0.3;border-bottom:1px solid var(--color-edge);padding-bottom:0.5rem;">
+                        🧩 Language: <strong style="color:var(--color-fg);">${getLanguageDisplay(language)}</strong>
+                    </div>`;
 
             // AST Analysis
             html += `<div class="output-section">`;
@@ -4082,7 +4130,7 @@ print(fibonacci(10))</textarea>
                             </div>
                         </div>`;
                 html += `<div style="margin-top:0.5rem;font-size:0.55rem;color:var(--color-fg-dim);opacity:0.3;">
-                            <i class="fas fa-info-circle"></i> Changes: Added docstrings, fixed bare except, improved code style
+                            <i class="fas fa-info-circle"></i> Changes made based on analysis
                         </div>`;
             } else {
                 html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
@@ -4103,7 +4151,9 @@ print(fibonacci(10))</textarea>
             div.textContent = text;
             return div.innerHTML;
         }
-    </script>
 
+        // Initial update for language detection
+        updateStats();
+    </script>
 </body>
 </html>
