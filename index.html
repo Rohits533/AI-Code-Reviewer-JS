@@ -254,6 +254,7 @@
       font-weight: 500;
       position: relative;
       text-transform: uppercase;
+      cursor: pointer;
     }
     .nav a::before {
       content: '';
@@ -389,7 +390,7 @@
 
     .hero p {
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.3);
       max-width: 480px;
       line-height: 1.8;
       font-weight: 300;
@@ -528,7 +529,7 @@
     /* Stats */
     .hero-stats {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       margin-top: 0.5rem;
       padding-top: 1.5rem;
       border-top: 1px solid rgba(255, 255, 255, 0.02);
@@ -572,7 +573,7 @@
     }
 
     /* ============================================================
-       FULL DEBUGGER INTERFACE - Hidden by default, shown on Discover
+       FULL DEBUGGER INTERFACE
        ============================================================ */
     #debugger-interface {
       display: none;
@@ -834,7 +835,6 @@
       50% { opacity: 1; }
     }
 
-    /* Back button */
     .back-btn {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.02);
@@ -852,6 +852,249 @@
       border-color: rgba(255, 255, 255, 0.04);
       color: #ffffff;
       transform: scale(1.05);
+    }
+
+    /* ============================================================
+       FAB
+       ============================================================ */
+    .fab {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 99;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border: none;
+      color: white;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 30px rgba(139, 92, 246, 0.3);
+      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fabPulse 2s ease-in-out infinite;
+      cursor: pointer;
+    }
+    .fab:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.4);
+    }
+    @keyframes fabPulse {
+      0%, 100% { box-shadow: 0 4px 30px rgba(139,92,246,0.3); }
+      50% { box-shadow: 0 4px 60px rgba(139,92,246,0.5); }
+    }
+
+    /* ============================================================
+       FEATURES SECTION
+       ============================================================ */
+    #features {
+      min-height: 100vh;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #features.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .features-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: -2px;
+      color: #ffffff;
+    }
+    .features-title span {
+      color: #8b5cf6;
+    }
+    .features-sub {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      border-radius: 20px;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(30px) saturate(1.5);
+      -webkit-backdrop-filter: blur(30px) saturate(1.5);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(139, 92, 246, 0.06);
+      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.04);
+    }
+    .feature-card .icon {
+      font-size: 2rem;
+      color: #8b5cf6;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+    .feature-card p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.3);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+       ============================================================ */
+    #about {
+      min-height: 100vh;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #about.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .about-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: -2px;
+      color: #ffffff;
+    }
+    .about-title span {
+      color: #8b5cf6;
+    }
+    .about-sub {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .about-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .about-text h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .about-text h3 span {
+      color: #8b5cf6;
+    }
+    .about-text p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.3);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+    .about-text .about-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .about-text .about-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.9rem;
+    }
+    .about-text .about-list li i {
+      color: #8b5cf6;
+      font-size: 0.8rem;
+      width: 20px;
+    }
+
+    .about-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-card {
+      width: 100%;
+      max-width: 450px;
+      aspect-ratio: 1;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.01);
+      backdrop-filter: blur(60px) saturate(2);
+      -webkit-backdrop-filter: blur(60px) saturate(2);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .about-card-inner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .about-card-inner .big-icon {
+      font-size: 4rem;
+      color: rgba(139, 92, 246, 0.1);
+    }
+    .about-card-inner .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .about-card-inner .stat-label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.2);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     /* ============================================================
@@ -886,6 +1129,16 @@
         display: none;
       }
       .debugger-title {
+        font-size: 2.2rem;
+      }
+      .about-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .about-text .about-list li {
+        justify-content: center;
+      }
+      .features-title, .about-title {
         font-size: 2.2rem;
       }
     }
@@ -929,6 +1182,15 @@
       .debugger-title {
         font-size: 1.8rem;
       }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .features-title, .about-title {
+        font-size: 1.8rem;
+      }
+      .about-text h3 {
+        font-size: 1.4rem;
+      }
       .rotating-logo-container {
         display: none;
       }
@@ -968,6 +1230,9 @@
         font-size: 0.7rem;
         padding: 0.8rem;
         min-height: 150px;
+      }
+      .features-title, .about-title {
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -1015,19 +1280,15 @@
     </div>
     <nav class="nav">
       <a href="#home" id="navHome">Home</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
       <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#blog">Blog</a>
-      <a href="#pages">Pages</a>
+      <a href="#about">About</a>
       <i class="fas fa-search search-icon"></i>
-      <button class="btn-cta" id="headerGetInTouch">Get in Touch</button>
+      <a href="mailto:rohitsavan360@gmail.com" class="btn-cta">Get in Touch</a>
     </nav>
   </header>
 
   <!-- ============================================================
-       HERO - With AI Code Debugger Title
+       HERO
        ============================================================ -->
   <section class="hero" id="home">
     <div class="hero-content">
@@ -1038,9 +1299,8 @@
           <span class="highlight-light">Debugger</span>
         </h1>
         <p>
-          Mumching paradise fish! Triggerfish bango guppy oqah sunfish
-          burtonose kundefish-ogode-doan-carthi colba spooftanh
-          connect catchd.
+          A powerful AI-driven code analysis tool that helps you debug, optimize, 
+          and understand your Python code using AST parsing and Gemini AI intelligence.
         </p>
         <div class="hero-buttons">
           <button class="btn-primary" id="discoverBtn">
@@ -1052,7 +1312,7 @@
         </div>
         <div class="hero-stats">
           <div class="stat">
-            <span class="number">590</span>
+            <span class="number">18+</span>
             <span class="label">Projects</span>
           </div>
           <div class="stat">
@@ -1078,7 +1338,95 @@
   </section>
 
   <!-- ============================================================
-       FULL DEBUGGER INTERFACE - Hidden initially
+       FEATURES SECTION
+       ============================================================ -->
+  <section id="features">
+    <div class="features-container">
+      <h2 class="features-title">⚡ <span>Features</span></h2>
+      <p class="features-sub">What makes AERO AI Code Debugger powerful</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-code"></i></span>
+          <h3>AST Analysis</h3>
+          <p>Parse and analyze Python code structure to detect unused variables, long lines, missing docstrings, and more.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-brain"></i></span>
+          <h3>Gemini AI Review</h3>
+          <p>Get intelligent code reviews with summary, issues, and rating powered by Google's Gemini AI model.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-file-upload"></i></span>
+          <h3>File Upload Support</h3>
+          <p>Upload your .py files directly or paste code into the editor for instant analysis.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-download"></i></span>
+          <h3>Export Reports</h3>
+          <p>Download analysis results as PDF, TXT, or copy to clipboard for sharing and documentation.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-keyboard"></i></span>
+          <h3>Keyboard Shortcuts</h3>
+          <p>Work faster with Ctrl+Enter to analyze and Ctrl+L to focus the editor.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon"><i class="fas fa-history"></i></span>
+          <h3>History Tracking</h3>
+          <p>All your analyses are saved locally for easy reference and comparison.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT SECTION
+       ============================================================ -->
+  <section id="about">
+    <div class="about-container">
+      <h2 class="about-title">📖 <span>About</span></h2>
+      <p class="about-sub">Learn more about AERO AI Code Debugger</p>
+
+      <div class="about-content">
+        <div class="about-text">
+          <h3>AI-Powered <span>Code Intelligence</span></h3>
+          <p>
+            AERO AI Code Debugger is a cutting-edge tool designed to help developers 
+            write cleaner, more efficient Python code. By combining Abstract Syntax Tree (AST) 
+            analysis with Google's Gemini AI, it provides comprehensive code reviews and insights.
+          </p>
+          <ul class="about-list">
+            <li><i class="fas fa-check-circle"></i> Real-time code analysis</li>
+            <li><i class="fas fa-check-circle"></i> AI-powered recommendations</li>
+            <li><i class="fas fa-check-circle"></i> Clean, modern glass UI</li>
+            <li><i class="fas fa-check-circle"></i> Privacy-focused local storage</li>
+            <li><i class="fas fa-check-circle"></i> Built with ❤️ for developers</li>
+          </ul>
+          <div style="margin-top:0.5rem;">
+            <button class="btn-primary" id="aboutDiscoverBtn" style="padding:0.6rem 2rem;font-size:0.85rem;">
+              <i class="fas fa-arrow-right"></i> Try the Debugger
+            </button>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="about-card">
+            <div class="about-card-inner">
+              <div class="big-icon"><i class="fas fa-rocket"></i></div>
+              <div class="stat-number">18+</div>
+              <div class="stat-label">Projects Completed</div>
+              <div style="color:rgba(255,255,255,0.1);font-size:0.7rem;margin-top:0.5rem;">
+                <i class="fas fa-code"></i> Built with Python & Gemini
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FULL DEBUGGER INTERFACE
        ============================================================ -->
   <section id="debugger-interface">
     <div class="debugger-container">
@@ -1126,21 +1474,11 @@ print(fibonacci(10))</textarea>
   </section>
 
   <!-- ============================================================
-       FLOATING ACTION BUTTON
+       FAB
        ============================================================ -->
-  <button class="fab" id="fabBtn" title="Back to top" style="position:fixed;bottom:2rem;right:2rem;z-index:99;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#7c3aed);border:none;color:white;font-size:1.4rem;box-shadow:0 4px 30px rgba(139,92,246,0.3);transition:0.4s cubic-bezier(0.22,1,0.36,1);display:flex;align-items:center;justify-content:center;animation:fabPulse 2s ease-in-out infinite;cursor:pointer;">
+  <button class="fab" id="fabBtn" title="Back to top">
     <i class="fas fa-arrow-up"></i>
   </button>
-  <style>
-    .fab:hover {
-      transform: scale(1.1) rotate(90deg);
-      box-shadow: 0 8px 50px rgba(139,92,246,0.4);
-    }
-    @keyframes fabPulse {
-      0%, 100% { box-shadow: 0 4px 30px rgba(139,92,246,0.3); }
-      50% { box-shadow: 0 4px 60px rgba(139,92,246,0.5); }
-    }
-  </style>
 
   <script>
     // ============================================================
@@ -1191,6 +1529,20 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
+    // SCROLL REVEAL FOR SECTIONS
+    // ============================================================
+    const sections = document.querySelectorAll('#features, #about');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => observer.observe(section));
+
+    // ============================================================
     // FAB
     // ============================================================
     document.getElementById('fabBtn').addEventListener('click', () => {
@@ -1200,34 +1552,43 @@ print(fibonacci(10))</textarea>
     // ============================================================
     // SHOW DEBUGGER ON DISCOVER
     // ============================================================
-    document.getElementById('discoverBtn').addEventListener('click', () => {
+    function showDebugger() {
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
       heroSection.style.display = 'none';
+      document.getElementById('features').style.display = 'none';
+      document.getElementById('about').style.display = 'none';
       debuggerSection.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(() => document.getElementById('codeInput').focus(), 500);
-    });
+    }
+
+    document.getElementById('discoverBtn').addEventListener('click', showDebugger);
+    document.getElementById('aboutDiscoverBtn').addEventListener('click', showDebugger);
 
     document.getElementById('backBtn').addEventListener('click', () => {
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
+      const featuresSection = document.getElementById('features');
+      const aboutSection = document.getElementById('about');
       debuggerSection.classList.remove('active');
       heroSection.style.display = 'flex';
+      featuresSection.style.display = 'block';
+      aboutSection.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    document.getElementById('headerGetInTouch').addEventListener('click', () => {
-      document.getElementById('discoverBtn').click();
     });
 
     document.getElementById('navHome').addEventListener('click', (e) => {
       e.preventDefault();
       const debuggerSection = document.getElementById('debugger-interface');
       const heroSection = document.querySelector('.hero');
+      const featuresSection = document.getElementById('features');
+      const aboutSection = document.getElementById('about');
       if (debuggerSection.classList.contains('active')) {
         debuggerSection.classList.remove('active');
         heroSection.style.display = 'flex';
+        featuresSection.style.display = 'block';
+        aboutSection.style.display = 'block';
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
