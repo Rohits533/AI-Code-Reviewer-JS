@@ -20,7 +20,6 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-snap-type: y proximity;
         }
 
         body {
@@ -45,7 +44,7 @@
         }
 
         /* ============================================================
-           ANIMATED CURSOR - GLITCH STYLE
+           ANIMATED CURSOR
            ============================================================ */
         #custom-cursor {
             position: fixed;
@@ -96,7 +95,7 @@
         }
 
         /* ============================================================
-           ANIMATED BACKGROUND - PREMIUM
+           ANIMATED BACKGROUND
            ============================================================ */
         #animated-bg {
             position: fixed;
@@ -152,7 +151,6 @@
             }
         }
 
-        /* Floating Orbs */
         .gradient-orb {
             position: fixed;
             border-radius: 50%;
@@ -207,7 +205,7 @@
         }
 
         /* ============================================================
-           ENTRY ANIMATION - GLITCH THEME
+           ENTRY ANIMATION
            ============================================================ */
         .entry-overlay {
             position: fixed;
@@ -298,7 +296,7 @@
         }
 
         /* ============================================================
-           GLITCH TEXT ANIMATION
+           GLITCH TEXT
            ============================================================ */
         .glitch-text {
             position: relative;
@@ -419,22 +417,6 @@
             50% {
                 background-position: 200% 0%;
             }
-        }
-
-        /* ============================================================
-           GLASS EFFECTS - PREMIUM
-           ============================================================ */
-        .glass-premium {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(40px) saturate(1.5);
-            -webkit-backdrop-filter: blur(40px) saturate(1.5);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .glass-premium:hover {
-            border-color: rgba(139, 92, 246, 0.06);
-            box-shadow: 0 8px 80px rgba(139, 92, 246, 0.04);
         }
 
         /* ============================================================
@@ -573,7 +555,7 @@
         }
 
         /* ============================================================
-           HERO - WITH GLITCH
+           HERO
            ============================================================ */
         .hero {
             min-height: 60vh;
@@ -822,7 +804,7 @@
         }
 
         /* ============================================================
-           TECH STACK SECTION
+           TECH STACK - UPDATED
            ============================================================ */
         #stack {
             padding: 4rem 2rem;
@@ -868,13 +850,13 @@
 
         .stack-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 1.5rem;
         }
 
         .stack-card {
             text-align: center;
-            padding: 1.8rem 1rem;
+            padding: 1.5rem 0.8rem;
             background: rgba(255, 255, 255, 0.01);
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.02);
@@ -890,24 +872,24 @@
         }
 
         .stack-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            margin-bottom: 0.3rem;
             display: block;
         }
 
         .stack-card .name {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.3);
             font-weight: 500;
         }
 
         .stack-card .tag {
             display: inline-block;
-            margin-top: 0.3rem;
-            font-size: 0.5rem;
+            margin-top: 0.2rem;
+            font-size: 0.45rem;
             color: rgba(139, 92, 246, 0.2);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             border: 1px solid rgba(139, 92, 246, 0.02);
             padding: 0.05rem 0.4rem;
             border-radius: 8px;
@@ -1513,7 +1495,7 @@
             </p>
             <div class="hero-buttons">
                 <button class="btn-primary" id="launchBtn">
-                    <i class="fas fa-arrow-right"></i> Launch Debugger
+                    <i class="fas fa-arrow-right"></i> Try It Now
                 </button>
                 <button class="btn-secondary" id="watchBtn">
                     <i class="fas fa-play-circle"></i> Watch demo
@@ -1535,9 +1517,9 @@
                     <strong style="color:#8b5cf6;">Google's Gemini AI</strong> to provide professional-grade code reviews.
                 </p>
                 <p>
-                    Built by <strong style="color:#8b5cf6;">Rohit Savan</strong>, a 17-year-old AI developer from Mumbai,
-                    AERO helps developers write cleaner, more efficient Python code by identifying issues,
-                    suggesting improvements, and even generating corrected code automatically.
+                    Built by <strong style="color:#8b5cf6;">Rohit Savan</strong>, a 17-year-old AI developer from Mumbai.
+                    Deployed on <strong style="color:#8b5cf6;">Streamlit</strong> and <strong style="color:#8b5cf6;">Vercel</strong>,
+                    with the backend powered by Python and the frontend enhanced with JavaScript.
                 </p>
                 <div class="about-stats-grid">
                     <div class="about-stat">
@@ -1588,7 +1570,7 @@
     </section>
 
     <!-- ============================================================
-       TECH STACK SECTION
+       TECH STACK - UPDATED
        ============================================================ -->
     <section id="stack">
         <div class="stack-container">
@@ -1601,39 +1583,49 @@
                     <span class="tag">Core</span>
                 </div>
                 <div class="stack-card">
+                    <span class="icon">🎨</span>
+                    <div class="name">Streamlit</div>
+                    <span class="tag">UI Framework</span>
+                </div>
+                <div class="stack-card">
                     <span class="icon">🤖</span>
                     <div class="name">Gemini AI</div>
-                    <span class="tag">AI</span>
+                    <span class="tag">AI Model</span>
                 </div>
                 <div class="stack-card">
                     <span class="icon">🔮</span>
                     <div class="name">AST</div>
-                    <span class="tag">Parsing</span>
-                </div>
-                <div class="stack-card">
-                    <span class="icon">🎨</span>
-                    <div class="name">Streamlit</div>
-                    <span class="tag">UI</span>
+                    <span class="tag">Code Parsing</span>
                 </div>
                 <div class="stack-card">
                     <span class="icon">📊</span>
                     <div class="name">ReportLab</div>
-                    <span class="tag">PDF</span>
+                    <span class="tag">PDF Export</span>
                 </div>
                 <div class="stack-card">
                     <span class="icon">🐙</span>
                     <div class="name">GitHub</div>
-                    <span class="tag">Version</span>
+                    <span class="tag">Version Control</span>
                 </div>
                 <div class="stack-card">
-                    <span class="icon">☁️</span>
-                    <div class="name">Deployment</div>
+                    <span class="icon">▲</span>
+                    <div class="name">Vercel</div>
                     <span class="tag">Hosting</span>
                 </div>
                 <div class="stack-card">
+                    <span class="icon">⚡</span>
+                    <div class="name">Render</div>
+                    <span class="tag">Hosting</span>
+                </div>
+                <div class="stack-card">
+                    <span class="icon">📜</span>
+                    <div class="name">JavaScript</div>
+                    <span class="tag">Frontend</span>
+                </div>
+                <div class="stack-card">
                     <span class="icon">🎯</span>
-                    <div class="name">Prompt Eng.</div>
-                    <span class="tag">AI</span>
+                    <div class="name">HTML/CSS</div>
+                    <span class="tag">Styling</span>
                 </div>
             </div>
         </div>
@@ -1652,11 +1644,11 @@
                 </div>
 
                 <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def fibonacci(n):
-                    if n <= 1:
-                    return n
-                    return fibonacci(n-1) + fibonacci(n-2)
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
 
-                    print(fibonacci(10))</textarea>
+print(fibonacci(10))</textarea>
 
                 <div class="code-stats">
                     <span id="lineCount">📄 Lines: 0</span>
@@ -1729,7 +1721,7 @@
         }
 
         // ============================================================
-        // SCROLL PROGRESS
+        // SCROLL PROGRESS & HEADER
         // ============================================================
         window.addEventListener('scroll', () => {
             const scrollTop = window.scrollY;
@@ -1862,11 +1854,11 @@
             document.getElementById('codeInput').value = '';
             updateStats();
             document.getElementById('output').innerHTML = `
-                    <div class="placeholder">
-                      <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.01);"></i>
-                      Results will appear here
-                    </div>
-                  `;
+            <div class="placeholder">
+              <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; color:rgba(255,255,255,0.01);"></i>
+              Results will appear here
+            </div>
+          `;
         });
 
         // ============================================================
@@ -1885,12 +1877,12 @@
             element.style.backgroundColor = '#f5f0ff';
             element.style.color = '#1a1a2e';
             element.innerHTML = `
-                    <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
-                    <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
-                      ${content}
-                    </div>
-                    <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
-                  `;
+            <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
+            <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
+              ${content}
+            </div>
+            <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
+          `;
             document.body.appendChild(element);
             html2pdf().set({ margin: 1, filename: 'analysis-report.pdf' }).from(element).save().then(() => {
                 document.body.removeChild(element);
@@ -1898,7 +1890,7 @@
         });
 
         // ============================================================
-        // ANALYZE - DETAILED AST + GEMINI
+        // ANALYZE - DETAILED AST + GEMINI + ALWAYS CORRECTED CODE
         // ============================================================
         const GEMINI_API_KEY = 'AIzaSyC5LdN6q_9UzLt6s9JXkX8YqG6o3fS2mP0';
         const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' +
@@ -1908,49 +1900,65 @@
             const code = document.getElementById('codeInput').value.trim();
             if (!code) {
                 document.getElementById('output').innerHTML = `
-                      <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
-                        ⚠️ Please paste some Python code first.
-                      </div>
-                    `;
+              <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
+                ⚠️ Please paste some Python code first.
+              </div>
+            `;
                 return;
             }
 
             document.getElementById('output').innerHTML = `
-                    <div class="spinner-container">
-                      <div class="spinner"></div>
-                      <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
-                    </div>
-                  `;
+            <div class="spinner-container">
+              <div class="spinner"></div>
+              <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
+            </div>
+          `;
 
             try {
+                // 1. Run AST Analysis
                 const astResult = detailedASTAnalysis(code);
+
+                // 2. Generate Corrected Code (ALWAYS)
                 const correctedCode = generateCorrectedCode(code, astResult);
 
+                // 3. Get Gemini AI Review
                 const prompt = `
-                      You are an expert Python code reviewer. Analyze this code in detail and provide:
-                      1. COMPREHENSIVE SUMMARY: (2-3 sentences)
-                      2. DETAILED ISSUES: List with line numbers, type, severity, explanation
-                      3. PERFORMANCE ANALYSIS: Time/space complexity
-                      4. SECURITY CONCERNS: Any vulnerabilities
-                      5. CODE QUALITY SCORES: Readability, Maintainability, Efficiency, Security (X/10)
-                      6. RATING: Overall X/10 with justification
-                      7. BEST PRACTICES: 3-4 suggestions
+              You are an expert Python code reviewer with 10+ years of experience. Analyze this code in extreme detail and provide:
 
-                      Code:
-                      ${code}
+              1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
 
-                      Format:
-                      SUMMARY: [summary]
-                      ISSUES: [line X - type - severity - explanation]
-                      PERFORMANCE: [analysis]
-                      SECURITY: [concerns]
-                      READABILITY: [X/10]
-                      MAINTAINABILITY: [X/10]
-                      EFFICIENCY: [X/10]
-                      SECURITY_SCORE: [X/10]
-                      RATING: [X/10 - justification]
-                      PRACTICES: [suggestions]
-                    `;
+              2. DETAILED ISSUES: List 5-10 specific issues with:
+                 - Line number reference
+                 - Issue type (Bug, Style, Performance, Security, Best Practice)
+                 - Severity (Critical, High, Medium, Low)
+                 - Explanation of why it's an issue
+                 - How to fix it
+
+              3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
+
+              4. SECURITY CONCERNS: Any potential security vulnerabilities
+
+              5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
+
+              6. RATING: Overall rating out of 10 with detailed justification
+
+              7. BEST PRACTICES: 3-4 specific best practices that should be followed
+
+              Code:
+              ${code}
+
+              Format your response as:
+              SUMMARY: [detailed summary]
+              ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
+              PERFORMANCE: [time/space complexity analysis]
+              SECURITY: [any security concerns]
+              READABILITY: [X/10]
+              MAINTAINABILITY: [X/10]
+              EFFICIENCY: [X/10]
+              SECURITY_SCORE: [X/10]
+              RATING: [X/10 - detailed justification]
+              PRACTICES: [3-4 best practices]
+            `;
 
                 let geminiResponse = '';
                 try {
@@ -1969,15 +1977,16 @@
                     geminiResponse = '';
                 }
 
+                // 4. Build Output with CORRECTED CODE ALWAYS
                 const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode);
                 document.getElementById('output').innerHTML = outputHtml;
 
             } catch (err) {
                 document.getElementById('output').innerHTML = `
-                      <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
-                        ❌ Error: ${err.message}
-                      </div>
-                    `;
+              <div style="color:#f87171;padding:0.8rem;border-left:3px solid #f87171;font-size:0.8rem;">
+                ❌ Error: ${err.message}
+              </div>
+            `;
             }
         });
 
@@ -2078,6 +2087,14 @@
                 }
             });
 
+            // Complexity check
+            const conditions = lines.filter(l => l.includes('if ') || l.includes('elif ') || l.includes('else:') || l
+                .includes('for ') || l.includes('while '));
+            if (conditions.length > 10) {
+                issues.push({ line: 0, type: 'warning', msg: `High complexity (${conditions.length} conditionals)`,
+                    severity: 'Medium' });
+            }
+
             return {
                 issues: issues,
                 stats: {
@@ -2087,7 +2104,8 @@
                     imports: lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from '))
                         .length,
                     comments: lines.filter(l => l.trim().startsWith('#')).length,
-                    blankLines: lines.filter(l => l.trim() === '').length
+                    blankLines: lines.filter(l => l.trim() === '').length,
+                    conditionals: conditions.length
                 },
                 issueCount: issues.length,
                 warningCount: issues.filter(i => i.type === 'warning').length,
@@ -2098,7 +2116,7 @@
         }
 
         // ============================================================
-        // GENERATE CORRECTED CODE
+        // GENERATE CORRECTED CODE - ALWAYS
         // ============================================================
         function generateCorrectedCode(code, astResult) {
             const lines = code.split('\n');
@@ -2106,9 +2124,20 @@
 
             for (let i = 0; i < lines.length; i++) {
                 const line = lines[i];
-                newLines.push(line);
+                let modifiedLine = line;
 
-                // Add docstrings to functions
+                // Fix bare except
+                if (line.trim().match(/^except\s*:/)) {
+                    modifiedLine = line.replace('except:', 'except Exception as e:');
+                    newLines.push(modifiedLine);
+                    const indent = line.match(/^\s*/)[0];
+                    newLines.push(`${indent}    print(f"Error: {e}")  # Log the error properly`);
+                    continue;
+                }
+
+                newLines.push(modifiedLine);
+
+                // Add docstrings to functions (if missing)
                 if (line.trim().startsWith('def ') && i < lines.length - 1) {
                     let hasDocstring = false;
                     for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
@@ -2128,10 +2157,24 @@
                     }
                 }
 
-                // Fix bare except
-                if (line.trim().match(/^except\s*:/)) {
-                    newLines[newLines.length - 1] = line.replace('except:', 'except Exception as e:');
-                    newLines.push(`    print(f"Error: {e}")  # Log properly`);
+                // Add docstrings to classes (if missing)
+                if (line.trim().startsWith('class ') && i < lines.length - 1) {
+                    let hasDocstring = false;
+                    for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
+                        const next = lines[j].trim();
+                        if (next.startsWith('"""') || next.startsWith("'''")) {
+                            hasDocstring = true;
+                            break;
+                        }
+                        if (next && !next.startsWith('#')) break;
+                    }
+                    if (!hasDocstring) {
+                        const indent = line.match(/^\s*/)[0];
+                        const className = line.match(/class\s+(\w+)/);
+                        newLines.push(`${indent}    """`);
+                        newLines.push(`${indent}    ${className ? className[1] : 'class'} documentation.`);
+                        newLines.push(`${indent}    """`);
+                    }
                 }
             }
 
@@ -2139,19 +2182,20 @@
         }
 
         // ============================================================
-        // BUILD DETAILED OUTPUT
+        // BUILD DETAILED OUTPUT - WITH CORRECTED CODE ALWAYS
         // ============================================================
         function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode) {
             let html = '';
 
-            // AST Analysis
+            // ====== AST ANALYSIS ======
             html += `<div class="output-section">`;
             html += `<div class="output-section-title">
-                    <i class="fas fa-code"></i> AST Analysis
-                    <span class="badge">${astResult.issueCount} issues</span>
-                    <span class="badge" style="color:#fbbf24;">${astResult.warningCount} warnings</span>
-                    <span class="badge" style="color:#f87171;">${astResult.errorCount} errors</span>
-                  </div>`;
+            <i class="fas fa-code"></i> AST Analysis
+            <span class="badge">${astResult.issueCount} issues</span>
+            <span class="badge" style="color:#fbbf24;">${astResult.warningCount} warnings</span>
+            <span class="badge" style="color:#f87171;">${astResult.errorCount} errors</span>
+            <span class="badge" style="color:#ef4444;">${astResult.criticalCount} critical</span>
+          </div>`;
 
             html +=
                 `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:0.3rem;margin-bottom:0.6rem;padding:0.4rem;background:rgba(255,255,255,0.01);border-radius:6px;font-size:0.6rem;color:rgba(255,255,255,0.1);">`;
@@ -2160,13 +2204,14 @@
             html += `<div><span style="color:#ffffff;">${astResult.stats.classes}</span> classes</div>`;
             html += `<div><span style="color:#ffffff;">${astResult.stats.imports}</span> imports</div>`;
             html += `<div><span style="color:#ffffff;">${astResult.stats.comments}</span> comments</div>`;
+            html += `<div><span style="color:#ffffff;">${astResult.stats.conditionals}</span> conditionals</div>`;
             html += `</div>`;
 
             if (astResult.issues.length === 0) {
                 html += `<div class="output-issue success">
-                          <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
-                          <span>✅ No issues found — clean code!</span>
-                        </div>`;
+              <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
+              <span>✅ No issues found — clean code!</span>
+            </div>`;
             } else {
                 astResult.issues.forEach(issue => {
                     const typeClass = issue.type;
@@ -2177,21 +2222,21 @@
                         issue.severity === 'High' ? '#f87171' :
                         issue.severity === 'Medium' ? '#fbbf24' : '#60a5fa';
                     html += `<div class="output-issue ${typeClass}">
-                                <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
-                                <span class="issue-icon"><i class="fas ${icon}"></i></span>
-                                <span>${issue.msg}</span>
-                                <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:rgba(255,255,255,0.02);padding:0.05rem 0.3rem;border-radius:8px;">${issue.severity || 'Info'}</span>
-                              </div>`;
+                <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
+                <span class="issue-icon"><i class="fas ${icon}"></i></span>
+                <span>${issue.msg}</span>
+                <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:rgba(255,255,255,0.02);padding:0.05rem 0.3rem;border-radius:8px;">${issue.severity || 'Info'}</span>
+              </div>`;
                 });
             }
             html += `</div>`;
 
-            // Gemini AI Review
+            // ====== GEMINI AI REVIEW ======
             html += `<div class="output-section">`;
             html += `<div class="output-section-title">
-                    <i class="fas fa-brain"></i> Gemini AI Review
-                    <span class="badge">v2.0-flash</span>
-                  </div>`;
+            <i class="fas fa-brain"></i> Gemini AI Review
+            <span class="badge">v2.0-flash</span>
+          </div>`;
 
             if (geminiText && geminiText.length > 10) {
                 const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
@@ -2207,30 +2252,30 @@
 
                 if (summaryMatch) {
                     html += `<div class="output-summary">
-                                <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
-                                <div style="margin-top:0.2rem;color:rgba(255,255,255,0.4);font-size:0.75rem;">${summaryMatch[1].trim()}</div>
-                              </div>`;
+                <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
+                <div style="margin-top:0.2rem;color:rgba(255,255,255,0.4);font-size:0.75rem;">${summaryMatch[1].trim()}</div>
+              </div>`;
                 }
 
                 if (issuesMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:#f87171;font-size:0.65rem;">📋 Issues & Improvements</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
-                              </div>`;
+                <strong style="color:#f87171;font-size:0.65rem;">📋 Issues & Improvements</strong>
+                <div class="output-ai" style="margin-top:0.2rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+              </div>`;
                 }
 
                 if (performanceMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:#60a5fa;font-size:0.65rem;">⚡ Performance</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${performanceMatch[1].trim()}</div>
-                              </div>`;
+                <strong style="color:#60a5fa;font-size:0.65rem;">⚡ Performance</strong>
+                <div class="output-ai" style="margin-top:0.2rem;">${performanceMatch[1].trim()}</div>
+              </div>`;
                 }
 
                 if (securityMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:#f87171;font-size:0.65rem;">🔒 Security</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${securityMatch[1].trim()}</div>
-                              </div>`;
+                <strong style="color:#f87171;font-size:0.65rem;">🔒 Security</strong>
+                <div class="output-ai" style="margin-top:0.2rem;">${securityMatch[1].trim()}</div>
+              </div>`;
                 }
 
                 // Scores
@@ -2248,10 +2293,10 @@
                         const num = score.match(/\d+(\.\d+)?/);
                         const stars = num ? Math.round(parseFloat(num[0]) / 2) : 0;
                         html += `<div style="text-align:center;padding:0.2rem;background:rgba(255,255,255,0.01);border-radius:4px;">
-                                  <div style="font-size:0.5rem;color:rgba(255,255,255,0.1);">${s.label}</div>
-                                  <div style="font-size:0.7rem;font-weight:600;color:#ffffff;">${score}</div>
-                                  <div style="font-size:0.4rem;color:#fbbf24;">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
-                                </div>`;
+                  <div style="font-size:0.5rem;color:rgba(255,255,255,0.1);">${s.label}</div>
+                  <div style="font-size:0.7rem;font-weight:600;color:#ffffff;">${score}</div>
+                  <div style="font-size:0.4rem;color:#fbbf24;">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
+                </div>`;
                     }
                 });
                 html += `</div>`;
@@ -2261,55 +2306,63 @@
                     const ratingNum = ratingText.match(/\d+(\.\d+)?/);
                     const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
                     html += `<div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:rgba(139,92,246,0.02);border-radius:6px;border:1px solid rgba(139,92,246,0.02);">
-                                <div class="rating-bar">
-                                  <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                                  <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
-                                  <span class="rating-text">${ratingText}</span>
-                                </div>
-                              </div>`;
+                <div class="rating-bar">
+                  <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                  <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
+                  <span class="rating-text">${ratingText}</span>
+                </div>
+              </div>`;
                 }
 
                 if (practicesMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                <strong style="color:#34d399;font-size:0.65rem;">💡 Best Practices</strong>
-                                <div class="output-ai" style="margin-top:0.2rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
-                              </div>`;
+                <strong style="color:#34d399;font-size:0.65rem;">💡 Best Practices</strong>
+                <div class="output-ai" style="margin-top:0.2rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+              </div>`;
                 }
             } else {
-                // Fallback
+                // Fallback review
                 const fallbackRating = astResult.criticalCount > 0 ? 4 :
                     astResult.errorCount > 0 ? 5 :
                     astResult.warningCount > 0 ? 7 : 9;
                 const stars = Math.round(fallbackRating / 2);
                 html += `<div class="output-summary">
-                          <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
-                          <div style="margin-top:0.2rem;color:rgba(255,255,255,0.3);font-size:0.75rem;">
-                            ${astResult.criticalCount > 0 ? '⚠️ Critical issues found.' :
-                              astResult.errorCount > 0 ? '⚠️ Issues found that need attention.' :
-                              astResult.warningCount > 0 ? '📝 Code has some warnings to address.' :
-                              '✅ Code is clean and well-structured.'}
-                          </div>
-                        </div>
-                        <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:rgba(139,92,246,0.02);border-radius:6px;border:1px solid rgba(139,92,246,0.02);">
-                          <div class="rating-bar">
-                            <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                            <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
-                            <span class="rating-text">${fallbackRating}/10</span>
-                          </div>
-                        </div>`;
+              <strong style="color:#8b5cf6;font-size:0.7rem;">📌 Summary</strong>
+              <div style="margin-top:0.2rem;color:rgba(255,255,255,0.3);font-size:0.75rem;">
+                ${astResult.criticalCount > 0 ? '⚠️ Critical issues found that need immediate attention.' :
+                  astResult.errorCount > 0 ? '⚠️ Several issues found that should be addressed.' :
+                  astResult.warningCount > 0 ? '📝 Code is functional but has some warnings to address.' :
+                  '✅ Code is clean and well-structured.'}
+              </div>
+            </div>
+            <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:rgba(139,92,246,0.02);border-radius:6px;border:1px solid rgba(139,92,246,0.02);">
+              <div class="rating-bar">
+                <span style="color:#8b5cf6;font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
+                <span class="rating-text">${fallbackRating}/10</span>
+              </div>
+            </div>`;
             }
             html += `</div>`;
 
-            // Corrected Code
+            // ====== CORRECTED CODE - ALWAYS SHOWN ======
+            html += `<div class="output-section">`;
+            html += `<div class="output-section-title">
+            <i class="fas fa-check-circle" style="color:#34d399;"></i> Corrected Code
+            <span class="badge" style="background:rgba(52,211,153,0.06);color:#34d399;">${correctedCode !== originalCode ? 'Issues Resolved' : 'No Changes Needed'}</span>
+          </div>`;
+            html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
+
             if (correctedCode !== originalCode) {
-                html += `<div class="output-section">`;
-                html += `<div class="output-section-title">
-                          <i class="fas fa-check-circle" style="color:#34d399;"></i> Corrected Code
-                          <span class="badge" style="background:rgba(52,211,153,0.06);color:#34d399;">Issues Resolved</span>
-                        </div>`;
-                html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
-                html += `</div>`;
+                html += `<div style="margin-top:0.4rem;font-size:0.55rem;color:rgba(255,255,255,0.08);">
+              <i class="fas fa-info-circle"></i> Changes: Added docstrings, fixed bare except, improved code style
+            </div>`;
+            } else {
+                html += `<div style="margin-top:0.4rem;font-size:0.55rem;color:rgba(255,255,255,0.08);">
+              <i class="fas fa-check-circle" style="color:#34d399;"></i> Code is already clean — no corrections needed!
+            </div>`;
             }
+            html += `</div>`;
 
             return html;
         }
