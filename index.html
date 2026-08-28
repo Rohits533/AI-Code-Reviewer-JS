@@ -1,2344 +1,1292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AERO · AI Code Debugger</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0f;
-      color: #ffffff;
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding: 0;
-      position: relative;
-    }
-    body.no-cursor {
-      cursor: auto !important;
-    }
-    body.no-cursor * {
-      cursor: auto !important;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rohit Savan · AI Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* ============================================================
-       ANIMATED GRADIENT BACKGROUND - VIBRANT
-       ============================================================ */
-    #animated-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 25%, #0a0a2e 50%, #1a0a2e 75%, #0a0a0f 100%);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease-in-out infinite alternate;
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 0%; }
-      25% { background-position: 100% 0%; }
-      50% { background-position: 100% 100%; }
-      75% { background-position: 0% 100%; }
-      100% { background-position: 0% 0%; }
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f1117;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
 
-    #animated-bg::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 40%),
-        radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
-      animation: orbPulse 8s ease-in-out infinite alternate;
-    }
-    @keyframes orbPulse {
-      0% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1117;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#00d4ff, #7b2ff7);
+            border-radius: 3px;
+        }
 
-    /* Floating gradient orbs */
-    .gradient-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      pointer-events: none;
-      z-index: 0;
-      animation: orbFloat 25s ease-in-out infinite alternate;
-      opacity: 0.3;
-    }
-    .gradient-orb-1 {
-      width: 600px;
-      height: 600px;
-      top: -15%;
-      right: -10%;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
-      animation-delay: 0s;
-    }
-    .gradient-orb-2 {
-      width: 500px;
-      height: 500px;
-      bottom: -15%;
-      left: -10%;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
-      animation-delay: -8s;
-    }
-    .gradient-orb-3 {
-      width: 400px;
-      height: 400px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(236, 72, 153, 0.08), transparent 70%);
-      animation-delay: -16s;
-    }
-    @keyframes orbFloat {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-      50% { transform: translate(80px, -100px) scale(1.3); opacity: 0.5; }
-      100% { transform: translate(-60px, 60px) scale(0.8); opacity: 0.2; }
-    }
+        /* ============================================================
+           ENTRY ANIMATION - DRAMATIC
+           ============================================================ */
+        .entry-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f1117;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            pointer-events: none;
+            animation: entryFadeOut 1.6s ease 2.2s forwards;
+        }
 
-    /* ============================================================
-       CUSTOM CURSOR
-       ============================================================ */
-    #custom-cursor {
-      position: fixed;
-      pointer-events: none;
-      z-index: 99999;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(139, 92, 246, 0.2);
-      background: rgba(139, 92, 246, 0.02);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                  height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                  background 0.3s ease,
-                  border-color 0.3s ease;
-      transform: translate(-50%, -50%);
-      will-change: transform;
-    }
-    #custom-cursor .cursor-dot {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(139, 92, 246, 0.3);
-      transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
-    }
-    #custom-cursor.hover {
-      width: 64px;
-      height: 64px;
-      background: rgba(139, 92, 246, 0.04);
-      border-color: rgba(139, 92, 246, 0.3);
-    }
-    #custom-cursor.hover .cursor-dot {
-      width: 6px;
-      height: 6px;
-      background: rgba(139, 92, 246, 0.5);
-    }
+        .entry-overlay .loader {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(0, 212, 255, 0.05);
+            border-top: 2px solid #00d4ff;
+            border-radius: 50%;
+            animation: spinLoader 1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.05);
+        }
 
-    /* ============================================================
-       ROTATING LOGO
-       ============================================================ */
-    .rotating-logo-container {
-      position: fixed;
-      left: -150px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.025;
-    }
-    .rotating-logo-container .logo-text {
-      font-size: 30rem;
-      font-weight: 900;
-      color: #8b5cf6;
-      animation: rotateLogo 40s linear infinite;
-      text-shadow: 0 0 100px rgba(139, 92, 246, 0.05);
-      user-select: none;
-      letter-spacing: -20px;
-    }
-    @keyframes rotateLogo {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.05); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
+        @keyframes spinLoader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    /* ============================================================
-       HEADER
-       ============================================================ */
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 0.8rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      background: rgba(10, 10, 15, 0.15);
-      backdrop-filter: blur(40px) saturate(1.4);
-      -webkit-backdrop-filter: blur(40px) saturate(1.4);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-      flex-wrap: wrap;
-      gap: 1rem;
-      transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .header.scrolled {
-      background: rgba(10, 10, 15, 0.4);
-      border-bottom: 1px solid rgba(139, 92, 246, 0.03);
-      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
-    }
+        .entry-overlay .loader-text {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.05);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
 
-    .logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: 0.3s;
-    }
-    .logo:hover {
-      transform: scale(1.02);
-    }
-    .logo span {
-      color: #8b5cf6;
-    }
-    .logo .logo-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #8b5cf6;
-      display: inline-block;
-      animation: pulseDot 2s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
-    }
-    @keyframes pulseDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.2; transform: scale(0.5); }
-    }
+        .entry-overlay .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(0, 212, 255, 0.02);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
 
-    .nav {
-      display: flex;
-      gap: 1.8rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .nav a {
-      color: rgba(255, 255, 255, 0.2);
-      text-decoration: none;
-      font-size: 0.75rem;
-      transition: 0.4s;
-      letter-spacing: 0.5px;
-      font-weight: 400;
-      position: relative;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-    .nav a::before {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      width: 0;
-      height: 1px;
-      background: #8b5cf6;
-      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      transform: translateX(-50%);
-    }
-    .nav a:hover::before {
-      width: 100%;
-    }
-    .nav a:hover {
-      color: #ffffff;
-    }
+        .entry-overlay .loader-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, #00d4ff, #7b2ff7, transparent);
+            border-radius: 2px;
+            animation: loadingProgress 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            position: absolute;
+            left: -100%;
+        }
 
-    .nav .btn-cta {
-      padding: 0.35rem 1.2rem;
-      border-radius: 40px;
-      background: rgba(139, 92, 246, 0.04);
-      border: 1px solid rgba(139, 92, 246, 0.06);
-      color: rgba(255, 255, 255, 0.3);
-      font-weight: 400;
-      font-size: 0.7rem;
-      transition: 0.4s;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      backdrop-filter: blur(8px);
-      cursor: pointer;
-    }
-    .nav .btn-cta:hover {
-      background: rgba(139, 92, 246, 0.06);
-      border-color: rgba(139, 92, 246, 0.1);
-      color: #ffffff;
-      transform: scale(1.05);
-    }
+        @keyframes loadingProgress {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
 
-    .search-icon {
-      color: rgba(255, 255, 255, 0.15);
-      font-size: 0.85rem;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-    .search-icon:hover {
-      color: #ffffff;
-    }
+        @keyframes entryFadeOut {
+            0% { opacity: 1; visibility: visible; backdrop-filter: blur(0px); }
+            100% { opacity: 0; visibility: hidden; backdrop-filter: blur(20px); }
+        }
 
-    /* ============================================================
-       SCROLL PROGRESS
-       ============================================================ */
-    #scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 1.5px;
-      background: linear-gradient(90deg, #8b5cf6, #a78bfa, #ec4899);
-      background-size: 200% 100%;
-      z-index: 999;
-      width: 0%;
-      transition: width 0.1s linear;
-      animation: shimmerProgress 3s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
-    }
-    @keyframes shimmerProgress {
-      0%, 100% { background-position: 0% 0%; }
-      50% { background-position: 200% 0%; }
-    }
+        /* ============================================================
+           PARTICLES CANVAS
+           ============================================================ */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    /* ============================================================
-       HERO
-       ============================================================ */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6rem 2rem 2rem;
-      position: relative;
-      z-index: 1;
-    }
+        /* ============================================================
+           NAVIGATION
+           ============================================================ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 17, 23, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            animation: fadeDown 1s ease 0.5s both;
+        }
 
-    .hero-content {
-      max-width: 1000px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: heroIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
-    }
-    @keyframes heroIn {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+        @keyframes fadeDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-    .hero-text {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
 
-    .hero-badge {
-      display: inline-block;
-      color: rgba(139, 92, 246, 0.4);
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      width: fit-content;
-    }
+        .logo .hash {
+            -webkit-text-fill-color: #00d4ff;
+            font-weight: 400;
+            background: none;
+        }
 
-    .hero h1 {
-      font-size: 3.8rem;
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -2px;
-      color: #ffffff;
-    }
-    .hero h1 .highlight {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: textShimmer 4s ease-in-out infinite;
-    }
-    @keyframes textShimmer {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+            transition: color 0.3s;
+            position: relative;
+        }
 
-    .hero p {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.3);
-      max-width: 440px;
-      line-height: 1.8;
-      font-weight: 300;
-    }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            transition: width 0.3s;
+        }
 
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 0.3rem;
-    }
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
 
-    .btn-primary {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.04), rgba(139, 92, 246, 0.02));
-      border: 1px solid rgba(139, 92, 246, 0.06);
-      padding: 0.6rem 2rem;
-      border-radius: 60px;
-      font-weight: 400;
-      font-size: 0.8rem;
-      color: #ffffff;
-      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      backdrop-filter: blur(8px);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-    }
-    .btn-primary:hover {
-      background: rgba(139, 92, 246, 0.06);
-      border-color: rgba(139, 92, 246, 0.1);
-      transform: scale(1.03) translateY(-2px);
-    }
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            position: relative;
+            z-index: 1;
+        }
 
-    .btn-secondary {
-      background: transparent;
-      border: none;
-      padding: 0.6rem 1.5rem;
-      font-weight: 400;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.2);
-      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-    }
-    .btn-secondary:hover {
-      color: #ffffff;
-      transform: scale(1.03);
-    }
-    .btn-secondary i {
-      color: rgba(139, 92, 246, 0.3);
-    }
+        .hero-badge {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 13px;
+            color: #00d4ff;
+            margin-bottom: 24px;
+            animation: fadeInDown 0.8s ease 0.8s both;
+        }
 
-    .hero-visual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-    .hero-card {
-      width: 100%;
-      max-width: 450px;
-      aspect-ratio: 1.1;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.01);
-      backdrop-filter: blur(40px) saturate(1.4);
-      -webkit-backdrop-filter: blur(40px) saturate(1.4);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
-      pointer-events: none;
-    }
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            animation: fadeInDown 1s ease 1s both;
+        }
 
-    .hero-card-inner {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.2rem;
-      width: 100%;
-    }
+        .hero h1 .hash {
+            color: #00d4ff;
+            font-weight: 400;
+        }
 
-    .hero-card-inner .ai-icon {
-      font-size: 3rem;
-      color: rgba(139, 92, 246, 0.08);
-      animation: floatIcon 6s ease-in-out infinite;
-    }
-    @keyframes floatIcon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+        .gradient-text {
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .hero-card-inner .code-preview {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.04);
-      text-align: left;
-      line-height: 2.2;
-      background: rgba(0, 0, 0, 0.08);
-      padding: 1.2rem;
-      border-radius: 14px;
-      width: 100%;
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.01);
-    }
-    .hero-card-inner .code-preview .keyword {
-      color: rgba(139, 92, 246, 0.2);
-    }
-    .hero-card-inner .code-preview .function {
-      color: rgba(139, 92, 246, 0.12);
-    }
-    .hero-card-inner .code-preview .string {
-      color: rgba(139, 92, 246, 0.08);
-    }
+        .hero .tagline {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 300;
+            margin-bottom: 16px;
+            animation: fadeInDown 1.2s ease 1.2s both;
+        }
 
-    /* ============================================================
-       ABOUT SECTION - DETAILED
-       ============================================================ */
-    #about {
-      min-height: 100vh;
-      padding: 8rem 2rem 4rem;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    #about.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        .hero .tagline .highlight {
+            color: #00d4ff;
+            -webkit-text-fill-color: #00d4ff;
+        }
 
-    .about-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
+        .typing-text::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+            color: #00d4ff;
+        }
 
-    .about-title {
-      font-size: 2.8rem;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      letter-spacing: -2px;
-      color: #ffffff;
-    }
-    .about-title span {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .about-sub {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      font-weight: 300;
-    }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
+        .hero .bio {
+            font-size: 18px;
+            color: #888;
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 1.4s both;
+        }
 
-    .about-text {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .about-text h3 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .about-text h3 span {
-      color: #8b5cf6;
-    }
-    .about-text p {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.4);
-      line-height: 1.9;
-      font-weight: 300;
-    }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-    .about-features-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-    .about-features-list .feature-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      padding: 0.8rem;
-      background: rgba(255, 255, 255, 0.01);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      transition: 0.3s;
-    }
-    .about-features-list .feature-item:hover {
-      background: rgba(139, 92, 246, 0.02);
-      border-color: rgba(139, 92, 246, 0.04);
-    }
-    .about-features-list .feature-item i {
-      color: #8b5cf6;
-      font-size: 1rem;
-      margin-top: 0.1rem;
-    }
-    .about-features-list .feature-item .feature-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-    }
-    .about-features-list .feature-item .feature-text strong {
-      font-size: 0.85rem;
-      color: #ffffff;
-      font-weight: 600;
-    }
-    .about-features-list .feature-item .feature-text span {
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.2);
-      font-weight: 300;
-    }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1.2s ease 1.6s both;
+        }
 
-    .about-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 1rem;
-      padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.01);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.02);
-    }
-    .about-stats .stat-item {
-      text-align: center;
-    }
-    .about-stats .stat-item .number {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .about-stats .stat-item .label {
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.2);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 0.2rem;
-    }
+        .btn-primary {
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
 
-    /* ============================================================
-       FEATURES SECTION - DETAILED
-       ============================================================ */
-    #features {
-      min-height: 100vh;
-      padding: 8rem 2rem 4rem;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    #features.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
 
-    .features-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
 
-    .features-title {
-      font-size: 2.8rem;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      letter-spacing: -2px;
-      color: #ffffff;
-    }
-    .features-title span {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .features-sub {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      font-weight: 300;
-    }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
+        .btn-secondary {
+            background: transparent;
+            color: #00d4ff;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            transition: all 0.3s;
+            z-index: 2;
+        }
 
-    .feature-card {
-      border-radius: 20px;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.01);
-      backdrop-filter: blur(30px) saturate(1.5);
-      -webkit-backdrop-filter: blur(30px) saturate(1.5);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    .feature-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(139, 92, 246, 0.04);
-      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.03);
-    }
-    .feature-card .icon {
-      font-size: 2rem;
-      color: #8b5cf6;
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .feature-card h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #ffffff;
-    }
-    .feature-card p {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.3);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-    .feature-card .feature-tag {
-      display: inline-block;
-      margin-top: 0.8rem;
-      font-size: 0.55rem;
-      color: rgba(139, 92, 246, 0.3);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border: 1px solid rgba(139, 92, 246, 0.03);
-      padding: 0.05rem 0.5rem;
-      border-radius: 12px;
-    }
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
 
-    /* ============================================================
-       DEBUGGER INTERFACE
-       ============================================================ */
-    #debugger-interface {
-      display: none;
-      min-height: 100vh;
-      padding: 8rem 2rem 2rem;
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    #debugger-interface.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
+        /* ============================================================
+           STATS
+           ============================================================ */
+        .stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 60px;
+            animation: fadeInUp 1.4s ease 1.8s both;
+        }
 
-    .debugger-container {
-      max-width: 960px;
-      margin: 0 auto;
-      width: 100%;
-    }
+        .stat {
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: default;
+        }
 
-    .debugger-title {
-      font-size: 2.8rem;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 0.3rem;
-      letter-spacing: -3px;
-      color: #ffffff;
-    }
-    .debugger-title span {
-      color: #8b5cf6;
-    }
-    .debugger-sub {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      font-weight: 300;
-    }
+        .stat:hover {
+            transform: scale(1.05);
+        }
 
-    .debugger-area {
-      border-radius: 24px;
-      padding: 2.2rem;
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(40px) saturate(1.5);
-      -webkit-backdrop-filter: blur(40px) saturate(1.5);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: 0 8px 60px rgba(0, 0, 0, 0.3);
-      transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .debugger-area:hover {
-      border-color: rgba(139, 92, 246, 0.06);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 80px rgba(0, 0, 0, 0.4);
-    }
-    .debugger-area::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
-      pointer-events: none;
-    }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .file-upload-area {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
-      flex-wrap: wrap;
-    }
-    .file-upload-label {
-      background: rgba(139, 92, 246, 0.03);
-      border: 1px dashed rgba(139, 92, 246, 0.04);
-      color: rgba(255, 255, 255, 0.3);
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      transition: 0.4s;
-      font-family: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      backdrop-filter: blur(8px);
-      cursor: pointer;
-    }
-    .file-upload-label:hover {
-      background: rgba(139, 92, 246, 0.04);
-      border-color: rgba(139, 92, 246, 0.08);
-      transform: scale(1.02);
-      color: #ffffff;
-    }
-    .file-name {
-      color: rgba(255, 255, 255, 0.15);
-      font-size: 0.75rem;
-    }
+        .stat-label {
+            font-size: 13px;
+            color: #888;
+            margin-top: 4px;
+        }
 
-    .debugger-area textarea {
-      width: 100%;
-      padding: 1.2rem;
-      background: rgba(0, 0, 0, 0.15);
-      color: #ffffff;
-      border: 1px solid rgba(139, 92, 246, 0.02);
-      border-radius: 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      line-height: 1.8;
-      resize: vertical;
-      min-height: 200px;
-      transition: 0.4s;
-      backdrop-filter: blur(8px);
-    }
-    .debugger-area textarea:focus {
-      outline: none;
-      border-color: rgba(139, 92, 246, 0.08);
-      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.02);
-    }
+        /* ============================================================
+           SECTION COMMON
+           ============================================================ */
+        section {
+            padding: 80px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
 
-    .code-stats {
-      display: flex;
-      gap: 1.5rem;
-      margin-top: 0.8rem;
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.1);
-      flex-wrap: wrap;
-    }
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+        }
 
-    .toolbar {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.8rem;
-      flex-wrap: wrap;
-    }
-    .toolbar button {
-      background: rgba(255, 255, 255, 0.01);
-      border: 1px solid rgba(139, 92, 246, 0.02);
-      color: rgba(255, 255, 255, 0.2);
-      padding: 0.3rem 0.9rem;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      transition: 0.4s;
-      font-family: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      backdrop-filter: blur(8px);
-      cursor: pointer;
-    }
-    .toolbar button:hover {
-      background: rgba(139, 92, 246, 0.03);
-      color: #ffffff;
-      border-color: rgba(139, 92, 246, 0.06);
-      transform: scale(1.05);
-    }
+        .section-subtitle {
+            color: #888;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 50px;
+        }
 
-    .lang-badge {
-      display: inline-block;
-      background: rgba(139, 92, 246, 0.04);
-      color: #8b5cf6;
-      padding: 0.05rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.6rem;
-      font-weight: 600;
-      margin-left: 0.2rem;
-    }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
 
-    .analyze-btn {
-      margin-top: 1rem;
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      border: none;
-      padding: 0.9rem 2rem;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 1rem;
-      color: #ffffff;
-      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      width: 100%;
-      box-shadow: 0 4px 30px rgba(139, 92, 246, 0.15);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    .analyze-btn::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.02), transparent);
-      transform: rotate(45deg);
-      transition: 0.8s;
-    }
-    .analyze-btn:hover::after {
-      left: 100%;
-    }
-    .analyze-btn:hover {
-      transform: scale(1.02) translateY(-4px);
-      box-shadow: 0 8px 50px rgba(139, 92, 246, 0.25);
-    }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    #output {
-      background: rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 1.2rem;
-      border-radius: 16px;
-      min-height: 200px;
-      color: #ffffff;
-      font-size: 0.8rem;
-      line-height: 1.8;
-      border: 1px solid rgba(139, 92, 246, 0.02);
-      margin-top: 1.2rem;
-      transition: 0.4s;
-      max-height: 700px;
-      overflow-y: auto;
-    }
-    #output::-webkit-scrollbar {
-      width: 4px;
-    }
-    #output::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.01);
-      border-radius: 2px;
-    }
-    #output::-webkit-scrollbar-thumb {
-      background: rgba(139, 92, 246, 0.2);
-      border-radius: 2px;
-    }
+        /* ============================================================
+           PROJECTS - ENHANCED WITH BADGES
+           ============================================================ */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
 
-    #output .placeholder {
-      color: rgba(255, 255, 255, 0.03);
-      font-family: 'Inter', sans-serif;
-      text-align: center;
-      padding: 1.2rem 0;
-    }
+        .project-card {
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .spinner-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem 0;
-      gap: 0.8rem;
-    }
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 2px solid rgba(139, 92, 246, 0.03);
-      border-top: 2px solid #8b5cf6;
-      border-radius: 50%;
-      animation: spin 0.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-      box-shadow: 0 0 40px rgba(139, 92, 246, 0.03);
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .spinner-text {
-      color: rgba(255, 255, 255, 0.15);
-      font-size: 0.8rem;
-      animation: pulseText 1.5s ease-in-out infinite;
-    }
-    @keyframes pulseText {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
-    }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
 
-    .back-btn {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      color: rgba(255, 255, 255, 0.2);
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      transition: 0.4s;
-      cursor: pointer;
-      margin-bottom: 1.5rem;
-      backdrop-filter: blur(8px);
-    }
-    .back-btn:hover {
-      background: rgba(255, 255, 255, 0.02);
-      border-color: rgba(255, 255, 255, 0.04);
-      color: #ffffff;
-      transform: scale(1.05);
-    }
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
 
-    /* ============================================================
-       FAB
-       ============================================================ */
-    .fab {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 99;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: rgba(139, 92, 246, 0.04);
-      border: 1px solid rgba(139, 92, 246, 0.06);
-      color: rgba(255, 255, 255, 0.2);
-      font-size: 1.2rem;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-    }
-    .fab:hover {
-      background: rgba(139, 92, 246, 0.06);
-      border-color: rgba(139, 92, 246, 0.1);
-      transform: scale(1.05) rotate(90deg);
-      color: #ffffff;
-    }
+        .project-card:hover {
+            border-color: rgba(0, 212, 255, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.15);
+        }
 
-    /* ============================================================
-       OUTPUT STYLES
-       ============================================================ */
-    .output-section {
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    }
-    .output-section:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-    .output-section-title {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #8b5cf6;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .output-section-title .badge {
-      font-size: 0.55rem;
-      background: rgba(139, 92, 246, 0.1);
-      padding: 0.05rem 0.5rem;
-      border-radius: 12px;
-      color: rgba(255,255,255,0.3);
-    }
-    .output-issue {
-      padding: 0.3rem 0.5rem;
-      margin: 0.2rem 0;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      line-height: 1.5;
-    }
-    .output-issue .line-num {
-      color: rgba(255,255,255,0.1);
-      font-size: 0.65rem;
-      min-width: 50px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .output-issue .issue-icon {
-      font-size: 0.7rem;
-      min-width: 16px;
-    }
-    .output-issue.warning {
-      border-left: 2px solid #fbbf24;
-      background: rgba(251, 191, 36, 0.03);
-    }
-    .output-issue.warning .issue-icon { color: #fbbf24; }
-    .output-issue.style {
-      border-left: 2px solid #60a5fa;
-      background: rgba(96, 165, 250, 0.03);
-    }
-    .output-issue.style .issue-icon { color: #60a5fa; }
-    .output-issue.info {
-      border-left: 2px solid #8b5cf6;
-      background: rgba(139, 92, 246, 0.03);
-    }
-    .output-issue.info .issue-icon { color: #8b5cf6; }
-    .output-issue.error {
-      border-left: 2px solid #f87171;
-      background: rgba(248, 113, 113, 0.03);
-    }
-    .output-issue.error .issue-icon { color: #f87171; }
-    .output-issue.success {
-      border-left: 2px solid #34d399;
-      background: rgba(52, 211, 153, 0.03);
-    }
-    .output-issue.success .issue-icon { color: #34d399; }
+        .project-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
 
-    .output-ai {
-      font-size: 0.8rem;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.6);
-    }
-    .output-ai strong {
-      color: #ffffff;
-    }
-    .output-summary {
-      background: rgba(139, 92, 246, 0.02);
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      border: 1px solid rgba(139, 92, 246, 0.04);
-      margin-bottom: 0.5rem;
-    }
-    .rating-bar {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 0.3rem;
-      flex-wrap: wrap;
-    }
-    .rating-bar .stars {
-      color: #fbbf24;
-      font-size: 0.9rem;
-    }
-    .rating-bar .rating-text {
-      color: rgba(255,255,255,0.3);
-      font-size: 0.7rem;
-    }
-    .corrected-code {
-      background: rgba(0, 0, 0, 0.15);
-      border-radius: 12px;
-      padding: 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      line-height: 1.8;
-      color: rgba(255, 255, 255, 0.6);
-      white-space: pre-wrap;
-      border: 1px solid rgba(52, 211, 153, 0.1);
-      max-height: 300px;
-      overflow-y: auto;
-    }
+        .project-icon {
+            font-size: 32px;
+        }
 
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
-    @media (max-width: 1024px) {
-      .hero-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-      }
-      .hero h1 {
-        font-size: 3rem;
-        max-width: 100%;
-      }
-      .hero p {
-        max-width: 100%;
-      }
-      .hero-badge {
-        margin: 0 auto;
-      }
-      .hero-buttons {
-        justify-content: center;
-      }
-      .hero-card {
-        max-width: 100%;
-      }
-      .rotating-logo-container {
-        display: none;
-      }
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-      .about-features-list {
-        grid-template-columns: 1fr;
-      }
-      .about-stats {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .debugger-title {
-        font-size: 2.2rem;
-      }
-    }
+        .project-status-badge {
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    @media (max-width: 768px) {
-      .header {
-        padding: 0.6rem 1.2rem;
-      }
-      .nav {
-        gap: 1rem;
-      }
-      .nav a {
-        font-size: 0.6rem;
-      }
-      .hero h1 {
-        font-size: 2.4rem;
-        letter-spacing: -1px;
-      }
-      .hero-content {
-        padding: 0 0.5rem;
-      }
-      .hero-card {
-        min-height: 280px;
-      }
-      .hero-card-inner .code-preview {
-        font-size: 0.55rem;
-        padding: 0.8rem;
-      }
-      .about-title, .features-title {
-        font-size: 2rem;
-      }
-      .about-stats {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-      #debugger-interface {
-        padding: 7rem 1rem 1rem;
-      }
-      .debugger-area {
-        padding: 1.2rem;
-      }
-      .debugger-title {
-        font-size: 1.8rem;
-      }
-      .rotating-logo-container {
-        display: none;
-      }
-      #custom-cursor {
-        display: none !important;
-      }
-      body {
-        cursor: auto !important;
-      }
-      * {
-        cursor: auto !important;
-      }
-    }
+        .project-status-badge.live {
+            background: rgba(52, 211, 153, 0.1);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.15);
+        }
 
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-      .nav {
-        gap: 0.6rem;
-      }
-      .nav a {
-        font-size: 0.5rem;
-        letter-spacing: 0px;
-      }
-      .btn-primary, .btn-secondary {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.7rem;
-      }
-      .hero-card {
-        min-height: 220px;
-      }
-      .about-title, .features-title {
-        font-size: 1.6rem;
-      }
-      .debugger-title {
-        font-size: 1.5rem;
-      }
-      .debugger-area textarea {
-        font-size: 0.7rem;
-        padding: 0.8rem;
-        min-height: 150px;
-      }
-      .corrected-code {
-        font-size: 0.6rem;
-        padding: 0.8rem;
-      }
-    }
-  </style>
+        .project-status-badge.building {
+            background: rgba(251, 191, 36, 0.05);
+            color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            font-style: italic;
+        }
+
+        .project-status-badge.winner {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            font-weight: 700;
+        }
+
+        .project-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .project-desc {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #00d4ff;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: gap 0.3s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .project-link:hover {
+            gap: 14px;
+        }
+
+        /* ============================================================
+           SKILLS
+           ============================================================ */
+        #skills {
+            background: linear-gradient(135deg, #1a1a2e, #0f1117);
+            padding: 80px 20px;
+            max-width: 100%;
+        }
+
+        #skills .skills-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .skill-card:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
+            background: linear-gradient(135deg, #2a2a3e, #3a2a4e);
+        }
+
+        .skill-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.2);
+        }
+
+        .skill-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #cdd6f4;
+        }
+
+        /* ============================================================
+           ABOUT
+           ============================================================ */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #888;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+
+        .about-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+            border-radius: 12px;
+            padding: 16px 20px;
+            border-left: 3px solid #00d4ff;
+            font-size: 14px;
+            color: #cdd6f4;
+            transition: all 0.3s;
+        }
+
+        .highlight:hover {
+            transform: translateX(8px);
+            border-left-color: #7b2ff7;
+            box-shadow: -4px 0 20px rgba(123, 47, 247, 0.2);
+        }
+
+        /* ============================================================
+           CONTACT
+           ============================================================ */
+        .contact-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .contact-link {
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px 30px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-link:hover {
+            border-color: #00d4ff;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.25);
+            background: linear-gradient(135deg, #2a2a3e, #3a2a4e);
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #444;
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero .bio {
+                font-size: 16px;
+            }
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+            .stats {
+                gap: 20px;
+            }
+            .stat-number {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero .bio {
+                font-size: 14px;
+            }
+            .btn-primary,
+            .btn-secondary {
+                padding: 12px 24px;
+                font-size: 13px;
+            }
+            .section-title {
+                font-size: 28px;
+            }
+            .hero-badge {
+                font-size: 11px;
+                padding: 6px 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       ANIMATED GRADIENT BACKGROUND
-       ============================================================ -->
-  <div id="animated-bg"></div>
-  <div class="gradient-orb gradient-orb-1"></div>
-  <div class="gradient-orb gradient-orb-2"></div>
-  <div class="gradient-orb gradient-orb-3"></div>
-
-  <!-- ============================================================
-       ROTATING LOGO
-       ============================================================ -->
-  <div class="rotating-logo-container">
-    <div class="logo-text">✦</div>
-  </div>
-
-  <!-- ============================================================
-       CUSTOM CURSOR
-       ============================================================ -->
-  <div id="custom-cursor">
-    <div class="cursor-dot"></div>
-  </div>
-
-  <!-- ============================================================
-       SCROLL PROGRESS
-       ============================================================ -->
-  <div id="scroll-progress"></div>
-
-  <!-- ============================================================
-       HEADER
-       ============================================================ -->
-  <header class="header" id="header">
-    <div class="logo">
-      <span class="logo-dot"></span>
-      AERO<span>.</span>
+    <!-- ============================================================
+         ENTRY ANIMATION
+         ============================================================ -->
+    <div class="entry-overlay" id="entryOverlay">
+        <div class="loader"></div>
+        <div class="loader-text">Loading Experience</div>
+        <div class="loader-bar"></div>
     </div>
-    <nav class="nav">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#features">Features</a>
-      <i class="fas fa-search search-icon"></i>
-      <a href="mailto:rohitsavan360@gmail.com" class="btn-cta">Get in Touch</a>
-    </nav>
-  </header>
 
-  <!-- ============================================================
-       HERO
-       ============================================================ -->
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <div class="hero-text">
-        <span class="hero-badge">✦ AI Powered</span>
+    <!-- ============================================================
+         PARTICLES CANVAS
+         ============================================================ -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ============================================================
+         NAVIGATION
+         ============================================================ -->
+    <nav>
+        <div class="logo"><span class="hash">#</span> rohit.savan</div>
+        <div class="nav-links">
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <div class="hero">
+        <div class="hero-badge">🚀 AI Developer & BTech AIML Student</div>
         <h1>
-          AI <span class="highlight">Code</span><br />
-          Debugger
+            <span class="hash">#</span> rohit.savan
         </h1>
-        <p>
-          Intelligent code analysis with AST parsing and Gemini AI.
-          Paste your Python code and get detailed insights instantly.
+        <p class="tagline">I build with <span class="highlight">it</span>.</p>
+        <p class="bio">
+            17-year-old AI developer shipping real-world applications — 
+            recently shipped <strong style="color:#00d4ff;">AERO AI Code Debugger</strong> 
+            (Python + Gemini + AST) to <strong style="color:#00d4ff;">17 live projects</strong>.
         </p>
         <div class="hero-buttons">
-          <button class="btn-primary" id="discoverBtn">
-            <i class="fas fa-arrow-right"></i> Launch Debugger
-          </button>
-          <button class="btn-secondary" id="watchBtn">
-            <i class="fas fa-play-circle"></i> Watch demo
-          </button>
+            <a href="#projects" class="btn-primary">Explore My Work →</a>
+            <a href="#contact" class="btn-secondary">Get In Touch</a>
         </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-card">
-          <div class="hero-card-inner">
-            <div class="ai-icon">
-              <i class="fas fa-code"></i>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" data-target="17">0</div>
+                <div class="stat-label">Live Projects</div>
             </div>
-            <div class="code-preview">
-              <span class="keyword">def</span> <span class="function">analyze</span>():<br />
-              &nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"clean code"</span>
+            <div class="stat">
+                <div class="stat-number" data-target="8">0</div>
+                <div class="stat-label">Libraries Mastered</div>
             </div>
-          </div>
+            <div class="stat">
+                <div class="stat-number" data-target="17">0</div>
+                <div class="stat-label">Years Old</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" data-target="100">0</div>
+                <div class="stat-label">% Self Taught</div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
 
-  <!-- ============================================================
-       ABOUT SECTION - DETAILED
-       ============================================================ -->
-  <section id="about">
-    <div class="about-container">
-      <h2 class="about-title">📖 <span>About AERO</span></h2>
-      <p class="about-sub">Revolutionizing code analysis with AI intelligence</p>
+    <!-- ============================================================
+         PROJECTS - WITH STATUS BADGES
+         ============================================================ -->
+    <section id="projects">
+        <h2 class="section-title reveal">🚀 My <span class="gradient-text">Projects</span></h2>
+        <p class="section-subtitle reveal">17 deployed AI applications built from scratch</p>
+        <div class="projects-grid">
 
-      <div class="about-grid">
-        <div class="about-text">
-          <h3>AI-Powered <span>Code Intelligence</span></h3>
-          <p>
-            AERO AI Code Debugger is a cutting-edge tool designed to help developers 
-            write cleaner, more efficient Python code. By combining Abstract Syntax Tree (AST) 
-            analysis with Google's Gemini AI, it provides comprehensive code reviews and insights 
-            that go beyond traditional linters.
-          </p>
-          <p>
-            Whether you're a beginner learning Python or an experienced developer looking 
-            to optimize your code, AERO provides actionable feedback that helps you grow 
-            as a programmer.
-          </p>
+            <!-- Project 1 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">🤖</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Assistant Platform</div>
+                <div class="project-desc">Multi-feature AI platform with chatbot, web search agent, code explainer, quiz generator and PDF reader.</div>
+                <div class="project-tags">
+                    <span class="tag">LangChain</span>
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">RAG</span>
+                </div>
+                <a href="https://rohit-ai-chatbot-2026.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
 
-          <div class="about-features-list">
-            <div class="feature-item">
-              <i class="fas fa-check-circle"></i>
-              <div class="feature-text">
-                <strong>AST Analysis</strong>
-                <span>Parse and analyze code structure</span>
-              </div>
+            <!-- Project 2 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">📄</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Resume Builder</div>
+                <div class="project-desc">Fill in your details and AI generates a professional ATS-friendly resume with PDF download.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">ReportLab</span>
+                    <span class="tag">PDF</span>
+                </div>
+                <a href="https://rohit-resume-builder.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
             </div>
-            <div class="feature-item">
-              <i class="fas fa-check-circle"></i>
-              <div class="feature-text">
-                <strong>Gemini AI Review</strong>
-                <span>Intelligent code recommendations</span>
-              </div>
+
+            <!-- Project 3 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">📰</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI News Summarizer</div>
+                <div class="project-desc">Enter any topic and AI searches the web for latest news and summarizes top stories in real time.</div>
+                <div class="project-tags">
+                    <span class="tag">LangChain</span>
+                    <span class="tag">DuckDuckGo</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Web Search</span>
+                </div>
+                <a href="https://rohit-news-summarizer.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
             </div>
-            <div class="feature-item">
-              <i class="fas fa-check-circle"></i>
-              <div class="feature-text">
-                <strong>Corrected Code</strong>
-                <span>Get fixed code automatically</span>
-              </div>
+
+            <!-- Project 4 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">🃏</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Flashcard Generator</div>
+                <div class="project-desc">Enter any topic and AI generates interactive flashcards with reveal animations for exam preparation.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">JSON</span>
+                    <span class="tag">Animations</span>
+                </div>
+                <a href="https://rohit-flashcards.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
             </div>
-            <div class="feature-item">
-              <i class="fas fa-check-circle"></i>
-              <div class="feature-text">
-                <strong>Privacy First</strong>
-                <span>All data stored locally</span>
-              </div>
+
+            <!-- Project 5 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">🎯</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Interview Coach</div>
+                <div class="project-desc">Practice interviews with AI. Get asked questions, submit answers and receive instant feedback with scores.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Session State</span>
+                    <span class="tag">PDF</span>
+                </div>
+                <a href="https://rohit-interview-coach.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
             </div>
-          </div>
+
+            <!-- Project 6 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">⭐</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Code Reviewer</div>
+                <div class="project-desc">Paste any code and get a professional senior developer review with bugs, security issues and improvements.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">ReportLab</span>
+                    <span class="tag">Multi-language</span>
+                </div>
+                <a href="https://rohit-code-reviewer.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 7 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">🌍</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Translator</div>
+                <div class="project-desc">Translate any text into 20+ languages including Indian languages with pronunciation guides and cultural notes.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">20+ Languages</span>
+                    <span class="tag">PDF</span>
+                </div>
+                <a href="https://rohit-translator.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 8 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">📖</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Story Generator</div>
+                <div class="project-desc">Enter a genre, character and plot idea — AI writes a creative story with real-time streaming output word by word.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Streaming</span>
+                    <span class="tag">ReportLab</span>
+                </div>
+                <a href="https://rohit-story-generator.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 9 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">📧</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Email Generator</div>
+                <div class="project-desc">Generate professional emails instantly. Select email type, tone and context — AI writes a perfect email with streaming output.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Streaming</span>
+                    <span class="tag">9 Email Types</span>
+                </div>
+                <a href="https://rohit-email-generator.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 10 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">📅</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Study Planner</div>
+                <div class="project-desc">Enter your exam date and subjects — AI creates a personalized day by day study schedule with streaming output.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Streaming</span>
+                    <span class="tag">PDF</span>
+                </div>
+                <a href="https://rohit-study-planner.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 11 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">🔍</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Image Analyzer</div>
+                <div class="project-desc">Upload any image and AI analyzes it in detail — objects, colors, emotions, text extraction and more using multimodal AI.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">Llama 4 Vision</span>
+                    <span class="tag">Multimodal</span>
+                    <span class="tag">Streamlit</span>
+                </div>
+                <a href="https://rohit-image-analyzer.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 12 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">📊</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Data Analyzer</div>
+                <div class="project-desc">Upload any CSV dataset — AI analyzes, visualizes with charts, builds ML models automatically and answers questions about your data.</div>
+                <div class="project-tags">
+                    <span class="tag">Scikit-learn</span>
+                    <span class="tag">Pandas</span>
+                    <span class="tag">NumPy</span>
+                    <span class="tag">Matplotlib</span>
+                </div>
+                <a href="https://rohit-data-analyzer.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 13 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">🎓</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Student Performance Predictor</div>
+                <div class="project-desc">Enter study hours, attendance and marks — real ML model predicts your final grade with personalized AI study advice.</div>
+                <div class="project-tags">
+                    <span class="tag">Scikit-learn</span>
+                    <span class="tag">RandomForest</span>
+                    <span class="tag">Groq</span>
+                    <span class="tag">Matplotlib</span>
+                </div>
+                <a href="https://rohit-student-predictor.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 14 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">💼</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Career Coach</div>
+                <div class="project-desc">Upload resume and paste job description — AI analyzes match score, identifies skill gaps, generates cover letters and tracks applications.</div>
+                <div class="project-tags">
+                    <span class="tag">Groq</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">PyPDF2</span>
+                    <span class="tag">Free Jobscan</span>
+                </div>
+                <a href="https://rohit-career-coach.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 15 - AERO AI Code Debugger (FEATURED) -->
+            <div class="project-card reveal" style="border-color: rgba(0, 212, 255, 0.3);">
+                <div class="project-card-top">
+                    <div class="project-icon">🧠</div>
+                    <span class="project-status-badge live" style="background: rgba(0, 212, 255, 0.15); color: #00d4ff; border-color: rgba(0, 212, 255, 0.3);">★ FEATURED</span>
+                </div>
+                <div class="project-title">AERO AI Code Debugger</div>
+                <div class="project-desc">Paste any Python code and get a professional senior developer review with static analysis (AST) + AI-powered bug detection, severity ratings, and suggested fixes.</div>
+                <div class="project-tags">
+                    <span class="tag">AST</span>
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Static Analysis</span>
+                    <span class="tag">Python</span>
+                </div>
+                <a href="https://ai-code-reviewer-2.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 16 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">🚀</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Code Migration Assistant</div>
+                <div class="project-desc">Rename variables and functions at scale using AST — bulk rename, AI-powered explanations, and a sleek dark UI.</div>
+                <div class="project-tags">
+                    <span class="tag">AST</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Code Transformation</span>
+                </div>
+                <a href="https://ai-code-migration-assistant-hs9nqzusctcjz34uwo4oph.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
+            <!-- Project 17 -->
+            <div class="project-card reveal">
+                <div class="project-card-top">
+                    <div class="project-icon">📚</div>
+                    <span class="project-status-badge live">● LIVE</span>
+                </div>
+                <div class="project-title">AI Documentation Generator</div>
+                <div class="project-desc">Auto-generates READMEs, docstrings, and AI explanations from Python code using AST + Groq.</div>
+                <div class="project-tags">
+                    <span class="tag">AST</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Groq</span>
+                    <span class="tag">Streamlit</span>
+                    <span class="tag">Documentation</span>
+                </div>
+                <a href="https://ai-documentation-generator.streamlit.app" target="_blank" rel="noopener noreferrer" class="project-link">Live Demo →</a>
+            </div>
+
         </div>
+    </section>
 
-        <div class="about-stats">
-          <div class="stat-item">
-            <div class="number">18+</div>
-            <div class="label">Projects</div>
-          </div>
-          <div class="stat-item">
-            <div class="number">100%</div>
-            <div class="label">Privacy Focused</div>
-          </div>
-          <div class="stat-item">
-            <div class="number">24/7</div>
-            <div class="label">Available</div>
-          </div>
+    <!-- ============================================================
+         SKILLS
+         ============================================================ -->
+    <section id="skills">
+        <div class="skills-container">
+            <h2 class="section-title reveal">🛠️ My <span class="gradient-text">Skills</span></h2>
+            <p class="section-subtitle reveal">Technologies I use to build AI applications</p>
+            <div class="skills-grid">
+                <div class="skill-card reveal"><div class="skill-icon">🐍</div><div class="skill-name">Python</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🤖</div><div class="skill-name">LangChain</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">⚡</div><div class="skill-name">Groq API</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🎨</div><div class="skill-name">Streamlit</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🔢</div><div class="skill-name">NumPy</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🐼</div><div class="skill-name">Pandas</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">📊</div><div class="skill-name">Matplotlib</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🧪</div><div class="skill-name">Scikit-learn</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🐙</div><div class="skill-name">GitHub</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">☁️</div><div class="skill-name">Deployment</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🧠</div><div class="skill-name">Prompt Engineering</div></div>
+                <div class="skill-card reveal"><div class="skill-icon">🗄️</div><div class="skill-name">SQL & SQLite</div></div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT
+         ============================================================ -->
+    <section id="about">
+        <div class="about-content">
+            <div class="about-text reveal">
+                <h2>About <span class="gradient-text">Me</span></h2>
+                <p>I'm Rohit Savan, a 17-year-old AI developer from Mumbai, India. I'm passionate about building practical AI applications that solve real problems.</p>
+                <p>I started learning AI development from scratch and built 17 deployed applications in a short time. I'm about to start my BTech in AI & ML and I'm already ahead of the curve.</p>
+                <p>I believe in learning by building — every project teaches me something new and adds real value to my portfolio.</p>
+            </div>
+            <div class="about-highlights reveal">
+                <div class="highlight">🎓 Incoming BTech AIML Student</div>
+                <div class="highlight">🚀 17 Live Deployed AI Applications</div>
+                <div class="highlight">🌍 Based in Mumbai, India</div>
+                <div class="highlight">💡 Self Taught AI Developer</div>
+                <div class="highlight">🔥 Building with Python, LangChain & Groq</div>
+                <div class="highlight">📈 Always learning, always building</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT
+         ============================================================ -->
+    <div class="contact-section" id="contact">
+        <h2 class="section-title reveal">📬 Get In <span class="gradient-text">Touch</span></h2>
+        <p class="section-subtitle reveal">Feel free to reach out for collaborations or just a chat!</p>
+        <div class="contact-links reveal">
+            <a href="https://github.com/Rohits533" target="_blank" rel="noopener noreferrer" class="contact-link">🐙 GitHub</a>
+            <a href="mailto:rohitsavan360@gmail.com" class="contact-link">📧 Email</a>
+            <a href="https://rohit-ai-chatbot-2026.streamlit.app" target="_blank" rel="noopener noreferrer" class="contact-link">🤖 Try My AI</a>
+        </div>
     </div>
-  </section>
 
-  <!-- ============================================================
-       FEATURES SECTION - DETAILED
-       ============================================================ -->
-  <section id="features">
-    <div class="features-container">
-      <h2 class="features-title">⚡ <span>Features</span></h2>
-      <p class="features-sub">Everything you need for professional code analysis</p>
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer>
+        <p>Built with ❤️ by <span style="color:#00d4ff;"># rohit.savan</span> • 2026 • Mumbai, India</p>
+    </footer>
 
-      <div class="features-grid">
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-code"></i></span>
-          <h3>AST Analysis</h3>
-          <p>Parse and analyze Python code structure to detect unused variables, long lines, missing docstrings, and more.</p>
-          <span class="feature-tag">Static Analysis</span>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-brain"></i></span>
-          <h3>Gemini AI Review</h3>
-          <p>Get intelligent code reviews with summary, issues, performance analysis, security concerns, and rating powered by Google's Gemini AI.</p>
-          <span class="feature-tag">AI Powered</span>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-file-upload"></i></span>
-          <h3>File Upload Support</h3>
-          <p>Upload your .py files directly or paste code into the editor for instant analysis with full syntax highlighting.</p>
-          <span class="feature-tag">Easy Input</span>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-download"></i></span>
-          <h3>Export Reports</h3>
-          <p>Download analysis results as PDF, TXT, or copy to clipboard for sharing and documentation with your team.</p>
-          <span class="feature-tag">Shareable</span>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-keyboard"></i></span>
-          <h3>Keyboard Shortcuts</h3>
-          <p>Work faster with Ctrl+Enter to analyze, Ctrl+L to focus the editor, and Escape to clear the code.</p>
-          <span class="feature-tag">Productivity</span>
-        </div>
-        <div class="feature-card">
-          <span class="icon"><i class="fas fa-shield-alt"></i></span>
-          <h3>Security Analysis</h3>
-          <p>Detect potential security vulnerabilities like bare except, unsafe imports, and other common security issues.</p>
-          <span class="feature-tag">Secure Code</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       DEBUGGER INTERFACE
-       ============================================================ -->
-  <section id="debugger-interface">
-    <div class="debugger-container">
-      <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
-      <h2 class="debugger-title">⚡ <span>AI Code Debugger</span></h2>
-      <p class="debugger-sub">Paste your Python code and get detailed AST analysis + AI review with corrected code.</p>
-
-      <div class="debugger-area">
-        <div class="file-upload-area">
-          <label for="fileInput" class="file-upload-label"><i class="fas fa-upload"></i> Upload .py File</label>
-          <input type="file" id="fileInput" accept=".py" style="display:none;" />
-          <span id="fileName" class="file-name">No file selected</span>
-        </div>
-
-        <textarea id="codeInput" rows="7" placeholder="Paste your Python code here...">def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-print(fibonacci(10))</textarea>
-
-        <div class="code-stats">
-          <span id="lineCount">📄 Lines: 0</span>
-          <span id="charCount">📝 Characters: 0</span>
-          <span id="langDetect">🔤 Language: <span class="lang-badge" id="langBadge">Python</span></span>
-        </div>
-
-        <div class="toolbar">
-          <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
-          <button class="download-btn" id="downloadBtn"><i class="fas fa-download"></i> .txt</button>
-          <button class="clear-btn" id="clearBtn"><i class="fas fa-trash"></i> Clear</button>
-          <button class="pdf-btn" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF</button>
-        </div>
-
-        <button class="analyze-btn" id="analyzeBtn"><i class="fas fa-microchip"></i> Analyze with AST + Gemini</button>
-
-        <div id="output">
-          <div class="placeholder">
-            <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
-            Results will appear here<br />
-            <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review + Corrected code</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       FAB
-       ============================================================ -->
-  <button class="fab" id="fabBtn" title="Back to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-
-  <script>
-    // ============================================================
-    // CUSTOM CURSOR
-    // ============================================================
-    const cursor = document.getElementById('custom-cursor');
-    let cursorX = 0, cursorY = 0;
-    let targetX = 0, targetY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-    });
-
-    function animateCursor() {
-      cursorX += (targetX - cursorX) * 0.12;
-      cursorY += (targetY - cursorY) * 0.12;
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    document.querySelectorAll('button, a, .btn-primary, .btn-secondary, .btn-cta, .search-icon, .hero-card, .nav a, .file-upload-label, .toolbar button, .analyze-btn, .back-btn, .fab, .feature-card, .feature-item').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-
-    if ('ontouchstart' in window) {
-      cursor.style.display = 'none';
-      document.body.classList.add('no-cursor');
-    }
-
-    // ============================================================
-    // SCROLL PROGRESS & HEADER
-    // ============================================================
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / docHeight) * 100;
-      document.getElementById('scroll-progress').style.width = progress + '%';
-      
-      if (scrollTop > 50) {
-        document.getElementById('header').classList.add('scrolled');
-      } else {
-        document.getElementById('header').classList.remove('scrolled');
-      }
-    });
-
-    // ============================================================
-    // SCROLL REVEAL
-    // ============================================================
-    const sections = document.querySelectorAll('#about, #features');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    sections.forEach(section => observer.observe(section));
-
-    // ============================================================
-    // FAB
-    // ============================================================
-    document.getElementById('fabBtn').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // ============================================================
-    // SHOW DEBUGGER
-    // ============================================================
-    function showDebugger() {
-      const debuggerSection = document.getElementById('debugger-interface');
-      const heroSection = document.querySelector('.hero');
-      const aboutSection = document.getElementById('about');
-      const featuresSection = document.getElementById('features');
-      heroSection.style.display = 'none';
-      aboutSection.style.display = 'none';
-      featuresSection.style.display = 'none';
-      debuggerSection.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => document.getElementById('codeInput').focus(), 500);
-    }
-
-    document.getElementById('discoverBtn').addEventListener('click', showDebugger);
-
-    document.getElementById('backBtn').addEventListener('click', () => {
-      const debuggerSection = document.getElementById('debugger-interface');
-      const heroSection = document.querySelector('.hero');
-      const aboutSection = document.getElementById('about');
-      const featuresSection = document.getElementById('features');
-      debuggerSection.classList.remove('active');
-      heroSection.style.display = 'flex';
-      aboutSection.style.display = 'block';
-      featuresSection.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // ============================================================
-    // WATCH VIDEO
-    // ============================================================
-    document.getElementById('watchBtn').addEventListener('click', () => {
-      alert('🎬 Demo video coming soon!');
-    });
-
-    // ============================================================
-    // KEYBOARD SHORTCUTS
-    // ============================================================
-    document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault();
-        document.getElementById('analyzeBtn').click();
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
-        e.preventDefault();
-        document.getElementById('codeInput').focus();
-      }
-      if (e.key === 'Escape') {
-        document.getElementById('clearBtn').click();
-      }
-    });
-
-    // ============================================================
-    // CODE STATS
-    // ============================================================
-    function updateStats() {
-      const code = document.getElementById('codeInput').value;
-      const lines = code.split('\n').length;
-      const chars = code.length;
-      document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
-      document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
-      const langBadge = document.getElementById('langBadge');
-      if (code.includes('def ') || code.includes('import ') || code.includes('class ')) {
-        langBadge.textContent = 'Python';
-      } else if (code.includes('function ') || code.includes('const ') || code.includes('let ')) {
-        langBadge.textContent = 'JavaScript';
-      } else if (code.includes('public class ') || code.includes('System.out.println')) {
-        langBadge.textContent = 'Java';
-      } else {
-        langBadge.textContent = 'Unknown';
-      }
-    }
-    document.getElementById('codeInput').addEventListener('input', updateStats);
-    updateStats();
-
-    // ============================================================
-    // FILE UPLOAD
-    // ============================================================
-    document.getElementById('fileInput').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        document.getElementById('fileName').textContent = file.name;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          document.getElementById('codeInput').value = ev.target.result;
-          updateStats();
-        };
-        reader.readAsText(file);
-      }
-    });
-
-    // ============================================================
-    // COPY
-    // ============================================================
-    document.getElementById('copyBtn').addEventListener('click', () => {
-      const code = document.getElementById('codeInput').value;
-      navigator.clipboard.writeText(code).then(() => {
-        const btn = document.getElementById('copyBtn');
-        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 1500);
-      }).catch(() => {
-        const textarea = document.getElementById('codeInput');
-        textarea.select();
-        document.execCommand('copy');
-      });
-    });
-
-    // ============================================================
-    // DOWNLOAD .txt
-    // ============================================================
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-      const code = document.getElementById('codeInput').value;
-      const blob = new Blob([code], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'code.txt';
-      a.click();
-      URL.revokeObjectURL(a.href);
-    });
-
-    // ============================================================
-    // CLEAR
-    // ============================================================
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      document.getElementById('codeInput').value = '';
-      updateStats();
-      document.getElementById('output').innerHTML = `
-        <div class="placeholder">
-          <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
-          Results will appear here<br />
-          <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review + Corrected code</span>
-        </div>
-      `;
-    });
-
-    // ============================================================
-    // PDF
-    // ============================================================
-    document.getElementById('pdfBtn').addEventListener('click', () => {
-      const output = document.getElementById('output');
-      const content = output.innerHTML;
-      if (content.includes('placeholder') || content.trim() === '') {
-        alert('Please analyze some code first before generating PDF.');
-        return;
-      }
-      const element = document.createElement('div');
-      element.style.padding = '30px';
-      element.style.fontFamily = 'Inter, sans-serif';
-      element.style.backgroundColor = '#f5f0ff';
-      element.style.color = '#1a1a2e';
-      element.innerHTML = `
-        <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
-        <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
-          ${content}
-        </div>
-        <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
-      `;
-      document.body.appendChild(element);
-      html2pdf().set({ margin: 1, filename: 'analysis-report.pdf' }).from(element).save().then(() => {
-        document.body.removeChild(element);
-      });
-    });
-
-    // ============================================================
-    // ANALYZE - DETAILED AST + GEMINI + CORRECTED CODE
-    // ============================================================
-    const GEMINI_API_KEY = 'AIzaSyC5LdN6q_9UzLt6s9JXkX8YqG6o3fS2mP0';
-    const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_API_KEY;
-
-    document.getElementById('analyzeBtn').addEventListener('click', async () => {
-      const code = document.getElementById('codeInput').value.trim();
-      if (!code) {
-        document.getElementById('output').innerHTML = `
-          <div style="color:#f87171;padding:1rem;border-left:3px solid #f87171;">
-            ⚠️ Please paste some Python code first.
-          </div>
-        `;
-        return;
-      }
-
-      document.getElementById('output').innerHTML = `
-        <div class="spinner-container">
-          <div class="spinner"></div>
-          <div class="spinner-text">🧠 Detailed AST + Gemini analyzing...</div>
-        </div>
-      `;
-
-      try {
-        const astResult = detailedASTAnalysis(code);
-        const correctedCode = generateCorrectedCode(code, astResult);
-
-        const prompt = `
-          You are an expert Python code reviewer with 10+ years of experience. Analyze this code in extreme detail and provide:
-
-          1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
-          
-          2. DETAILED ISSUES: List 5-10 specific issues with:
-             - Line number reference
-             - Issue type (Bug, Style, Performance, Security, Best Practice)
-             - Severity (Critical, High, Medium, Low)
-             - Explanation of why it's an issue
-             - How to fix it
-          
-          3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
-          
-          4. SECURITY CONCERNS: Any potential security vulnerabilities
-          
-          5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
-          
-          6. RATING: Overall rating out of 10 with detailed justification
-          
-          7. BEST PRACTICES: 3-4 specific best practices that should be followed
-
-          Code:
-          ${code}
-
-          Format your response as:
-          SUMMARY: [detailed summary]
-          ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
-          PERFORMANCE: [time/space complexity analysis]
-          SECURITY: [any security concerns]
-          READABILITY: [X/10]
-          MAINTAINABILITY: [X/10]
-          EFFICIENCY: [X/10]
-          SECURITY_SCORE: [X/10]
-          RATING: [X/10 - detailed justification]
-          PRACTICES: [3-4 best practices]
-        `;
-
-        let geminiResponse = '';
-        try {
-          const res = await fetch(GEMINI_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }] }]
-            })
-          });
-          if (res.ok) {
-            const data = await res.json();
-            geminiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          } else {
-            geminiResponse = '';
-          }
-        } catch (err) {
-          geminiResponse = '';
-        }
-
-        const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode);
-        document.getElementById('output').innerHTML = outputHtml;
-
-      } catch (err) {
-        document.getElementById('output').innerHTML = `
-          <div style="color:#f87171;padding:1rem;border-left:3px solid #f87171;">
-            ❌ Error: ${err.message}
-          </div>
-        `;
-      }
-    });
-
-    // ============================================================
-    // DETAILED AST ANALYSIS
-    // ============================================================
-    function detailedASTAnalysis(code) {
-      const issues = [];
-      const lines = code.split('\n');
-      const totalLines = lines.length;
-      const codeLength = code.length;
-      
-      const imports = lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from '));
-      const functions = lines.filter(l => l.trim().startsWith('def '));
-      const classes = lines.filter(l => l.trim().startsWith('class '));
-      const comments = lines.filter(l => l.trim().startsWith('#'));
-      
-      // Unused variables
-      const varPattern = /^(\s*)(\w+)\s*=\s*(.+)/;
-      const allVars = [];
-      const usedVars = new Set();
-      
-      lines.forEach(line => {
-        const match = line.match(varPattern);
-        if (match) {
-          allVars.push({ name: match[2], line: lines.indexOf(line) + 1 });
-        }
-        const words = line.match(/\b(\w+)\b/g);
-        if (words) {
-          words.forEach(w => {
-            if (w.length > 1 && !['if','for','while','def','return','print','import','from','class','lambda','in','is','not','or','and','True','False','None','elif','else','try','except','finally','with','as','pass','break','continue','raise','yield','global','nonlocal','assert','del'].includes(w)) {
-              usedVars.add(w);
-            }
-          });
-        }
-      });
-      
-      allVars.forEach(v => {
-        let used = false;
-        lines.forEach((l, i) => {
-          if (i !== v.line - 1 && l.includes(v.name)) used = true;
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script>
+        // ============================================================
+        // PARTICLES
+        // ============================================================
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
-        if (!used) {
-          issues.push({ line: v.line, type: 'warning', msg: `Unused variable '${v.name}'`, severity: 'Medium' });
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.5 + 0.1
+            });
         }
-      });
-      
-      // Line length
-      lines.forEach((line, idx) => {
-        if (line.length > 79) {
-          issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)`, severity: 'Low' });
-        }
-        if (line.length > 100) {
-          issues.push({ line: idx + 1, type: 'error', msg: `Line extremely long (${line.length} chars) - break it up`, severity: 'High' });
-        }
-      });
-      
-      // Docstrings
-      lines.forEach((line, idx) => {
-        if (line.trim().startsWith('def ') && idx < lines.length - 1) {
-          let hasDocstring = false;
-          for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
-            const next = lines[i].trim();
-            if (next.startsWith('"""') || next.startsWith("'''")) {
-              hasDocstring = true;
-              break;
-            }
-            if (next && !next.startsWith('#')) break;
-          }
-          if (!hasDocstring) {
-            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function', severity: 'Medium' });
-          }
-        }
-        if (line.trim().startsWith('class ') && idx < lines.length - 1) {
-          let hasDocstring = false;
-          for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
-            const next = lines[i].trim();
-            if (next.startsWith('"""') || next.startsWith("'''")) {
-              hasDocstring = true;
-              break;
-            }
-            if (next && !next.startsWith('#')) break;
-          }
-          if (!hasDocstring) {
-            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for class', severity: 'Medium' });
-          }
-        }
-      });
-      
-      // Nesting depth
-      let maxDepth = 0;
-      let currentDepth = 0;
-      lines.forEach(line => {
-        const indent = line.match(/^\s*/)[0].length;
-        if (indent > currentDepth && line.trim()) {
-          currentDepth = indent;
-          maxDepth = Math.max(maxDepth, currentDepth);
-        } else if (indent < currentDepth) {
-          currentDepth = indent;
-        }
-      });
-      
-      if (maxDepth > 20) {
-        issues.push({ line: 0, type: 'warning', msg: `High nesting depth (${Math.floor(maxDepth/4)} levels) - consider refactoring`, severity: 'Medium' });
-      }
-      
-      // TODO/FIXME
-      lines.forEach((line, idx) => {
-        if (line.toLowerCase().includes('todo') || line.toLowerCase().includes('fixme')) {
-          issues.push({ line: idx + 1, type: 'info', msg: 'TODO/FIXME found - pending task', severity: 'Low' });
-        }
-      });
-      
-      // Print statements
-      const prints = lines.filter(l => l.trim().startsWith('print('));
-      if (prints.length > 3) {
-        issues.push({ line: 0, type: 'info', msg: `Multiple print statements (${prints.length}) - consider using logging`, severity: 'Low' });
-      }
-      
-      // Bare except
-      lines.forEach((line, idx) => {
-        if (line.trim().match(/^except\s*:/)) {
-          issues.push({ line: idx + 1, type: 'error', msg: 'Bare except - catches all exceptions, hides bugs. Use specific exceptions', severity: 'Critical' });
-        }
-      });
-      
-      // Complexity
-      const conditions = lines.filter(l => l.includes('if ') || l.includes('elif ') || l.includes('else:') || l.includes('for ') || l.includes('while '));
-      if (conditions.length > 10) {
-        issues.push({ line: 0, type: 'warning', msg: `High complexity (${conditions.length} conditionals) - consider breaking down`, severity: 'Medium' });
-      }
-      
-      return {
-        issues: issues,
-        stats: {
-          totalLines,
-          codeLength,
-          imports: imports.length,
-          functions: functions.length,
-          classes: classes.length,
-          comments: comments.length,
-          blankLines: lines.filter(l => l.trim() === '').length,
-          maxIndent: maxDepth,
-          conditionals: conditions.length,
-          prints: prints.length
-        },
-        issueCount: issues.length,
-        warningCount: issues.filter(i => i.type === 'warning').length,
-        styleCount: issues.filter(i => i.type === 'style').length,
-        errorCount: issues.filter(i => i.type === 'error').length,
-        infoCount: issues.filter(i => i.type === 'info').length,
-        criticalCount: issues.filter(i => i.severity === 'Critical').length
-      };
-    }
 
-    // ============================================================
-    // GENERATE CORRECTED CODE
-    // ============================================================
-    function generateCorrectedCode(code, astResult) {
-      let corrected = code;
-      const lines = code.split('\n');
-      
-      const newLines = [];
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        newLines.push(line);
-        
-        if (line.trim().startsWith('def ') && i < lines.length - 1) {
-          let hasDocstring = false;
-          for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
-            const next = lines[j].trim();
-            if (next.startsWith('"""') || next.startsWith("'''")) {
-              hasDocstring = true;
-              break;
-            }
-            if (next && !next.startsWith('#')) break;
-          }
-          if (!hasDocstring) {
-            const indent = line.match(/^\s*/)[0];
-            newLines.push(`${indent}    """`);
-            const funcName = line.match(/def\s+(\w+)/);
-            newLines.push(`${indent}    ${funcName ? funcName[1] : 'function'} documentation.`);
-            newLines.push(`${indent}    """`);
-          }
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 212, 255, ${p.opacity})`;
+                ctx.fill();
+                particles.forEach((p2, j) => {
+                    if (i === j) return;
+                    const dx = p.x - p2.x,
+                        dy = p.y - p2.y,
+                        dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.1 * (1 - dist/120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                });
+            });
+            requestAnimationFrame(drawParticles);
         }
-        
-        if (line.trim().match(/^except\s*:/)) {
-          newLines[newLines.length - 1] = line.replace('except:', 'except Exception as e:');
-          newLines.push(`    print(f"Error: {e}")  # Log the error properly`);
-        }
-      }
-      
-      corrected = newLines.join('\n');
-      return corrected;
-    }
+        drawParticles();
 
-    // ============================================================
-    // BUILD DETAILED OUTPUT
-    // ============================================================
-    function buildDetailedOutput(astResult, geminiText, originalCode, correctedCode) {
-      let html = '';
-      
-      // AST ANALYSIS
-      html += `<div class="output-section">`;
-      html += `<div class="output-section-title">
-        <i class="fas fa-code"></i> AST Analysis 
-        <span class="badge">${astResult.issueCount} issues</span>
-        <span class="badge" style="color:#fbbf24;">${astResult.warningCount} warnings</span>
-        <span class="badge" style="color:#60a5fa;">${astResult.styleCount} style</span>
-        <span class="badge" style="color:#f87171;">${astResult.errorCount} errors</span>
-        <span class="badge" style="color:#ef4444;">${astResult.criticalCount} critical</span>
-      </div>`;
-      
-      html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:0.5rem;margin-bottom:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.totalLines}</span> lines</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.functions}</span> functions</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.classes}</span> classes</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.imports}</span> imports</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.comments}</span> comments</div>`;
-      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.blankLines}</span> blank</div>`;
-      html += `</div>`;
-      
-      if (astResult.issues.length === 0) {
-        html += `<div class="output-issue success">
-          <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
-          <span>✅ No issues found — clean code!</span>
-        </div>`;
-      } else {
-        astResult.issues.forEach(issue => {
-          const typeClass = issue.type;
-          const icon = issue.type === 'warning' ? 'fa-exclamation-triangle' : 
-                       issue.type === 'style' ? 'fa-paint-brush' : 
-                       issue.type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
-          const severityColor = issue.severity === 'Critical' ? '#ef4444' : 
-                               issue.severity === 'High' ? '#f87171' : 
-                               issue.severity === 'Medium' ? '#fbbf24' : '#60a5fa';
-          html += `<div class="output-issue ${typeClass}">
-            <span class="line-num">${issue.line > 0 ? `Line ${issue.line}` : 'General'}</span>
-            <span class="issue-icon"><i class="fas ${icon}"></i></span>
-            <span>${issue.msg}</span>
-            <span style="font-size:0.55rem;color:${severityColor};margin-left:auto;background:rgba(255,255,255,0.02);padding:0.05rem 0.4rem;border-radius:10px;">${issue.severity || 'Info'}</span>
-          </div>`;
+        // ============================================================
+        // ANIMATE COUNTERS
+        // ============================================================
+        function animateCounter(el, target) {
+            let count = 0;
+            const increment = target / 60;
+            const timer = setInterval(() => {
+                count += increment;
+                if (count >= target) {
+                    el.textContent = target + (target === 100 ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    el.textContent = Math.floor(count);
+                }
+            }, 30);
+        }
+        const counters = document.querySelectorAll('.stat-number[data-target]');
+        let counted = false;
+        window.addEventListener('scroll', () => {
+            if (!counted && window.scrollY > 100) {
+                counters.forEach(c => animateCounter(c, parseInt(c.dataset.target)));
+                counted = true;
+            }
         });
-      }
-      html += `</div>`;
-      
-      // GEMINI AI REVIEW
-      html += `<div class="output-section">`;
-      html += `<div class="output-section-title">
-        <i class="fas fa-brain"></i> Gemini AI Review 
-        <span class="badge">v2.0-flash</span>
-      </div>`;
-      
-      if (geminiText && geminiText.length > 10) {
-        const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-        const issuesMatch = geminiText.match(/ISSUES:\s*([^]*?)(?=PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-        const performanceMatch = geminiText.match(/PERFORMANCE:\s*([^]*?)(?=SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-        const securityMatch = geminiText.match(/SECURITY:\s*([^]*?)(?=READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-        const readabilityMatch = geminiText.match(/READABILITY:\s*([^]*?)(?=MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-        const maintainabilityMatch = geminiText.match(/MAINTAINABILITY:\s*([^]*?)(?=EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-        const efficiencyMatch = geminiText.match(/EFFICIENCY:\s*([^]*?)(?=SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
-        const securityScoreMatch = geminiText.match(/SECURITY_SCORE:\s*([^]*?)(?=RATING:|PRACTICES:|$)/i);
-        const ratingMatch = geminiText.match(/RATING:\s*([^]*?)(?=PRACTICES:|$)/i);
-        const practicesMatch = geminiText.match(/PRACTICES:\s*([^]*?)(?=$)/i);
-        
-        if (summaryMatch) {
-          html += `<div class="output-summary">
-            <strong style="color:#8b5cf6;">📌 Summary</strong>
-            <div style="margin-top:0.3rem;color:rgba(255,255,255,0.6);">${summaryMatch[1].trim()}</div>
-          </div>`;
-        }
-        
-        if (issuesMatch) {
-          html += `<div style="margin-top:0.8rem;">
-            <strong style="color:#f87171;font-size:0.75rem;">📋 Issues & Improvements</strong>
-            <div class="output-ai" style="margin-top:0.3rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
-          </div>`;
-        }
-        
-        if (performanceMatch) {
-          html += `<div style="margin-top:0.8rem;">
-            <strong style="color:#60a5fa;font-size:0.75rem;">⚡ Performance Analysis</strong>
-            <div class="output-ai" style="margin-top:0.3rem;">${performanceMatch[1].trim()}</div>
-          </div>`;
-        }
-        
-        if (securityMatch) {
-          html += `<div style="margin-top:0.8rem;">
-            <strong style="color:#f87171;font-size:0.75rem;">🔒 Security Concerns</strong>
-            <div class="output-ai" style="margin-top:0.3rem;">${securityMatch[1].trim()}</div>
-          </div>`;
-        }
-        
-        html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.5rem;margin-top:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
-        
-        const scores = [
-          { label: 'Readability', match: readabilityMatch },
-          { label: 'Maintainability', match: maintainabilityMatch },
-          { label: 'Efficiency', match: efficiencyMatch },
-          { label: 'Security', match: securityScoreMatch }
-        ];
-        
-        scores.forEach(s => {
-          if (s.match) {
-            const score = s.match[1].trim();
-            const num = score.match(/\d+(\.\d+)?/);
-            const stars = num ? Math.round(parseFloat(num[0]) / 2) : 0;
-            html += `<div style="text-align:center;padding:0.3rem;background:rgba(255,255,255,0.01);border-radius:6px;">
-              <div style="font-size:0.6rem;color:rgba(255,255,255,0.2);">${s.label}</div>
-              <div style="font-size:0.85rem;font-weight:600;color:#ffffff;">${score}</div>
-              <div style="font-size:0.5rem;color:#fbbf24;">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
-            </div>`;
-          }
-        });
-        html += `</div>`;
-        
-        if (ratingMatch) {
-          const ratingText = ratingMatch[1].trim();
-          const ratingNum = ratingText.match(/\d+(\.\d+)?/);
-          const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
-          html += `<div style="margin-top:0.8rem;padding:0.5rem 0.8rem;background:rgba(139,92,246,0.03);border-radius:8px;border:1px solid rgba(139,92,246,0.04);">
-            <div class="rating-bar">
-              <span style="color:#8b5cf6;font-weight:600;font-size:0.8rem;">⭐ Overall Rating</span>
-              <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
-              <span class="rating-text">${ratingText}</span>
-            </div>
-          </div>`;
-        }
-        
-        if (practicesMatch) {
-          html += `<div style="margin-top:0.8rem;">
-            <strong style="color:#34d399;font-size:0.75rem;">💡 Best Practices</strong>
-            <div class="output-ai" style="margin-top:0.3rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
-          </div>`;
-        }
-      } else {
-        const fallbackRating = astResult.criticalCount > 0 ? 4 : 
-                              astResult.errorCount > 0 ? 5 : 
-                              astResult.warningCount > 0 ? 7 : 9;
-        const stars = Math.round(fallbackRating / 2);
-        html += `<div class="output-summary">
-          <strong style="color:#8b5cf6;">📌 Summary</strong>
-          <div style="margin-top:0.3rem;color:rgba(255,255,255,0.6);">
-            ${astResult.criticalCount > 0 ? '⚠️ Critical issues found that need immediate attention.' :
-              astResult.errorCount > 0 ? '⚠️ Several issues found that should be addressed.' :
-              astResult.warningCount > 0 ? '📝 Code is functional but has some warnings to address.' :
-              '✅ Code is clean and well-structured.'}
-          </div>
-        </div>
-        <div style="margin-top:0.8rem;padding:0.5rem 0.8rem;background:rgba(139,92,246,0.03);border-radius:8px;border:1px solid rgba(139,92,246,0.04);">
-          <div class="rating-bar">
-            <span style="color:#8b5cf6;font-weight:600;font-size:0.8rem;">⭐ Overall Rating</span>
-            <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
-            <span class="rating-text">${fallbackRating}/10 - ${fallbackRating >= 8 ? 'Good code quality' : fallbackRating >= 6 ? 'Needs improvements' : 'Significant issues to fix'}</span>
-          </div>
-        </div>`;
-      }
-      html += `</div>`;
-      
-      // CORRECTED CODE
-      if (correctedCode !== originalCode) {
-        html += `<div class="output-section">`;
-        html += `<div class="output-section-title">
-          <i class="fas fa-check-circle" style="color:#34d399;"></i> Corrected Code 
-          <span class="badge" style="background:rgba(52,211,153,0.1);color:#34d399;">Issues Resolved</span>
-        </div>`;
-        html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
-        html += `<div style="margin-top:0.5rem;font-size:0.65rem;color:rgba(255,255,255,0.1);">
-          <i class="fas fa-info-circle"></i> Changes: Added docstrings, fixed bare except, improved code style
-        </div>`;
-        html += `</div>`;
-      }
-      
-      return html;
-    }
+        setTimeout(() => {
+            if (!counted) {
+                counters.forEach(c => animateCounter(c, parseInt(c.dataset.target)));
+                counted = true;
+            }
+        }, 1500);
 
-    // ============================================================
-    // ESCAPE HTML
-    // ============================================================
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-  </script>
+        // ============================================================
+        // SCROLL REVEAL
+        // ============================================================
+        const reveals = document.querySelectorAll('.reveal');
+
+        function checkReveal() {
+            reveals.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+        checkReveal();
+    </script>
+
 </body>
 </html>
