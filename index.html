@@ -2722,7 +2722,7 @@
                     AI Code <span class="highlight glitch" data-text="Debugger">Debugger</span>
                 </p>
                 <p class="bio reveal stagger-2">
-                    AST parsing + Gemini AI review. Paste your Python code and get detailed analysis with corrected code instantly.
+                    AST parsing + Gemini AI review. Paste your code and get detailed analysis with corrected code instantly.
                 </p>
                 <div class="hero-buttons reveal stagger-3">
                     <button class="btn-primary" id="tryItNowBtn">
@@ -2893,9 +2893,9 @@
 
                     <div class="file-upload-area">
                         <label for="fileInput" class="file-upload-label">
-                            <i class="fas fa-upload"></i> Upload .py
+                            <i class="fas fa-upload"></i> Upload
                         </label>
-                        <input type="file" id="fileInput" accept=".py" style="display:none;" />
+                        <input type="file" id="fileInput" accept=".py,.js,.java,.cpp,.go,.rs" style="display:none;" />
                         <span id="fileName" class="file-name">No file selected</span>
                     </div>
 
@@ -3402,38 +3402,31 @@ print(fibonacci(10))</textarea>
             const chars = code.length;
             document.getElementById('lineCount').textContent = `📄 Lines: ${lines}`;
             document.getElementById('charCount').textContent = `📝 Characters: ${chars}`;
-            
-            // Detect language
+
             const lang = detectLanguage(code);
             const langDisplay = getLanguageDisplay(lang);
             document.getElementById('langBadge').textContent = langDisplay;
         }
 
         // ============================================================
-        // MULTI-LANGUAGE SUPPORT — NEW FUNCTIONS
+        // MULTI-LANGUAGE SUPPORT
         // ============================================================
         function detectLanguage(code) {
-            // JavaScript/TypeScript
             if (/function\s+\w+\s*\(/.test(code) || /const\s+\w+\s*=\s*\(/.test(code) || /let\s+\w+\s*=\s*\(/.test(code) || /=>/.test(code)) {
                 return 'javascript';
             }
-            // Python
             if (/def\s+\w+\s*\(/.test(code) || /import\s+\w+/.test(code) || /class\s+\w+/.test(code) || /print\(/.test(code)) {
                 return 'python';
             }
-            // Java
             if (/public\s+class/.test(code) || /System\.out\.println/.test(code) || /public\s+static\s+void\s+main/.test(code)) {
                 return 'java';
             }
-            // C++
             if (/#include\s*</.test(code) || /using\s+namespace\s+std/.test(code) || /int\s+main\s*\(/.test(code) && /std::/.test(code)) {
                 return 'cpp';
             }
-            // Go
             if (/package\s+\w+/.test(code) || /func\s+\w+/.test(code) || /fmt\.Println/.test(code)) {
                 return 'go';
             }
-            // Rust
             if (/fn\s+\w+/.test(code) || /let\s+mut/.test(code) || /println!/.test(code)) {
                 return 'rust';
             }
@@ -3454,13 +3447,13 @@ print(fibonacci(10))</textarea>
         }
 
         // ============================================================
-        // LANGUAGE-SPECIFIC AST ANALYSIS
+        // LANGUAGE-SPECIFIC AST ANALYSIS — FIXED
         // ============================================================
         function analyzeASTForLanguage(code, language) {
             const issues = [];
             const lines = code.split('\n');
 
-            switch(language) {
+            switch (language) {
                 case 'python':
                     lines.forEach((line, idx) => {
                         if (/^\s*\w+\s*=/.test(line) && !line.includes('return') && !line.includes('print')) {
@@ -3471,7 +3464,8 @@ print(fibonacci(10))</textarea>
                                     if (i !== idx && l.includes(varName[1])) used = true;
                                 });
                                 if (!used) {
-                                    issues.push({ line: idx + 1, type: 'warning', msg: `Unused variable '${varName[1]}'`, severity: 'Medium' });
+                                    issues.push({ line: idx + 1, type: 'warning', msg: `Unused variable '${varName[1]}'`,
+                                        severity: 'Medium' });
                                 }
                             }
                         }
@@ -3484,7 +3478,8 @@ print(fibonacci(10))</textarea>
                                 }
                             }
                             if (!hasDocstring) {
-                                issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function', severity: 'Medium' });
+                                issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function',
+                                    severity: 'Medium' });
                             }
                         }
                     });
@@ -3493,12 +3488,15 @@ print(fibonacci(10))</textarea>
                 case 'javascript':
                     lines.forEach((line, idx) => {
                         if (/console\.log/.test(line)) {
-                            issues.push({ line: idx + 1, type: 'info', msg: 'console.log found - remove in production', severity: 'Low' });
+                            issues.push({ line: idx + 1, type: 'info', msg: 'console.log found - remove in production',
+                                severity: 'Low' });
                         }
                         if (/var\s+\w+/.test(line)) {
-                            issues.push({ line: idx + 1, type: 'style', msg: 'Use let or const instead of var', severity: 'Medium' });
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Use let or const instead of var',
+                                severity: 'Medium' });
                         }
-                        if (!line.includes('{') && !line.includes('}') && line.trim() && !line.trim().endsWith(';') && !line.trim().endsWith('/*')) {
+                        if (!line.includes('{') && !line.includes('}') && line.trim() && !line.trim().endsWith(';') && !
+                            line.trim().endsWith('/*')) {
                             issues.push({ line: idx + 1, type: 'style', msg: 'Missing semicolon', severity: 'Low' });
                         }
                     });
@@ -3507,21 +3505,27 @@ print(fibonacci(10))</textarea>
                 case 'java':
                     lines.forEach((line, idx) => {
                         if (/System\.out\.println/.test(line)) {
-                            issues.push({ line: idx + 1, type: 'info', msg: 'System.out.println found - use logging framework', severity: 'Low' });
+                            issues.push({ line: idx + 1, type: 'info', msg: 'System.out.println found - use logging framework',
+                                severity: 'Low' });
                         }
-                        if (/class\s+\w+/.test(line) && !line.includes('public') && !line.includes('private') && !line.includes('protected')) {
-                            issues.push({ line: idx + 1, type: 'style', msg: 'Add access modifier for class', severity: 'Medium' });
+                        if (/class\s+\w+/.test(line) && !line.includes('public') && !line.includes('private') && !
+                            line.includes('protected')) {
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Add access modifier for class',
+                                severity: 'Medium' });
                         }
                     });
                     break;
 
                 case 'cpp':
                     lines.forEach((line, idx) => {
-                        if (/std::shared_ptr/.test(line) || /std::unique_ptr/.test(line) || /\*\s*\w+/.test(line) && !line.includes('nullptr')) {
-                            issues.push({ line: idx + 1, type: 'style', msg: 'Consider using smart pointers', severity: 'Medium' });
+                        if (/std::shared_ptr/.test(line) || /std::unique_ptr/.test(line) || /\*\s*\w+/.test(line) && !
+                            line.includes('nullptr')) {
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Consider using smart pointers',
+                                severity: 'Medium' });
                         }
                         if (/using\s+namespace\s+std/.test(line)) {
-                            issues.push({ line: idx + 1, type: 'style', msg: 'Avoid using namespace std in headers', severity: 'Low' });
+                            issues.push({ line: idx + 1, type: 'style', msg: 'Avoid using namespace std in headers',
+                                severity: 'Low' });
                         }
                     });
                     break;
@@ -3533,10 +3537,12 @@ print(fibonacci(10))</textarea>
                             if (varName) {
                                 let used = false;
                                 lines.forEach((l, i) => {
-                                    if (i !== idx && l.includes(varName[1]) && !l.includes('_ =')) used = true;
+                                    if (i !== idx && l.includes(varName[1]) && !l.includes('_ =')) used =
+                                    true;
                                 });
                                 if (!used) {
-                                    issues.push({ line: idx + 1, type: 'warning', msg: `Unused variable '${varName[1]}'`, severity: 'Medium' });
+                                    issues.push({ line: idx + 1, type: 'warning',
+                                        msg: `Unused variable '${varName[1]}'`, severity: 'Medium' });
                                 }
                             }
                         }
@@ -3549,7 +3555,8 @@ print(fibonacci(10))</textarea>
                                 }
                             }
                             if (!hasErrorHandling) {
-                                issues.push({ line: idx + 1, type: 'warning', msg: 'Error not handled', severity: 'High' });
+                                issues.push({ line: idx + 1, type: 'warning', msg: 'Error not handled',
+                                    severity: 'High' });
                             }
                         }
                     });
@@ -3558,7 +3565,8 @@ print(fibonacci(10))</textarea>
                 default:
                     lines.forEach((line, idx) => {
                         if (line.length > 100) {
-                            issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars)`, severity: 'Low' });
+                            issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars)`,
+                                severity: 'Low' });
                         }
                     });
             }
@@ -3574,12 +3582,35 @@ print(fibonacci(10))</textarea>
                         emptyCount++;
                     }
                     if (emptyCount > 2) {
-                        issues.push({ line: idx + 1, type: 'style', msg: 'Too many consecutive blank lines', severity: 'Low' });
+                        issues.push({ line: idx + 1, type: 'style', msg: 'Too many consecutive blank lines',
+                            severity: 'Low' });
                     }
                 }
             });
 
-            return issues;
+            // ✅ FIXED: Return full object with stats
+            return {
+                issues: issues,
+                stats: {
+                    totalLines: lines.length,
+                    functions: lines.filter(l => l.trim().startsWith('def ') || l.trim().startsWith('function ') || l
+                        .trim().startsWith('func ')).length,
+                    classes: lines.filter(l => l.trim().startsWith('class ') || l.trim().startsWith('public class '))
+                        .length,
+                    imports: lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from ') || l
+                        .includes('#include')).length,
+                    comments: lines.filter(l => l.trim().startsWith('#') || l.trim().startsWith('//') || l.trim()
+                        .startsWith('/*')).length,
+                    blankLines: lines.filter(l => l.trim() === '').length,
+                    conditionals: lines.filter(l => l.includes('if ') || l.includes('elif ') || l.includes('else:') ||
+                        l.includes('for ') || l.includes('while ')).length
+                },
+                issueCount: issues.length,
+                warningCount: issues.filter(i => i.type === 'warning').length,
+                styleCount: issues.filter(i => i.type === 'style').length,
+                errorCount: issues.filter(i => i.type === 'error').length,
+                criticalCount: issues.filter(i => i.severity === 'Critical').length
+            };
         }
 
         // ============================================================
@@ -3682,11 +3713,11 @@ print(fibonacci(10))</textarea>
             document.getElementById('codeInput').value = '';
             updateStats();
             document.getElementById('output').innerHTML = `
-                        <div class="placeholder">
-                            <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; opacity:0.1;"></i>
-                            Results will appear here
-                        </div>
-                    `;
+                            <div class="placeholder">
+                                <i class="fas fa-code" style="display:block; font-size:1.2rem; margin-bottom:0.2rem; opacity:0.1;"></i>
+                                Results will appear here
+                            </div>
+                        `;
         });
 
         // ============================================================
@@ -3705,12 +3736,12 @@ print(fibonacci(10))</textarea>
             element.style.backgroundColor = '#f5f0ff';
             element.style.color = '#1a1a2e';
             element.innerHTML = `
-                        <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
-                        <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
-                            ${content}
-                        </div>
-                        <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
-                    `;
+                            <h2 style="color:#1a1a2e;margin-bottom:10px;">📄 Code Analysis Report</h2>
+                            <div style="margin:20px 0;padding:20px;background:white;border-radius:12px;border:1px solid #e5e7eb;">
+                                ${content}
+                            </div>
+                            <p style="color:#8b5cf6;font-size:12px;margin-top:10px;">Generated by AERO · AI Code Debugger</p>
+                        `;
             document.body.appendChild(element);
             html2pdf().set({ margin: 1, filename: 'analysis-report.pdf' }).from(element).save().then(() => {
                 document.body.removeChild(element);
@@ -3728,73 +3759,71 @@ print(fibonacci(10))</textarea>
             const code = document.getElementById('codeInput').value.trim();
             if (!code) {
                 document.getElementById('output').innerHTML = `
-                            <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
-                                ⚠️ Please paste some code first.
-                            </div>
-                        `;
+                                <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
+                                    ⚠️ Please paste some code first.
+                                </div>
+                            `;
                 return;
             }
 
-            // Detect language
             const language = detectLanguage(code);
             const langDisplay = getLanguageDisplay(language);
 
             document.getElementById('output').innerHTML = `
-                        <div class="skeleton-loader">
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line medium"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                            <div class="skeleton-line"></div>
-                        </div>
-                    `;
+                            <div class="skeleton-loader">
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line medium"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-line"></div>
+                            </div>
+                        `;
 
             try {
-                // Use language-specific AST analysis
                 const astResult = analyzeASTForLanguage(code, language);
                 const correctedCode = generateCorrectedCode(code, astResult, language);
 
                 const prompt = `
-                            You are an expert code reviewer with 10+ years of experience in ${language.toUpperCase()}.
+                                You are an expert code reviewer with 10+ years of experience in ${language.toUpperCase()}.
 
-                            The code is written in ${language.toUpperCase()}.
+                                The code is written in ${language.toUpperCase()}.
 
-                            Analyze this code in extreme detail and provide:
+                                Analyze this code in extreme detail and provide:
 
-                            1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
+                                1. COMPREHENSIVE SUMMARY: (3-4 sentences explaining what the code does, its purpose, and overall quality assessment)
 
-                            2. DETAILED ISSUES: List 5-10 specific issues with:
-                               - Line number reference
-                               - Issue type (Bug, Style, Performance, Security, Best Practice)
-                               - Severity (Critical, High, Medium, Low)
-                               - Explanation of why it's an issue
-                               - How to fix it
+                                2. DETAILED ISSUES: List 5-10 specific issues with:
+                                   - Line number reference
+                                   - Issue type (Bug, Style, Performance, Security, Best Practice)
+                                   - Severity (Critical, High, Medium, Low)
+                                   - Explanation of why it's an issue
+                                   - How to fix it
 
-                            3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
+                                3. PERFORMANCE ANALYSIS: Evaluate time/space complexity and suggest optimizations
 
-                            4. SECURITY CONCERNS: Any potential security vulnerabilities
+                                4. SECURITY CONCERNS: Any potential security vulnerabilities
 
-                            5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
+                                5. CODE QUALITY SCORE: Rate each aspect (Readability, Maintainability, Efficiency, Security) out of 10
 
-                            6. RATING: Overall rating out of 10 with detailed justification
+                                6. RATING: Overall rating out of 10 with detailed justification
 
-                            7. BEST PRACTICES: 3-4 specific best practices for ${language.toUpperCase()} that should be followed
+                                7. BEST PRACTICES: 3-4 specific best practices for ${language.toUpperCase()} that should be followed
 
-                            Code:
-                            ${code}
+                                Code:
+                                ${code}
 
-                            Format your response as:
-                            SUMMARY: [detailed summary]
-                            ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
-                            PERFORMANCE: [time/space complexity analysis]
-                            SECURITY: [any security concerns]
-                            READABILITY: [X/10]
-                            MAINTAINABILITY: [X/10]
-                            EFFICIENCY: [X/10]
-                            SECURITY_SCORE: [X/10]
-                            RATING: [X/10 - detailed justification]
-                            PRACTICES: [3-4 best practices]
-                        `;
+                                Format your response as:
+                                SUMMARY: [detailed summary]
+                                ISSUES: [list each issue with line number, type, severity, explanation, and fix suggestion]
+                                PERFORMANCE: [time/space complexity analysis]
+                                SECURITY: [any security concerns]
+                                READABILITY: [X/10]
+                                MAINTAINABILITY: [X/10]
+                                EFFICIENCY: [X/10]
+                                SECURITY_SCORE: [X/10]
+                                RATING: [X/10 - detailed justification]
+                                PRACTICES: [3-4 best practices]
+                            `;
 
                 let geminiResponse = '';
                 try {
@@ -3813,7 +3842,6 @@ print(fibonacci(10))</textarea>
                     geminiResponse = '';
                 }
 
-                // Update language badge with detected language
                 document.getElementById('langBadge').textContent = langDisplay;
 
                 const outputHtml = buildDetailedOutput(astResult, geminiResponse, code, correctedCode, language);
@@ -3821,10 +3849,10 @@ print(fibonacci(10))</textarea>
 
             } catch (err) {
                 document.getElementById('output').innerHTML = `
-                            <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
-                                ❌ Error: ${err.message}
-                            </div>
-                        `;
+                                <div style="color:oklch(70% 0.15 20); padding:0.8rem; border-left:3px solid oklch(70% 0.15 20); font-size:0.8rem;">
+                                    ❌ Error: ${err.message}
+                                </div>
+                            `;
             }
         });
 
@@ -3927,18 +3955,18 @@ print(fibonacci(10))</textarea>
 
             // Language header
             html += `<div style="margin-bottom:0.8rem;font-size:0.6rem;color:var(--color-fg-dim);opacity:0.3;border-bottom:1px solid var(--color-edge);padding-bottom:0.5rem;">
-                        🧩 Language: <strong style="color:var(--color-fg);">${getLanguageDisplay(language)}</strong>
-                    </div>`;
+                            🧩 Language: <strong style="color:var(--color-fg);">${getLanguageDisplay(language)}</strong>
+                        </div>`;
 
             // AST Analysis
             html += `<div class="output-section">`;
             html += `<div class="output-section-title">
-                            <i class="fas fa-code"></i> AST Analysis
-                            <span class="badge">${astResult.issueCount} issues</span>
-                            <span class="badge" style="color:oklch(85% 0.15 80);">${astResult.warningCount} warnings</span>
-                            <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.errorCount} errors</span>
-                            <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.criticalCount} critical</span>
-                        </div>`;
+                                <i class="fas fa-code"></i> AST Analysis
+                                <span class="badge">${astResult.issueCount} issues</span>
+                                <span class="badge" style="color:oklch(85% 0.15 80);">${astResult.warningCount} warnings</span>
+                                <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.errorCount} errors</span>
+                                <span class="badge" style="color:oklch(70% 0.15 20);">${astResult.criticalCount} critical</span>
+                            </div>`;
 
             html +=
                 `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:0.3rem;margin-bottom:0.6rem;padding:0.4rem;background:oklch(100% 0 0 / 0.01);border-radius:6px;font-size:0.6rem;color:var(--color-fg-dim);opacity:0.3;">`;
@@ -3952,9 +3980,9 @@ print(fibonacci(10))</textarea>
 
             if (astResult.issues.length === 0) {
                 html += `<div class="output-issue success">
-                                <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
-                                <span>✅ No issues found — clean code!</span>
-                            </div>`;
+                                    <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
+                                    <span>✅ No issues found — clean code!</span>
+                                </div>`;
             } else {
                 astResult.issues.forEach(issue => {
                     const typeClass = issue.type;
@@ -3965,11 +3993,11 @@ print(fibonacci(10))</textarea>
                         issue.severity === 'High' ? 'oklch(80% 0.15 30)' :
                         issue.severity === 'Medium' ? 'oklch(85% 0.15 80)' : 'oklch(70% 0.15 240)';
                     html += `<div class="output-issue ${typeClass}">
-                                        <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
-                                        <span class="issue-icon"><i class="fas ${icon}"></i></span>
-                                        <span>${issue.msg}</span>
-                                        <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:oklch(100% 0 0 / 0.02);padding:0.05rem 0.3rem;border-radius:8px;opacity:0.5;">${issue.severity || 'Info'}</span>
-                                    </div>`;
+                                            <span class="line-num">${issue.line > 0 ? `L${issue.line}` : 'Gen'}</span>
+                                            <span class="issue-icon"><i class="fas ${icon}"></i></span>
+                                            <span>${issue.msg}</span>
+                                            <span style="font-size:0.5rem;color:${severityColor};margin-left:auto;background:oklch(100% 0 0 / 0.02);padding:0.05rem 0.3rem;border-radius:8px;opacity:0.5;">${issue.severity || 'Info'}</span>
+                                        </div>`;
                 });
             }
             html += `</div>`;
@@ -3977,9 +4005,9 @@ print(fibonacci(10))</textarea>
             // Gemini AI Review
             html += `<div class="output-section">`;
             html += `<div class="output-section-title">
-                            <i class="fas fa-brain"></i> Gemini AI Review
-                            <span class="badge">v2.0-flash</span>
-                        </div>`;
+                                <i class="fas fa-brain"></i> Gemini AI Review
+                                <span class="badge">v2.0-flash</span>
+                            </div>`;
 
             if (geminiText && geminiText.length > 10) {
                 const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|PERFORMANCE:|SECURITY:|READABILITY:|MAINTAINABILITY:|EFFICIENCY:|SECURITY_SCORE:|RATING:|PRACTICES:|$)/i);
@@ -3995,9 +4023,9 @@ print(fibonacci(10))</textarea>
 
                 if (summaryMatch) {
                     html += `<div class="output-summary">
-                                        <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
-                                        <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="summaryOutput"></div>
-                                    </div>`;
+                                            <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
+                                            <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="summaryOutput"></div>
+                                        </div>`;
                     const summaryText = summaryMatch[1].trim();
                     setTimeout(() => {
                         const el = document.getElementById('summaryOutput');
@@ -4007,9 +4035,9 @@ print(fibonacci(10))</textarea>
 
                 if (issuesMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                        <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">📋 Issues & Improvements</strong>
-                                        <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="issuesOutput"></div>
-                                    </div>`;
+                                            <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">📋 Issues & Improvements</strong>
+                                            <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="issuesOutput"></div>
+                                        </div>`;
                     const issuesText = issuesMatch[1].trim();
                     setTimeout(() => {
                         const el = document.getElementById('issuesOutput');
@@ -4019,9 +4047,9 @@ print(fibonacci(10))</textarea>
 
                 if (performanceMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                        <strong style="color:oklch(70% 0.15 240);font-size:0.65rem;">⚡ Performance</strong>
-                                        <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="performanceOutput"></div>
-                                    </div>`;
+                                            <strong style="color:oklch(70% 0.15 240);font-size:0.65rem;">⚡ Performance</strong>
+                                            <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="performanceOutput"></div>
+                                        </div>`;
                     const perfText = performanceMatch[1].trim();
                     setTimeout(() => {
                         const el = document.getElementById('performanceOutput');
@@ -4031,9 +4059,9 @@ print(fibonacci(10))</textarea>
 
                 if (securityMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                        <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">🔒 Security</strong>
-                                        <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="securityOutput"></div>
-                                    </div>`;
+                                            <strong style="color:oklch(70% 0.15 20);font-size:0.65rem;">🔒 Security</strong>
+                                            <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="securityOutput"></div>
+                                        </div>`;
                     const secText = securityMatch[1].trim();
                     setTimeout(() => {
                         const el = document.getElementById('securityOutput');
@@ -4055,10 +4083,10 @@ print(fibonacci(10))</textarea>
                         const num = score.match(/\d+(\.\d+)?/);
                         const stars = num ? Math.round(parseFloat(num[0]) / 2) : 0;
                         html += `<div style="text-align:center;padding:0.2rem;background:oklch(100% 0 0 / 0.01);border-radius:4px;">
-                                            <div style="font-size:0.5rem;color:var(--color-fg-dim);opacity:0.3;">${s.label}</div>
-                                            <div style="font-size:0.7rem;font-weight:600;color:var(--color-fg);">${score}</div>
-                                            <div style="font-size:0.4rem;color:oklch(85% 0.15 80);">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
-                                        </div>`;
+                                                <div style="font-size:0.5rem;color:var(--color-fg-dim);opacity:0.3;">${s.label}</div>
+                                                <div style="font-size:0.7rem;font-weight:600;color:var(--color-fg);">${score}</div>
+                                                <div style="font-size:0.4rem;color:oklch(85% 0.15 80);">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</div>
+                                            </div>`;
                     }
                 });
                 html += `</div>`;
@@ -4068,19 +4096,19 @@ print(fibonacci(10))</textarea>
                     const ratingNum = ratingText.match(/\d+(\.\d+)?/);
                     const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
                     html += `<div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:oklch(60% 0.2 280 / 0.02);border-radius:6px;border:1px solid oklch(60% 0.2 280 / 0.02);">
-                                        <div class="rating-bar">
-                                            <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                                            <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
-                                            <span class="rating-text">${ratingText}</span>
-                                        </div>
-                                    </div>`;
+                                            <div class="rating-bar">
+                                                <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                                                <span class="stars">${'★'.repeat(Math.min(stars, 5))}${'☆'.repeat(Math.max(0, 5-stars))}</span>
+                                                <span class="rating-text">${ratingText}</span>
+                                            </div>
+                                        </div>`;
                 }
 
                 if (practicesMatch) {
                     html += `<div style="margin-top:0.6rem;">
-                                        <strong style="color:oklch(85% 0.2 160);font-size:0.65rem;">💡 Best Practices</strong>
-                                        <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="practicesOutput"></div>
-                                    </div>`;
+                                            <strong style="color:oklch(85% 0.2 160);font-size:0.65rem;">💡 Best Practices</strong>
+                                            <div class="output-ai" style="margin-top:0.2rem;font-size:0.75rem;" id="practicesOutput"></div>
+                                        </div>`;
                     const pracText = practicesMatch[1].trim();
                     setTimeout(() => {
                         const el = document.getElementById('practicesOutput');
@@ -4093,50 +4121,50 @@ print(fibonacci(10))</textarea>
                     astResult.warningCount > 0 ? 7 : 9;
                 const stars = Math.round(fallbackRating / 2);
                 html += `<div class="output-summary">
-                                    <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
-                                    <div style="margin-top:0.2rem;color:var(--color-fg-dim);font-size:0.75rem;opacity:0.5;">
-                                        ${astResult.criticalCount > 0 ? '⚠️ Critical issues found that need immediate attention.' :
-                                            astResult.errorCount > 0 ? '⚠️ Several issues found that should be addressed.' :
-                                            astResult.warningCount > 0 ? '📝 Code is functional but has some warnings to address.' :
-                                            '✅ Code is clean and well-structured.'}
+                                        <strong style="color:var(--color-accent);font-size:0.7rem;">📌 Summary</strong>
+                                        <div style="margin-top:0.2rem;color:var(--color-fg-dim);font-size:0.75rem;opacity:0.5;">
+                                            ${astResult.criticalCount > 0 ? '⚠️ Critical issues found that need immediate attention.' :
+                                                astResult.errorCount > 0 ? '⚠️ Several issues found that should be addressed.' :
+                                                astResult.warningCount > 0 ? '📝 Code is functional but has some warnings to address.' :
+                                                '✅ Code is clean and well-structured.'}
+                                        </div>
                                     </div>
-                                </div>
-                                <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:oklch(60% 0.2 280 / 0.02);border-radius:6px;border:1px solid oklch(60% 0.2 280 / 0.02);">
-                                    <div class="rating-bar">
-                                        <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
-                                        <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
-                                        <span class="rating-text">${fallbackRating}/10</span>
-                                    </div>
-                                </div>`;
+                                    <div style="margin-top:0.6rem;padding:0.4rem 0.6rem;background:oklch(60% 0.2 280 / 0.02);border-radius:6px;border:1px solid oklch(60% 0.2 280 / 0.02);">
+                                        <div class="rating-bar">
+                                            <span style="color:var(--color-accent);font-weight:600;font-size:0.7rem;">⭐ Rating</span>
+                                            <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
+                                            <span class="rating-text">${fallbackRating}/10</span>
+                                        </div>
+                                    </div>`;
             }
             html += `</div>`;
 
             // Corrected Code with Diff View
             html += `<div class="output-section">`;
             html += `<div class="output-section-title">
-                            <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Corrected Code
-                            <span class="badge" style="background:oklch(85% 0.2 160 / 0.06); color:oklch(85% 0.2 160);">${correctedCode !== originalCode ? 'Issues Resolved' : 'No Changes Needed'}</span>
-                        </div>`;
+                                <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Corrected Code
+                                <span class="badge" style="background:oklch(85% 0.2 160 / 0.06); color:oklch(85% 0.2 160);">${correctedCode !== originalCode ? 'Issues Resolved' : 'No Changes Needed'}</span>
+                            </div>`;
 
             if (correctedCode !== originalCode) {
                 html += `<div class="diff-view">
-                            <div class="diff-panel original">
-                                <h4>⬅️ Original</h4>
-                                <pre>${escapeHtml(originalCode)}</pre>
-                            </div>
-                            <div class="diff-panel corrected">
-                                <h4>✅ Corrected ➡️</h4>
-                                <pre>${escapeHtml(correctedCode)}</pre>
-                            </div>
-                        </div>`;
+                                <div class="diff-panel original">
+                                    <h4>⬅️ Original</h4>
+                                    <pre>${escapeHtml(originalCode)}</pre>
+                                </div>
+                                <div class="diff-panel corrected">
+                                    <h4>✅ Corrected ➡️</h4>
+                                    <pre>${escapeHtml(correctedCode)}</pre>
+                                </div>
+                            </div>`;
                 html += `<div style="margin-top:0.5rem;font-size:0.55rem;color:var(--color-fg-dim);opacity:0.3;">
-                            <i class="fas fa-info-circle"></i> Changes made based on analysis
-                        </div>`;
+                                <i class="fas fa-info-circle"></i> Changes made based on analysis
+                            </div>`;
             } else {
                 html += `<div class="corrected-code">${escapeHtml(correctedCode)}</div>`;
                 html += `<div style="margin-top:0.4rem;font-size:0.55rem;color:var(--color-fg-dim);opacity:0.3;">
-                            <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Code is already clean — no corrections needed!
-                        </div>`;
+                                <i class="fas fa-check-circle" style="color:oklch(85% 0.2 160);"></i> Code is already clean — no corrections needed!
+                            </div>`;
             }
             html += `</div>`;
 
@@ -4155,5 +4183,6 @@ print(fibonacci(10))</textarea>
         // Initial update for language detection
         updateStats();
     </script>
+
 </body>
 </html>
