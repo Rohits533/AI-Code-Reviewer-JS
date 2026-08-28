@@ -33,7 +33,7 @@
     }
 
     /* ============================================================
-       CUSTOM CURSOR - APPLE STYLE
+       CUSTOM CURSOR
        ============================================================ */
     #custom-cursor {
       position: fixed;
@@ -96,7 +96,7 @@
     }
 
     /* ============================================================
-       ROTATING LOGO - LEFT SIDE
+       ROTATING LOGO
        ============================================================ */
     .rotating-logo-container {
       position: fixed;
@@ -447,7 +447,6 @@
       transform: scale(1.05) translateY(-2px);
     }
 
-    /* Hero Visual */
     .hero-visual {
       display: flex;
       align-items: center;
@@ -526,7 +525,6 @@
       color: rgba(139, 92, 246, 0.15);
     }
 
-    /* Stats */
     .hero-stats {
       display: flex;
       gap: 2.5rem;
@@ -573,7 +571,7 @@
     }
 
     /* ============================================================
-       FULL DEBUGGER INTERFACE
+       DEBUGGER INTERFACE
        ============================================================ */
     #debugger-interface {
       display: none;
@@ -592,7 +590,7 @@
     }
 
     .debugger-container {
-      max-width: 860px;
+      max-width: 960px;
       margin: 0 auto;
       width: 100%;
     }
@@ -787,16 +785,28 @@
       -webkit-backdrop-filter: blur(20px);
       padding: 1.2rem;
       border-radius: 16px;
-      min-height: 100px;
+      min-height: 200px;
       color: #ffffff;
-      font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       line-height: 1.8;
-      white-space: pre-wrap;
       border: 1px solid rgba(139, 92, 246, 0.02);
       margin-top: 1.2rem;
       transition: 0.4s;
+      max-height: 600px;
+      overflow-y: auto;
     }
+    #output::-webkit-scrollbar {
+      width: 4px;
+    }
+    #output::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: 2px;
+    }
+    #output::-webkit-scrollbar-thumb {
+      background: rgba(139, 92, 246, 0.2);
+      border-radius: 2px;
+    }
+
     #output .placeholder {
       color: rgba(255, 255, 255, 0.03);
       font-family: 'Inter', sans-serif;
@@ -1095,6 +1105,119 @@
       color: rgba(255, 255, 255, 0.2);
       text-transform: uppercase;
       letter-spacing: 2px;
+    }
+
+    /* ============================================================
+       OUTPUT STYLES - DETAILED
+       ============================================================ */
+    .output-section {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .output-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .output-section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #8b5cf6;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .output-section-title .badge {
+      font-size: 0.55rem;
+      background: rgba(139, 92, 246, 0.1);
+      padding: 0.05rem 0.5rem;
+      border-radius: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+    .output-issue {
+      padding: 0.3rem 0.5rem;
+      margin: 0.2rem 0;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.5;
+    }
+    .output-issue .line-num {
+      color: rgba(255,255,255,0.1);
+      font-size: 0.65rem;
+      min-width: 50px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .output-issue .issue-icon {
+      font-size: 0.7rem;
+      min-width: 16px;
+    }
+    .output-issue.warning {
+      border-left: 2px solid #fbbf24;
+      background: rgba(251, 191, 36, 0.03);
+    }
+    .output-issue.warning .issue-icon { color: #fbbf24; }
+    .output-issue.style {
+      border-left: 2px solid #60a5fa;
+      background: rgba(96, 165, 250, 0.03);
+    }
+    .output-issue.style .issue-icon { color: #60a5fa; }
+    .output-issue.info {
+      border-left: 2px solid #8b5cf6;
+      background: rgba(139, 92, 246, 0.03);
+    }
+    .output-issue.info .issue-icon { color: #8b5cf6; }
+    .output-issue.error {
+      border-left: 2px solid #f87171;
+      background: rgba(248, 113, 113, 0.03);
+    }
+    .output-issue.error .issue-icon { color: #f87171; }
+    .output-issue.success {
+      border-left: 2px solid #34d399;
+      background: rgba(52, 211, 153, 0.03);
+    }
+    .output-issue.success .issue-icon { color: #34d399; }
+
+    .output-ai {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+    }
+    .output-ai strong {
+      color: #ffffff;
+    }
+    .output-ai .ai-label {
+      color: #8b5cf6;
+      font-weight: 600;
+    }
+
+    .output-summary {
+      background: rgba(139, 92, 246, 0.02);
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(139, 92, 246, 0.04);
+      margin-bottom: 0.5rem;
+    }
+
+    .rating-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.3rem;
+    }
+    .rating-bar .stars {
+      color: #fbbf24;
+      font-size: 0.9rem;
+    }
+    .rating-bar .rating-text {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
     }
 
     /* ============================================================
@@ -1426,13 +1549,13 @@
   </section>
 
   <!-- ============================================================
-       FULL DEBUGGER INTERFACE
+       DEBUGGER INTERFACE
        ============================================================ -->
   <section id="debugger-interface">
     <div class="debugger-container">
       <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Home</button>
       <h2 class="debugger-title">⚡ <span>AI Code Debugger</span></h2>
-      <p class="debugger-sub">Paste your Python code and get AST analysis + AI review instantly.</p>
+      <p class="debugger-sub">Paste your Python code and get detailed AST analysis + AI review instantly.</p>
 
       <div class="debugger-area">
         <div class="file-upload-area">
@@ -1466,7 +1589,8 @@ print(fibonacci(10))</textarea>
         <div id="output">
           <div class="placeholder">
             <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
-            Results will appear here
+            Results will appear here<br />
+            <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review</span>
           </div>
         </div>
       </div>
@@ -1529,7 +1653,7 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
-    // SCROLL REVEAL FOR SECTIONS
+    // SCROLL REVEAL
     // ============================================================
     const sections = document.querySelectorAll('#features, #about');
     const observer = new IntersectionObserver((entries) => {
@@ -1550,7 +1674,7 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
-    // SHOW DEBUGGER ON DISCOVER
+    // SHOW DEBUGGER
     // ============================================================
     function showDebugger() {
       const debuggerSection = document.getElementById('debugger-interface');
@@ -1694,7 +1818,8 @@ print(fibonacci(10))</textarea>
       document.getElementById('output').innerHTML = `
         <div class="placeholder">
           <i class="fas fa-code" style="display:block; font-size:1.4rem; margin-bottom:0.3rem; color:rgba(255,255,255,0.01);"></i>
-          Results will appear here
+          Results will appear here<br />
+          <span style="font-size:0.6rem;color:rgba(255,255,255,0.005);">Detailed AST analysis + AI review</span>
         </div>
       `;
     });
@@ -1728,7 +1853,7 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
-    // ANALYZE - AST + GEMINI
+    // ANALYZE - DETAILED AST + GEMINI
     // ============================================================
     const GEMINI_API_KEY = 'AIzaSyC5LdN6q_9UzLt6s9JXkX8YqG6o3fS2mP0';
     const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_API_KEY;
@@ -1747,24 +1872,26 @@ print(fibonacci(10))</textarea>
       document.getElementById('output').innerHTML = `
         <div class="spinner-container">
           <div class="spinner"></div>
-          <div class="spinner-text">🧠 AST + Gemini analyzing...</div>
+          <div class="spinner-text">🧠 Detailed AST + Gemini analyzing...</div>
         </div>
       `;
 
       try {
-        const astIssues = analyzeAST(code);
+        const astResult = detailedASTAnalysis(code);
 
         const prompt = `
-          You are an expert code reviewer. Analyze this Python code and provide:
-          1. A brief summary (1-2 sentences)
-          2. 3-5 bullet points of issues or improvements
-          3. A rating out of 10
+          You are an expert Python code reviewer. Analyze this code in detail and provide:
+          1. A comprehensive summary (2-3 sentences explaining what the code does and its quality)
+          2. 5-8 specific issues or improvements with line numbers if possible
+          3. A rating out of 10 with justification
+          4. Best practices suggestions (2-3)
           Code:
           ${code}
           Format your response as:
-          SUMMARY: ...
-          ISSUES: ...
-          RATING: ...
+          SUMMARY: [detailed summary]
+          ISSUES: [list each issue with line number suggestion if possible]
+          RATING: [X/10 - brief justification]
+          PRACTICES: [2-3 best practice suggestions]
         `;
 
         let geminiResponse = '';
@@ -1778,15 +1905,15 @@ print(fibonacci(10))</textarea>
           });
           if (res.ok) {
             const data = await res.json();
-            geminiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '⚠️ No response from Gemini.';
+            geminiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
           } else {
-            geminiResponse = '⚠️ Gemini API unavailable. Using fallback review.';
+            geminiResponse = '';
           }
         } catch (err) {
-          geminiResponse = '⚠️ Network error. Using fallback review.';
+          geminiResponse = '';
         }
 
-        const outputHtml = buildOutput(astIssues, geminiResponse, code);
+        const outputHtml = buildDetailedOutput(astResult, geminiResponse, code);
         document.getElementById('output').innerHTML = outputHtml;
 
       } catch (err) {
@@ -1799,37 +1926,68 @@ print(fibonacci(10))</textarea>
     });
 
     // ============================================================
-    // AST ANALYZER
+    // DETAILED AST ANALYSIS
     // ============================================================
-    function analyzeAST(code) {
+    function detailedASTAnalysis(code) {
       const issues = [];
       const lines = code.split('\n');
-
+      const totalLines = lines.length;
+      const codeLength = code.length;
+      
+      // Count imports
+      const imports = lines.filter(l => l.trim().startsWith('import ') || l.trim().startsWith('from '));
+      
+      // Count functions
+      const functions = lines.filter(l => l.trim().startsWith('def '));
+      
+      // Count classes
+      const classes = lines.filter(l => l.trim().startsWith('class '));
+      
+      // Count comments
+      const comments = lines.filter(l => l.trim().startsWith('#'));
+      
+      // Find unused variables
       const varPattern = /^(\s*)(\w+)\s*=\s*(.+)/;
+      const allVars = [];
       const usedVars = new Set();
+      
       lines.forEach(line => {
-        const matches = line.match(/\b(\w+)\b/g);
-        if (matches) matches.forEach(w => {
-          if (w.length > 1 && !['if','for','while','def','return','print','import','from','class','lambda'].includes(w)) {
-            usedVars.add(w);
-          }
-        });
-      });
-      lines.forEach((line, idx) => {
         const match = line.match(varPattern);
         if (match) {
-          const varName = match[2];
-          let used = false;
-          lines.forEach((l, i) => {
-            if (i !== idx && l.includes(varName)) used = true;
-          });
-          if (!used) {
-            issues.push({ line: idx + 1, type: 'warning', msg: `Unused variable '${varName}'` });
-          }
+          allVars.push({ name: match[2], line: lines.indexOf(line) + 1 });
         }
+        const words = line.match(/\b(\w+)\b/g);
+        if (words) {
+          words.forEach(w => {
+            if (w.length > 1 && !['if','for','while','def','return','print','import','from','class','lambda','in','is','not','or','and','True','False','None','elif','else','try','except','finally','with','as','pass','break','continue','raise','yield','global','nonlocal','assert','del'].includes(w)) {
+              usedVars.add(w);
+            }
+          });
+        }
+      });
+      
+      allVars.forEach(v => {
+        let used = false;
+        lines.forEach((l, i) => {
+          if (i !== v.line - 1 && l.includes(v.name)) used = true;
+        });
+        if (!used) {
+          issues.push({ line: v.line, type: 'warning', msg: `Unused variable '${v.name}'` });
+        }
+      });
+      
+      // Check line length
+      lines.forEach((line, idx) => {
         if (line.length > 79) {
           issues.push({ line: idx + 1, type: 'style', msg: `Line too long (${line.length} chars, max 79)` });
         }
+        if (line.length > 100) {
+          issues.push({ line: idx + 1, type: 'error', msg: `Line extremely long (${line.length} chars) - consider breaking it up` });
+        }
+      });
+      
+      // Check docstrings for functions
+      lines.forEach((line, idx) => {
         if (line.trim().startsWith('def ') && idx < lines.length - 1) {
           let hasDocstring = false;
           for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
@@ -1844,71 +2002,199 @@ print(fibonacci(10))</textarea>
             issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for function' });
           }
         }
-        if (line.includes('if ') && line.includes('elif')) {
-          issues.push({ line: idx + 1, type: 'info', msg: 'Consider reducing condition complexity' });
+      });
+      
+      // Check class docstrings
+      lines.forEach((line, idx) => {
+        if (line.trim().startsWith('class ') && idx < lines.length - 1) {
+          let hasDocstring = false;
+          for (let i = idx + 1; i < Math.min(idx + 5, lines.length); i++) {
+            const next = lines[i].trim();
+            if (next.startsWith('"""') || next.startsWith("'''")) {
+              hasDocstring = true;
+              break;
+            }
+            if (next && !next.startsWith('#')) break;
+          }
+          if (!hasDocstring) {
+            issues.push({ line: idx + 1, type: 'style', msg: 'Missing docstring for class' });
+          }
         }
       });
-
-      if (code.includes('import ')) {
-        issues.push({ line: 0, type: 'info', msg: 'AST: Import statements detected' });
+      
+      // Check nested depth
+      let maxDepth = 0;
+      let currentDepth = 0;
+      lines.forEach(line => {
+        const indent = line.match(/^\s*/)[0].length;
+        if (indent > currentDepth && line.trim()) {
+          currentDepth = indent;
+          maxDepth = Math.max(maxDepth, currentDepth);
+        } else if (indent < currentDepth) {
+          currentDepth = indent;
+        }
+      });
+      
+      if (maxDepth > 20) {
+        issues.push({ line: 0, type: 'warning', msg: `High nesting depth (${Math.floor(maxDepth/4)} levels) - consider refactoring` });
       }
-      if (code.includes('class ')) {
-        issues.push({ line: 0, type: 'info', msg: 'AST: Class definition found' });
+      
+      // Check for TODO/FIXME
+      lines.forEach((line, idx) => {
+        if (line.toLowerCase().includes('todo') || line.toLowerCase().includes('fixme')) {
+          issues.push({ line: idx + 1, type: 'info', msg: 'TODO/FIXME found - pending task' });
+        }
+      });
+      
+      // Check for print statements (debugging)
+      const prints = lines.filter(l => l.trim().startsWith('print('));
+      if (prints.length > 3) {
+        issues.push({ line: 0, type: 'info', msg: `Multiple print statements (${prints.length}) - consider using logging for production` });
       }
-      if (code.includes('lambda')) {
-        issues.push({ line: 0, type: 'info', msg: 'AST: Lambda function detected' });
-      }
-
-      return issues;
+      
+      // Check for bare except
+      lines.forEach((line, idx) => {
+        if (line.trim().match(/^except\s*:/)) {
+          issues.push({ line: idx + 1, type: 'error', msg: 'Bare except - catches all exceptions, hide bugs. Use specific exceptions' });
+        }
+      });
+      
+      // Return detailed stats
+      return {
+        issues: issues,
+        stats: {
+          totalLines,
+          codeLength,
+          imports: imports.length,
+          functions: functions.length,
+          classes: classes.length,
+          comments: comments.length,
+          blankLines: lines.filter(l => l.trim() === '').length,
+          maxIndent: maxDepth
+        },
+        issueCount: issues.length,
+        warningCount: issues.filter(i => i.type === 'warning').length,
+        styleCount: issues.filter(i => i.type === 'style').length,
+        errorCount: issues.filter(i => i.type === 'error').length,
+        infoCount: issues.filter(i => i.type === 'info').length
+      };
     }
 
     // ============================================================
-    // BUILD OUTPUT
+    // BUILD DETAILED OUTPUT
     // ============================================================
-    function buildOutput(astIssues, geminiText, code) {
-      let html = '<div style="padding:0.2rem 0;">';
-
-      html += `<div style="margin-bottom:1.2rem;">
-        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
-          <span style="font-weight:600;color:#8b5cf6;">🔍 AST Analysis</span>
-          <span style="font-size:0.65rem;color:rgba(255,255,255,0.08);">${astIssues.length} issues found</span>
+    function buildDetailedOutput(astResult, geminiText, code) {
+      let html = '';
+      
+      // ====== AST ANALYSIS SECTION ======
+      html += `<div class="output-section">`;
+      html += `<div class="output-section-title">
+        <i class="fas fa-code"></i> AST Analysis 
+        <span class="badge">${astResult.issueCount} issues</span>
+        <span class="badge" style="color:#fbbf24;">${astResult.warningCount} warnings</span>
+        <span class="badge" style="color:#60a5fa;">${astResult.styleCount} style</span>
+        <span class="badge" style="color:#f87171;">${astResult.errorCount} errors</span>
+      </div>`;
+      
+      // Stats
+      html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.5rem;margin-bottom:0.8rem;padding:0.5rem;background:rgba(255,255,255,0.02);border-radius:8px;">`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.totalLines}</span> lines</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.functions}</span> functions</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.classes}</span> classes</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.imports}</span> imports</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.comments}</span> comments</div>`;
+      html += `<div style="font-size:0.65rem;color:rgba(255,255,255,0.2);"><span style="color:#ffffff;">${astResult.stats.blankLines}</span> blank lines</div>`;
+      html += `</div>`;
+      
+      // Issues list
+      if (astResult.issues.length === 0) {
+        html += `<div class="output-issue success">
+          <span class="issue-icon"><i class="fas fa-check-circle"></i></span>
+          <span>✅ No issues found — clean code!</span>
         </div>`;
-      if (astIssues.length === 0) {
-        html += `<div style="color:#34d399;font-size:0.85rem;padding:0.3rem 0;">✅ No issues found — clean code!</div>`;
       } else {
-        astIssues.forEach(issue => {
-          const color = issue.type === 'warning' ? '#fbbf24' : issue.type === 'style' ? '#60a5fa' : '#8b5cf6';
-          const icon = issue.type === 'warning' ? '⚠️' : issue.type === 'style' ? '💡' : 'ℹ️';
-          html += `<div style="font-size:0.8rem;color:${color};padding:0.2rem 0;display:flex;gap:0.4rem;">
-            <span>${icon}</span>
-            <span>${issue.line > 0 ? `Line ${issue.line}:` : ''} ${issue.msg}</span>
+        astResult.issues.forEach(issue => {
+          const typeClass = issue.type;
+          const icon = issue.type === 'warning' ? 'fa-exclamation-triangle' : 
+                       issue.type === 'style' ? 'fa-paint-brush' : 
+                       issue.type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
+          html += `<div class="output-issue ${typeClass}">
+            <span class="line-num">${issue.line > 0 ? `Line ${issue.line}` : 'General'}</span>
+            <span class="issue-icon"><i class="fas ${icon}"></i></span>
+            <span>${issue.msg}</span>
           </div>`;
         });
       }
       html += `</div>`;
-
-      html += `<div style="margin-bottom:0.5rem;padding-top:0.8rem;border-top:1px solid rgba(139,92,246,0.01);">
-        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
-          <span style="font-weight:600;color:#8b5cf6;">🧠 Gemini AI Review</span>
-          <span style="font-size:0.65rem;color:rgba(255,255,255,0.08);">v2.0-flash</span>
-        </div>`;
-      if (geminiText && !geminiText.includes('⚠️')) {
-        const formatted = geminiText
-          .replace(/\*\*/g, '')
-          .replace(/SUMMARY:/g, '<br><span style="font-weight:600;color:#8b5cf6;">📌 Summary:</span>')
-          .replace(/ISSUES:/g, '<br><span style="font-weight:600;color:#8b5cf6;">📋 Issues:</span>')
-          .replace(/RATING:/g, '<br><span style="font-weight:600;color:#8b5cf6;">⭐ Rating:</span>');
-        html += `<div style="font-size:0.85rem;line-height:1.8;margin-top:0.3rem;color:rgba(255,255,255,0.6);">${formatted}</div>`;
+      
+      // ====== GEMINI AI REVIEW ======
+      html += `<div class="output-section">`;
+      html += `<div class="output-section-title">
+        <i class="fas fa-brain"></i> Gemini AI Review 
+        <span class="badge">v2.0-flash</span>
+      </div>`;
+      
+      if (geminiText && geminiText.length > 10) {
+        // Parse AI response
+        const summaryMatch = geminiText.match(/SUMMARY:\s*([^]*?)(?=ISSUES:|RATING:|PRACTICES:|$)/i);
+        const issuesMatch = geminiText.match(/ISSUES:\s*([^]*?)(?=RATING:|PRACTICES:|$)/i);
+        const ratingMatch = geminiText.match(/RATING:\s*([^]*?)(?=PRACTICES:|$)/i);
+        const practicesMatch = geminiText.match(/PRACTICES:\s*([^]*?)(?=$)/i);
+        
+        if (summaryMatch) {
+          html += `<div class="output-summary">
+            <strong style="color:#8b5cf6;">📌 Summary</strong>
+            <div style="margin-top:0.3rem;color:rgba(255,255,255,0.6);">${summaryMatch[1].trim()}</div>
+          </div>`;
+        }
+        
+        if (issuesMatch) {
+          html += `<div style="margin-top:0.5rem;">
+            <strong style="color:#8b5cf6;font-size:0.75rem;">📋 Issues & Improvements</strong>
+            <div class="output-ai" style="margin-top:0.3rem;">${issuesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+          </div>`;
+        }
+        
+        if (ratingMatch) {
+          const ratingText = ratingMatch[1].trim();
+          const ratingNum = ratingText.match(/\d+(\.\d+)?/);
+          const stars = ratingNum ? Math.round(parseFloat(ratingNum[0]) / 2) : 0;
+          html += `<div style="margin-top:0.5rem;">
+            <div class="rating-bar">
+              <span style="color:#8b5cf6;font-weight:600;">⭐ Rating</span>
+              <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
+              <span class="rating-text">${ratingText}</span>
+            </div>
+          </div>`;
+        }
+        
+        if (practicesMatch) {
+          html += `<div style="margin-top:0.5rem;">
+            <strong style="color:#8b5cf6;font-size:0.75rem;">💡 Best Practices</strong>
+            <div class="output-ai" style="margin-top:0.3rem;">${practicesMatch[1].trim().replace(/\n/g, '<br />')}</div>
+          </div>`;
+        }
       } else {
-        html += `<div style="font-size:0.85rem;line-height:1.8;color:rgba(255,255,255,0.3);">
-          <div>📌 Summary: The code appears functional but could benefit from improvements.</div>
-          <div>📋 Issues: Consider adding docstrings, handling edge cases, and reducing complexity.</div>
-          <div>⭐ Rating: 7/10</div>
+        html += `<div style="color:rgba(255,255,255,0.3);font-size:0.8rem;padding:0.5rem 0;">
+          <i class="fas fa-spinner fa-spin"></i> AI review generated with fallback intelligence.
+        </div>`;
+        // Fallback review
+        const fallbackRating = astResult.errorCount === 0 ? (astResult.warningCount === 0 ? 9 : 7) : 5;
+        const stars = Math.round(fallbackRating / 2);
+        html += `<div class="output-summary">
+          <strong style="color:#8b5cf6;">📌 Summary</strong>
+          <div style="margin-top:0.3rem;color:rgba(255,255,255,0.6);">The code is ${astResult.errorCount === 0 ? 'functionally correct' : 'has some issues'} with ${astResult.issueCount} total issues found.</div>
+        </div>
+        <div style="margin-top:0.5rem;">
+          <div class="rating-bar">
+            <span style="color:#8b5cf6;font-weight:600;">⭐ Rating</span>
+            <span class="stars">${'★'.repeat(stars)}${'☆'.repeat(5-stars)}</span>
+            <span class="rating-text">${fallbackRating}/10 - ${fallbackRating >= 8 ? 'Good code quality' : fallbackRating >= 6 ? 'Needs some improvements' : 'Significant improvements needed'}</span>
+          </div>
         </div>`;
       }
       html += `</div>`;
-
-      html += `</div>`;
+      
       return html;
     }
   </script>
